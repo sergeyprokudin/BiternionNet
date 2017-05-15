@@ -14,8 +14,8 @@ if [[ ! -e ${PYENV} ]];then
         dbash::pp "# We install virtualenv!"
         sudo pip install virtualenv
     fi
-    virtualenv ${PYENV} --clear
-    virtualenv ${PYENV} --relocatable
+    virtualenv -p python3 ${PYENV} --clear
+    virtualenv -p python3 ${PYENV} --relocatable
 fi
 
 source ${PYENV}/bin/activate
@@ -24,9 +24,7 @@ dbash::pp "# Should we upgrade all dependencies?"
 dbash::user_confirm ">> Update dependencies?" "n"
 if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
     ${PYENV}/bin/pip install --upgrade pip
-    ${PYENV}/bin/pip install --upgrade \
-             numpy scipy matplotlib joblib ipdb python-gflags google-apputils autopep8 sklearn pandas ipython opencv\
-             jupyter
+    ${PYENV}/bin/pip install --upgrade numpy scipy matplotlib joblib ipdb python-gflags google-apputils autopep8 sklearn pandas ipython jupyter theano opencv-python h5py tensorflow
 fi
 
 dbash::pp "# Installing DeepFried2 toolbox"
