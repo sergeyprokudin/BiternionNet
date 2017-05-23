@@ -25,6 +25,7 @@ def dotrain(model, sess, loss, aug, Xtr, ytr, nepochs=50, batchsize=100, title=N
 
     opt = tf.train.AdadeltaOptimizer(learning_rate=1, rho=0.95, epsilon=1e-7).minimize(loss)
 
+    # noinspection PyInterpreter
     progress = IntProgress(value=0, min=0, max=nepochs, description='Training:')
     display(progress)
 
