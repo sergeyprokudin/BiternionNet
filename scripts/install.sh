@@ -24,7 +24,8 @@ dbash::pp "# Should we upgrade all dependencies?"
 dbash::user_confirm ">> Update dependencies?" "n"
 if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
     ${PYENV}/bin/pip install --upgrade pip
-    ${PYENV}/bin/pip install --upgrade numpy scipy matplotlib joblib ipdb python-gflags google-apputils autopep8 sklearn pandas ipython jupyter theano opencv-python h5py tensorflow
+    ${PYENV}/bin/pip install --upgrade numpy scipy matplotlib joblib ipdb python-gflags google-apputils autopep8 sklearn
+    ${PYENV}/bin/pip install --upgrade pandas ipython jupyter theano opencv-python h5py tensorflow keras
 fi
 
 dbash::pp "# Installing DeepFried2 toolbox"
