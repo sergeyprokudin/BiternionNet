@@ -1,0 +1,10 @@
+root_log_dir: 'logs'
+data_path: 'data/TownCentre.pkl.gz'
+n_epochs: 50
+batch_size: 100
+validation_size: 1000
+loss: cosine # possible choices : cosine, von_mises
+optimizer_params:
+  learning_rate: 1.0
+  rho: 0.95
+  epsilon: 1.0e-07
