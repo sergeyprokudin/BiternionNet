@@ -1,0 +1,6 @@
+trained_models_path: 'trained_models_path'
+data_path: 'data/TownCentre.pkl.gz'
+n_epochs: 100
+batch_size: 100
+validation_size: 1000
+loss: cosine
