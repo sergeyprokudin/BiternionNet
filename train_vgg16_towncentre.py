@@ -34,10 +34,12 @@ def train():
     elif config['loss'] == 'von_mises':
         loss = von_mises_loss_tf
     else:
-        raise ValueError("loss should be cosine or von_mises")
+        raise ValueError("loss should be 'cosine' or 'von_mises'")
 
     model.compile(loss=loss,
-                  optimizer=keras.optimizers.Adadelta(),
+                  optimizer=keras.optimizers.Adadelta(rho=.95,
+                                                      epsilon=1e-7,
+                                                      lr=1),
                   metrics=['cosine'])
 
     model.fit(x=xtr[val_size:], y=ytr_bit[val_size:],
@@ -48,7 +50,7 @@ def train():
 
     if not os.path.exists(trained_models_path):
         os.mkdir(trained_models_path)
-    model.save(os.path.join(trained_models_path, 'vgg_bit_town.h5'))
+    model.save(os.path.join(trained_models_path, 'vgg_bit_' + config['loss'] + '_town.h5'))
 
     yte_preds = bit2deg(model.predict(xte))
 
@@ -57,8 +59,6 @@ def train():
     std_loss = np.std(loss)
 
     print("MAAD error (test) : %f ± %f" % (mean_loss, std_loss))
-
-    # model = load_model('trained_models/vgg_bit_town.h5', custom_objects={'cosine_loss_tf': cosine_loss_tf})
 
     return
 
