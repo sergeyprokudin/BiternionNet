@@ -25,7 +25,7 @@ dbash::user_confirm ">> Update dependencies?" "n"
 if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
     ${PYENV}/bin/pip install --upgrade pip
     ${PYENV}/bin/pip install --upgrade numpy scipy matplotlib joblib ipdb python-gflags google-apputils autopep8 sklearn
-    ${PYENV}/bin/pip install --upgrade pandas ipython jupyter theano opencv-python h5py tensorflow keras
+    ${PYENV}/bin/pip install --upgrade pandas ipython ipdb jupyter theano opencv-python h5py keras
 fi
 
 dbash::pp "# Installing DeepFried2 toolbox"
@@ -33,24 +33,17 @@ pip install git+https://github.com/lucasb-eyer/DeepFried2.git
 dbash::pp "# Installing lbtoolbox"
 pip install git+https://github.com/lucasb-eyer/lbtoolbox.git
 
-#dbash::user_confirm ">> Install tensorflow gpu MAC?" "n"
-#if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
-#    dbash::pp "Please install cuda 8.0 from nvidia!"
-#    dbash::pp "Please install cudnn 5.0 from nvidia!"
-#    dbash::pp "Notice, symbolic links for libcudnn.dylib and libcuda.dylib have to be added."
-#    export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/mac/gpu/tensorflow_gpu-0.12.0-py2-none-any.whl
-#    ${PYENV}/bin/pip install --ignore-installed --upgrade $TF_BINARY_URL
-#fi
-#
-#dbash::user_confirm ">> Install tensorflow cpu MAC?" "n"
-#if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
-#    export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/mac/cpu/tensorflow-0.12.0-py2-none-any.whl
-#    ${PYENV}/bin/pip install --ignore-installed --upgrade $TF_BINARY_URL
-#fi
-#
-#dbash::user_confirm ">> Install tensorflow gpu ubuntu?" "n"
-#if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
-#    export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-0.12.0-cp27-none-linux_x86_64.whl
-#    ${PYENV}/bin/pip install --ignore-installed --upgrade $TF_BINARY_URL
-#fi
+
+dbash::user_confirm ">> Install tensorflow (CPU-only)?" "n"
+if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
+    ${PYENV}/bin/pip install tensorflow
+fi
+
+dbash::user_confirm ">> Install tensorflow (GPU)?" "n"
+if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
+    dbash::pp "Please install cuda 8.0 from nvidia!"
+    dbash::pp "Please install cudnn 5.0 from nvidia!"
+    dbash::pp "Notice, symbolic links for libcudnn.dylib and libcuda.dylib have to be added."
+    ${PYENV}/bin/pip install tensorflow-gpu
+fi
 
