@@ -21,7 +21,7 @@ def von_mises_loss_np(y_target, y_pred, kappa=1):
 def von_mises_loss_tf(y_target, y_pred, kappa=1):
     cosine_dist = tf.reduce_sum(tf.multiply(y_target, y_pred), axis=1) - 1
     vm_loss = 1 - tf.exp(kappa*cosine_dist)
-    mean_loss = tf.reduce_mean(vm_loss, name='vonmises_loss')
+    mean_loss = tf.reduce_mean(vm_loss, name='von_mises_loss')
     return mean_loss
 
 

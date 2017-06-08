@@ -2,19 +2,25 @@ import numpy as np
 import keras
 import os
 import yaml
-import binascii
 import shutil
 
 from models import vgg
 from utils.angles import deg2bit, bit2deg
 from utils.losses import cosine_loss_tf, von_mises_loss_tf, maad_from_deg
 from utils.towncentre import load_towncentre
+from utils.experiements import get_experiment_id, set_logging
 
 
-def get_exp_id():
-    experiment_id = binascii.hexlify(os.urandom(10))
-    # experiment_name = '_'.join([config['']])
-    return experiment_id
+def get_optimizer(optimizer_params):
+    if optimizer_params['name'] == 'Adadelta':
+        optimizer=keras.optimizers.Adadelta(rho=optimizer_params['rho'],
+                                            epsilon=optimizer_params['epsilon'],
+                                            lr=optimizer_params['learning_rate'])
+    elif optimizer_params['name'] == 'Adam':
+        optimizer=keras.optimizers.Adam(epsilon=optimizer_params['epsilon'],
+                                        lr=optimizer_params['learning_rate'])
+    return optimizer
+
 
 def train():
 
@@ -26,7 +32,7 @@ def train():
 
     if not os.path.exists(root_log_dir):
         os.mkdir(root_log_dir)
-    experiment_id = get_exp_id()
+    experiment_id = get_experiment_id()
     experiment_dir = os.path.join(root_log_dir, str(experiment_id))
     os.mkdir(experiment_dir)
     shutil.copy(config_path, experiment_dir)
@@ -48,12 +54,10 @@ def train():
                           image_width=image_width,
                           l2_normalize_final=True)
 
-    optimizer_params = config['optimizer_params']
+    optimizer = get_optimizer(config['optimizer_params'])
 
     model.compile(loss=loss,
-                  optimizer=keras.optimizers.Adadelta(rho=optimizer_params['rho'],
-                                                      epsilon=optimizer_params['epsilon'],
-                                                      lr=optimizer_params['learning_rate']),
+                  optimizer=optimizer,
                   metrics=['cosine'])
 
     val_size = config['validation_size']
