@@ -15,10 +15,12 @@ def get_optimizer(optimizer_params):
     if optimizer_params['name'] == 'Adadelta':
         optimizer=keras.optimizers.Adadelta(rho=optimizer_params['rho'],
                                             epsilon=optimizer_params['epsilon'],
-                                            lr=optimizer_params['learning_rate'])
+                                            lr=optimizer_params['learning_rate'],
+                                            decay=optimizer_params['decay'])
     elif optimizer_params['name'] == 'Adam':
         optimizer=keras.optimizers.Adam(epsilon=optimizer_params['epsilon'],
-                                        lr=optimizer_params['learning_rate'])
+                                        lr=optimizer_params['learning_rate'],
+                                        decay=optimizer_params['decay'])
     return optimizer
 
 
@@ -37,7 +39,7 @@ def train():
     os.mkdir(experiment_dir)
     shutil.copy(config_path, experiment_dir)
 
-    xtr, ytr, xte, yte = load_towncentre(data_path, canonical_split=True)
+    xtr, ytr, xte, yte = load_towncentre(data_path, canonical_split=config['canonical_split'])
     image_height, image_width = xtr.shape[1], xtr.shape[2]
     ytr_bit = deg2bit(ytr)
     yte_bit = deg2bit(yte)

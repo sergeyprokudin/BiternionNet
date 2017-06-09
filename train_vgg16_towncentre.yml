@@ -1,6 +1,7 @@
 root_log_dir: 'logs'
 log_to_stdout: True
 data_path: 'data/TownCentre.pkl.gz'
+canonical_split: True
 n_epochs: 100
 batch_size: 100
 validation_size: 1000
@@ -10,3 +11,4 @@ optimizer_params:
   learning_rate: 1.0e-03
   rho: 0.95
   epsilon: 1.0e-07
+  decay: 0.9
