@@ -41,9 +41,9 @@ def dotrain(model, crit, aug, Xtr, ytr, nepochs=50, batchsize=100, title=None):
             batchcosts.append(cost)
 
         costs.append(np.mean(batchcosts))
-        progress.value = e+1
+        # progress.value = e+1
 
-        liveplot(plotcost, costs, title)
+        # liveplot(plotcost, costs, title)
     return costs
 
 
