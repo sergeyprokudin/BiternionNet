@@ -24,8 +24,8 @@ from lbtoolbox.util import batched
 def dotrain(model, crit, aug, Xtr, ytr, nepochs=50, batchsize=100, title=None):
     opt = df.AdaDelta(rho=.95, eps=1e-7, lr=1)
 
-    progress = IntProgress(value=0, min=0, max=nepochs, description='Training:')
-    display(progress)
+    # progress = IntProgress(value=0, min=0, max=nepochs, description='Training:')
+    # display(progress)
 
     model.training()
 
