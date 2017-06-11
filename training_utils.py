@@ -2,23 +2,23 @@ from ipywidgets import IntProgress
 from IPython.display import display
 
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 import DeepFried2 as df
 
 from lbtoolbox.util import batched
-from lbtoolbox.plotting import liveplot, annotline
+#from lbtoolbox.plotting import liveplot, annotline
 
 
-def plotcost(costs, title):
-    fig, ax = plt.subplots()
-    line, = ax.plot(1+np.arange(len(costs)), costs, label='Training cost')
-    ax.set_xlabel('Epochs')
-    ax.set_ylabel('Cost')
-    annotline(ax, line, np.min)
-    if title:
-        fig.suptitle(title, fontsize=16)
-    return fig
+# def plotcost(costs, title):
+#     fig, ax = plt.subplots()
+#     line, = ax.plot(1+np.arange(len(costs)), costs, label='Training cost')
+#     ax.set_xlabel('Epochs')
+#     ax.set_ylabel('Cost')
+#     annotline(ax, line, np.min)
+#     if title:
+#         fig.suptitle(title, fontsize=16)
+#     return fig
 
 
 def dotrain(model, crit, aug, Xtr, ytr, nepochs=50, batchsize=100, title=None):

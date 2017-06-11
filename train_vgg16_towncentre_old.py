@@ -127,7 +127,7 @@ def main():
     Flatten(),
     df.Linear(3*46*46, 1, initW=df.init.const(0)),) for _ in range(1)]
     print('{:.3f}M params'.format(count_params(nets_shallow_linreg[0])/1000000))
-    nets_linreg = [mknet_gpu(df.Linear(512, 1, initW=df.init.const(0))) for _ in range(1)]
+    nets_linreg = [mknet_cpu(df.Linear(512, 1, initW=df.init.const(0))) for _ in range(1)]
     #import ipdb; ipdb.set_trace()
     trains_linreg = [dotrain(net, df.MADCriterion(), aug, Xtr, ytr[:,None]) for net in nets_linreg]
     y_preds_linreg = [dopred_deg(net, aug, Xte) for net in nets_linreg]
