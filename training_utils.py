@@ -38,9 +38,11 @@ def dotrain(model, crit, aug, Xtr, ytr, nepochs=50, batchsize=100, title=None):
             model.zero_grad_parameters()
             cost = model.accumulate_gradients(Xb, yb, crit)
             opt.update_parameters(model)
+            print("batch cost: %f" % cost)
             batchcosts.append(cost)
 
         costs.append(np.mean(batchcosts))
+        print("mean batch cost: %f" % costs[-1])
         # progress.value = e+1
 
         # liveplot(plotcost, costs, title)

@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Experiments - TownCentre (original).ipynb" afterPath="$PROJECT_DIR$/Experiments - TownCentre (original).ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg16_towncentre_old.py" afterPath="$PROJECT_DIR$/train_vgg16_towncentre_old.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/training_utils.py" afterPath="$PROJECT_DIR$/training_utils.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
@@ -75,8 +76,8 @@
           <file leaf-file-name="train_vgg16_towncentre_old.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_vgg16_towncentre_old.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.35085836">
-                  <caret line="102" column="25" selection-start-line="102" selection-start-column="25" selection-end-line="102" selection-end-column="25" />
+                <state vertical-scroll-proportion="0.7081545">
+                  <caret line="127" column="33" selection-start-line="127" selection-start-column="33" selection-end-line="127" selection-end-column="33" />
                   <folding />
                 </state>
               </provider>
@@ -169,8 +170,8 @@
           <file leaf-file-name="training_utils.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/training_utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.43454936">
-                  <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.47103006">
+                  <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -233,9 +234,9 @@
         <option value="$PROJECT_DIR$/scripts/start_notebook_old.sh" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/scripts/install_old.sh" />
-        <option value="$PROJECT_DIR$/train_vgg16_towncentre_old.py" />
         <option value="$PROJECT_DIR$/scripts/install.sh" />
         <option value="$PROJECT_DIR$/training_utils.py" />
+        <option value="$PROJECT_DIR$/train_vgg16_towncentre_old.py" />
       </list>
     </option>
   </component>
@@ -883,18 +884,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_vgg16_towncentre_old.py">
+    <entry file="file://$PROJECT_DIR$/training_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35085836">
-          <caret line="102" column="25" selection-start-line="102" selection-start-column="25" selection-end-line="102" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.47103006">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/training_utils.py">
+    <entry file="file://$PROJECT_DIR$/train_vgg16_towncentre_old.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43454936">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.7081545">
+          <caret line="127" column="33" selection-start-line="127" selection-start-column="33" selection-end-line="127" selection-end-column="33" />
           <folding />
         </state>
       </provider>

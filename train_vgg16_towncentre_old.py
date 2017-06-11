@@ -32,9 +32,11 @@ def split(X, y, n, split=0.9):
                 tes.add(pid)
     return (X[itr], y[itr], [n[i] for i in itr]), (X[ite], y[ite], [n[i] for i in ite])
 
+
 class Flatten(df.Module):
     def symb_forward(self, symb_in):
         return symb_in.flatten(2)
+
 
 def mknet_gpu(*outlayers):
     return df.Sequential(                          #     3@46
@@ -65,6 +67,7 @@ def mknet_gpu(*outlayers):
         df.Dropout(0.5),
         *outlayers
     )
+
 
 def mknet_cpu(*outlayers):
     return df.Sequential(                          #     3@46
@@ -125,7 +128,8 @@ def main():
     df.Linear(3*46*46, 1, initW=df.init.const(0)),) for _ in range(1)]
     print('{:.3f}M params'.format(count_params(nets_shallow_linreg[0])/1000000))
     nets_linreg = [mknet_gpu(df.Linear(512, 1, initW=df.init.const(0))) for _ in range(1)]
-    trains_linreg = [dotrain(nets_linreg, df.MADCriterion(), aug, Xtr, ytr[:,None]) for net in nets_linreg]
+    #import ipdb; ipdb.set_trace()
+    trains_linreg = [dotrain(net, df.MADCriterion(), aug, Xtr, ytr[:,None]) for net in nets_linreg]
     y_preds_linreg = [dopred_deg(net, aug, Xte) for net in nets_linreg]
     show_errs_deg(y_preds_linreg, yte[:,None])
 
