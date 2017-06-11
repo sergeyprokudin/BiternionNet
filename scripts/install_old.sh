@@ -26,7 +26,7 @@ if [[ "y" == "${USER_CONFIRM_RESULT}" ]];then
     ${PYENV}/bin/pip install --upgrade pip
     ${PYENV}/bin/pip install --upgrade numpy scipy matplotlib joblib ipdb python-gflags google-apputils autopep8 sklearn
     ${PYENV}/bin/pip install --upgrade pandas ipython ipdb jupyter opencv-python h5py keras
-    ${PYENV}/bin/pip install theano==0.7
+    ${PYENV}/bin/pip install theano==0.8.2
 fi
 
 dbash::pp "# Installing DeepFried2 toolbox"

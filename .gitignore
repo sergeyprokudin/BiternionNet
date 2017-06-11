@@ -2,3 +2,5 @@ data/
 .ipynb_checkpoints/
 py_env
 py_env_old
+.idea/workspace.xml
+.idea
