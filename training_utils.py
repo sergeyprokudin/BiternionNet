@@ -21,7 +21,7 @@ from lbtoolbox.util import batched
 #     return fig
 
 
-def dotrain(model, crit, aug, Xtr, ytr, nepochs=20, batchsize=100, title=None):
+def dotrain(model, crit, aug, Xtr, ytr, nepochs=50, batchsize=100, title=None):
     opt = df.AdaDelta(rho=.95, eps=1e-7, lr=1)
 
     # progress = IntProgress(value=0, min=0, max=nepochs, description='Training:')
@@ -58,6 +58,7 @@ def dostats(model, aug, Xtr, batchsize=100):
         else:
             for Xb_aug in aug.augbatch_pred(Xb):
                 model.accumulate_statistics(Xb_aug)
+
 
 def dopred(model, aug, X, ensembling, output2preds, batchsize=100):
     model.evaluate()

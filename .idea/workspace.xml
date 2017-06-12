@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Experiments - TownCentre (original).ipynb" afterPath="$PROJECT_DIR$/Experiments - TownCentre (original).ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/download_data.py" afterPath="$PROJECT_DIR$/download_data.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg_towncentre_old.py" afterPath="$PROJECT_DIR$/train_vgg_towncentre_old.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/training_utils.py" afterPath="$PROJECT_DIR$/training_utils.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
@@ -57,8 +57,8 @@
           <file leaf-file-name="train_vgg_towncentre_old.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_vgg_towncentre_old.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.908896">
-                  <caret line="88" column="26" selection-start-line="88" selection-start-column="26" selection-end-line="88" selection-end-column="26" />
+                <state vertical-scroll-proportion="0.8542337">
+                  <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -67,7 +67,7 @@
           <file leaf-file-name="augmentation.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/lbtoolbox/augmentation.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
+                <state vertical-scroll-proportion="52.25926">
                   <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
                   <folding />
                 </state>
@@ -151,8 +151,18 @@
           <file leaf-file-name="training_utils.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/training_utils.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.30760986">
+                <state vertical-scroll-proportion="0.018220793">
                   <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Module.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/DeepFried2/Module.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="165" column="43" selection-start-line="165" selection-start-column="31" selection-end-line="165" selection-end-column="43" />
                   <folding />
                 </state>
               </provider>
@@ -595,13 +605,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/DeepFried2/Module.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.610687">
-          <caret line="84" column="58" selection-start-line="84" selection-start-column="58" selection-end-line="84" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/lbtoolbox/util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -873,22 +876,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/lbtoolbox/augmentation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/knet/tools/experiment_config.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.18435155">
@@ -905,14 +892,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/training_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30760986">
-          <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.9230769">
@@ -921,10 +900,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="98" column="0" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/lbtoolbox/augmentation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="52.25926">
+          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/DeepFried2/Module.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="165" column="43" selection-start-line="165" selection-start-column="31" selection-end-line="165" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/training_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.018220793">
+          <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/train_vgg_towncentre_old.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.908896">
-          <caret line="88" column="26" selection-start-line="88" selection-start-column="26" selection-end-line="88" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.8542337">
+          <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
           <folding />
         </state>
       </provider>

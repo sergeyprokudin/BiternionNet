@@ -74,17 +74,16 @@ def main():
     aug = AugmentationPipeline(Xtr, ytr, Cropper((46, 46)))
     print("Trainset: {}".format(len(Xtr)))
     print("Testset:  {}".format(len(Xte)))
-    nets_linreg = [mknet_gpu(df.Linear(512, 1, initW=df.init.const(0))) for _ in range(3)]
-    print('{:.3f}M params'.format(count_params(nets_linreg[0])/1000000))
     net = mknet_gpu(df.Linear(512, 1, initW=df.init.const(0)))
-    trains_linreg = dotrain(net, df.MADCriterion(), aug, Xtr, ytr[:, None])
-    y_preds = np.squeeze(dopred(net, aug, Xte, ensembling=ensemble_degrees, output2preds=lambda x: x, batchsize=100))
+    dotrain(net, df.MADCriterion(), aug, Xtr, ytr[:, None])
+    dostats(net, aug, Xtr, batchsize=1000)
+    y_preds = np.squeeze(dopred_deg(net, aug, Xte))
     loss = maad_from_deg(y_preds, yte)
     mean_loss = np.mean(loss)
     std_loss = np.std(loss)
     print("MAAD error (test) : %f ± %f" % (mean_loss, std_loss))
-    import ipdb; ipdb.set_trace()
     return
+
 
 if __name__ == '__main__':
     main()
