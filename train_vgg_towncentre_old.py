@@ -96,16 +96,16 @@ def main():
     # y_preds = np.squeeze(dopred_deg(net, aug, Xte))
 
     # Biternion deep regression with cosine criterion
-    net = mknet_gpu(df.Linear(512, 2, initW=df.init.normal(0.01)), Biternion())
-    dotrain(net, CosineCriterion(), aug, Xtr, deg2bit(ytr))
-    dostats(net, aug, Xtr, batchsize=1000)
-    y_preds = bit2deg(np.squeeze(dopred_deg(net, aug, Xte)))
-
-    # Biternion deep regression with Von-Mises criterion
     # net = mknet_gpu(df.Linear(512, 2, initW=df.init.normal(0.01)), Biternion())
-    # dotrain(net, VonMisesBiternionCriterion(1), aug, Xtr, deg2bit(ytr))
+    # dotrain(net, CosineCriterion(), aug, Xtr, deg2bit(ytr))
     # dostats(net, aug, Xtr, batchsize=1000)
     # y_preds = bit2deg(np.squeeze(dopred_deg(net, aug, Xte)))
+
+    # Biternion deep regression with Von-Mises criterion
+    net = mknet_gpu(df.Linear(512, 2, initW=df.init.normal(0.01)), Biternion())
+    dotrain(net, VonMisesBiternionCriterion(1), aug, Xtr, deg2bit(ytr))
+    dostats(net, aug, Xtr, batchsize=1000)
+    y_preds = bit2deg(np.squeeze(dopred_deg(net, aug, Xte)))
 
     loss = maad_from_deg(y_preds, yte)
     mean_loss = np.mean(loss)
