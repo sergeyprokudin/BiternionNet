@@ -61,8 +61,22 @@ class CosineCriterion(df.Criterion):
         # For normalized `p_t_given_x` and `t`, dot-product (batched)
         # outputs a cosine value, i.e. between -1 (worst) and 1 (best)
         cos_angles = df.T.batched_dot(symb_in, symb_tgt)
-
         # Rescale to a cost going from 2 (worst) to 0 (best) each, then take mean.
+        return df.T.mean(1 - cos_angles)
+
+
+class VonMisesBiternionCriterion(df.Criterion):
+    def __init__(self, kappa):
+        df.Criterion.__init__(self)
+        self.kappa = kappa
+
+    def symb_forward(self, symb_in, symb_tgt):
+        cos_angles = df.T.batched_dot(symb_in, symb_tgt)
+
+        # This is the only difference to the pure `CosineCriterion`.
+        # Obviously, they could be in the same class, but I separate them here for narration.
+        cos_angles = df.T.exp(self.kappa * (cos_angles - 1))
+
         return df.T.mean(1 - cos_angles)
 
 
@@ -74,14 +88,30 @@ def main():
     aug = AugmentationPipeline(Xtr, ytr, Cropper((46, 46)))
     print("Trainset: {}".format(len(Xtr)))
     print("Testset:  {}".format(len(Xte)))
-    net = mknet_gpu(df.Linear(512, 1, initW=df.init.const(0)))
-    dotrain(net, df.MADCriterion(), aug, Xtr, ytr[:, None])
+
+    # Naive deep regression
+    # net = mknet_gpu(df.Linear(512, 1, initW=df.init.const(0)))
+    # dotrain(net, df.MADCriterion(), aug, Xtr, ytr[:, None])
+    # dostats(net, aug, Xtr, batchsize=1000)
+    # y_preds = np.squeeze(dopred_deg(net, aug, Xte))
+
+    # Biternion deep regression with cosine criterion
+    net = mknet_gpu(df.Linear(512, 2, initW=df.init.normal(0.01)), Biternion())
+    dotrain(net, CosineCriterion(), aug, Xtr, deg2bit(ytr))
     dostats(net, aug, Xtr, batchsize=1000)
-    y_preds = np.squeeze(dopred_deg(net, aug, Xte))
+    y_preds = bit2deg(np.squeeze(dopred_deg(net, aug, Xte)))
+
+    # Biternion deep regression with Von-Mises criterion
+    # net = mknet_gpu(df.Linear(512, 2, initW=df.init.normal(0.01)), Biternion())
+    # dotrain(net, VonMisesBiternionCriterion(1), aug, Xtr, deg2bit(ytr))
+    # dostats(net, aug, Xtr, batchsize=1000)
+    # y_preds = bit2deg(np.squeeze(dopred_deg(net, aug, Xte)))
+
     loss = maad_from_deg(y_preds, yte)
     mean_loss = np.mean(loss)
     std_loss = np.std(loss)
     print("MAAD error (test) : %f ± %f" % (mean_loss, std_loss))
+
     return
 
 
