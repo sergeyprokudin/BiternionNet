@@ -100,7 +100,7 @@ def train():
     if net_output == 'biternion':
         yte_preds = bit2deg(model.predict(xte))
     elif net_output == 'degrees':
-        yte_preds = model.predict(xte)
+        yte_preds = np.squeeze(model.predict(xte))
 
     loss = maad_from_deg(yte_preds, yte_deg)
     mean_loss = np.mean(loss)
