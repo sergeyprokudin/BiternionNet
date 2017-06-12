@@ -6,6 +6,11 @@ def cosine_loss_np(y_target, y_pred):
     return 1 - np.sum(np.multiply(y_target, y_pred),axis=1)
 
 
+def mad_loss_tf(y_target, y_pred):
+    loss = tf.abs(y_target - y_pred)
+    return tf.reduce_mean(loss)
+
+
 def cosine_loss_tf(y_target, y_pred):
     loss = 1 - tf.reduce_sum(tf.multiply(y_target, y_pred),axis=1)
     mean_loss = tf.reduce_mean(loss, name='cosine_loss')

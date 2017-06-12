@@ -1,0 +1,15 @@
+root_log_dir: 'logs'
+log_to_stdout: True
+data_path: 'data/TownCentre.pkl.gz'
+canonical_split: True
+n_epochs: 50
+batch_size: 100
+validation_split: 0.1
+net_output: degrees # possible choices: degrees, biternion
+loss: mad # possible choices : cosine, von_mises, mad
+optimizer_params:
+  name: Adadelta
+  learning_rate: 1.0e-00
+  rho: 0.95
+  epsilon: 1.0e-07
+  decay: 0.0
