@@ -13,12 +13,12 @@ from utils.experiements import get_experiment_id, set_logging
 
 def get_optimizer(optimizer_params):
     if optimizer_params['name'] == 'Adadelta':
-        optimizer=keras.optimizers.Adadelta(rho=optimizer_params['rho'],
+        optimizer = keras.optimizers.Adadelta(rho=optimizer_params['rho'],
                                             epsilon=optimizer_params['epsilon'],
                                             lr=optimizer_params['learning_rate'],
                                             decay=optimizer_params['decay'])
     elif optimizer_params['name'] == 'Adam':
-        optimizer=keras.optimizers.Adam(epsilon=optimizer_params['epsilon'],
+        optimizer = keras.optimizers.Adam(epsilon=optimizer_params['epsilon'],
                                         lr=optimizer_params['learning_rate'],
                                         decay=optimizer_params['decay'])
     return optimizer

@@ -7,7 +7,8 @@ from keras.layers.normalization import BatchNormalization
 from keras import backend as K
 
 
-def vgg_model(n_outputs, image_height=50, image_width=50, l2_normalize_final=False):
+def vgg_model(n_outputs=1, final_layer=True, l2_normalize_final=False,
+              image_height=50, image_width=50):
     model = Sequential()
 
     model.add(Conv2D(24, kernel_size=(3, 3),
@@ -38,9 +39,10 @@ def vgg_model(n_outputs, image_height=50, image_width=50, l2_normalize_final=Fal
     model.add(Flatten())
     model.add(Dense(512, activation='relu'))
     model.add(Dropout(0.5))
-    model.add(Dense(n_outputs, activation=None))
 
-    if l2_normalize_final:
-        model.add(Lambda(lambda x: K.l2_normalize(x,axis=1)))
+    if final_layer:
+        model.add(Dense(n_outputs, activation=None))
+        if l2_normalize_final:
+            model.add(Lambda(lambda x: K.l2_normalize(x, axis=1)))
 
     return model
