@@ -81,7 +81,7 @@ def log_bessel_approx_tf(x, m=5):
     return res
 
 
-def von_mises_log_likelihood_np(y_true, mu, log_kappa, input_type='degree'):
+def von_mises_log_likelihood_np(y_true, mu, kappa, input_type='degree'):
     '''
     Compute log-likelihood given data samples and predicted Von-Mises model parameters
     :param y_true: true values of an angle in biternion (cos, sin) representation
@@ -98,8 +98,8 @@ def von_mises_log_likelihood_np(y_true, mu, log_kappa, input_type='degree'):
         cosin_dist = np.cos(y_true - mu)
     elif input_type == 'biternion':
         cosin_dist = np.sum(np.multiply(y_true, mu), axis=1)
-    log_likelihood = np.exp(log_kappa) * cosin_dist - \
-                     np.log(2 * np.pi * bessel(np.exp(log_kappa)))
+    log_likelihood = kappa * cosin_dist - \
+                     np.log(2 * np.pi) - np.log(bessel(kappa))
     return np.mean(log_likelihood)
 
 
@@ -128,15 +128,6 @@ def von_mises_log_likelihood_tf(y_true, mu, kappa, input_type='degree'):
     log_likelihood = kappa * cosin_dist - \
                      tf.log(2 * np.pi) - log_bessel_approx_tf(kappa)
     return tf.reduce_mean(log_likelihood)
-
-
-def von_mises_neg_log_likelihood_keras(y_true, y_pred, fixed_kappa=True):
-    mu_pred = y_pred[:, 0:2]
-    if fixed_kappa:
-        kappa_pred = tf.ones(shape=tf.shape(y_pred[:, 2:]))
-    else:
-        kappa_pred = tf.abs(y_pred[:, 2:])
-    return -von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion')
 
 
 def maad_from_deg(y_pred, y_target):
