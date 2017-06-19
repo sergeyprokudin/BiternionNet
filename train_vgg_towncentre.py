@@ -66,8 +66,11 @@ def train():
         loss = von_mises_loss_tf
     elif config['loss'] == 'mad':
         loss = mad_loss_tf
+    elif config['loss'] == 'vm_likelihood':
+        kappa = config['kappa']
+        loss = mad_loss_tf
     else:
-        raise ValueError("loss should be 'mad','cosine' or 'von_mises'")
+        raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
 
     model = vgg.vgg_model(n_outputs=n_outputs,
                           image_height=image_height,

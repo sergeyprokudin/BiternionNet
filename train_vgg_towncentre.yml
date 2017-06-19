@@ -6,10 +6,11 @@ n_epochs: 200
 batch_size: 10
 validation_split: 0.0
 net_output: biternion # possible choices: degrees, biternion
-loss: von_mises # possible choices : cosine, von_mises, mad
+loss: von_mises # possible choices : cosine, von_mises, mad, vm_likelihood
+kappa: 1.0 #kappa value for vm_likelihood loss
 optimizer_params:
   name: Adam
-  learning_rate: 1.0e-04
+  learning_rate: 1.0e-03
   rho: 0.95
   epsilon: 1.0e-07
   decay: 0.0
