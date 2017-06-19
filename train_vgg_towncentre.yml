@@ -2,14 +2,14 @@ root_log_dir: 'logs'
 log_to_stdout: True
 data_path: 'data/TownCentre.pkl.gz'
 canonical_split: True
-n_epochs: 50
+n_epochs: 20
 batch_size: 100
 validation_split: 0.0
 net_output: biternion # possible choices: degrees, biternion
 loss: von_mises # possible choices : cosine, von_mises, mad
 optimizer_params:
   name: Adam
-  learning_rate: 1.0e-04
+  learning_rate: 1.0e-03
   rho: 0.95
   epsilon: 1.0e-07
   decay: 0.0
