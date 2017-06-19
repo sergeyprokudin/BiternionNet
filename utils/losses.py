@@ -71,7 +71,7 @@ def log_bessel_approx_tf(x, m=5):
         deg_tiled = tf.tile(deg, [n_rows, 1])
         coef_tiled = tf.tile(bessel_taylor_coefs[0:m].reshape(1, m), [n_rows, 1])
         val = tf.log(tf.reduce_sum(tf.pow(x_tiled, tf.to_float(deg_tiled))*coef_tiled, axis=1))
-        return tf.reshape(val, [-1,1])
+        return tf.reshape(val, [-1, 1])
 
     def _log_bessel_approx_large(x):
         return x - 0.5*tf.log(2*np.pi*x)
@@ -103,12 +103,12 @@ def von_mises_log_likelihood_np(y_true, mu, log_kappa, input_type='degree'):
     return np.mean(log_likelihood)
 
 
-def von_mises_log_likelihood_tf(y_true, mu, log_kappa, input_type='degree'):
+def von_mises_log_likelihood_tf(y_true, mu, kappa, input_type='degree'):
     '''
     Compute log-likelihood given data samples and predicted Von-Mises model parameters
     :param y_true: true values of an angle in biternion (cos, sin) representation
     :param mu: predicted mean values of an angle in biternion (cos, sin) representation
-    :param log_kappa: predicted mean values of an angle in biternion (cos, sin) representation
+    :param kappa: predicted kappa (inverse variance) values of an angle in biternion (cos, sin) representation
     :param radian_input:
     :return:
     log_likelihood
@@ -125,8 +125,8 @@ def von_mises_log_likelihood_tf(y_true, mu, log_kappa, input_type='degree'):
         cosin_dist = tf.reduce_sum(np.multiply(y_true, mu), axis=1)
     # log_likelihood = tf.exp(log_kappa) * cosin_dist - \
     #                  tf.log(2 * np.pi) + tf.log(bessel_approx_tf(tf.exp(log_kappa)))
-    log_likelihood = tf.exp(log_kappa) * cosin_dist - \
-                     tf.log(2 * np.pi) - log_bessel_approx_tf(tf.exp(log_kappa))
+    log_likelihood = kappa * cosin_dist - \
+                     tf.log(2 * np.pi) - log_bessel_approx_tf(kappa)
     return tf.reduce_mean(log_likelihood)
 
 

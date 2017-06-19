@@ -88,6 +88,12 @@ def train():
                   epochs=config['n_epochs'],
                   verbose=1,
                   validation_data=(xte, yte))
+        model.optimizer.lr.assign(config['optimizer_params']['learning_rate']*0.1)
+        model.fit(x=xtr, y=ytr,
+                  batch_size=config['batch_size'],
+                  epochs=100,
+                  verbose=1,
+                  validation_data=(xte, yte))
     else:
         model.fit(x=xtr, y=ytr,
                   batch_size=config['batch_size'],
