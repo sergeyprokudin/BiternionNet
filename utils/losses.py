@@ -130,6 +130,15 @@ def von_mises_log_likelihood_tf(y_true, mu, kappa, input_type='degree'):
     return tf.reduce_mean(log_likelihood)
 
 
+def von_mises_neg_log_likelihood_keras(y_true, y_pred, fixed_kappa=True):
+    mu_pred = y_pred[:, 0:2]
+    if fixed_kappa:
+        kappa_pred = tf.ones(shape=tf.shape(y_pred[:, 2:]))
+    else:
+        kappa_pred = tf.abs(y_pred[:, 2:])
+    return -von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion')
+
+
 def maad_from_deg(y_pred, y_target):
     return np.rad2deg(np.abs(np.arctan2(np.sin(np.deg2rad(y_target - y_pred)), np.cos(np.deg2rad(y_target - y_pred)))))
 

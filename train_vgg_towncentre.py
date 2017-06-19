@@ -88,19 +88,28 @@ def train():
                   epochs=config['n_epochs'],
                   verbose=1,
                   validation_data=(xte, yte))
-        model.optimizer.lr.assign(config['optimizer_params']['learning_rate']*0.001)
+        print("fine-tuning the model..")
+        model.optimizer.lr.assign(config['optimizer_params']['learning_rate']*0.01)
         model.fit(x=xtr, y=ytr,
                   batch_size=config['batch_size'],
                   epochs=100,
                   verbose=1,
-                  validation_data=(xte, yte))
+                  validation_data=(xte, yte),
+                  initial_epoch=config['n_epochs'])
     else:
         model.fit(x=xtr, y=ytr,
                   batch_size=config['batch_size'],
                   epochs=config['n_epochs'],
                   verbose=1,
                   validation_split=validation_split)
-
+        print("fine-tuning the model..")
+        model.optimizer.lr.assign(config['optimizer_params']['learning_rate']*0.01)
+        model.fit(x=xtr, y=ytr,
+                  batch_size=config['batch_size'],
+                  epochs=100,
+                  verbose=1,
+                  validation_data=(xte, yte),
+                  initial_epoch=config['n_epochs'])
     model.save(os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.h5'))
 
     if net_output == 'biternion':
@@ -113,6 +122,7 @@ def train():
     std_loss = np.std(loss)
 
     print("MAAD error (test) : %f ± %f" % (mean_loss, std_loss))
+    print("stored model available at %s" % experiment_dir)
 
     return
 
