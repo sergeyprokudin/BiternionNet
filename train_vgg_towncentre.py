@@ -2,6 +2,7 @@ import numpy as np
 import keras
 import tensorflow as tf
 import os
+import sys
 import yaml
 import shutil
 
@@ -45,7 +46,8 @@ def finetune_kappa(x, y_bit, model):
 
 def train():
 
-    config_path = 'train_vgg_towncentre.yml'
+    config_path = sys.argv[1]
+
     with open(config_path, 'r') as f:
         config = yaml.load(f)
     root_log_dir = config['root_log_dir']
@@ -96,26 +98,26 @@ def train():
 
     if config['loss'] == 'cosine':
         print("using cosine loss..")
-        loss = cosine_loss_tf
+        loss_te = cosine_loss_tf
     elif config['loss'] == 'von_mises':
         print("using von-mises loss..")
-        loss = von_mises_loss_tf
+        loss_te = von_mises_loss_tf
     elif config['loss'] == 'mad':
         print("using mad loss..")
-        loss = mad_loss_tf
+        loss_te = mad_loss_tf
     elif config['loss'] == 'vm_likelihood':
         print("using likelihood loss..")
 
         def _von_mises_neg_log_likelihood_keras(y_true, y_pred):
             return -von_mises_log_likelihood_tf(y_true, y_pred, kappa_pred, input_type='biternion')
 
-        loss = _von_mises_neg_log_likelihood_keras
+        loss_te = _von_mises_neg_log_likelihood_keras
     else:
         raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
 
     optimizer = get_optimizer(config['optimizer_params'])
 
-    model.compile(loss=loss,
+    model.compile(loss=loss_te,
                   optimizer=optimizer,
                   metrics=metrics)
 
@@ -157,25 +159,32 @@ def train():
     elif net_output == 'degrees':
         yte_preds_deg = np.squeeze(model.predict(xte))
 
-
     if kappa == 0.0:
         print("predicting kappa...")
+        kappa_preds_tr = kappa_model.predict(xtr)
+        mean_kappa_tr = np.mean(kappa_preds_tr)
+        std_kappa_tr = np.std(kappa_preds_tr)
+        print("predicted kappa (train) : %f ± %f" % (mean_kappa_tr, std_kappa_tr))
         kappa_preds_te = kappa_model.predict(xte)
-        mean_kappa = np.mean(kappa_preds_te)
-        std_kappa = np.std(kappa_preds_te)
-        print("predicted kappa (test) : %f ± %f" % (mean_kappa, std_kappa))
+        mean_kappa_te = np.mean(kappa_preds_te)
+        std_kappa_te = np.std(kappa_preds_te)
+        print("predicted kappa (test) : %f ± %f" % (mean_kappa_te, std_kappa_te))
     else:
-        print("fine-tuning kappa as hyper-parameter...")
-        kappa = finetune_kappa(xtr, ytr_bit, model)
+        # print("fine-tuning kappa as hyper-parameter...")
+        # kappa = finetune_kappa(xtr, ytr_bit, model)
         kappa_preds_tr = np.ones([xtr.shape[0], 1]) * kappa
         kappa_preds_te = np.ones([xte.shape[0], 1]) * kappa
-        print("tuned kappa value: %f" % kappa)
+        print("kappa value: %f" % kappa)
 
-    loss = maad_from_deg(yte_preds_deg, yte_deg)
-    mean_loss = np.mean(loss)
-    std_loss = np.std(loss)
+    loss_tr = maad_from_deg(ytr_preds_deg, ytr_deg)
+    mean_loss_tr = np.mean(loss_tr)
+    std_loss_tr = np.std(loss_tr)
+    print("MAAD error (train) : %f ± %f" % (mean_loss_tr, std_loss_tr))
 
-    print("MAAD error (test) : %f ± %f" % (mean_loss, std_loss))
+    loss_te = maad_from_deg(yte_preds_deg, yte_deg)
+    mean_loss_te = np.mean(loss_te)
+    std_loss_te = np.std(loss_te)
+    print("MAAD error (test) : %f ± %f" % (mean_loss_te, std_loss_te))
 
     if net_output == 'biternion':
         log_likelihood_loss_tr = von_mises_log_likelihood_np(ytr_bit, ytr_preds_bit, kappa_preds_tr,
