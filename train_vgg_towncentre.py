@@ -134,6 +134,8 @@ def train():
     model.save(os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.h5'))
 
     if net_output == 'biternion':
+        ytr_preds_bit = model.predict(xtr)
+        ytr_preds_deg = bit2deg(ytr_preds_bit)
         yte_preds_bit = model.predict(xte)
         yte_preds_deg = bit2deg(yte_preds_bit)
 
@@ -152,13 +154,17 @@ def train():
     else:
         print("fine-tuning kappa as hyper-parameter...")
         kappa = finetune_kappa(xtr, ytr_bit, model)
+        kappa_preds_tr = np.ones([xtr.shape[0], 1]) * kappa
         kappa_preds_te = np.ones([xte.shape[0], 1]) * kappa
         print("tuned kappa value: %f" % kappa)
 
     if net_output == 'biternion':
-        log_likelihood_loss = von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te,
+        log_likelihood_loss_tr = von_mises_log_likelihood_np(ytr_bit, ytr_preds_bit, kappa_preds_tr,
                                                           input_type='biternion')
-        print("log-likelihood (test) : %f" % log_likelihood_loss)
+        print("log-likelihood (train) : %f" % log_likelihood_loss_tr)
+        log_likelihood_loss_te = von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te,
+                                                          input_type='biternion')
+        print("log-likelihood (test) : %f" % log_likelihood_loss_te)
 
     print("stored model available at %s" % experiment_dir)
 

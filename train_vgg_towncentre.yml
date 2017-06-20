@@ -7,7 +7,7 @@ batch_size: 10
 validation_split: 0.0
 net_output: biternion # possible choices: degrees, biternion
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
-kappa: 1.0 #kappa value for vm_likelihood loss. Use '0.0' for predicting kappa
+kappa: 1.0 #kappa value for vm_likelihood loss. Use 0.0 for predicting kappa
 optimizer_params:
   name: Adadelta
   learning_rate: 1.0
