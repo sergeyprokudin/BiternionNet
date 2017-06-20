@@ -7,7 +7,7 @@ from keras.layers.normalization import BatchNormalization
 from keras import backend as K
 
 
-def vgg_model(n_outputs=1, final_layer=True, l2_normalize_final=False,
+def vgg_model(n_outputs=1, final_layer=False, l2_normalize_final=False,
               image_height=50, image_width=50):
     model = Sequential()
 
