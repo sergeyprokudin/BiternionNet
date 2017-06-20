@@ -81,7 +81,7 @@ def log_bessel_approx_tf(x, m=5):
     return res
 
 
-def von_mises_log_likelihood_np(y_true, mu, kappa, input_type='degree'):
+def von_mises_log_likelihood_np(y_true, mu, kappa, input_type='biternion'):
     '''
     Compute log-likelihood given data samples and predicted Von-Mises model parameters
     :param y_true: true values of an angle in biternion (cos, sin) representation

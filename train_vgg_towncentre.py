@@ -30,6 +30,19 @@ def get_optimizer(optimizer_params):
     return optimizer
 
 
+def finetune_kappa(x, y_bit, model):
+    ytr_preds_bit = model.predict(x)
+    kappa_vals = np.arange(0, 10, 0.1)
+    log_likelihoods = np.zeros(kappa_vals.shape)
+    for i, kappa_val in enumerate(kappa_vals):
+        kappa_preds = np.ones([x.shape[0], 1]) * kappa_val
+        log_likelihoods[i] = von_mises_log_likelihood_np(y_bit, ytr_preds_bit, kappa_preds, input_type='biternion')
+        print("kappa: %f, log-likelihood: %f" %(kappa_val, log_likelihoods[i]))
+    max_ix = np.argmax(log_likelihoods)
+    kappa = kappa_vals[max_ix]
+    return kappa
+
+
 def train():
 
     config_path = 'train_vgg_towncentre.yml'
@@ -134,12 +147,17 @@ def train():
     print("MAAD error (test) : %f ± %f" % (mean_loss, std_loss))
 
     if kappa == 0.0:
-        kappa_preds = kappa_model.predict(xte)
+        print("predicting kappa...")
+        kappa_preds_te = kappa_model.predict(xte)
     else:
-        kappa_preds = np.ones([xte.shape[0], 1]) * kappa
+        print("fine-tuning kappa as hyper-parameter...")
+        kappa = finetune_kappa(xtr, ytr_bit, model)
+        kappa_preds_te = np.ones([xte.shape[0], 1]) * kappa
+        print("tuned kappa value: %f" % kappa)
 
     if net_output == 'biternion':
-        log_likelihood_loss = von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds)
+        log_likelihood_loss = von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te,
+                                                          input_type='biternion')
         print("log-likelihood (test) : %f" % log_likelihood_loss)
 
     print("stored model available at %s" % experiment_dir)
