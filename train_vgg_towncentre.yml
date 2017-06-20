@@ -1,3 +1,4 @@
+experiment_name: 'vgg_bit_likelihood_fixed_kappa_DEBUG'
 root_log_dir: 'logs'
 log_to_stdout: True
 data_path: 'data/TownCentre.pkl.gz'

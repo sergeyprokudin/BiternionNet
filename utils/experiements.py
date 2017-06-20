@@ -22,4 +22,4 @@ def set_logging(to_stdout, log_file=None):
 def get_experiment_id():
     experiment_id = binascii.hexlify(os.urandom(10))
     # experiment_name = '_'.join([config['']])
-    return experiment_id
+    return experiment_id.decode("utf-8")

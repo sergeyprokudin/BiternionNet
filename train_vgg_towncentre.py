@@ -51,10 +51,11 @@ def train():
     root_log_dir = config['root_log_dir']
     data_path = config['data_path']
 
+    experiment_name = '_'.join([config['experiment_name'], get_experiment_id()])
+
     if not os.path.exists(root_log_dir):
         os.mkdir(root_log_dir)
-    experiment_id = get_experiment_id()
-    experiment_dir = os.path.join(root_log_dir, str(experiment_id))
+    experiment_dir = os.path.join(root_log_dir, experiment_name)
     os.mkdir(experiment_dir)
     shutil.copy(config_path, experiment_dir)
 
@@ -94,12 +95,16 @@ def train():
         kappa_pred = tf.ones([tf.shape(y_pred)[0], 1])*kappa
 
     if config['loss'] == 'cosine':
+        print("using cosine loss..")
         loss = cosine_loss_tf
     elif config['loss'] == 'von_mises':
+        print("using von-mises loss..")
         loss = von_mises_loss_tf
     elif config['loss'] == 'mad':
+        print("using mad loss..")
         loss = mad_loss_tf
     elif config['loss'] == 'vm_likelihood':
+        print("using likelihood loss..")
 
         def _von_mises_neg_log_likelihood_keras(y_true, y_pred):
             return -von_mises_log_likelihood_tf(y_true, y_pred, kappa_pred, input_type='biternion')
@@ -114,6 +119,14 @@ def train():
                   optimizer=optimizer,
                   metrics=metrics)
 
+    tensorboard_callback = keras.callbacks.TensorBoard(log_dir=experiment_dir,
+                                                       write_images=True)
+
+    train_csv_log = os.path.join(experiment_dir, 'train.csv')
+    csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
+
+    print("logs could be found at %s" % experiment_dir)
+
     validation_split = config['validation_split']
     if validation_split == 0:
         print("Using test data as validation..")
@@ -121,13 +134,15 @@ def train():
                   batch_size=config['batch_size'],
                   epochs=config['n_epochs'],
                   verbose=1,
-                  validation_data=(xte, yte))
+                  validation_data=(xte, yte),
+                  callbacks=[tensorboard_callback, csv_callback])
     else:
         model.fit(x=xtr, y=ytr,
                   batch_size=config['batch_size'],
                   epochs=config['n_epochs'],
                   verbose=1,
-                  validation_split=validation_split)
+                  validation_split=validation_split,
+                  callbacks=[tensorboard_callback, csv_callback])
         # print("fine-tuning the model..")
         # model.optimizer.lr.assign(config['optimizer_params']['learning_rate']*0.01)
 
@@ -142,11 +157,6 @@ def train():
     elif net_output == 'degrees':
         yte_preds_deg = np.squeeze(model.predict(xte))
 
-    loss = maad_from_deg(yte_preds_deg, yte_deg)
-    mean_loss = np.mean(loss)
-    std_loss = np.std(loss)
-
-    print("MAAD error (test) : %f ± %f" % (mean_loss, std_loss))
 
     if kappa == 0.0:
         print("predicting kappa...")
@@ -157,6 +167,12 @@ def train():
         kappa_preds_tr = np.ones([xtr.shape[0], 1]) * kappa
         kappa_preds_te = np.ones([xte.shape[0], 1]) * kappa
         print("tuned kappa value: %f" % kappa)
+
+    loss = maad_from_deg(yte_preds_deg, yte_deg)
+    mean_loss = np.mean(loss)
+    std_loss = np.std(loss)
+
+    print("MAAD error (test) : %f ± %f" % (mean_loss, std_loss))
 
     if net_output == 'biternion':
         log_likelihood_loss_tr = von_mises_log_likelihood_np(ytr_bit, ytr_preds_bit, kappa_preds_tr,
