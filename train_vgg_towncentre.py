@@ -161,6 +161,9 @@ def train():
     if kappa == 0.0:
         print("predicting kappa...")
         kappa_preds_te = kappa_model.predict(xte)
+        mean_kappa = np.mean(kappa_preds_te)
+        std_kappa = np.std(kappa_preds_te)
+        print("predicted kappa (test) : %f ± %f" % (mean_kappa, std_kappa))
     else:
         print("fine-tuning kappa as hyper-parameter...")
         kappa = finetune_kappa(xtr, ytr_bit, model)
@@ -176,10 +179,10 @@ def train():
 
     if net_output == 'biternion':
         log_likelihood_loss_tr = von_mises_log_likelihood_np(ytr_bit, ytr_preds_bit, kappa_preds_tr,
-                                                          input_type='biternion')
+                                                             input_type='biternion')
         print("log-likelihood (train) : %f" % log_likelihood_loss_tr)
         log_likelihood_loss_te = von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te,
-                                                          input_type='biternion')
+                                                             input_type='biternion')
         print("log-likelihood (test) : %f" % log_likelihood_loss_te)
 
     print("stored model available at %s" % experiment_dir)
