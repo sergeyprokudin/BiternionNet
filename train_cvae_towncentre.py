@@ -189,10 +189,7 @@ cvae.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=200, validation_data=[
 # In[23]:
 
 n_samples = xte.shape[0]
-#X = np.zeros([n_samples, 10])
 ute = np.random.normal(0,1, [n_samples,n_u])
-#x_flatten  = xte[0:n_samples].reshape(n_samples,-1)
-#decoder_input = np.concatenate([xte, u],axis=1)
 
 yte_preds_bit = decoder.predict([xte, ute])
 yte_preds_deg = bit2deg(yte_preds_bit)
