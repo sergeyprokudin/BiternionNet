@@ -16,7 +16,7 @@ from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_n
 from keras.layers import Input, Dense, Lambda
 import keras.backend as K
 from keras.models import Model
-
+from keras.models import load_model
 
 def get_optimizer(optimizer_params):
     if optimizer_params['name'] == 'Adadelta':
@@ -127,6 +127,11 @@ def train():
     train_csv_log = os.path.join(experiment_dir, 'train.csv')
     csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
+    best_model_weights_file = 'vgg_bit_' + config['loss'] + '_town.weights.h5'
+    model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
+                                                          save_best_only=True,
+                                                          save_weights_only=True)
+
     print("logs could be found at %s" % experiment_dir)
 
     validation_split = config['validation_split']
@@ -137,18 +142,20 @@ def train():
                   epochs=config['n_epochs'],
                   verbose=1,
                   validation_data=(xte, yte),
-                  callbacks=[tensorboard_callback, csv_callback])
+                  callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
     else:
         model.fit(x=xtr, y=ytr,
                   batch_size=config['batch_size'],
                   epochs=config['n_epochs'],
                   verbose=1,
                   validation_split=validation_split,
-                  callbacks=[tensorboard_callback, csv_callback])
+                  callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
         # print("fine-tuning the model..")
         # model.optimizer.lr.assign(config['optimizer_params']['learning_rate']*0.01)
 
-    model.save(os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.h5'))
+    # model.save(os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.h5'))
+
+    model.load_weights(best_model_weights_file)
 
     if net_output == 'biternion':
         ytr_preds_bit = model.predict(xtr)
