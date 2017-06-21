@@ -127,7 +127,8 @@ def train():
     train_csv_log = os.path.join(experiment_dir, 'train.csv')
     csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
-    best_model_weights_file = 'vgg_bit_' + config['loss'] + '_town.weights.h5'
+    best_model_weights_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.weights.h5')
+
     model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
                                                           save_best_only=True,
                                                           save_weights_only=True)
