@@ -13,6 +13,8 @@ from utils.towncentre import load_towncentre
 from utils.experiements import get_experiment_id, set_logging
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np
 
+from scipy.stats import sem
+
 from keras.layers import Input, Dense, Lambda
 import keras.backend as K
 from keras.models import Model
@@ -88,6 +90,7 @@ def train():
         raise ValueError("net_output should be 'biternion' or 'degrees'")
 
     model = Model(X, y_pred)
+    custom_objects = {}
 
     kappa = config['kappa']
     if kappa == 0.0:
@@ -112,6 +115,8 @@ def train():
             return -von_mises_log_likelihood_tf(y_true, y_pred, kappa_pred, input_type='biternion')
 
         loss_te = _von_mises_neg_log_likelihood_keras
+        custom_objects.update({'_von_mises_neg_log_likelihood_keras':_von_mises_neg_log_likelihood_keras})
+
     else:
         raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
 
@@ -127,11 +132,10 @@ def train():
     train_csv_log = os.path.join(experiment_dir, 'train.csv')
     csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
-    best_model_weights_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.weights.h5')
+    best_model_weights_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.model.h5')
 
     model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
-                                                          save_best_only=True,
-                                                          save_weights_only=True)
+                                                          save_best_only=True)
 
     print("logs could be found at %s" % experiment_dir)
 
@@ -156,7 +160,12 @@ def train():
 
     # model.save(os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.h5'))
 
-    model.load_weights(best_model_weights_file)
+    # model.load_weights(best_model_weights_file)
+    model = load_model(best_model_weights_file,
+                       custom_objects=custom_objects)
+
+    results = dict()
+    results_yml_file = os.path.join(experiment_dir, 'results.yml')
 
     if net_output == 'biternion':
         ytr_preds_bit = model.predict(xtr)
@@ -170,39 +179,50 @@ def train():
     if kappa == 0.0:
         print("predicting kappa...")
         kappa_preds_tr = kappa_model.predict(xtr)
-        mean_kappa_tr = np.mean(kappa_preds_tr)
-        std_kappa_tr = np.std(kappa_preds_tr)
-        print("predicted kappa (train) : %f ± %f" % (mean_kappa_tr, std_kappa_tr))
+        results['mean_kappa_tr'] = float(np.mean(kappa_preds_tr))
+        results['std_kappa_tr'] = float(np.std(kappa_preds_tr))
+        print("predicted kappa (train) : %f ± %f" % (results['mean_kappa_tr'], results['std_kappa_tr']))
         kappa_preds_te = kappa_model.predict(xte)
-        mean_kappa_te = np.mean(kappa_preds_te)
-        std_kappa_te = np.std(kappa_preds_te)
-        print("predicted kappa (test) : %f ± %f" % (mean_kappa_te, std_kappa_te))
+        results['mean_kappa_te'] = float(np.mean(kappa_preds_te))
+        results['std_kappa_te'] = float(np.std(kappa_preds_te))
+        print("predicted kappa (test) : %f ± %f" % (results['mean_kappa_te'], results['std_kappa_te']))
     else:
         # print("fine-tuning kappa as hyper-parameter...")
         # kappa = finetune_kappa(xtr, ytr_bit, model)
-        kappa_preds_tr = np.ones([xtr.shape[0], 1]) * kappa
-        kappa_preds_te = np.ones([xte.shape[0], 1]) * kappa
+        kappa_preds_tr = np.ones(xtr.shape[0]) * kappa
+        kappa_preds_te = np.ones(xte.shape[0]) * kappa
         print("kappa value: %f" % kappa)
 
     loss_tr = maad_from_deg(ytr_preds_deg, ytr_deg)
-    mean_loss_tr = np.mean(loss_tr)
-    std_loss_tr = np.std(loss_tr)
-    print("MAAD error (train) : %f ± %f" % (mean_loss_tr, std_loss_tr))
+    results['mean_loss_tr'] = float(np.mean(loss_tr))
+    results['std_loss_tr'] = float(np.std(loss_tr))
+    print("MAAD error (train) : %f ± %f" % (results['mean_loss_tr'], results['std_loss_tr']))
 
     loss_te = maad_from_deg(yte_preds_deg, yte_deg)
-    mean_loss_te = np.mean(loss_te)
-    std_loss_te = np.std(loss_te)
-    print("MAAD error (test) : %f ± %f" % (mean_loss_te, std_loss_te))
+    results['mean_loss_te'] = float(np.mean(loss_te))
+    results['std_loss_te'] = float(np.std(loss_te))
+    print("MAAD error (test) : %f ± %f" % (results['mean_loss_te'], results['std_loss_te']))
 
     if net_output == 'biternion':
-        log_likelihood_loss_tr = von_mises_log_likelihood_np(ytr_bit, ytr_preds_bit, kappa_preds_tr,
-                                                             input_type='biternion')
-        print("log-likelihood (train) : %f" % log_likelihood_loss_tr)
-        log_likelihood_loss_te = von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te,
-                                                             input_type='biternion')
-        print("log-likelihood (test) : %f" % log_likelihood_loss_te)
+        log_likelihoods_tr = von_mises_log_likelihood_np(ytr_bit, ytr_preds_bit, kappa_preds_tr, input_type='biternion')
+        results['log_likelihood_mean_tr'] = float(np.mean(log_likelihoods_tr))
+        results['log_likelihood_tr_sem'] = float(sem(log_likelihoods_tr, axis=None))
+        print("log-likelihood (train) : %f ± %f SEM" % (results['log_likelihood_mean_tr'],
+                                                        results['log_likelihood_tr_sem']))
+        import ipdb; ipdb.set_trace()
+
+        log_likelihoods_te = von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te, input_type='biternion')
+        results['log_likelihood_mean_te'] = float(np.mean(log_likelihoods_te))
+        results['log_likelihood_te_sem'] = float(sem(log_likelihoods_te, axis=None))
+        print("log-likelihood (test) : %f ± %f SEM" % (results['log_likelihood_mean_te'],
+                                                       results['log_likelihood_te_sem']))
 
     print("stored model available at %s" % experiment_dir)
+
+    import ipdb; ipdb.set_trace()
+
+    with open(results_yml_file, 'w') as results_yml_file:
+        yaml.dump(results, results_yml_file, default_flow_style=False)
 
     return
 

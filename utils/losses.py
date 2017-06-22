@@ -100,7 +100,8 @@ def von_mises_log_likelihood_np(y_true, mu, kappa, input_type='biternion'):
         cosin_dist = np.sum(np.multiply(y_true, mu), axis=1)
     log_likelihood = kappa * cosin_dist - \
                      np.log(2 * np.pi) - np.log(bessel(kappa))
-    return np.mean(log_likelihood)
+    import ipdb; ipdb.set_trace()
+    return log_likelihood
 
 
 def von_mises_log_likelihood_tf(y_true, mu, kappa, input_type='degree'):

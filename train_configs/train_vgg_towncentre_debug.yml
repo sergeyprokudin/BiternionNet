@@ -4,7 +4,7 @@ log_to_stdout: True
 data_path: 'data/TownCentre.pkl.gz'
 canonical_split: True
 n_epochs: 1
-batch_size: 10
+batch_size: 1000
 validation_split: 0.1
 net_output: biternion # possible choices: degrees, biternion
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood

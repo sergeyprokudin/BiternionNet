@@ -202,8 +202,8 @@ print("MAAD error (test) : %f ± %f" % (mean_loss_te, std_loss_te))
 
 kappa_preds_te = np.ones([xte.shape[0], 1]) 
 
-log_likelihood_loss_te = von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te,
-                                                     input_type='biternion')
+log_likelihood_loss_te = np.mean(von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te,
+                                                     input_type='biternion'))
 
 print("log-likelihood (test) : %f" % log_likelihood_loss_te)
 
@@ -220,7 +220,7 @@ print("MAAD error (train) : %f ± %f" % (mean_loss_tr, std_loss_tr))
 
 kappa_preds_tr = np.ones([xtr.shape[0], 1])
 
-log_likelihood_loss_tr = von_mises_log_likelihood_np(ytr_bit, ytr_preds_bit, kappa_preds_tr,
-                                                     input_type='biternion')
+log_likelihood_loss_tr = np.mean(von_mises_log_likelihood_np(ytr_bit, ytr_preds_bit, kappa_preds_tr,
+                                                     input_type='biternion'))
 
 print("log-likelihood (train) : %f" % log_likelihood_loss_tr)
