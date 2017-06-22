@@ -132,10 +132,11 @@ def train():
     train_csv_log = os.path.join(experiment_dir, 'train.csv')
     csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
-    best_model_ckpt_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.model.h5')
+    best_model_ckpt_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.best_model.h5')
 
     model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_ckpt_file,
                                                           monitor='val_loss',
+                                                          mode='min',
                                                           save_best_only=True)
 
     print("logs could be found at %s" % experiment_dir)
@@ -160,6 +161,9 @@ def train():
         # model.optimizer.lr.assign(config['optimizer_params']['learning_rate']*0.01)
 
     # model.save(os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.h5'))
+
+    final_model_ckpt_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.best_model.h5')
+    model.save(final_model_ckpt_file)
 
     # model.load_weights(best_model_ckpt_file)
     model = load_model(best_model_ckpt_file,
