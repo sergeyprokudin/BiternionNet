@@ -167,6 +167,8 @@ def train():
     results = dict()
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
 
+    print("evaluating model..")
+
     if net_output == 'biternion':
         ytr_preds_bit = model.predict(xtr)
         ytr_preds_deg = bit2deg(ytr_preds_bit)
@@ -209,7 +211,6 @@ def train():
         results['log_likelihood_tr_sem'] = float(sem(log_likelihoods_tr, axis=None))
         print("log-likelihood (train) : %f ± %f SEM" % (results['log_likelihood_mean_tr'],
                                                         results['log_likelihood_tr_sem']))
-        import ipdb; ipdb.set_trace()
 
         log_likelihoods_te = von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te, input_type='biternion')
         results['log_likelihood_mean_te'] = float(np.mean(log_likelihoods_te))
@@ -218,8 +219,6 @@ def train():
                                                        results['log_likelihood_te_sem']))
 
     print("stored model available at %s" % experiment_dir)
-
-    import ipdb; ipdb.set_trace()
 
     with open(results_yml_file, 'w') as results_yml_file:
         yaml.dump(results, results_yml_file, default_flow_style=False)

@@ -97,10 +97,9 @@ def von_mises_log_likelihood_np(y_true, mu, kappa, input_type='biternion'):
     elif input_type == 'radian':
         cosin_dist = np.cos(y_true - mu)
     elif input_type == 'biternion':
-        cosin_dist = np.sum(np.multiply(y_true, mu), axis=1)
+        cosin_dist = np.reshape(np.sum(np.multiply(y_true, mu), axis=1), [-1, 1])
     log_likelihood = kappa * cosin_dist - \
                      np.log(2 * np.pi) - np.log(bessel(kappa))
-    import ipdb; ipdb.set_trace()
     return log_likelihood
 
 
@@ -123,7 +122,7 @@ def von_mises_log_likelihood_tf(y_true, mu, kappa, input_type='degree'):
     elif input_type == 'radian':
         cosin_dist = tf.cos(y_true - mu)
     elif input_type == 'biternion':
-        cosin_dist = tf.reduce_sum(np.multiply(y_true, mu), axis=1)
+        cosin_dist = tf.reshape(tf.reduce_sum(np.multiply(y_true, mu), axis=1), [-1, 1])
     # log_likelihood = tf.exp(log_kappa) * cosin_dist - \
     #                  tf.log(2 * np.pi) + tf.log(bessel_approx_tf(tf.exp(log_kappa)))
     log_likelihood = kappa * cosin_dist - \
