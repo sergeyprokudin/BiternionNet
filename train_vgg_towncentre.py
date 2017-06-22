@@ -162,7 +162,7 @@ def train():
 
     # model.save(os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.h5'))
 
-    final_model_ckpt_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.best_model.h5')
+    final_model_ckpt_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.final_model.h5')
     model.save(final_model_ckpt_file)
 
     # model.load_weights(best_model_ckpt_file)
