@@ -135,7 +135,7 @@ def train():
     best_model_ckpt_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.model.h5')
 
     model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_ckpt_file,
-                                                          monitor=['val_loss'],
+                                                          monitor='val_loss',
                                                           save_best_only=True)
 
     print("logs could be found at %s" % experiment_dir)
