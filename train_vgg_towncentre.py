@@ -132,9 +132,9 @@ def train():
     train_csv_log = os.path.join(experiment_dir, 'train.csv')
     csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
-    best_model_weights_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.model.h5')
+    best_model_ckpt_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.model.h5')
 
-    model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
+    model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_ckpt_file,
                                                           save_best_only=True)
 
     print("logs could be found at %s" % experiment_dir)
@@ -160,8 +160,8 @@ def train():
 
     # model.save(os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.h5'))
 
-    # model.load_weights(best_model_weights_file)
-    model = load_model(best_model_weights_file,
+    # model.load_weights(best_model_ckpt_file)
+    model = load_model(best_model_ckpt_file,
                        custom_objects=custom_objects)
 
     results = dict()
@@ -209,13 +209,13 @@ def train():
         log_likelihoods_tr = von_mises_log_likelihood_np(ytr_bit, ytr_preds_bit, kappa_preds_tr, input_type='biternion')
         results['log_likelihood_mean_tr'] = float(np.mean(log_likelihoods_tr))
         results['log_likelihood_tr_sem'] = float(sem(log_likelihoods_tr, axis=None))
-        print("log-likelihood (train) : %f ± %f SEM" % (results['log_likelihood_mean_tr'],
+        print("log-likelihood (train) : %f ± %fSEM" % (results['log_likelihood_mean_tr'],
                                                         results['log_likelihood_tr_sem']))
 
         log_likelihoods_te = von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te, input_type='biternion')
         results['log_likelihood_mean_te'] = float(np.mean(log_likelihoods_te))
         results['log_likelihood_te_sem'] = float(sem(log_likelihoods_te, axis=None))
-        print("log-likelihood (test) : %f ± %f SEM" % (results['log_likelihood_mean_te'],
+        print("log-likelihood (test) : %f ± %fSEM" % (results['log_likelihood_mean_te'],
                                                        results['log_likelihood_te_sem']))
 
     print("stored model available at %s" % experiment_dir)

@@ -1,7 +1,7 @@
 import numpy as np
 import tensorflow as tf
-from scipy.special import i0 as bessel
-
+from scipy.special import i0 as mod_bessel0
+from scipy.special import i1 as mod_bessel1
 
 def cosine_loss_np(y_target, y_pred):
     return 1 - np.sum(np.multiply(y_target, y_pred),axis=1)
@@ -99,7 +99,7 @@ def von_mises_log_likelihood_np(y_true, mu, kappa, input_type='biternion'):
     elif input_type == 'biternion':
         cosin_dist = np.reshape(np.sum(np.multiply(y_true, mu), axis=1), [-1, 1])
     log_likelihood = kappa * cosin_dist - \
-                     np.log(2 * np.pi) - np.log(bessel(kappa))
+                     np.log(2 * np.pi) - np.log(mod_bessel0(kappa))
     return log_likelihood
 
 
@@ -128,6 +128,19 @@ def von_mises_log_likelihood_tf(y_true, mu, kappa, input_type='degree'):
     log_likelihood = kappa * cosin_dist - \
                      tf.log(2 * np.pi) - log_bessel_approx_tf(kappa)
     return tf.reduce_mean(log_likelihood)
+
+
+def kappa_to_stddev(kappa, output='radians'):
+    '''
+    :param kappa: vector (numpy array) of  kappa values
+    :param output: output format (radians or degrees)
+    :return: vector (numpy array) of  corresponding standard deviation values
+    '''
+    rad_stddev = np.sqrt(1 - (mod_bessel1(kappa)/mod_bessel0(kappa)))
+    if output == 'radians':
+        return rad_stddev
+    else:
+        return np.rad2deg(rad_stddev)
 
 
 def maad_from_deg(y_pred, y_target):
