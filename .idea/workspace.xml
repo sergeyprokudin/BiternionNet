@@ -32,8 +32,18 @@
       <file leaf-file-name="train_vgg_towncentre.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5251397">
-              <caret line="164" column="99" selection-start-line="164" selection-start-column="99" selection-end-line="164" selection-end-column="99" />
+            <state vertical-scroll-proportion="0.33519554">
+              <caret line="147" column="31" selection-start-line="147" selection-start-column="31" selection-end-line="147" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="callbacks.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/keras/callbacks.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="329" column="26" selection-start-line="329" selection-start-column="17" selection-end-line="329" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -859,10 +869,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/keras/callbacks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="329" column="26" selection-start-line="329" selection-start-column="17" selection-end-line="329" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5251397">
-          <caret line="164" column="99" selection-start-line="164" selection-start-column="99" selection-end-line="164" selection-end-column="99" />
+        <state vertical-scroll-proportion="0.33519554">
+          <caret line="147" column="31" selection-start-line="147" selection-start-column="31" selection-end-line="147" selection-end-column="31" />
           <folding />
         </state>
       </provider>

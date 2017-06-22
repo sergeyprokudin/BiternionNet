@@ -137,7 +137,8 @@ def train():
     model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_ckpt_file,
                                                           monitor='val_loss',
                                                           mode='min',
-                                                          save_best_only=True)
+                                                          save_best_only=True,
+                                                          verbose=1)
 
     print("logs could be found at %s" % experiment_dir)
 
@@ -166,8 +167,7 @@ def train():
     model.save(final_model_ckpt_file)
 
     # model.load_weights(best_model_ckpt_file)
-    model = load_model(best_model_ckpt_file,
-                       custom_objects=custom_objects)
+    model = load_model(best_model_ckpt_file, custom_objects=custom_objects)
 
     results = dict()
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
