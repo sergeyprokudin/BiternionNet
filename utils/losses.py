@@ -112,11 +112,11 @@ def log_bessel_approx_tf(x):
     return res
 
 
-def von_mises_log_likelihood_np(y_true, mu, kappa, input_type='biternion'):
+def von_mises_log_likelihood_np(y_true, mu_pred, kappa_pred, input_type='biternion'):
     '''
     Compute log-likelihood given data samples and predicted Von-Mises model parameters
     :param y_true: true values of an angle in biternion (cos, sin) representation
-    :param mu: predicted mean values of an angle in biternion (cos, sin) representation
+    :param mu_pred: predicted mean values of an angle in biternion (cos, sin) representation
     :param log_kappa: predicted mean values of an angle in biternion (cos, sin) representation
     :param radian_input:
     :return:
@@ -124,40 +124,37 @@ def von_mises_log_likelihood_np(y_true, mu, kappa, input_type='biternion'):
     '''
     if input_type == 'degree':
         scaler = 0.0174533
-        cosin_dist = np.cos(scaler * (y_true - mu))
+        cosin_dist = np.cos(scaler * (y_true - mu_pred))
     elif input_type == 'radian':
-        cosin_dist = np.cos(y_true - mu)
+        cosin_dist = np.cos(y_true - mu_pred)
     elif input_type == 'biternion':
-        cosin_dist = np.reshape(np.sum(np.multiply(y_true, mu), axis=1), [-1, 1])
-    log_likelihood = kappa * cosin_dist - \
-                     np.log(2 * np.pi) - log_bessel_approx_np(kappa)
+        cosin_dist = np.reshape(np.sum(np.multiply(y_true, mu_pred), axis=1), [-1, 1])
+    log_likelihood = kappa_pred * cosin_dist - \
+                     np.log(2 * np.pi) - log_bessel_approx_np(kappa_pred)
     return log_likelihood
 
 
-def von_mises_log_likelihood_tf(y_true, mu, kappa, input_type='degree'):
+def von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='degree'):
     '''
     Compute log-likelihood given data samples and predicted Von-Mises model parameters
     :param y_true: true values of an angle in biternion (cos, sin) representation
-    :param mu: predicted mean values of an angle in biternion (cos, sin) representation
-    :param kappa: predicted kappa (inverse variance) values of an angle in biternion (cos, sin) representation
+    :param mu_pred: predicted mean values of an angle in biternion (cos, sin) representation
+    :param kappa_pred: predicted kappa (inverse variance) values of an angle in biternion (cos, sin) representation
     :param radian_input:
     :return:
     log_likelihood
     '''
-    # y_true = tf.to_double(y_true)
-    # mu = tf.to_double(mu)
-    # log_kappa = tf.to_double(log_kappa)
     if input_type == 'degree':
         scaler = 0.0174533
-        cosin_dist = tf.cos(scaler * (y_true - mu))
+        cosin_dist = tf.cos(scaler * (y_true - mu_pred))
     elif input_type == 'radian':
-        cosin_dist = tf.cos(y_true - mu)
+        cosin_dist = tf.cos(y_true - mu_pred)
     elif input_type == 'biternion':
-        cosin_dist = tf.reshape(tf.reduce_sum(np.multiply(y_true, mu), axis=1), [-1, 1])
+        cosin_dist = tf.reshape(tf.reduce_sum(np.multiply(y_true, mu_pred), axis=1), [-1, 1])
     # log_likelihood = tf.exp(log_kappa) * cosin_dist - \
     #                  tf.log(2 * np.pi) + tf.log(bessel_approx_tf(tf.exp(log_kappa)))
-    log_likelihood = kappa * cosin_dist - \
-                     tf.log(2 * np.pi) - log_bessel_approx_tf(kappa)
+    log_likelihood = kappa_pred * cosin_dist - \
+                     tf.log(2 * np.pi) - log_bessel_approx_tf(kappa_pred)
     return tf.reduce_mean(log_likelihood)
 
 

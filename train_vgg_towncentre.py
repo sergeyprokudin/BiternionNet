@@ -196,8 +196,8 @@ def train():
     else:
         # print("fine-tuning kappa as hyper-parameter...")
         # kappa = finetune_kappa(xtr, ytr_bit, model)
-        kappa_preds_tr = np.ones(xtr.shape[0]) * kappa
-        kappa_preds_te = np.ones(xte.shape[0]) * kappa
+        kappa_preds_tr = np.ones([xtr.shape[0], 1]) * kappa
+        kappa_preds_te = np.ones([xte.shape[0], 1]) * kappa
         print("kappa value: %f" % kappa)
 
     loss_tr = maad_from_deg(ytr_preds_deg, ytr_deg)
