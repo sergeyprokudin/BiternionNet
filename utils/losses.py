@@ -130,7 +130,7 @@ def von_mises_log_likelihood_np(y_true, mu, kappa, input_type='biternion'):
     elif input_type == 'biternion':
         cosin_dist = np.reshape(np.sum(np.multiply(y_true, mu), axis=1), [-1, 1])
     log_likelihood = kappa * cosin_dist - \
-                     np.log(2 * np.pi) - np.log(mod_bessel0(kappa))
+                     np.log(2 * np.pi) - log_bessel_approx_np(kappa)
     return log_likelihood
 
 
