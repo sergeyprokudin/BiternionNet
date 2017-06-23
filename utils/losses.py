@@ -60,11 +60,42 @@ def bessel_approx_tf(x, m=5):
     return tf.reduce_sum(tf.pow(x_tiled, tf.to_float(deg_tiled))*coef_tiled, axis=1)
 
 
-def log_bessel_approx_tf(x, m=5):
+def log_bessel_approx_np(x):
+    x = x.reshape([-1,1])
+
+    def _log_bessel_approx_0(x):
+        x = x.reshape([-1,1])
+        bessel_taylor_coefs = np.asarray([1.00000000e+00, 2.50000000e-01, 1.56250000e-02,
+                                          4.34027778e-04, 6.78168403e-06], dtype='float32')
+        m = bessel_taylor_coefs.shape[0]
+        deg = np.reshape(np.arange(0, m, 1)*2, [1, -1])
+        n_rows = np.shape(x)[0]
+        x_tiled = np.tile(x, [1, m])
+        deg_tiled = np.tile(deg, [n_rows, 1])
+        coef_tiled = np.tile(bessel_taylor_coefs[0:m].reshape(1, m), [n_rows, 1])
+        val = np.log(np.sum(np.power(x_tiled, deg_tiled)*coef_tiled, axis=1))
+        return np.squeeze(val)
+
+    def _log_bessel_approx_large(x):
+        x = x.reshape([-1,1])
+        val = x - 0.5*np.log(2*np.pi*x)
+        return np.squeeze(val)
+
+    res = np.zeros(x.shape)
+    res[np.where(x > 5.0)] = _log_bessel_approx_large(x[x > 5.0])
+    res[np.where(x <= 5.0)] = _log_bessel_approx_0(x[x <= 5.0])
+
+    return res
+
+
+def log_bessel_approx_tf(x):
+
+    x = tf.reshape(x, [-1, 1])
 
     def _log_bessel_approx_0(x):
         bessel_taylor_coefs = np.asarray([1.00000000e+00, 2.50000000e-01, 1.56250000e-02,
-                                  4.34027778e-04, 6.78168403e-06], dtype='float32')
+                                          4.34027778e-04, 6.78168403e-06], dtype='float32')
+        m = bessel_taylor_coefs.shape[0]
         deg = tf.reshape(tf.range(0, m, 1)*2, [1, -1])
         n_rows = tf.shape(x)[0]
         x_tiled = tf.tile(x, [1, m])
