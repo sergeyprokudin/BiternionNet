@@ -3,6 +3,7 @@ import tensorflow as tf
 from scipy.special import i0 as mod_bessel0
 from scipy.special import i1 as mod_bessel1
 
+
 def cosine_loss_np(y_target, y_pred):
     return 1 - np.sum(np.multiply(y_target, y_pred),axis=1)
 
@@ -134,7 +135,7 @@ def von_mises_log_likelihood_np(y_true, mu_pred, kappa_pred, input_type='biterni
     return log_likelihood
 
 
-def von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='degree'):
+def von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion'):
     '''
     Compute log-likelihood given data samples and predicted Von-Mises model parameters
     :param y_true: true values of an angle in biternion (cos, sin) representation
@@ -169,6 +170,42 @@ def kappa_to_stddev(kappa, output='radians'):
         return rad_stddev
     else:
         return np.rad2deg(rad_stddev)
+
+
+def gaussian_kl_divergence_np(mu1, ln_var1, mu2, ln_var2):
+
+    shape = mu1.shape
+
+    batch_size = shape[0]
+    n = shape[1]
+
+    log_var_diff = ln_var2 - ln_var1
+
+    var_diff_trace = np.sum(np.exp(log_var_diff), axis=1)
+
+    mudiff = np.sum(np.square(mu1-mu2) / np.exp(ln_var2), axis=1)
+
+    kl_divs = 0.5*(np.sum(log_var_diff, axis=1) - n + var_diff_trace + mudiff)
+
+    return kl_divs
+
+
+def gaussian_kl_divergence_tf(mu1, ln_var1, mu2, ln_var2):
+
+    shape = tf.to_float(tf.shape(mu1))
+
+    batch_size = shape[0]
+    n = shape[1]
+
+    log_var_diff = ln_var2 - ln_var1
+
+    var_diff_trace = tf.reduce_sum(tf.exp(log_var_diff), axis=1)
+
+    mudiff = tf.reduce_sum(tf.square(mu1-mu2) / tf.exp(ln_var2), axis=1)
+
+    kl_div = 0.5*(tf.reduce_sum(log_var_diff, axis=1) - n + var_diff_trace + mudiff)
+
+    return tf.reduce_sum(kl_div) / batch_size
 
 
 def maad_from_deg(y_pred, y_target):

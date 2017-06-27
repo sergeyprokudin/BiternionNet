@@ -203,12 +203,12 @@ print("MAAD error (test) : %f ± %f" % (mean_loss_te, std_loss_te))
 kappa_preds_te = np.ones([xte.shape[0], 1]) 
 
 log_likelihood_loss_te = np.mean(von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te,
-                                                     input_type='biternion'))
+                                                             input_type='biternion'))
 
 print("log-likelihood (test) : %f" % log_likelihood_loss_te)
 
 n_samples = xtr.shape[0]
-utr = np.random.normal(0,1, [n_samples, n_u])
+utr = np.random.normal(0, 1, [n_samples, n_u])
 ytr_preds_bit = decoder.predict([xtr, utr])
 ytr_preds_deg = bit2deg(ytr_preds_bit)
 
@@ -221,6 +221,6 @@ print("MAAD error (train) : %f ± %f" % (mean_loss_tr, std_loss_tr))
 kappa_preds_tr = np.ones([xtr.shape[0], 1])
 
 log_likelihood_loss_tr = np.mean(von_mises_log_likelihood_np(ytr_bit, ytr_preds_bit, kappa_preds_tr,
-                                                     input_type='biternion'))
+                                                             input_type='biternion'))
 
 print("log-likelihood (train) : %f" % log_likelihood_loss_tr)
