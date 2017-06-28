@@ -20,6 +20,7 @@ import keras.backend as K
 from keras.models import Model
 from keras.models import load_model
 
+
 def get_optimizer(optimizer_params):
     if optimizer_params['name'] == 'Adadelta':
         optimizer = keras.optimizers.Adadelta(rho=optimizer_params['rho'],

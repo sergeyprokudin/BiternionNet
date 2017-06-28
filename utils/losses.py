@@ -132,7 +132,7 @@ def von_mises_log_likelihood_np(y_true, mu_pred, kappa_pred, input_type='biterni
         cosin_dist = np.reshape(np.sum(np.multiply(y_true, mu_pred), axis=1), [-1, 1])
     log_likelihood = kappa_pred * cosin_dist - \
                      np.log(2 * np.pi) - log_bessel_approx_np(kappa_pred)
-    return log_likelihood
+    return np.reshape(log_likelihood, [-1,1])
 
 
 def von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion'):
@@ -156,7 +156,8 @@ def von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biterni
     #                  tf.log(2 * np.pi) + tf.log(bessel_approx_tf(tf.exp(log_kappa)))
     log_likelihood = kappa_pred * cosin_dist - \
                      tf.log(2 * np.pi) - log_bessel_approx_tf(kappa_pred)
-    return tf.reduce_mean(log_likelihood)
+    return tf.reshape(log_likelihood, [-1, 1])
+    #return tf.reduce_mean(log_likelihood)
 
 
 def kappa_to_stddev(kappa, output='radians'):
@@ -179,15 +180,15 @@ def gaussian_kl_divergence_np(mu1, ln_var1, mu2, ln_var2):
     batch_size = shape[0]
     n = shape[1]
 
-    log_var_diff = ln_var2 - ln_var1
+    log_var_diff = ln_var1 - ln_var2
 
-    var_diff_trace = np.sum(np.exp(log_var_diff), axis=1)
+    var_diff_trace = np.sum(np.exp(log_var_diff),axis=1)
 
     mudiff = np.sum(np.square(mu1-mu2) / np.exp(ln_var2), axis=1)
 
-    kl_divs = 0.5*(np.sum(log_var_diff, axis=1) - n + var_diff_trace + mudiff)
+    kl_div = 0.5*(-np.sum(log_var_diff, axis=1) - n + var_diff_trace + mudiff)
 
-    return kl_divs
+    return np.reshape(kl_div, [-1, 1])
 
 
 def gaussian_kl_divergence_tf(mu1, ln_var1, mu2, ln_var2):
@@ -197,15 +198,15 @@ def gaussian_kl_divergence_tf(mu1, ln_var1, mu2, ln_var2):
     batch_size = shape[0]
     n = shape[1]
 
-    log_var_diff = ln_var2 - ln_var1
+    log_var_diff = ln_var1 - ln_var2
 
     var_diff_trace = tf.reduce_sum(tf.exp(log_var_diff), axis=1)
 
     mudiff = tf.reduce_sum(tf.square(mu1-mu2) / tf.exp(ln_var2), axis=1)
 
-    kl_div = 0.5*(tf.reduce_sum(log_var_diff, axis=1) - n + var_diff_trace + mudiff)
+    kl_div = 0.5*(-tf.reduce_sum(log_var_diff, axis=1) - n + var_diff_trace + mudiff)
 
-    return tf.reduce_sum(kl_div) / batch_size
+    return tf.reshape(kl_div, [-1, 1])
 
 
 def maad_from_deg(y_pred, y_target):
