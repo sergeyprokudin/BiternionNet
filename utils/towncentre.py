@@ -35,5 +35,8 @@ def prepare_data(x, y):
 def load_towncentre(data_path, canonical_split=True):
     x, y, n = pickle.load(gzip.open(data_path, 'rb'))
     x, y = prepare_data(x, y)
-    (xtr, ytr, ntr), (xte, yte, nte) = split_dataset(x, y, n, split=0.9, canonical_split=True)
-    return xtr, ytr, xte, yte
+    (xtrval, ytrval, ntrval), (xte, yte, nte) = split_dataset(x, y, n, split=0.9,
+                                                              canonical_split=canonical_split)
+    (xtr, ytr, ntr), (xval, yval, nval) = split_dataset(xtrval, ytrval, ntrval, split=0.9,
+                                                        canonical_split=canonical_split)
+    return xtr, ytr, xval, yval, xte, yte

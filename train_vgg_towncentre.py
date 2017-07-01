@@ -64,9 +64,10 @@ def train():
     os.mkdir(experiment_dir)
     shutil.copy(config_path, experiment_dir)
 
-    xtr, ytr_deg, xte, yte_deg = load_towncentre(data_path, canonical_split=config['canonical_split'])
+    xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre(data_path, canonical_split=config['canonical_split'])
     image_height, image_width = xtr.shape[1], xtr.shape[2]
     ytr_bit = deg2bit(ytr_deg)
+    yval_bit = deg2bit(yval_deg)
     yte_bit = deg2bit(yte_deg)
 
     X = Input(shape=[50, 50, 3])
@@ -81,11 +82,13 @@ def train():
         y_pred = Lambda(lambda x: K.l2_normalize(x, axis=1))(Dense(2)(vgg_x))
         metrics = ['cosine']
         ytr = ytr_bit
+        yval = yval_bit
         yte = yte_bit
     elif net_output == 'degrees':
         y_pred = Dense(1)(vgg_x)
         metrics = ['mae']
         ytr = ytr_deg
+        yval = yval_deg
         yte = yte_deg
     else:
         raise ValueError("net_output should be 'biternion' or 'degrees'")
@@ -144,21 +147,12 @@ def train():
     print("logs could be found at %s" % experiment_dir)
 
     validation_split = config['validation_split']
-    if validation_split == 0:
-        print("Using test data as validation..")
-        model.fit(x=xtr, y=ytr,
-                  batch_size=config['batch_size'],
-                  epochs=config['n_epochs'],
-                  verbose=1,
-                  validation_data=(xte, yte),
-                  callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
-    else:
-        model.fit(x=xtr, y=ytr,
-                  batch_size=config['batch_size'],
-                  epochs=config['n_epochs'],
-                  verbose=1,
-                  validation_split=validation_split,
-                  callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+    model.fit(x=xtr, y=ytr,
+              batch_size=config['batch_size'],
+              epochs=config['n_epochs'],
+              verbose=1,
+              validation_data=(xval, yval),
+              callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
         # print("fine-tuning the model..")
         # model.optimizer.lr.assign(config['optimizer_params']['learning_rate']*0.01)
 
