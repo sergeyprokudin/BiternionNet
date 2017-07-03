@@ -120,8 +120,18 @@ def train():
         custom_objects.update({'mad_loss_tf': mad_loss_tf})
     elif config['loss'] == 'vm_likelihood':
         print("using likelihood loss..")
-        loss_te = von_mises_neg_log_likelihood_keras
-        custom_objects.update({'von_mises_neg_log_likelihood_keras': von_mises_neg_log_likelihood_keras})
+        if kappa == 0.0:
+            loss_te = von_mises_neg_log_likelihood_keras
+            custom_objects.update({'von_mises_neg_log_likelihood_keras': von_mises_neg_log_likelihood_keras})
+        else:
+
+            def _von_mises_neg_log_likelihood_keras_fixed(y_true, y_pred):
+                mu_pred = y_pred[:, 0:2]
+                kappa_pred = tf.ones([tf.shape(y_pred[:, 2:])[0], 1])*kappa
+                return -K.mean(von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion'))
+
+            loss_te = _von_mises_neg_log_likelihood_keras_fixed
+            custom_objects.update({'_von_mises_neg_log_likelihood_keras_fixed': _von_mises_neg_log_likelihood_keras_fixed})
     else:
         raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
 
