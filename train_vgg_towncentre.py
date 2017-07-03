@@ -66,8 +66,6 @@ def train():
 
     xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre(data_path, canonical_split=config['canonical_split'])
 
-    import ipdb; ipdb.set_trace()
-
     image_height, image_width = xtr.shape[1], xtr.shape[2]
     ytr_bit = deg2bit(ytr_deg)
     yval_bit = deg2bit(yval_deg)

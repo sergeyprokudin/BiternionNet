@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CVAE for headpose.ipynb" afterPath="$PROJECT_DIR$/CVAE for headpose.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg_towncentre.py" afterPath="$PROJECT_DIR$/train_vgg_towncentre.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/towncentre.py" afterPath="$PROJECT_DIR$/utils/towncentre.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
@@ -29,21 +31,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="train_vgg_towncentre.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="train_vgg_towncentre.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.31658292">
+              <caret line="66" column="118" selection-start-line="66" selection-start-column="118" selection-end-line="66" selection-end-column="118" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="towncentre.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="towncentre.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/towncentre.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5125628">
-              <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="47" column="9" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -188,8 +190,8 @@
         <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_likelihood_fixed_kappa.yml" />
         <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_cosine.yml" />
         <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_best.yml" />
-        <option value="$PROJECT_DIR$/train_vgg_towncentre.py" />
         <option value="$PROJECT_DIR$/utils/towncentre.py" />
+        <option value="$PROJECT_DIR$/train_vgg_towncentre.py" />
       </list>
     </option>
   </component>
@@ -239,34 +241,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="BiternionNet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BiternionNet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BiternionNet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BiternionNet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BiternionNet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -861,18 +835,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
+    <entry file="file://$PROJECT_DIR$/utils/towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+          <caret line="47" column="9" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/towncentre.py">
+    <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5125628">
-          <caret line="18" column="25" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.31658292">
+          <caret line="66" column="118" selection-start-line="66" selection-start-column="118" selection-end-line="66" selection-end-column="118" />
           <folding />
         </state>
       </provider>
