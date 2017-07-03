@@ -2,11 +2,11 @@ import numpy as np
 import pickle, gzip
 
 
-def split_dataset(X, y, n, canonical_split=True, split=0.9):
+def split_dataset(X, y, n_val, canonical_split=True, split=0.9):
     if canonical_split:
         np.random.seed(0)
     itr, ite, trs, tes = [], [], set(), set()
-    for i, name in enumerate(n):
+    for i, name in enumerate(n_val):
         # Extract the person's ID.
         pid = int(name.split('_')[1])
 
@@ -23,7 +23,7 @@ def split_dataset(X, y, n, canonical_split=True, split=0.9):
                 ite.append(i)
                 tes.add(pid)
     import ipdb; ipdb.set_trace()
-    return (X[itr], y[itr], [n[i] for i in itr]), (X[ite], y[ite], [n[i] for i in ite])
+    return (X[itr], y[itr], [n_val[i] for i in itr]), (X[ite], y[ite], [n_val[i] for i in ite])
 
 
 def prepare_data(x, y):
