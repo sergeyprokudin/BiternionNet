@@ -3,9 +3,8 @@ root_log_dir: 'logs'
 log_to_stdout: True
 data_path: 'data/TownCentre.pkl.gz'
 canonical_split: True
-n_epochs: 50
+n_epochs: 100
 batch_size: 10
-validation_split: 0.1
 net_output: biternion # possible choices: degrees, biternion
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
 kappa: 5.0 #kappa value for vm_likelihood loss. Use 0.0 for predicting kappa

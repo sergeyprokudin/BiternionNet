@@ -107,12 +107,15 @@ def train():
     if config['loss'] == 'cosine':
         print("using cosine loss..")
         loss_te = cosine_loss_tf
+        custom_objects.update({'cosine_loss_tf': cosine_loss_tf})
     elif config['loss'] == 'von_mises':
         print("using von-mises loss..")
         loss_te = von_mises_loss_tf
+        custom_objects.update({'von_mises_loss_tf': von_mises_loss_tf})
     elif config['loss'] == 'mad':
         print("using mad loss..")
         loss_te = mad_loss_tf
+        custom_objects.update({'mad_loss_tf': mad_loss_tf})
     elif config['loss'] == 'vm_likelihood':
         print("using likelihood loss..")
 
@@ -120,7 +123,7 @@ def train():
             return -von_mises_log_likelihood_tf(y_true, y_pred, kappa_pred, input_type='biternion')
 
         loss_te = _von_mises_neg_log_likelihood_keras
-        custom_objects.update({'_von_mises_neg_log_likelihood_keras':_von_mises_neg_log_likelihood_keras})
+        custom_objects.update({'_von_mises_neg_log_likelihood_keras': _von_mises_neg_log_likelihood_keras})
 
     else:
         raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
@@ -147,15 +150,12 @@ def train():
 
     print("logs could be found at %s" % experiment_dir)
 
-    # validation_split = config['validation_split']
     model.fit(x=xtr, y=ytr,
               batch_size=config['batch_size'],
               epochs=config['n_epochs'],
               verbose=1,
               validation_data=(xval, yval),
               callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
-        # print("fine-tuning the model..")
-        # model.optimizer.lr.assign(config['optimizer_params']['learning_rate']*0.01)
 
     # model.save(os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.h5'))
 
