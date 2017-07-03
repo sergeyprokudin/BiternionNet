@@ -6,7 +6,7 @@ canonical_split: True
 n_epochs: 1
 batch_size: 1000
 net_output: biternion # possible choices: degrees, biternion
-loss: cosine # possible choices : cosine, von_mises, mad, vm_likelihood
+loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
 kappa: 0.0 #kappa value for vm_likelihood loss. Use 0.0 for predicting kappa
 optimizer_params:
   name: Adadelta
