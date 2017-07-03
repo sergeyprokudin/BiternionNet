@@ -209,6 +209,20 @@ def gaussian_kl_divergence_tf(mu1, ln_var1, mu2, ln_var2):
     return tf.reshape(kl_div, [-1, 1])
 
 
+from keras import backend as K
+
+def von_mises_neg_log_likelihood_keras(y_true, y_pred):
+    '''
+
+    :param y_true : array with ground truth angle in biternion representation (cos, sin) of shape [n_samples, 1]
+    :param y_pred : array with predicted mean angle (cos, sin) and kappa of shape [n_samples, 3]
+    :return: mean negative log likelihood
+    '''
+    mu_pred = y_pred[:, 0:2]
+    kappa_pred = y_pred[:, 2:]
+    return -K.mean(von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion'))
+
+
 def maad_from_deg(y_pred, y_target):
     return np.rad2deg(np.abs(np.arctan2(np.sin(np.deg2rad(y_target - y_pred)), np.cos(np.deg2rad(y_target - y_pred)))))
 
