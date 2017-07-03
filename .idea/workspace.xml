@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sh" afterPath="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sh" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -71,10 +71,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="train_vgg_cosine_loss.sh" pinned="false" current-in-tab="false">
+          <file leaf-file-name="train_vgg_cosine_loss.sh" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sh">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
+                <state vertical-scroll-proportion="0.20135364">
                   <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
                   <folding />
                 </state>
@@ -115,16 +115,16 @@
             <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sub">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+                  <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+          <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/.gitignore">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.2109929">
+                <state vertical-scroll-proportion="-4.4074073">
                   <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
                   <folding />
                 </state>
@@ -162,7 +162,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/py_env/lib/python2.7/site-packages/DeepFried2/init/Concat.py" />
         <option value="$PROJECT_DIR$/py_env/lib/python2.7/site-packages/lbtoolbox/plotting.py" />
         <option value="$USER_HOME$/knet/nms_network/model.py" />
         <option value="$PROJECT_DIR$/py_env/lib/python3.6/site-packages/DeepFried2/criteria/MADCriterion.py" />
@@ -213,6 +212,7 @@
         <option value="$PROJECT_DIR$/train_scripts/train_vgg_likelihood_learned_kappa.sh" />
         <option value="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sub" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sh" />
       </list>
     </option>
   </component>
@@ -859,14 +859,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_von_mises_loss.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -923,18 +915,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sub">
+    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+        <state vertical-scroll-proportion="-4.4074073">
+          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sub">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2109929">
-          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.20135364">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -6,4 +6,4 @@ PYENV="${SCRIPT_DIR}/../py_env"
 
 source ${PYENV}/bin/activate
 
-python train_vgg_towncentre.py "${PROJECT_DIR}/train_configs/train_vgg_towncentre_cosine.yml"
+python "${PROJECT_DIR}train_vgg_towncentre.py" "${PROJECT_DIR}/train_configs/train_vgg_towncentre_cosine.yml"
