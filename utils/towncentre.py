@@ -16,9 +16,7 @@ def split_dataset(X, y, n, canonical_split=True, split=0.9):
         elif pid in tes:
             ite.append(i)
         else:
-            rid = np.random.rand()
-            print(rid)
-            if rid < split:
+            if np.random.rand() < split:
                 itr.append(i)
                 trs.add(pid)
             else:
