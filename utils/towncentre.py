@@ -2,28 +2,35 @@ import numpy as np
 import pickle, gzip
 
 
-def split_dataset(X, y, n_val, canonical_split=True, split=0.9):
+def split_dataset(X, y, img_names, canonical_split=True, split=0.9):
     if canonical_split:
         np.random.seed(0)
     itr, ite, trs, tes = [], [], set(), set()
-    for i, name in enumerate(n_val):
+    for i, name in enumerate(img_names):
         # Extract the person's ID.
         pid = int(name.split('_')[1])
 
         # Decide where to put that person.
         if pid in trs:
+            print('adding frame %d with person %d to test' % (i, pid))
             itr.append(i)
         elif pid in tes:
+            print('adding frame %d with person %d to test' % (i, pid))
             ite.append(i)
         else:
-            if np.random.rand() < split:
+            rid = np.random.rand()
+            if rid < split:
+                print("split : %f" % rid)
+                print('adding frame %d with person %d to test' % (i, pid))
                 itr.append(i)
                 trs.add(pid)
             else:
+                print("split : %f" % rid)
+                print('adding frame %d with person %d to test' % (i, pid))
                 ite.append(i)
                 tes.add(pid)
     import ipdb; ipdb.set_trace()
-    return (X[itr], y[itr], [n_val[i] for i in itr]), (X[ite], y[ite], [n_val[i] for i in ite])
+    return (X[itr], y[itr], [img_names[i] for i in itr]), (X[ite], y[ite], [img_names[i] for i in ite])
 
 
 def prepare_data(x, y):
