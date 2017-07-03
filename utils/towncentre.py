@@ -22,6 +22,7 @@ def split_dataset(X, y, n, canonical_split=True, split=0.9):
             else:
                 ite.append(i)
                 tes.add(pid)
+    import ipdb; ipdb.set_trace()
     return (X[itr], y[itr], [n[i] for i in itr]), (X[ite], y[ite], [n[i] for i in ite])
 
 
