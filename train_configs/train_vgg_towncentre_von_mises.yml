@@ -3,7 +3,7 @@ root_log_dir: 'logs'
 log_to_stdout: True
 data_path: 'data/TownCentre.pkl.gz'
 canonical_split: True
-n_epochs: 200
+n_epochs: 50
 batch_size: 10
 validation_split: 0.1
 net_output: biternion # possible choices: degrees, biternion
