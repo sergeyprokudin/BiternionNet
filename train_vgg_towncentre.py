@@ -65,6 +65,9 @@ def train():
     shutil.copy(config_path, experiment_dir)
 
     xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre(data_path, canonical_split=config['canonical_split'])
+
+    import ipdb; ipdb.set_trace()
+
     image_height, image_width = xtr.shape[1], xtr.shape[2]
     ytr_bit = deg2bit(ytr_deg)
     yval_bit = deg2bit(yval_deg)
@@ -146,7 +149,7 @@ def train():
 
     print("logs could be found at %s" % experiment_dir)
 
-    validation_split = config['validation_split']
+    # validation_split = config['validation_split']
     model.fit(x=xtr, y=ytr,
               batch_size=config['batch_size'],
               epochs=config['n_epochs'],
