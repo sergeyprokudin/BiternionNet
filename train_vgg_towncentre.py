@@ -16,7 +16,7 @@ from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_n
 from scipy.stats import sem
 
 from keras.layers import Input, Dense, Lambda
-import keras.backend as K
+from keras import backend as K
 from keras.models import Model
 from keras.models import load_model
 
