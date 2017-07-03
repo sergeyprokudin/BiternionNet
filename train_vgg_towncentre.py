@@ -98,7 +98,8 @@ def train():
 
     kappa = config['kappa']
     if kappa == 0.0:
-        kappa_pred = Lambda(lambda x: K.abs(x))(Dense(1)(vgg_x))
+        kappa_pred = Lambda(lambda x: K.abs(x))(Dense(1)(Dense(256)(vgg_x)))
+        # kappa_pred = Lambda(lambda x: K.abs(x))(Dense(1)(vgg_x))
         model = Model(X, concatenate([y_pred, kappa_pred]))
         # kappa_model = Model(X, kappa_pred)
     else:
