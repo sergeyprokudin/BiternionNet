@@ -16,7 +16,9 @@ def split_dataset(X, y, n, canonical_split=True, split=0.9):
         elif pid in tes:
             ite.append(i)
         else:
-            if np.random.rand() < split:
+            rid = np.random.rand()
+            print(rid)
+            if rid < split:
                 itr.append(i)
                 trs.add(pid)
             else:
@@ -35,8 +37,10 @@ def prepare_data(x, y):
 def load_towncentre(data_path, canonical_split=True):
     x, y, n = pickle.load(gzip.open(data_path, 'rb'))
     x, y = prepare_data(x, y)
+    print('************splitting trval-test************')
     (xtrval, ytrval, ntrval), (xte, yte, nte) = split_dataset(x, y, n, split=0.9,
                                                               canonical_split=canonical_split)
+    print('************splitting train-val************')
     (xtr, ytr, ntr), (xval, yval, nval) = split_dataset(xtrval, ytrval, ntrval, split=0.9,
                                                         canonical_split=canonical_split)
     return xtr, ytr, xval, yval, xte, yte
