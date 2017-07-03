@@ -99,11 +99,10 @@ def train():
     kappa = config['kappa']
     if kappa == 0.0:
         kappa_pred = Lambda(lambda x: K.abs(x))(Dense(1)(vgg_x))
+        model = Model(X, concatenate([y_pred, kappa_pred]))
         # kappa_model = Model(X, kappa_pred)
     else:
-        kappa_pred = tf.ones([tf.shape(y_pred)[0], 1])*kappa
-
-    model = Model(X, concatenate([y_pred, kappa_pred]))
+        model = Model(X, y_pred)
 
     custom_objects = {}
 
@@ -172,13 +171,16 @@ def train():
         if net_output == 'biternion':
             ypreds = model.predict(x)
             ypreds_bit = ypreds[:, 0:2]
-            kappa_preds = ypreds[:, 2:]
             ypreds_deg = bit2deg(ypreds_bit)
         elif net_output == 'degrees':
             ypreds = model.predict(x)
             ypreds_deg = ypreds[:, 0:1]
-            kappa_preds = ypreds[:, 1:]
             ypreds_bit = deg2bit(ypreds_deg)
+
+        if kappa == 0.0:
+            kappa_preds = ypreds[:, 2:]
+        else:
+            kappa_preds =  np.ones([ytrue_deg.shape[0], 1]) * kappa
 
         loss = maad_from_deg(ypreds_deg, ytrue_deg)
         results['mean_loss_'+data_part] = float(np.mean(loss))
