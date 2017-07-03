@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_cosine_loss.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_debug.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_likelihood_fixed_kappa.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_likelihood_learned_kappa.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_von_mises_loss.sh" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sub" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg_towncentre.py" afterPath="$PROJECT_DIR$/train_vgg_towncentre.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -47,31 +42,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="install.sh" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/scripts/install.sh">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-0.6296296">
-                  <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="5" selection-end-column="41" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="custom_keras_callbacks.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/utils/custom_keras_callbacks.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="losses.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/utils/losses.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="213" column="38" selection-start-line="213" selection-start-column="4" selection-end-line="213" selection-end-column="38" />
                   <folding />
                 </state>
               </provider>
@@ -88,7 +63,7 @@
             </entry>
           </file>
           <file leaf-file-name="train_vgg_likelihood_fixed_kappa.sh" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/train_scripts/train_vgg_likelihood_fixed_kappa.sh">
+            <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_likelihood_fixed_kappa.sh">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="8" column="108" selection-start-line="8" selection-start-column="108" selection-end-line="8" selection-end-column="108" />
@@ -97,18 +72,18 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="train_vgg_likelihood_learned_kappa.sh" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/train_scripts/train_vgg_likelihood_learned_kappa.sh">
+          <file leaf-file-name="train_vgg_likelihood_learned_kappa.sh" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_likelihood_learned_kappa.sh">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.23011844">
-                  <caret line="8" column="110" selection-start-line="8" selection-start-column="110" selection-end-line="8" selection-end-column="110" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
           <file leaf-file-name="train_vgg_cosine_loss.sh" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/train_scripts/train_vgg_cosine_loss.sh">
+            <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sh">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
@@ -118,7 +93,7 @@
             </entry>
           </file>
           <file leaf-file-name="train_vgg_von_mises_loss.sh" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/train_scripts/train_vgg_von_mises_loss.sh">
+            <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_von_mises_loss.sh">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="8" column="95" selection-start-line="8" selection-start-column="95" selection-end-line="8" selection-end-column="95" />
@@ -128,10 +103,30 @@
             </entry>
           </file>
           <file leaf-file-name="train_vgg_debug.sh" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/train_scripts/train_vgg_debug.sh">
+            <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_debug.sh">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+                  <caret line="8" column="59" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="train_cluster.sub" pinned="false" current-in-tab="false">
+            <entry file="file://$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/scripts/train_cluster.sub">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="train_vgg_cosine_loss.sub" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sub">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.028764805">
+                  <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
                   <folding />
                 </state>
               </provider>
@@ -218,6 +213,7 @@
         <option value="$PROJECT_DIR$/train_scripts/train_vgg_debug.sh" />
         <option value="$PROJECT_DIR$/train_scripts/train_vgg_likelihood_fixed_kappa.sh" />
         <option value="$PROJECT_DIR$/train_scripts/train_vgg_likelihood_learned_kappa.sh" />
+        <option value="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sub" />
       </list>
     </option>
   </component>
@@ -266,6 +262,48 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="knet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="knet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="experiments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="knet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="experiments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="faster_rcnn_knet_finetune" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="BiternionNet" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -280,35 +318,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="train_scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BiternionNet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BiternionNet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="train_configs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BiternionNet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BiternionNet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
+              <option name="myItemId" value="towncentre_train_scripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -538,20 +548,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/knet/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.01880531">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/keras/optimizers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="305" column="20" selection-start-line="305" selection-start-column="13" selection-end-line="305" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/py_env_old/lib/python3.6/site-packages/DeepFried2/layers/ReLU.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.21911922">
@@ -878,7 +874,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_scripts/train_vgg_cosine_loss.sh">
+    <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
@@ -886,18 +882,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_scripts/train_vgg_von_mises_loss.sh">
+    <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_von_mises_loss.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="95" selection-start-line="8" selection-start-column="95" selection-end-line="8" selection-end-column="95" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_scripts/train_vgg_debug.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
           <folding />
         </state>
       </provider>
@@ -910,7 +898,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_scripts/train_vgg_likelihood_fixed_kappa.sh">
+    <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_likelihood_fixed_kappa.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="108" selection-start-line="8" selection-start-column="108" selection-end-line="8" selection-end-column="108" />
@@ -918,10 +906,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_scripts/train_vgg_likelihood_learned_kappa.sh">
+    <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_likelihood_learned_kappa.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23011844">
-          <caret line="8" column="110" selection-start-line="8" selection-start-column="110" selection-end-line="8" selection-end-column="110" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="32" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_debug.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="59" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/scripts/train_cluster.sub">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sub">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.028764805">
+          <caret line="1" column="36" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
           <folding />
         </state>
       </provider>
