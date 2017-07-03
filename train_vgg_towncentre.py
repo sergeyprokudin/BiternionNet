@@ -120,7 +120,7 @@ def train():
         print("using likelihood loss..")
 
         def _von_mises_neg_log_likelihood_keras(y_true, y_pred):
-            return -von_mises_log_likelihood_tf(y_true, y_pred, kappa_pred, input_type='biternion')
+            return -K.mean(von_mises_log_likelihood_tf(y_true, y_pred, kappa_pred, input_type='biternion'))
 
         loss_te = _von_mises_neg_log_likelihood_keras
         custom_objects.update({'_von_mises_neg_log_likelihood_keras': _von_mises_neg_log_likelihood_keras})
@@ -170,54 +170,45 @@ def train():
 
     print("evaluating model..")
 
-    if net_output == 'biternion':
-        ytr_preds_bit = model.predict(xtr)
-        ytr_preds_deg = bit2deg(ytr_preds_bit)
-        yte_preds_bit = model.predict(xte)
-        yte_preds_deg = bit2deg(yte_preds_bit)
+    def _eval_model(x, ytrue_deg, ytrue_bit, data_part):
 
-    elif net_output == 'degrees':
-        yte_preds_deg = np.squeeze(model.predict(xte))
+        if net_output == 'biternion':
+            ypreds_bit = model.predict(x)
+            ypreds_deg = bit2deg(ypreds_bit)
+        elif net_output == 'degrees':
+            ypreds_deg = np.squeeze(model.predict(x))
+            ypreds_bit = deg2bit(ypreds_deg)
 
-    if kappa == 0.0:
-        print("predicting kappa...")
-        kappa_preds_tr = kappa_model.predict(xtr)
-        results['mean_kappa_tr'] = float(np.mean(kappa_preds_tr))
-        results['std_kappa_tr'] = float(np.std(kappa_preds_tr))
-        print("predicted kappa (train) : %f ± %f" % (results['mean_kappa_tr'], results['std_kappa_tr']))
-        kappa_preds_te = kappa_model.predict(xte)
-        results['mean_kappa_te'] = float(np.mean(kappa_preds_te))
-        results['std_kappa_te'] = float(np.std(kappa_preds_te))
-        print("predicted kappa (test) : %f ± %f" % (results['mean_kappa_te'], results['std_kappa_te']))
-    else:
-        # print("fine-tuning kappa as hyper-parameter...")
-        # kappa = finetune_kappa(xtr, ytr_bit, model)
-        kappa_preds_tr = np.ones([xtr.shape[0], 1]) * kappa
-        kappa_preds_te = np.ones([xte.shape[0], 1]) * kappa
-        print("kappa value: %f" % kappa)
+        loss = maad_from_deg(ypreds_deg, ytrue_deg)
+        results['mean_loss_'+data_part] = float(np.mean(loss))
+        results['std_loss_'+data_part] = float(np.std(loss))
+        print("MAAD error (%s) : %f ± %f" % (data_part,
+                                             results['mean_loss_'+data_part],
+                                             results['std_loss_'+data_part]))
 
-    loss_tr = maad_from_deg(ytr_preds_deg, ytr_deg)
-    results['mean_loss_tr'] = float(np.mean(loss_tr))
-    results['std_loss_tr'] = float(np.std(loss_tr))
-    print("MAAD error (train) : %f ± %f" % (results['mean_loss_tr'], results['std_loss_tr']))
+        if kappa == 0.0:
+            # print("predicting kappa...")
+            kappa_preds = kappa_model.predict(x)
+            results['mean_kappa_'+data_part] = float(np.mean(kappa_preds))
+            results['std_kappa_'+data_part] = float(np.std(kappa_preds))
+            print("predicted kappa (%s) : %f ± %f" % (data_part,
+                                                      results['mean_kappa_'+data_part],
+                                                      results['std_kappa_'+data_part]))
+        else:
+            kappa_preds = np.ones([x.shape[0], 1]) * kappa
+            print("kappa value: %f" % kappa)
 
-    loss_te = maad_from_deg(yte_preds_deg, yte_deg)
-    results['mean_loss_te'] = float(np.mean(loss_te))
-    results['std_loss_te'] = float(np.std(loss_te))
-    print("MAAD error (test) : %f ± %f" % (results['mean_loss_te'], results['std_loss_te']))
+        log_likelihoods = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds,
+                                                      input_type='biternion')
+        results['log_likelihood_mean_'+data_part] = float(np.mean(log_likelihoods))
+        results['log_likelihood_sem_'+data_part] = float(sem(log_likelihoods, axis=None))
+        print("log-likelihood (%s) : %f ± %fSEM" % (data_part,
+                                                    results['log_likelihood_mean_'+data_part],
+                                                    results['log_likelihood_sem_'+data_part]))
 
-    if net_output == 'biternion':
-        log_likelihoods_tr = von_mises_log_likelihood_np(ytr_bit, ytr_preds_bit, kappa_preds_tr, input_type='biternion')
-        results['log_likelihood_mean_tr'] = float(np.mean(log_likelihoods_tr))
-        results['log_likelihood_tr_sem'] = float(sem(log_likelihoods_tr, axis=None))
-        print("log-likelihood (train) : %f ± %fSEM" % (results['log_likelihood_mean_tr'],
-                                                        results['log_likelihood_tr_sem']))
-
-        log_likelihoods_te = von_mises_log_likelihood_np(yte_bit, yte_preds_bit, kappa_preds_te, input_type='biternion')
-        results['log_likelihood_mean_te'] = float(np.mean(log_likelihoods_te))
-        results['log_likelihood_te_sem'] = float(sem(log_likelihoods_te, axis=None))
-        print("log-likelihood (test) : %f ± %fSEM" % (results['log_likelihood_mean_te'],
-                                                       results['log_likelihood_te_sem']))
+    _eval_model(xtr, ytr_deg, ytr_bit, 'train')
+    _eval_model(xval, yval_deg, yval_bit, 'validation')
+    _eval_model(xte, yte_deg, yte_bit, 'test')
 
     print("stored model available at %s" % experiment_dir)
 

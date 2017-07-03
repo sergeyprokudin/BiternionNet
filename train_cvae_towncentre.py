@@ -178,7 +178,7 @@ cvae.compile(optimizer='adadelta', loss=cvae_loss, metrics = ['cosine'])
 
 # In[ ]:
 
-cvae.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=200, validation_data=[[xte, yte_bit], yte_bit])
+cvae.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=100, validation_data=[[xte, yte_bit], yte_bit])
 
 
 # #### Predictions using decoder part
