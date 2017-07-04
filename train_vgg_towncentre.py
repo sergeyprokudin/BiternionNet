@@ -66,7 +66,9 @@ def train():
     os.mkdir(experiment_dir)
     shutil.copy(config_path, experiment_dir)
 
-    xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre('data/TownCentre.pkl.gz', canonical_split=True)
+    xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre('data/TownCentre.pkl.gz',
+                                                                 canonical_split=True,
+                                                                 verbose=1)
 
     image_height, image_width = xtr.shape[1], xtr.shape[2]
     ytr_bit = deg2bit(ytr_deg)
