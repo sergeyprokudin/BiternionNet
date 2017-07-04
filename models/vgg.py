@@ -10,7 +10,6 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import Model
 from keras.layers.merge import concatenate
 
-from utils.losses import von_mises_log_likelihood_tf
 from utils.angles import deg2bit, bit2deg
 from utils.losses import maad_from_deg, von_mises_log_likelihood_np
 from scipy.stats import sem
@@ -103,11 +102,11 @@ class BiternionVGG:
 
         results = dict()
 
-        results['mean_loss'] = float(np.mean(loss))
-        results['std_loss'] = float(np.std(loss))
-        print("MAAD error (%s) : %f ± %f" % (data_part,
-                                             results['mean_loss'],
-                                             results['std_loss']))
+        results['maad_loss'] = float(np.mean(loss))
+        results['maad_loss_sem'] = float(sem(loss))
+        print("MAAD error (%s) : %f ± %fSEM" % (data_part,
+                                             results['maad_loss'],
+                                             results['maad_loss_sem']))
 
         results['mean_kappa'] = float(np.mean(kappa_preds))
         results['std_kappa'] = float(np.std(kappa_preds))

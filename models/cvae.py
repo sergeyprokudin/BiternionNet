@@ -1,3 +1,5 @@
+import numpy as np
+
 from keras.layers import Input, Dense, Lambda
 from keras.layers.merge import concatenate
 from keras.models import Model, Sequential
@@ -7,7 +9,10 @@ import keras.backend as K
 from models import vgg
 
 from utils.losses import gaussian_kl_divergence_tf, gaussian_kl_divergence_np
-from utils.losses  import von_mises_log_likelihood_tf, von_mises_log_likelihood_np
+from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np
+from utils.angles import deg2bit, bit2deg
+from utils.losses import maad_from_deg
+from scipy.stats import sem
 
 
 class CVAE:
@@ -121,5 +126,41 @@ class CVAE:
         loss = -log_likelihood + kl
         return loss, log_likelihood, kl
 
-    def evaluate(self, x, ytrue_deg, data_part):
-        return
+    def evaluate(cvae_model, x, ytrue_deg, data_part, verbose=1):
+
+        ytrue_bit = deg2bit(ytrue_deg)
+
+        results = dict()
+
+        cvae_preds = cvae_model.full_model.predict([x, ytrue_bit])
+        elbo, ll, kl = cvae_model._cvae_elbo_loss_np(ytrue_bit, cvae_preds)
+
+        results['elbo'] = np.mean(-elbo)
+        results['elbo_sem'] = sem(-elbo)
+
+        ypreds = cvae_model.decoder_model.predict(x)
+        ypreds_bit = ypreds[:,0:2]
+        kappa_preds = ypreds[:,2:]
+
+        ypreds_deg = bit2deg(ypreds_bit)
+
+        loss = maad_from_deg(ytrue_deg, ypreds_deg)
+        results['maad_loss'] = np.mean(loss)
+        results['maad_loss_sem'] = sem(loss)
+
+        log_likelihood_loss = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds,
+                                                          input_type='biternion')
+
+        results['log_likelihood'] = np.mean(log_likelihood_loss)
+        results['log_likelihood_loss_sem'] = sem(log_likelihood_loss)
+
+        if verbose:
+
+            print("MAAD error (%s) : %f ± %fSEM" % (data_part, results['maad_loss'], results['maad_loss_sem']))
+
+            print("ELBO (%s) : %f ± %fSEM" % (data_part, results['elbo'], results['elbo_sem']))
+
+            print("log-likelihood (%s) : %f±%fSEM" % (data_part,
+                                                      results['log_likelihood'],
+                                                      results['log_likelihood_loss_sem']))
+        return results

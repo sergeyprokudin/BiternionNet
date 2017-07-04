@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[1]:
+# In[2]:
 
 import numpy as np
 import tensorflow as tf
@@ -27,7 +27,7 @@ from utils.experiements import get_experiment_id
 
 # #### TownCentre data
 
-# In[2]:
+# In[3]:
 
 xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre('data/TownCentre.pkl.gz', 
                                                              canonical_split=True,
@@ -64,7 +64,7 @@ phi_shape = yte_bit.shape[1]
 # 
 # $p(\phi|u,x) \sim \mathcal{VM}(\mu(x,u,\theta''), \kappa(x,u,\theta'')) $
 
-# In[3]:
+# In[4]:
 
 n_u = 8
 
@@ -89,7 +89,7 @@ model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
                                                       verbose=1)
 
 
-# In[ ]:
+# In[6]:
 
 cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50, validation_data=([xval, yval_bit], yval_bit),
                    callbacks=[model_ckpt_callback])
@@ -99,63 +99,16 @@ cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50, v
 # 
 # $ \phi_i = \mu(x_i,u_i,\theta'') $
 
-# In[ ]:
+# In[10]:
 
-cvae_best = CVAE(n_hidden_units=n_u)
-cvae_best.full_model.load_weights(cvae_best_ckpt_path)
-
-
-# In[ ]:
-
-from scipy.stats import sem
-
-def evaluate(cvae_model, x, ytrue_deg, data_part):
-    
-    n_samples = x.shape[0]
-    
-    ytrue_bit = deg2bit(ytrue_deg)
-    
-    cvae_preds = cvae_model.full_model.predict([x, ytrue_bit])
-    elbo_te, ll_te, kl_te = cvae_model._cvae_elbo_loss_np(ytrue_bit, cvae_preds)
-
-    ypreds = cvae_model.decoder_model.predict(x)
-    ypreds_bit = ypreds[:,0:2]
-    kappa_preds_te = ypreds[:,2:]
-
-    ypreds_deg = bit2deg(ypreds_bit)
-
-    loss_te = maad_from_deg(ytrue_deg, ypreds_deg)
-    mean_loss_te = np.mean(loss_te)
-    std_loss_te = np.std(loss_te)
-
-    print("MAAD error (test) : %f ± %f" % (mean_loss_te, std_loss_te))
-
-    # print("kappa (test) : %f ± %f" % (np.mean(kappa_preds_te), np.std(kappa_preds_te)))
-
-    log_likelihood_loss = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds_te,
-                                                         input_type='biternion')
-
-    print("ELBO (%s) : %f ± %f SEM" % (data_part, np.mean(-elbo_te), sem(-elbo_te)))
-
-    # print("KL(encoder|prior) (%s) : %f ± %f SEM" % (data_part, np.mean(-kl_te), sem(-kl_te)))
-
-    print("log-likelihood (%s) : %f±%fSEM" % (data_part, 
-                                              np.mean(log_likelihood_loss), 
-                                              sem(log_likelihood_loss)))
-    return
+best_model = CVAE(n_hidden_units=n_u)
+best_model.full_model.load_weights(cvae_best_ckpt_path)
 
 
-# In[ ]:
+# In[12]:
 
-evaluate(cvae_best, xtr, ytr_deg, 'train')
-
-
-# In[ ]:
-
-evaluate(cvae_best, xval, yval_deg, 'validation')
-
-
-# In[ ]:
-
-evaluate(cvae_best, xte, yte_deg, 'test')
+results = dict()
+results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
+results['test'] = best_model.evaluate(xte, yte_deg, 'test')
 

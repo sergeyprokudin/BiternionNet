@@ -167,7 +167,7 @@ def train():
     results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
     results['test'] = best_model.evaluate(xte, yte_deg, 'test')
 
-    print("stored model available at %s" % experiment_dir)
+    print("best model store to %s" % best_model_weights_file)
 
     with open(results_yml_file, 'w') as results_yml_file:
         yaml.dump(results, results_yml_file, default_flow_style=False)
