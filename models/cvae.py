@@ -120,3 +120,6 @@ class CVAE:
         kl = gaussian_kl_divergence_np(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
         loss = -log_likelihood + kl
         return loss, log_likelihood, kl
+
+    def evaluate(self, x, ytrue_deg, data_part):
+        return
