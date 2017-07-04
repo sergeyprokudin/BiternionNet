@@ -1,13 +1,14 @@
-experiment_name: 'vggbit_von_mises_kappa1_Adadelta_200epochs_batch10'
+experiment_name: 'vggbit_likelihood_learned_kappa_Adadelta_200epochs_batch10'
 root_log_dir: 'logs'
 log_to_stdout: True
 data_path: 'data/TownCentre.pkl.gz'
 canonical_split: True
-n_epochs: 100
+n_epochs: 50
 batch_size: 10
 net_output: biternion # possible choices: degrees, biternion
 loss: von_mises # possible choices : cosine, von_mises, mad, vm_likelihood
-kappa: 1.0 #kappa value for vm_likelihood loss. Use 0.0 for predicting kappa
+predict_kappa: False
+fixed_kappa_value: 1.0 #kappa value for vm_likelihood loss in case if it's not predicted by network. Use 0.0 for predicting kappa
 optimizer_params:
   name: Adadelta
   learning_rate: 1.0

@@ -3,10 +3,11 @@ import keras
 
 class SideModelCheckpoint(keras.callbacks.Callback):
 
-    def __init__(self, model_name, model_to_save, save_path):
+    def __init__(self, model_name, model_to_save, save_path, save_weights_only=False):
         self.model_name = model_name
         self.model = model_to_save
         self.save_path = save_path
+        self.save_weights_only = save_weights_only
 
     def on_train_begin(self, logs={}):
         self.epoch_id = 0
@@ -20,4 +21,7 @@ class SideModelCheckpoint(keras.callbacks.Callback):
             print("val_loss improved from %f to %f, saving %s to %s" %
                   (self.min_val_loss, self.curr_val_loss, self.model_name, filepath))
             self.min_val_loss = self.curr_val_loss
-            self.model.save(filepath)
+            if self.save_weights_only:
+                self.model.save_weights(filepath)
+            else:
+                self.model.save(filepath)
