@@ -1,4 +1,4 @@
-experiment_name: 'vggbit_likelihood_learned_kappa_Adadelta_200epochs_batch10'
+experiment_name: 'vggbit_likelihood_learned_kappa_Adadelta_50epochs_batch10'
 root_log_dir: 'logs'
 log_to_stdout: True
 data_path: 'data/TownCentre.pkl.gz'
