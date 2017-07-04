@@ -66,29 +66,20 @@ def train():
     os.mkdir(experiment_dir)
     shutil.copy(config_path, experiment_dir)
 
-    xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre(data_path, canonical_split=config['canonical_split'])
-
+    xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre('data/TownCentre.pkl.gz', canonical_split=True)
     image_height, image_width = xtr.shape[1], xtr.shape[2]
     ytr_bit = deg2bit(ytr_deg)
     yval_bit = deg2bit(yval_deg)
     yte_bit = deg2bit(yte_deg)
-
-    X = Input(shape=[image_height, image_width, 3])
-
-    vgg_x = vgg.vgg_model(final_layer=False,
-                          image_height=image_height,
-                          image_width=image_width)(X)
 
     net_output = config['net_output']
 
     if net_output == 'biternion':
         ytr = ytr_bit
         yval = yval_bit
-        yte = yte_bit
     elif net_output == 'degrees':
         ytr = ytr_deg
         yval = yval_deg
-        yte = yte_deg
     else:
         raise ValueError("net_output should be 'biternion' or 'degrees'")
 
@@ -153,64 +144,25 @@ def train():
                         validation_data=(xval, yval),
                         callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
-    # model.save(os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.h5'))
-
-    final_model_ckpt_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.final_model.h5')
+    final_model_ckpt_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.final.weigths.h5')
     vgg_model.model.save_weights(final_model_ckpt_file)
 
-    best_vgg = vgg.BiternionVGG(image_height=image_height,
+    best_model = vgg.BiternionVGG(image_height=image_height,
                                 image_width=image_width,
                                 n_channels=3,
                                 predict_kappa=predict_kappa,
                                 fixed_kappa_value=fixed_kappa_value)
 
-    best_vgg.model.load_weights(best_model_weights_file)
+    best_model.model.load_weights(best_model_weights_file)
 
     results = dict()
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
 
     print("evaluating model..")
 
-    def _eval_model(x, ytrue_deg, ytrue_bit, data_part):
-
-        if net_output == 'biternion':
-            ypreds = best_vgg.model.predict(x)
-            ypreds_bit = ypreds[:, 0:2]
-            ypreds_deg = bit2deg(ypreds_bit)
-        elif net_output == 'degrees':
-            ypreds = best_vgg.model.predict(x)
-            ypreds_deg = ypreds[:, 0:1]
-            ypreds_bit = deg2bit(ypreds_deg)
-
-        if predict_kappa:
-            kappa_preds = ypreds[:, 2:]
-        else:
-            kappa_preds = np.ones([ytrue_deg.shape[0], 1]) * fixed_kappa_value
-
-        loss = maad_from_deg(ypreds_deg, ytrue_deg)
-        results['mean_loss_'+data_part] = float(np.mean(loss))
-        results['std_loss_'+data_part] = float(np.std(loss))
-        print("MAAD error (%s) : %f ± %f" % (data_part,
-                                             results['mean_loss_'+data_part],
-                                             results['std_loss_'+data_part]))
-
-        results['mean_kappa_'+data_part] = float(np.mean(kappa_preds))
-        results['std_kappa_'+data_part] = float(np.std(kappa_preds))
-        print("predicted kappa (%s) : %f ± %f" % (data_part,
-                                                      results['mean_kappa_'+data_part],
-                                                      results['std_kappa_'+data_part]))
-
-        log_likelihoods = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds,
-                                                      input_type='biternion')
-        results['log_likelihood_mean_'+data_part] = float(np.mean(log_likelihoods))
-        results['log_likelihood_sem_'+data_part] = float(sem(log_likelihoods, axis=None))
-        print("log-likelihood (%s) : %f ± %fSEM" % (data_part,
-                                                    results['log_likelihood_mean_'+data_part],
-                                                    results['log_likelihood_sem_'+data_part]))
-
-    _eval_model(xtr, ytr_deg, ytr_bit, 'train')
-    _eval_model(xval, yval_deg, yval_bit, 'validation')
-    _eval_model(xte, yte_deg, yte_bit, 'test')
+    results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+    results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
+    results['test'] = best_model.evaluate(xte, yte_deg, 'test')
 
     print("stored model available at %s" % experiment_dir)
 

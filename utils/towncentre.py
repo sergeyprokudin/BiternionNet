@@ -43,6 +43,7 @@ def load_towncentre(data_path,
     x, y, n = pickle.load(gzip.open(data_path, 'rb'))
     x, y = prepare_data(x, y)
     if canonical_split:
+        print("using canonical datasplit..")
         with open(canonical_path, 'rb') as f:
             itr, ival, ite = pickle.load(f)
     else:

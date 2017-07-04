@@ -1,5 +1,6 @@
 import tensorflow as tf
 import keras
+import numpy as np
 
 from keras import backend as K
 from keras.models import Sequential
@@ -10,6 +11,9 @@ from keras.models import Model
 from keras.layers.merge import concatenate
 
 from utils.losses import von_mises_log_likelihood_tf
+from utils.angles import deg2bit, bit2deg
+from utils.losses import maad_from_deg, von_mises_log_likelihood_np
+from scipy.stats import sem
 
 
 def vgg_model(n_outputs=1, final_layer=False, l2_normalize_final=False,
@@ -76,8 +80,45 @@ class BiternionVGG:
 
         self.y_pred = Lambda(lambda x: K.l2_normalize(x, axis=1))(Dense(2)(vgg_x))
 
-        if predict_kappa:
-            self.kappa_pred = Lambda(lambda x: K.abs(x))(Dense(1)(Dense(256)(vgg_x)))
+        if self.predict_kappa:
+            self.kappa_pred = Lambda(lambda x: K.abs(x))(Dense(1)(vgg_x))
+            # self.kappa_pred = Lambda(lambda x: K.abs(x))(Dense(1)(Dense(256)(vgg_x)))
             self.model = Model(self.X, concatenate([self.y_pred, self.kappa_pred]))
         else:
             self.model = Model(self.X, self.y_pred)
+
+    def evaluate(self, x, ytrue_deg, data_part):
+
+        ytrue_bit = deg2bit(ytrue_deg)
+        ypreds = self.model.predict(x)
+        ypreds_bit = ypreds[:, 0:2]
+        ypreds_deg = bit2deg(ypreds_bit)
+
+        if self.predict_kappa:
+            kappa_preds = ypreds[:, 2:]
+        else:
+            kappa_preds = np.ones([ytrue_deg.shape[0], 1]) * self.fixed_kappa_value
+
+        loss = maad_from_deg(ypreds_deg, ytrue_deg)
+
+        results = dict()
+
+        results['mean_loss'] = float(np.mean(loss))
+        results['std_loss'] = float(np.std(loss))
+        print("MAAD error (%s) : %f ± %f" % (data_part,
+                                             results['mean_loss'],
+                                             results['std_loss']))
+
+        results['mean_kappa'] = float(np.mean(kappa_preds))
+        results['std_kappa'] = float(np.std(kappa_preds))
+
+        log_likelihoods = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds,
+                                                      input_type='biternion')
+        results['log_likelihood_mean'] = float(np.mean(log_likelihoods))
+        results['log_likelihood_sem'] = float(sem(log_likelihoods, axis=None))
+        print("log-likelihood (%s) : %f ± %fSEM" % (data_part,
+                                                    results['log_likelihood_mean'],
+                                                    results['log_likelihood_sem']))
+
+        return results
+

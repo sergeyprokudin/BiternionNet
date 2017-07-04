@@ -4,9 +4,9 @@ log_to_stdout: True
 data_path: 'data/TownCentre.pkl.gz'
 canonical_split: True
 n_epochs: 1
-batch_size: 10
+batch_size: 1000
 net_output: biternion # possible choices: degrees, biternion
-loss: von_mises # possible choices : cosine, von_mises, mad, vm_likelihood
+loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: False
 fixed_kappa_value: 3.0 #kappa value for vm_likelihood loss in case if it's not predicted by network. Use 0.0 for predicting kappa
 optimizer_params:
