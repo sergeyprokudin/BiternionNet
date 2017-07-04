@@ -62,6 +62,4 @@ def load_towncentre(data_path,
     xval, yval = x[ixval], y[ixval]
     xte, yte = x[ixte], y[ixte]
 
-    import ipdb; ipdb.set_trace()
-
     return xtr, ytr, xval, yval, xte, yte
