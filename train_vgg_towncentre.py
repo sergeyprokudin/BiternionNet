@@ -67,6 +67,9 @@ def train():
     shutil.copy(config_path, experiment_dir)
 
     xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre('data/TownCentre.pkl.gz', canonical_split=True)
+
+    import ipdb; ipdb.set_trace()
+
     image_height, image_width = xtr.shape[1], xtr.shape[2]
     ytr_bit = deg2bit(ytr_deg)
     yval_bit = deg2bit(yval_deg)
@@ -148,10 +151,10 @@ def train():
     vgg_model.model.save_weights(final_model_ckpt_file)
 
     best_model = vgg.BiternionVGG(image_height=image_height,
-                                image_width=image_width,
-                                n_channels=3,
-                                predict_kappa=predict_kappa,
-                                fixed_kappa_value=fixed_kappa_value)
+                                  image_width=image_width,
+                                  n_channels=3,
+                                  predict_kappa=predict_kappa,
+                                  fixed_kappa_value=fixed_kappa_value)
 
     best_model.model.load_weights(best_model_weights_file)
 
