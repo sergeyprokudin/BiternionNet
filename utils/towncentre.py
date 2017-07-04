@@ -38,7 +38,8 @@ def prepare_data(x, y):
 
 def load_towncentre(data_path,
                     val_test_split=0.1,
-                    canonical_split=True):
+                    canonical_split=True,
+                    verbose=0):
 
     x, y, img_names = pickle.load(gzip.open(data_path, 'rb'))
 
@@ -61,5 +62,10 @@ def load_towncentre(data_path,
     xtr, ytr = x[ixtr], y[ixtr]
     xval, yval = x[ixval], y[ixval]
     xte, yte = x[ixte], y[ixte]
+
+    if verbose:
+        print("Number of train samples: %s" % xtr.shape[0])
+        print("Number of validation samples: %s" % xval.shape[0])
+        print("Number of test samples: %s" % xte.shape[0])
 
     return xtr, ytr, xval, yval, xte, yte
