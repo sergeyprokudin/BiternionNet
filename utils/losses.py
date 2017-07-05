@@ -62,7 +62,8 @@ def bessel_approx_tf(x, m=5):
 
 
 def log_bessel_approx_np(x):
-    x = x.reshape([-1,1])
+
+    x = np.asarray(x).reshape([-1, 1])
 
     def _log_bessel_approx_0(x):
         x = x.reshape([-1,1])

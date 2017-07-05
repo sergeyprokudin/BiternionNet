@@ -126,19 +126,19 @@ class CVAE:
         loss = -log_likelihood + kl
         return loss, log_likelihood, kl
 
-    def evaluate(cvae_model, x, ytrue_deg, data_part, verbose=1):
+    def evaluate(self, x, ytrue_deg, data_part, verbose=1):
 
         ytrue_bit = deg2bit(ytrue_deg)
 
         results = dict()
 
-        cvae_preds = cvae_model.full_model.predict([x, ytrue_bit])
-        elbo, ll, kl = cvae_model._cvae_elbo_loss_np(ytrue_bit, cvae_preds)
+        cvae_preds = self.full_model.predict([x, ytrue_bit])
+        elbo, ll, kl = self._cvae_elbo_loss_np(ytrue_bit, cvae_preds)
 
         results['elbo'] = np.mean(-elbo)
         results['elbo_sem'] = sem(-elbo)
 
-        ypreds = cvae_model.decoder_model.predict(x)
+        ypreds = self.decoder_model.predict(x)
         ypreds_bit = ypreds[:,0:2]
         kappa_preds = ypreds[:,2:]
 
