@@ -66,7 +66,7 @@ phi_shape = yte_bit.shape[1]
 
 # In[4]:
 
-n_u = 8
+n_u = 32
 
 cvae_model = CVAE(n_hidden_units=n_u)
 
@@ -91,7 +91,7 @@ model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
 
 # In[6]:
 
-cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=100, validation_data=([xval, yval_bit], yval_bit),
+cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50, validation_data=([xval, yval_bit], yval_bit),
                    callbacks=[model_ckpt_callback])
 
 
