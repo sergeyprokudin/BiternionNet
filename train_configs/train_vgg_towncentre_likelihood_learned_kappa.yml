@@ -1,10 +1,10 @@
-experiment_name: 'vggbit_likelihood_learned_kappa_Adadelta_50epochs_batch10'
+experiment_name: 'vggbit_likelihood_learned_kappa_Adadelta_50epochs_batch100'
 root_log_dir: 'logs'
 log_to_stdout: True
 data_path: 'data/TownCentre.pkl.gz'
 canonical_split: True
 n_epochs: 50
-batch_size: 10
+batch_size: 100
 net_output: biternion # possible choices: degrees, biternion
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: True
