@@ -68,7 +68,7 @@ class CVAE:
 
         x_vgg_phi = concatenate([self.x_vgg, self.phi])
 
-        hidden = Dense(512, activation='relu')(x_vgg_phi)
+        hidden = Dense(512, activation='relu')(Dense(512, activation='relu')(x_vgg_phi))
 
         mu_encoder = Dense(self.n_u, activation='linear')(hidden)
         log_sigma_encoder = Dense(self.n_u, activation='linear')(hidden)
@@ -92,13 +92,13 @@ class CVAE:
     def _decoder_net_seq(self):
         decoder_mu = Sequential()
         decoder_mu.add(Dense(512, activation='relu',input_shape=[self.x_vgg_shape + self.n_u]))
-        # decoder_mu.add(Dense(512, activation='relu'))
+        decoder_mu.add(Dense(512, activation='relu'))
         decoder_mu.add(Dense(2, activation='linear'))
         decoder_mu.add(Lambda(lambda x: K.l2_normalize(x, axis=1)))
 
         decoder_kappa = Sequential()
         decoder_kappa.add(Dense(512, activation='relu', input_shape=[self.x_vgg_shape + self.n_u]))
-        # decoder_kappa.add(Dense(512, activation='relu'))
+        decoder_kappa.add(Dense(512, activation='relu'))
         decoder_kappa.add(Dense(1, activation='linear'))
         decoder_kappa.add(Lambda(lambda x: K.abs(x)))
         return decoder_mu, decoder_kappa
