@@ -66,7 +66,7 @@ phi_shape = yte_bit.shape[1]
 
 # In[4]:
 
-n_u = 4
+n_u = 8
 
 cvae_model = CVAE(n_hidden_units=n_u)
 
