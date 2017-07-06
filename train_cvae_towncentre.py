@@ -3,26 +3,11 @@
 
 # In[2]:
 
-import numpy as np
-import tensorflow as tf
+import keras
 
-from keras import backend as K
-from keras.layers import Input, Dense, Lambda, Flatten, Activation, Merge, Concatenate, Add
-from keras import layers
-from keras.layers.merge import concatenate
-from keras.models import Model, Sequential
-from keras.objectives import binary_crossentropy
-from keras.callbacks import LearningRateScheduler
-from keras.models import load_model
-
-from models import vgg
 from models.cvae import CVAE
 from utils.angles import deg2bit, bit2deg
-from utils.losses import mad_loss_tf, cosine_loss_tf, von_mises_loss_tf, maad_from_deg
-from utils.losses import gaussian_kl_divergence_tf, gaussian_kl_divergence_np
-from utils.losses  import von_mises_log_likelihood_tf, von_mises_log_likelihood_np
 from utils.towncentre import load_towncentre
-from utils.experiements import get_experiment_id
 
 
 # #### TownCentre data
@@ -66,7 +51,7 @@ phi_shape = yte_bit.shape[1]
 
 # In[4]:
 
-n_u = 8
+n_u = 32
 
 cvae_model = CVAE(n_hidden_units=n_u)
 
@@ -75,7 +60,7 @@ cvae_model = CVAE(n_hidden_units=n_u)
 
 # In[5]:
 
-import keras
+
 from utils.custom_keras_callbacks import SideModelCheckpoint
 
 cvae_best_ckpt_path = 'logs/cvae.full_model.best.weights.hdf5'
