@@ -45,7 +45,7 @@ class CVAE:
         self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_sigma_prior])
         self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_sigma_encoder])
 
-        self.x_vgg_u = concatenate([self.x_vgg, self.u_encoder])
+        # self.x_vgg_u = concatenate([self.x_vgg, self.u_encoder])
 
         self.decoder_mu_seq, self.decoder_kappa_seq = self._decoder_net_seq()
 
@@ -54,15 +54,20 @@ class CVAE:
                                                      self.log_sigma_prior,
                                                      self.mu_encoder,
                                                      self.log_sigma_encoder,
-                                                     self.decoder_mu_seq(self.x_vgg_u),
-                                                     self.decoder_kappa_seq(self.x_vgg_u)]))
+                                                     self.decoder_mu_seq(self.u_encoder),
+                                                     self.decoder_kappa_seq(self.u_encoder)]))
+                                                     # self.decoder_mu_seq(self.x_vgg_u),
+                                                     # self.decoder_kappa_seq(self.x_vgg_u)]))
 
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
-        self.decoder_input = concatenate([self.x_vgg, self.u_prior])
+        # self.decoder_input = concatenate([self.x_vgg, self.u_prior])
+
         self.decoder_model = Model(inputs=[self.x],
-                                   outputs=concatenate([self.decoder_mu_seq(self.decoder_input),
-                                                        self.decoder_kappa_seq(self.decoder_input)]))
+                                   outputs=concatenate([self.decoder_mu_seq(self.u_prior),
+                                                        self.decoder_kappa_seq(self.u_prior)]))
+                                                        #self.decoder_mu_seq(self.decoder_input),
+                                                        #self.decoder_kappa_seq(self.decoder_input)]))
 
     def _encoder_mu_log_sigma(self):
 
@@ -91,13 +96,15 @@ class CVAE:
 
     def _decoder_net_seq(self):
         decoder_mu = Sequential()
-        decoder_mu.add(Dense(512, activation='relu',input_shape=[self.x_vgg_shape + self.n_u]))
+        # decoder_mu.add(Dense(512, activation='relu',input_shape=[self.x_vgg_shape + self.n_u]))
+        decoder_mu.add(Dense(512, activation='relu', input_shape=[self.n_u]))
         decoder_mu.add(Dense(512, activation='relu'))
         decoder_mu.add(Dense(2, activation='linear'))
         decoder_mu.add(Lambda(lambda x: K.l2_normalize(x, axis=1)))
 
         decoder_kappa = Sequential()
-        decoder_kappa.add(Dense(512, activation='relu', input_shape=[self.x_vgg_shape + self.n_u]))
+        # decoder_kappa.add(Dense(512, activation='relu', input_shape=[self.x_vgg_shape + self.n_u]))
+        decoder_kappa.add(Dense(512, activation='relu', input_shape=[self.n_u]))
         decoder_kappa.add(Dense(512, activation='relu'))
         decoder_kappa.add(Dense(1, activation='linear'))
         decoder_kappa.add(Lambda(lambda x: K.abs(x)))
