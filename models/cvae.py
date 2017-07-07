@@ -65,7 +65,7 @@ class CVAE:
                                                      self.decoder_mu_seq(self.x_vgg_u),
                                                      self.decoder_kappa_seq(self.x_vgg_u)]))
 
-        self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
+        self.full_model.compile(optimizer='adadelta', loss=self._cvae_elbo_loss_tf)
 
         self.decoder_input = concatenate([self.x_vgg_decoder, self.u_prior])
 
