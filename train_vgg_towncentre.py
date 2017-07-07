@@ -12,7 +12,7 @@ from utils.losses import mad_loss_tf, cosine_loss_tf, von_mises_loss_tf, maad_fr
 from utils.towncentre import load_towncentre
 from utils.experiements import get_experiment_id, set_logging
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np, von_mises_neg_log_likelihood_keras
-from utils.custom_keras_callbacks import SideModelCheckpoint
+from utils.custom_keras_callbacks import ModelCheckpointEveryNBatch
 
 from scipy.stats import sem
 
@@ -131,12 +131,13 @@ def train():
 
     best_model_weights_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.best.weights.h5')
 
-    model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
-                                                          monitor='val_loss',
-                                                          mode='min',
-                                                          save_best_only=True,
-                                                          save_weights_only=True,
-                                                          verbose=1)
+    model_ckpt_callback = ModelCheckpointEveryNBatch(best_model_weights_file,
+                                                     xval=xval,
+                                                     yval=yval,
+                                                     save_best_only=True,
+                                                     save_weights_only=True,
+                                                     verbose=1,
+                                                     period=50)
 
     print("logs could be found at %s" % experiment_dir)
 

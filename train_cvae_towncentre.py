@@ -8,7 +8,7 @@ import keras
 from models.cvae import CVAE
 from utils.angles import deg2bit, bit2deg
 from utils.towncentre import load_towncentre
-
+from utils.custom_keras_callbacks import ModelCheckpointEveryNBatch
 
 # #### TownCentre data
 
@@ -66,12 +66,20 @@ from utils.custom_keras_callbacks import SideModelCheckpoint
 cvae_best_ckpt_path = 'logs/cvae.full_model.best.weights.hdf5'
 
 
-model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
-                                                      monitor='val_loss',
-                                                      mode='min',
-                                                      save_best_only=True,
-                                                      save_weights_only=True,  
-                                                      verbose=1)
+# model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
+#                                                       monitor='val_loss',
+#                                                       mode='min',
+#                                                       save_best_only=True,
+#                                                       save_weights_only=True,
+#                                                       verbose=1)
+
+model_ckpt_callback = ModelCheckpointEveryNBatch(cvae_best_ckpt_path,
+                                                 xval=[xval, yval_bit],
+                                                 yval=yval_bit,
+                                                 save_best_only=True,
+                                                 save_weights_only=True,
+                                                 verbose=1,
+                                                 period=50)
 
 
 # In[6]:
