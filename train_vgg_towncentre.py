@@ -131,13 +131,21 @@ def train():
 
     best_model_weights_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.best.weights.h5')
 
-    model_ckpt_callback = ModelCheckpointEveryNBatch(best_model_weights_file,
-                                                     xval=xval,
-                                                     yval=yval,
-                                                     save_best_only=True,
-                                                     save_weights_only=True,
-                                                     verbose=1,
-                                                     period=50)
+    # model_ckpt_callback = ModelCheckpointEveryNBatch(best_model_weights_file,
+    #                                                  xval=xval,
+    #                                                  yval=yval,
+    #                                                  save_best_only=True,
+    #                                                  save_weights_only=True,
+    #                                                  verbose=1,
+    #                                                  period=50)
+
+    model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
+                                                          monitor='val_loss',
+                                                          mode='min',
+                                                          save_best_only=True,
+                                                          save_weights_only=True,
+                                                          period=5,
+                                                          verbose=1)
 
     print("logs could be found at %s" % experiment_dir)
 
