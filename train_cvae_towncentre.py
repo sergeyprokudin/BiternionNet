@@ -55,7 +55,6 @@ n_u = 8
 
 cvae_model = CVAE(n_hidden_units=n_u)
 
-
 # #### Training
 
 # In[5]:
@@ -63,8 +62,8 @@ cvae_model = CVAE(n_hidden_units=n_u)
 
 from utils.custom_keras_callbacks import SideModelCheckpoint
 
-cvae_best_ckpt_path = 'logs/cvae.full_model.best.weights.hdf5'
-cvae_final_ckpt_path = 'logs/cvae.full_model.final.weights.hdf5'
+cvae_best_ckpt_path = 'logs/cvae/cvae.full_model.best.weights.hdf5'
+cvae_final_ckpt_path = 'logs/cvae/cvae.full_model.final.weights.hdf5'
 
 model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
                                                       monitor='val_loss',
