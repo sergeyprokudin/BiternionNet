@@ -1,17 +1,17 @@
-experiment_name: 'vggbit_likelihood_fixed_kappa_Adadelta_50epochs_batch10'
+experiment_name: 'vggbit_likelihood_fixed_kappa_Adam_200epochs_batch10'
 root_log_dir: 'logs'
 log_to_stdout: True
 data_path: 'data/TownCentre.pkl.gz'
 canonical_split: True
-n_epochs: 100
+n_epochs: 200
 batch_size: 10
 net_output: biternion # possible choices: degrees, biternion
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: False
 fixed_kappa_value: 3.0 #kappa value for vm_likelihood loss in case if it's not predicted by network. Use 0.0 for predicting kappa
 optimizer_params:
-  name: Adadelta
-  learning_rate: 1.0
+  name: Adam
+  learning_rate: 0.0001
   rho: 0.95
   epsilon: 1.0e-07
   decay: 0.0
