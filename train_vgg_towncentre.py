@@ -124,8 +124,7 @@ def train():
     vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
     tensorboard_callback = keras.callbacks.TensorBoard(log_dir=experiment_dir,
-                                                       histogram_freq=1,
-                                                       write_images=True)
+                                                       histogram_freq=1)
 
     train_csv_log = os.path.join(experiment_dir, 'train.csv')
     csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
