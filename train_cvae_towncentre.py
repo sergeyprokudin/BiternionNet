@@ -64,7 +64,7 @@ cvae_model = CVAE(n_hidden_units=n_u)
 from utils.custom_keras_callbacks import SideModelCheckpoint
 
 cvae_best_ckpt_path = 'logs/cvae.full_model.best.weights.hdf5'
-
+cvae_final_ckpt_path = 'logs/cvae.full_model.final.weights.hdf5'
 
 model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
                                                       monitor='val_loss',
@@ -97,6 +97,8 @@ lr_reducer = keras.callbacks.ReduceLROnPlateau(monitor='val_loss',
 cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=200,
                           validation_data=([xval, yval_bit], yval_bit),
                           callbacks=[model_ckpt_callback, lr_reducer])
+
+cvae_model.full_model.save_weights(cvae_final_ckpt_path)
 
 
 # #### Predictions using decoder part
