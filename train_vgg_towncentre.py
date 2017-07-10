@@ -125,7 +125,6 @@ def train():
 
     tensorboard_callback = keras.callbacks.TensorBoard(log_dir=experiment_dir,
                                                        histogram_freq=1,
-                                                       write_grads=True,
                                                        write_images=True)
 
     train_csv_log = os.path.join(experiment_dir, 'train.csv')
