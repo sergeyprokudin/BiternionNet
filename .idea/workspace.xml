@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_cvae_towncentre.py" afterPath="$PROJECT_DIR$/train_cvae_towncentre.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg_towncentre.py" afterPath="$PROJECT_DIR$/train_vgg_towncentre.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ModelAnalysis.ipynb" afterPath="$PROJECT_DIR$/ModelAnalysis.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/train_vgg_towncentre_likelihood_learned_kappa.yml" afterPath="$PROJECT_DIR$/train_configs/train_vgg_towncentre_likelihood_learned_kappa.yml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/knet.iml" afterPath="$USER_HOME$/knet/.idea/knet.iml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/kitti_ms_cnn/scripts/config.yml" afterPath="$USER_HOME$/knet/experiments/kitti_ms_cnn/scripts/config.yml" />
@@ -56,7 +56,27 @@
         <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="154" column="61" selection-start-line="154" selection-start-column="61" selection-end-line="154" selection-end-column="61" />
+              <caret line="68" column="56" selection-start-line="68" selection-start-column="56" selection-end-line="68" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_vgg_towncentre_likelihood_learned_kappa.yml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/train_configs/train_vgg_towncentre_likelihood_learned_kappa.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.2742616">
+              <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="towncentre.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/towncentre.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="39" column="39" selection-start-line="39" selection-start-column="39" selection-end-line="39" selection-end-column="39" />
               <folding />
             </state>
           </provider>
@@ -84,11 +104,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_cvae_towncentre.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train_cvae_towncentre.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.877551">
-              <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="89" column="74" selection-start-line="89" selection-start-column="74" selection-end-line="89" selection-end-column="74" />
               <folding />
             </state>
           </provider>
@@ -110,18 +130,6 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="148" column="30" selection-start-line="148" selection-start-column="30" selection-end-line="148" selection-end-column="30" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="download_data.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/download_data.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-              <folding>
-                <element signature="e#23#62#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -186,12 +194,12 @@
         <option value="$PROJECT_DIR$/models/vgg.py" />
         <option value="$PROJECT_DIR$/utils/losses.py" />
         <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_likelihood_fixed_kappa.yml" />
-        <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_likelihood_learned_kappa.yml" />
         <option value="$PROJECT_DIR$/py_env/lib/python3.6/site-packages/keras/callbacks.py" />
         <option value="$PROJECT_DIR$/utils/custom_keras_callbacks.py" />
         <option value="$PROJECT_DIR$/models/cvae.py" />
         <option value="$PROJECT_DIR$/train_vgg_towncentre.py" />
         <option value="$PROJECT_DIR$/train_cvae_towncentre.py" />
+        <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_likelihood_learned_kappa.yml" />
       </list>
     </option>
   </component>
@@ -534,22 +542,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/keras/callbacks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="604" column="8" selection-start-line="604" selection-start-column="8" selection-end-line="604" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/losses.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -579,7 +571,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding>
-            <element signature="e#23#62#0" expanded="true" />
+            <element signature="e#23#62#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -643,7 +635,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="38" column="18" selection-start-line="38" selection-start-column="18" selection-end-line="38" selection-end-column="18" />
           <folding>
-            <element signature="e#23#62#0" expanded="true" />
+            <element signature="e#23#62#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -707,7 +699,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="38" column="18" selection-start-line="38" selection-start-column="18" selection-end-line="38" selection-end-column="18" />
           <folding>
-            <element signature="e#23#62#0" expanded="true" />
+            <element signature="e#23#62#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -732,7 +724,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="38" column="18" selection-start-line="38" selection-start-column="18" selection-end-line="38" selection-end-column="18" />
           <folding>
-            <element signature="e#23#62#0" expanded="true" />
+            <element signature="e#23#62#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -811,7 +803,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding>
-            <element signature="e#23#62#0" expanded="true" />
+            <element signature="e#23#62#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -891,14 +883,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="154" column="61" selection-start-line="154" selection-start-column="61" selection-end-line="154" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/train_vgg_towncentre_debug.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33755276">
@@ -915,10 +899,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/utils/towncentre.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="39" column="39" selection-start-line="39" selection-start-column="39" selection-end-line="39" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="68" column="56" selection-start-line="68" selection-start-column="56" selection-end-line="68" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.877551">
-          <caret line="99" column="0" selection-start-line="99" selection-start-column="0" selection-end-line="99" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="89" column="74" selection-start-line="89" selection-start-column="74" selection-end-line="89" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/train_vgg_towncentre_likelihood_learned_kappa.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2742616">
+          <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
           <folding />
         </state>
       </provider>
