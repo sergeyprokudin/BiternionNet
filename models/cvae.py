@@ -33,16 +33,16 @@ class CVAE:
         self.phi = Input(shape=[self.phi_shape])
         self.u = Input(shape=[self.n_u])
 
-        self.x_vgg_encoder = vgg.vgg_model(image_height=self.image_height,
+        self.x_vgg = vgg.vgg_model(image_height=self.image_height,
                                            image_width=self.image_width)(self.x)
 
-        self.x_vgg_prior = vgg.vgg_model(image_height=self.image_height,
-                                         image_width=self.image_width)(self.x)
+        # self.x_vgg_prior = vgg.vgg_model(image_height=self.image_height,
+        #                                  image_width=self.image_width)(self.x)
+        #
+        # self.x_vgg_decoder = vgg.vgg_model(image_height=self.image_height,
+        #                                    image_width=self.image_width)(self.x)
 
-        self.x_vgg_decoder = vgg.vgg_model(image_height=self.image_height,
-                                           image_width=self.image_width)(self.x)
-
-        self.x_vgg_shape = self.x_vgg_encoder.get_shape().as_list()[1]
+        self.x_vgg_shape = self.x_vgg.get_shape().as_list()[1]
 
         self.mu_encoder, self.log_sigma_encoder = self._encoder_mu_log_sigma()
 
@@ -51,7 +51,7 @@ class CVAE:
         self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_sigma_prior])
         self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_sigma_encoder])
 
-        self.x_vgg_u = concatenate([self.x_vgg_decoder, self.u_encoder])
+        self.x_vgg_u = concatenate([self.x_vgg, self.u_encoder])
 
         self.decoder_mu_seq, self.decoder_kappa_seq = self._decoder_net_seq()
 
@@ -67,7 +67,7 @@ class CVAE:
 
         self.full_model.compile(optimizer='adadelta', loss=self._cvae_elbo_loss_tf)
 
-        self.decoder_input = concatenate([self.x_vgg_decoder, self.u_prior])
+        self.decoder_input = concatenate([self.x_vgg, self.u_prior])
 
         self.decoder_model = Model(inputs=[self.x],
                                    outputs=concatenate([
@@ -78,7 +78,7 @@ class CVAE:
 
     def _encoder_mu_log_sigma(self):
 
-        x_vgg_phi = concatenate([self.x_vgg_encoder, self.phi])
+        x_vgg_phi = concatenate([self.x_vgg, self.phi])
 
         hidden = Dense(512, activation='relu')(Dense(512, activation='relu')(x_vgg_phi))
 
@@ -89,7 +89,7 @@ class CVAE:
 
     def _prior_mu_log_sigma(self):
 
-        hidden = Dense(512, activation='relu')(self.x_vgg_prior)
+        hidden = Dense(512, activation='relu')(self.x_vgg)
 
         mu_prior = Dense(self.n_u, activation='linear')(hidden)
         log_sigma_prior = Dense(self.n_u, activation='linear')(hidden)
