@@ -34,7 +34,7 @@ class CVAE:
         self.u = Input(shape=[self.n_u])
 
         self.x_vgg = vgg.vgg_model(image_height=self.image_height,
-                                           image_width=self.image_width)(self.x)
+                                   image_width=self.image_width)(self.x)
 
         # self.x_vgg_prior = vgg.vgg_model(image_height=self.image_height,
         #                                  image_width=self.image_width)(self.x)
@@ -65,7 +65,7 @@ class CVAE:
                                                      self.decoder_mu_seq(self.x_vgg_u),
                                                      self.decoder_kappa_seq(self.x_vgg_u)]))
 
-        self.full_model.compile(optimizer='adadelta', loss=self._cvae_elbo_loss_tf)
+        self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
         self.decoder_input = concatenate([self.x_vgg, self.u_prior])
 

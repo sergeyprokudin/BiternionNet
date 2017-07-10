@@ -147,6 +147,15 @@ def train():
                                                           period=1,
                                                           verbose=1)
 
+    lr_reducer = keras.callbacks.ReduceLROnPlateau(monitor='val_loss',
+                                                   factor=0.1,
+                                                   patience=5,
+                                                   verbose=1,
+                                                   mode='auto',
+                                                   epsilon=0.0001,
+                                                   cooldown=0,
+                                                   min_lr=0)
+
     print("logs could be found at %s" % experiment_dir)
 
     vgg_model.model.fit(x=xtr, y=ytr,
@@ -154,7 +163,7 @@ def train():
                         epochs=config['n_epochs'],
                         verbose=1,
                         validation_data=(xval, yval),
-                        callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+                        callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback, lr_reducer])
 
     final_model_ckpt_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.final.weigths.h5')
     vgg_model.model.save_weights(final_model_ckpt_file)

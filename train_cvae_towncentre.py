@@ -74,6 +74,15 @@ model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
                                                       period=1,
                                                       verbose=1)
 
+lr_reducer = keras.callbacks.ReduceLROnPlateau(monitor='val_loss',
+                                               factor=0.1,
+                                               patience=5,
+                                               verbose=1,
+                                               mode='auto',
+                                               epsilon=0.0001,
+                                               cooldown=0,
+                                               min_lr=0)
+
 # model_ckpt_callback = ModelCheckpointEveryNBatch(cvae_best_ckpt_path,
 #                                                  xval=[xval, yval_bit],
 #                                                  yval=yval_bit,
@@ -86,7 +95,7 @@ model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
 # In[6]:
 
 cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50, validation_data=([xval, yval_bit], yval_bit),
-                   callbacks=[model_ckpt_callback])
+                   callbacks=[model_ckpt_callback, lr_reducer])
 
 
 # #### Predictions using decoder part
