@@ -93,7 +93,7 @@ model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
 
 # In[6]:
 
-cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=200,
+cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50,
                           validation_data=([xval, yval_bit], yval_bit),
                           callbacks=[model_ckpt_callback])
 
