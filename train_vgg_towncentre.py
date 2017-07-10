@@ -144,7 +144,7 @@ def train():
                                                           mode='min',
                                                           save_best_only=True,
                                                           save_weights_only=True,
-                                                          period=5,
+                                                          period=1,
                                                           verbose=1)
 
     print("logs could be found at %s" % experiment_dir)

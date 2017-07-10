@@ -71,7 +71,7 @@ model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
                                                       mode='min',
                                                       save_best_only=True,
                                                       save_weights_only=True,
-                                                      period=5,
+                                                      period=1,
                                                       verbose=1)
 
 # model_ckpt_callback = ModelCheckpointEveryNBatch(cvae_best_ckpt_path,
