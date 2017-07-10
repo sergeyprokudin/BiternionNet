@@ -152,7 +152,7 @@ def train():
                                                    patience=5,
                                                    verbose=1,
                                                    mode='auto',
-                                                   epsilon=0.0001,
+                                                   epsilon=0.1,
                                                    cooldown=0,
                                                    min_lr=0)
 

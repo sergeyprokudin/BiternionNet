@@ -79,7 +79,7 @@ lr_reducer = keras.callbacks.ReduceLROnPlateau(monitor='val_loss',
                                                patience=5,
                                                verbose=1,
                                                mode='auto',
-                                               epsilon=0.0001,
+                                               epsilon=0.1,
                                                cooldown=0,
                                                min_lr=0)
 
@@ -94,8 +94,9 @@ lr_reducer = keras.callbacks.ReduceLROnPlateau(monitor='val_loss',
 
 # In[6]:
 
-cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50, validation_data=([xval, yval_bit], yval_bit),
-                   callbacks=[model_ckpt_callback, lr_reducer])
+cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=200,
+                          validation_data=([xval, yval_bit], yval_bit),
+                          callbacks=[model_ckpt_callback, lr_reducer])
 
 
 # #### Predictions using decoder part
