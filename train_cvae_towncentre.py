@@ -34,12 +34,21 @@ def main():
 
     for tid in range(0, n_trials):
 
+        trial_dir = os.path.join(experiment_dir, tid)
+        os.mkdir(trial_dir)
+
         cvae_model = CVAE(image_height=image_height,
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u)
 
-        cvae_best_ckpt_path = os.path.join(experiment_dir, 'cvae.full_model.trial_%d.best.weights.hdf5' % tid)
+        cvae_best_ckpt_path = os.path.join(trial_dir, 'cvae.full_model.trial_%d.best.weights.hdf5' % tid)
+
+        tensorboard_callback = keras.callbacks.TensorBoard(log_dir=trial_dir,
+                                                           histogram_freq=1)
+
+        train_csv_log = os.path.join(trial_dir, 'train.csv')
+        csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
         model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
                                                               monitor='val_loss',
@@ -51,7 +60,7 @@ def main():
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=1,
                                   validation_data=([xval, yval_bit], yval_bit),
-                                  callbacks=[model_ckpt_callback])
+                                  callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = CVAE(image_height=image_height,
                           image_width=image_width,
@@ -64,8 +73,9 @@ def main():
         trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
         trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
         results[tid] = trial_results
+
         if tid > 0:
-            if trial_results['validation']['elbo'] > results[best_trial_id]['elbo']:
+            if trial_results['validation']['elbo'] > results[best_trial_id]['validation']['elbo']:
                 best_trial_id = tid
 
     best_ckpt_path = results[best_trial_id]['ckpt_path']
