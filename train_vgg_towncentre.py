@@ -114,44 +114,69 @@ def train():
 
     optimizer = get_optimizer(config['optimizer_params'])
 
-    vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
+    best_trial_id = 0
+    n_trials = 5
+    results = dict()
 
-    tensorboard_callback = keras.callbacks.TensorBoard(log_dir=experiment_dir,
-                                                       histogram_freq=1)
+    for tid in range(0, n_trials):
 
-    train_csv_log = os.path.join(experiment_dir, 'train.csv')
-    csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
+        print("TRIAL %d" % tid)
+        trial_dir = os.path.join(experiment_dir, str(tid))
+        os.mkdir(trial_dir)
+        print("logs could be found at %s" % trial_dir)
 
-    best_model_weights_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.best.weights.h5')
+        vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
-    model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
-                                                          monitor='val_loss',
-                                                          mode='min',
-                                                          save_best_only=True,
-                                                          save_weights_only=True,
-                                                          period=1,
-                                                          verbose=1)
+        tensorboard_callback = keras.callbacks.TensorBoard(log_dir=trial_dir,
+                                                           histogram_freq=1)
 
-    # lr_reducer = keras.callbacks.ReduceLROnPlateau(monitor='val_loss',
-    #                                                factor=0.1,
-    #                                                patience=5,
-    #                                                verbose=1,
-    #                                                mode='auto',
-    #                                                epsilon=0.1,
-    #                                                cooldown=0,
-    #                                                min_lr=0)
+        train_csv_log = os.path.join(trial_dir, 'train.csv')
+        csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
-    print("logs could be found at %s" % experiment_dir)
+        best_model_weights_file = os.path.join(trial_dir, 'vgg_bit_' + config['loss'] + '_town.best.weights.h5')
 
-    vgg_model.model.fit(x=xtr, y=ytr,
-                        batch_size=config['batch_size'],
-                        epochs=config['n_epochs'],
-                        verbose=1,
-                        validation_data=(xval, yval),
-                        callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+        model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
+                                                              monitor='val_loss',
+                                                              mode='min',
+                                                              save_best_only=True,
+                                                              save_weights_only=True,
+                                                              period=1,
+                                                              verbose=1)
 
-    final_model_ckpt_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.final.weigths.h5')
-    vgg_model.model.save_weights(final_model_ckpt_file)
+        vgg_model.model.fit(x=xtr, y=ytr,
+                            batch_size=config['batch_size'],
+                            epochs=config['n_epochs'],
+                            verbose=1,
+                            validation_data=(xval, yval),
+                            callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+
+        # final_model_ckpt_file = os.path.join(trial_dir, 'vgg_bit_' + config['loss'] + '_town.final.weigths.h5')
+        # vgg_model.model.save_weights(final_model_ckpt_file)
+
+        best_model = vgg.BiternionVGG(image_height=image_height,
+                                      image_width=image_width,
+                                      n_channels=3,
+                                      predict_kappa=predict_kappa,
+                                      fixed_kappa_value=fixed_kappa_value)
+
+        best_model.model.load_weights(best_model_weights_file)
+
+        trial_results = dict()
+        print("evaluating model..")
+        trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+        trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
+        trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
+        results[tid] = trial_results
+
+        if tid > 0:
+            if trial_results['validation']['log_likelihood_mean'] > \
+                    results[best_trial_id]['validation']['log_likelihood_mean']:
+                best_trial_id = tid
+                print("Better validation loss achieved, current best trial: %d" % best_trial_id)
+
+    best_ckpt_path = results[best_trial_id]['ckpt_path']
+    overall_best_ckpt_path = os.path.join(experiment_dir, 'cvae.full_model.overall_best.weights.hdf5')
+    shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
     best_model = vgg.BiternionVGG(image_height=image_height,
                                   image_width=image_width,
@@ -159,19 +184,15 @@ def train():
                                   predict_kappa=predict_kappa,
                                   fixed_kappa_value=fixed_kappa_value)
 
-    best_model.model.load_weights(best_model_weights_file)
+    best_model.model.load_weights(overall_best_ckpt_path)
 
-    results = dict()
+    best_results = dict()
+    best_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+    best_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
+    best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
+    results['best'] = best_results
+
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
-
-    print("evaluating model..")
-
-    results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
-    results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
-    results['test'] = best_model.evaluate(xte, yte_deg, 'test')
-
-    print("best model store to %s" % best_model_weights_file)
-
     with open(results_yml_file, 'w') as results_yml_file:
         yaml.dump(results, results_yml_file, default_flow_style=False)
 

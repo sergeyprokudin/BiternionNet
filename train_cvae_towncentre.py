@@ -72,6 +72,7 @@ def main():
         trial_results['ckpt_path'] = cvae_best_ckpt_path
         trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
         trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
+        trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
         results[tid] = trial_results
 
         if tid > 0:
