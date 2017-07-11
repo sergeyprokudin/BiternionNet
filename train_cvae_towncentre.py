@@ -34,7 +34,7 @@ def main():
 
     for tid in range(0, n_trials):
 
-        trial_dir = os.path.join(experiment_dir, tid)
+        trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
 
         cvae_model = CVAE(image_height=image_height,
