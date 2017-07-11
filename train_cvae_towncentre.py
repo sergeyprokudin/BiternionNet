@@ -15,7 +15,8 @@ def main():
     exp_id = get_experiment_id()
     root_log_dir = 'logs/cvae/'
 
-    exp_dir = os.path.join(root_log_dir, exp_id)
+    experiment_dir = os.path.join(root_log_dir, exp_id)
+    os.mkdir(experiment_dir)
 
     xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre('data/TownCentre.pkl.gz',
                                                                  canonical_split=True,
@@ -38,7 +39,7 @@ def main():
                           n_channels=n_channels,
                           n_hidden_units=n_u)
 
-        cvae_best_ckpt_path = os.path.join(exp_dir, 'cvae.full_model.trial_%d.best.weights.hdf5' % tid)
+        cvae_best_ckpt_path = os.path.join(experiment_dir, 'cvae.full_model.trial_%d.best.weights.hdf5' % tid)
 
         model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
                                                               monitor='val_loss',
@@ -68,7 +69,7 @@ def main():
                 best_trial_id = tid
 
     best_ckpt_path = results[best_trial_id]['ckpt_path']
-    overall_best_ckpt_path = os.path.join(exp_dir, 'cvae.full_model.overall_best.weights.hdf5')
+    overall_best_ckpt_path = os.path.join(experiment_dir, 'cvae.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
     best_model = CVAE(image_height=image_height,
@@ -84,10 +85,10 @@ def main():
 
     results['best'] = best_results
 
-    results_yml_file = os.path.join(exp_dir, 'results.yml')
+    results_yml_file = os.path.join(experiment_dir, 'results.yml')
     with open(results_yml_file, 'w') as results_yml_file:
         yaml.dump(results, results_yml_file, default_flow_style=False)
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
