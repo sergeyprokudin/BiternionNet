@@ -163,6 +163,7 @@ def train():
 
         trial_results = dict()
         print("evaluating model..")
+        trial_results['ckpt_path'] = best_model_weights_file
         trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
         trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
         trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
