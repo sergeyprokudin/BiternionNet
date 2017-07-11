@@ -34,6 +34,7 @@ def main():
 
     for tid in range(0, n_trials):
 
+        print("TRIAL %d" % tid)
         trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
 
@@ -57,7 +58,7 @@ def main():
                                                               period=1,
                                                               verbose=1)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=1,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
@@ -76,6 +77,9 @@ def main():
         if tid > 0:
             if trial_results['validation']['elbo'] > results[best_trial_id]['validation']['elbo']:
                 best_trial_id = tid
+                print("Better validation loss achieved, current best trial: %d" % best_trial_id)
+
+    print("Loading best model (trial_id = %d)" % best_trial_id)
 
     best_ckpt_path = results[best_trial_id]['ckpt_path']
     overall_best_ckpt_path = os.path.join(experiment_dir, 'cvae.full_model.overall_best.weights.hdf5')
