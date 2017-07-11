@@ -82,12 +82,6 @@ def train():
     predict_kappa = config['predict_kappa']
     fixed_kappa_value = config['fixed_kappa_value']
 
-    vgg_model = vgg.BiternionVGG(image_height=image_height,
-                                 image_width=image_width,
-                                 n_channels=3,
-                                 predict_kappa=predict_kappa,
-                                 fixed_kappa_value=fixed_kappa_value)
-
     if config['loss'] == 'cosine':
         print("using cosine loss..")
         loss_te = cosine_loss_tf
@@ -124,6 +118,12 @@ def train():
         trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
         print("logs could be found at %s" % trial_dir)
+
+        vgg_model = vgg.BiternionVGG(image_height=image_height,
+                                     image_width=image_width,
+                                     n_channels=3,
+                                     predict_kappa=predict_kappa,
+                                     fixed_kappa_value=fixed_kappa_value)
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
