@@ -1,119 +1,93 @@
-
-# coding: utf-8
-
-# In[2]:
-
 import keras
+import os
+import shutil
+import yaml
 
 from models.cvae import CVAE
 from utils.angles import deg2bit, bit2deg
 from utils.towncentre import load_towncentre
-from utils.custom_keras_callbacks import ModelCheckpointEveryNBatch
-
-# #### TownCentre data
-
-# In[3]:
-
-xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre('data/TownCentre.pkl.gz', 
-                                                             canonical_split=True,
-                                                             verbose=1)
-image_height, image_width = xtr.shape[1], xtr.shape[2]
-ytr_bit = deg2bit(ytr_deg)
-yval_bit = deg2bit(yval_deg)
-yte_bit = deg2bit(yte_deg)
-
-image_height, image_width, n_channels = xtr.shape[1:]
-flatten_x_shape = xtr[0].flatten().shape[0]
-phi_shape = yte_bit.shape[1]
+from utils.experiements import get_experiment_id
 
 
-# #### Notation
-# 
-# $x$ - image,
-# 
-# $\phi$ - head angle,
-# 
-# $u$ - hidden variable
+def main():
 
-# #### Prior network
-# 
-# $ p(u|x) \sim \mathcal{N}(\mu_1(x, \theta), \sigma_1(x, \theta)) $
-# 
-# #### Encoder network
-# 
-# $ q(u|x,\phi) \sim \mathcal{N}(\mu_2(x, \theta), \sigma_2(x, \theta)) $
-# 
-# #### Sample  $u \sim \{p(u|x), q(u|x,\phi) \}$
-# 
-# #### Decoder network
-# 
-# $p(\phi|u,x) \sim \mathcal{VM}(\mu(x,u,\theta''), \kappa(x,u,\theta'')) $
+    n_u = 8
+    exp_id = get_experiment_id()
+    root_log_dir = 'logs/cvae/'
 
-# In[4]:
+    exp_dir = os.path.join(root_log_dir, exp_id)
 
-n_u = 8
+    xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre('data/TownCentre.pkl.gz',
+                                                                 canonical_split=True,
+                                                                 verbose=1)
+    ytr_bit = deg2bit(ytr_deg)
+    yval_bit = deg2bit(yval_deg)
+    yte_bit = deg2bit(yte_deg)
 
-cvae_model = CVAE(n_hidden_units=n_u)
+    image_height, image_width, n_channels = xtr.shape[1:]
+    phi_shape = yte_bit.shape[1]
 
-# #### Training
+    best_trial_id = 0
+    n_trials = 5
+    results = dict()
 
-# In[5]:
+    for tid in range(0, n_trials):
 
+        cvae_model = CVAE(image_height=image_height,
+                          image_width=image_width,
+                          n_channels=n_channels,
+                          n_hidden_units=n_u)
 
-from utils.custom_keras_callbacks import SideModelCheckpoint
+        cvae_best_ckpt_path = os.path.join(exp_dir, 'cvae.full_model.trial_%d.best.weights.hdf5' % tid)
 
-cvae_best_ckpt_path = 'logs/cvae/cvae.full_model.best.weights.hdf5'
-cvae_final_ckpt_path = 'logs/cvae/cvae.full_model.final.weights.hdf5'
+        model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
+                                                              monitor='val_loss',
+                                                              mode='min',
+                                                              save_best_only=True,
+                                                              save_weights_only=True,
+                                                              period=1,
+                                                              verbose=1)
 
-model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
-                                                      monitor='val_loss',
-                                                      mode='min',
-                                                      save_best_only=True,
-                                                      save_weights_only=True,
-                                                      period=1,
-                                                      verbose=1)
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=1,
+                                  validation_data=([xval, yval_bit], yval_bit),
+                                  callbacks=[model_ckpt_callback])
 
-# lr_reducer = keras.callbacks.ReduceLROnPlateau(monitor='val_loss',
-#                                                factor=0.1,
-#                                                patience=5,
-#                                                verbose=1,
-#                                                mode='auto',
-#                                                epsilon=0.1,
-#                                                cooldown=0,
-#                                                min_lr=0)
+        best_model = CVAE(image_height=image_height,
+                          image_width=image_width,
+                          n_channels=n_channels,
+                          n_hidden_units=n_u)
+        best_model.full_model.load_weights(cvae_best_ckpt_path)
 
-# model_ckpt_callback = ModelCheckpointEveryNBatch(cvae_best_ckpt_path,
-#                                                  xval=[xval, yval_bit],
-#                                                  yval=yval_bit,
-#                                                  save_best_only=True,
-#                                                  save_weights_only=True,
-#                                                  verbose=1,
-#                                                  period=50)
+        trial_results = dict()
+        trial_results['ckpt_path'] = cvae_best_ckpt_path
+        trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+        trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
+        results[tid] = trial_results
+        if tid > 0:
+            if trial_results['validation']['elbo'] > results[best_trial_id]['elbo']:
+                best_trial_id = tid
 
+    best_ckpt_path = results[best_trial_id]['ckpt_path']
+    overall_best_ckpt_path = os.path.join(exp_dir, 'cvae.full_model.overall_best.weights.hdf5')
+    shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
-# In[6]:
+    best_model = CVAE(image_height=image_height,
+                      image_width=image_width,
+                      n_channels=n_channels,
+                      n_hidden_units=n_u)
+    best_model.full_model.load_weights(overall_best_ckpt_path)
 
-cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50,
-                          validation_data=([xval, yval_bit], yval_bit),
-                          callbacks=[model_ckpt_callback])
+    best_results = dict()
+    best_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+    best_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
+    best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
 
-cvae_model.full_model.save_weights(cvae_final_ckpt_path)
+    results['best'] = best_results
 
-
-# #### Predictions using decoder part
-# 
-# $ \phi_i = \mu(x_i,u_i,\theta'') $
-
-# In[10]:
-
-best_model = CVAE(n_hidden_units=n_u)
-best_model.full_model.load_weights(cvae_best_ckpt_path)
+    results_yml_file = os.path.join(exp_dir, 'results.yml')
+    with open(results_yml_file, 'w') as results_yml_file:
+        yaml.dump(results, results_yml_file, default_flow_style=False)
 
 
-# In[12]:
-
-results = dict()
-results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
-results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
-results['test'] = best_model.evaluate(xte, yte_deg, 'test')
-
+if __name__=='__main__':
+    main()

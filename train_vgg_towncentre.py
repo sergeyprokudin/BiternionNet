@@ -7,20 +7,13 @@ import yaml
 import shutil
 
 from models import vgg
-from utils.angles import deg2bit, bit2deg
-from utils.losses import mad_loss_tf, cosine_loss_tf, von_mises_loss_tf, maad_from_deg
+from utils.angles import deg2bit
+from utils.losses import mad_loss_tf, cosine_loss_tf, von_mises_loss_tf
 from utils.towncentre import load_towncentre
-from utils.experiements import get_experiment_id, set_logging
+from utils.experiements import get_experiment_id
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np, von_mises_neg_log_likelihood_keras
-from utils.custom_keras_callbacks import ModelCheckpointEveryNBatch
-
-from scipy.stats import sem
 
 from keras import backend as K
-from keras.layers import Input, Dense, Lambda
-from keras.models import Model
-from keras.models import load_model
-from keras.layers.merge import concatenate
 
 
 def get_optimizer(optimizer_params):
@@ -130,14 +123,6 @@ def train():
     csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
     best_model_weights_file = os.path.join(experiment_dir, 'vgg_bit_' + config['loss'] + '_town.best.weights.h5')
-
-    # model_ckpt_callback = ModelCheckpointEveryNBatch(best_model_weights_file,
-    #                                                  xval=xval,
-    #                                                  yval=yval,
-    #                                                  save_best_only=True,
-    #                                                  save_weights_only=True,
-    #                                                  verbose=1,
-    #                                                  period=50)
 
     model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
                                                           monitor='val_loss',
