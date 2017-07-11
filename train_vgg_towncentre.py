@@ -115,7 +115,7 @@ def train():
     optimizer = get_optimizer(config['optimizer_params'])
 
     best_trial_id = 0
-    n_trials = 5
+    n_trials = 10
     results = dict()
 
     for tid in range(0, n_trials):
