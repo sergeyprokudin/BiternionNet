@@ -161,7 +161,6 @@ def train():
         best_model.model.load_weights(best_model_weights_file)
 
         trial_results = dict()
-        print("evaluating model..")
         trial_results['ckpt_path'] = best_model_weights_file
         trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
         trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
@@ -174,6 +173,7 @@ def train():
                 best_trial_id = tid
                 print("Better validation loss achieved, current best trial: %d" % best_trial_id)
 
+    print("evaluating model..")
     best_ckpt_path = results[best_trial_id]['ckpt_path']
     overall_best_ckpt_path = os.path.join(experiment_dir, 'cvae.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
