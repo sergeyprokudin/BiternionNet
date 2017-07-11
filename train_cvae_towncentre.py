@@ -44,8 +44,7 @@ def main():
 
         cvae_best_ckpt_path = os.path.join(trial_dir, 'cvae.full_model.trial_%d.best.weights.hdf5' % tid)
 
-        tensorboard_callback = keras.callbacks.TensorBoard(log_dir=trial_dir,
-                                                           histogram_freq=1)
+        tensorboard_callback = keras.callbacks.TensorBoard(log_dir=trial_dir)
 
         train_csv_log = os.path.join(trial_dir, 'train.csv')
         csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
