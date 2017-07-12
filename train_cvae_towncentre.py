@@ -58,7 +58,7 @@ def main():
                                                               period=1,
                                                               verbose=1)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=20,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
@@ -98,6 +98,8 @@ def main():
     best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
 
     results['best'] = best_results
+
+    import ipdb; ipdb.set_trace()
 
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
     with open(results_yml_file, 'w') as results_yml_file:
