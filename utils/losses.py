@@ -178,7 +178,6 @@ def gaussian_kl_divergence_np(mu1, ln_var1, mu2, ln_var2):
 
     shape = mu1.shape
 
-    batch_size = shape[0]
     n = shape[1]
 
     log_var_diff = ln_var1 - ln_var2
