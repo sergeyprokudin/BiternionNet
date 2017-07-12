@@ -29,7 +29,7 @@ def main():
     phi_shape = yte_bit.shape[1]
 
     best_trial_id = 0
-    n_trials = 10
+    n_trials = 1
     results = dict()
 
     for tid in range(0, n_trials):

@@ -175,7 +175,7 @@ def train():
 
     print("evaluating model..")
     best_ckpt_path = results[best_trial_id]['ckpt_path']
-    overall_best_ckpt_path = os.path.join(experiment_dir, 'cvae.full_model.overall_best.weights.hdf5')
+    overall_best_ckpt_path = os.path.join(experiment_dir, 'vgg.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
     best_model = vgg.BiternionVGG(image_height=image_height,
