@@ -126,7 +126,7 @@ class CVAE:
         kappa_pred = model_output[:, self.n_u*4+2:]
         log_likelihood = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion')
         kl = gaussian_kl_divergence_tf(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
-        return K.mean(-log_likelihood + 0.5*kl)
+        return K.mean(-log_likelihood + 0.9*kl)
 
     def _cvae_elbo_loss_np(self, y_true, y_pred):
         mu_prior = y_pred[:, 0:self.n_u]
@@ -151,6 +151,8 @@ class CVAE:
 
         results['elbo'] = np.mean(-elbo)
         results['elbo_sem'] = sem(-elbo)
+        results['kl'] = np.mean(kl)
+        results['kl_sem'] = sem(kl)
 
         ypreds = self.decoder_model.predict(x)
         ypreds_bit = ypreds[:, 0:2]
@@ -173,6 +175,8 @@ class CVAE:
             print("MAAD error (%s) : %f ± %fSEM" % (data_part, results['maad_loss'], results['maad_loss_sem']))
 
             print("ELBO (%s) : %f ± %fSEM" % (data_part, results['elbo'], results['elbo_sem']))
+
+            print("KL-div (%s) : %f ± %fSEM" % (data_part, results['kl'], results['kl_sem']))
 
             print("log-likelihood (%s) : %f±%fSEM" % (data_part,
                                                       results['log_likelihood'],
