@@ -2,6 +2,7 @@ import keras
 import os
 import shutil
 import yaml
+import numpy as np
 
 from models.cvae import CVAE
 from utils.angles import deg2bit, bit2deg
@@ -38,11 +39,6 @@ def main():
         trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
 
-        cvae_model = CVAE(image_height=image_height,
-                          image_width=image_width,
-                          n_channels=n_channels,
-                          n_hidden_units=n_u)
-
         cvae_best_ckpt_path = os.path.join(trial_dir, 'cvae.full_model.trial_%d.best.weights.hdf5' % tid)
 
         tensorboard_callback = keras.callbacks.TensorBoard(log_dir=trial_dir)
@@ -53,19 +49,50 @@ def main():
         model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
                                                               monitor='val_loss',
                                                               mode='min',
-                                                              save_best_only=True,
+                                                              # save_best_only=True,
                                                               save_weights_only=True,
                                                               period=1,
                                                               verbose=1)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=100,
+        cvae_model = CVAE(image_height=image_height,
+                          image_width=image_width,
+                          n_channels=n_channels,
+                          n_hidden_units=n_u,
+                          kl_weight=0.0)
+
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=10,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+
+        for kl_weight in np.arange(0.1, 1.1, 0.1):
+
+            csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
+
+            model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
+                                                                  monitor='val_loss',
+                                                                  mode='min',
+                                                                  # save_best_only=True,
+                                                                  save_weights_only=True,
+                                                                  period=1,
+                                                                  verbose=1)
+
+            cvae_model = CVAE(image_height=image_height,
+                              image_width=image_width,
+                              n_channels=n_channels,
+                              n_hidden_units=n_u,
+                              kl_weight=kl_weight)
+
+            cvae_model.full_model.load_weights(model_ckpt_callback)
+
+            cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=10,
+                                      validation_data=([xval, yval_bit], yval_bit),
+                                      callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = CVAE(image_height=image_height,
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u)
+
         best_model.full_model.load_weights(cvae_best_ckpt_path)
 
         trial_results = dict()

@@ -21,13 +21,15 @@ class CVAE:
                  image_height=50,
                  image_width=50,
                  n_channels=3,
-                 n_hidden_units=8):
+                 n_hidden_units=8,
+                 kl_weight=1.0):
 
         self.n_u = n_hidden_units
         self.image_height = image_height
         self.image_width = image_width
         self.n_channels = n_channels
         self.phi_shape = 2
+        self.kl_weight = kl_weight
 
         self.x = Input(shape=[self.image_height, self.image_width, self.n_channels])
         self.phi = Input(shape=[self.phi_shape])
@@ -126,7 +128,7 @@ class CVAE:
         kappa_pred = model_output[:, self.n_u*4+2:]
         log_likelihood = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion')
         kl = gaussian_kl_divergence_tf(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
-        return K.mean(-log_likelihood + 0.7*kl)
+        return K.mean(-log_likelihood + kl)
 
     def _cvae_elbo_loss_np(self, y_true, y_pred):
         mu_prior = y_pred[:, 0:self.n_u]
