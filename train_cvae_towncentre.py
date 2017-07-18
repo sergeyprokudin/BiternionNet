@@ -58,13 +58,13 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          kl_weight=0.0)
+                          kl_weight=0.5)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=10,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=30,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
-        for kl_weight in np.arange(0.2, 1.0, 0.2):
+        for kl_weight in np.arange(1.0, 2.0, 1.0):
 
             print('kl weight: %f' % kl_weight)
 
