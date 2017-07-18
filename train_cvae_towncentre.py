@@ -49,7 +49,7 @@ def main():
         model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
                                                               monitor='val_loss',
                                                               mode='min',
-                                                              # save_best_only=True,
+                                                              save_best_only=True,
                                                               save_weights_only=True,
                                                               period=1,
                                                               verbose=1)
@@ -60,18 +60,20 @@ def main():
                           n_hidden_units=n_u,
                           kl_weight=0.0)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=10,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=30,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
-        for kl_weight in np.arange(0.2, 1.2, 0.2):
+        for kl_weight in np.arange(1.0, 2.0, 1.0):
+
+            print('kl weight: %f' % kl_weight)
 
             csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
             model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
                                                                   monitor='val_loss',
                                                                   mode='min',
-                                                                  # save_best_only=True,
+                                                                  save_best_only=True,
                                                                   save_weights_only=True,
                                                                   period=1,
                                                                   verbose=1)
@@ -84,7 +86,7 @@ def main():
 
             cvae_model.full_model.load_weights(cvae_best_ckpt_path)
 
-            cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=10,
+            cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=30,
                                       validation_data=([xval, yval_bit], yval_bit),
                                       callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
@@ -125,8 +127,6 @@ def main():
     best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
 
     results['best'] = best_results
-
-    import ipdb; ipdb.set_trace()
 
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
     with open(results_yml_file, 'w') as results_yml_file:
