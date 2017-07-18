@@ -60,7 +60,7 @@ def main():
                           n_hidden_units=n_u,
                           kl_weight=0.0)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=1,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=10,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
@@ -84,7 +84,7 @@ def main():
 
             cvae_model.full_model.load_weights(cvae_best_ckpt_path)
 
-            cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=1,
+            cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=10,
                                       validation_data=([xval, yval_bit], yval_bit),
                                       callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
