@@ -113,6 +113,7 @@ class BiternionVGG:
 
         log_likelihoods = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds,
                                                       input_type='biternion')
+
         results['log_likelihood_mean'] = float(np.mean(log_likelihoods))
         results['log_likelihood_sem'] = float(sem(log_likelihoods, axis=None))
         print("log-likelihood (%s) : %f ± %fSEM" % (data_part,
