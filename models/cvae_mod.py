@@ -149,10 +149,13 @@ class CVAE:
         results = dict()
 
         cvae_preds = self.full_model.predict([x, ytrue_bit])
-        _, _, kl = self._cvae_elbo_loss_np(ytrue_bit, cvae_preds)
+        elbo, _, kl = self._cvae_elbo_loss_np(ytrue_bit, cvae_preds)
 
         results['kl'] = np.mean(kl)
         results['kl_sem'] = sem(kl)
+
+        results['elbo'] = np.mean(-elbo)
+        results['elbo_sem'] = sem(-elbo)
 
         ypreds = self.decoder_model.predict(x)
         ypreds_bit = ypreds[:, 0:2]
@@ -170,9 +173,6 @@ class CVAE:
         results['log_likelihood'] = np.mean(log_likelihood_loss)
         results['log_likelihood_loss_sem'] = sem(log_likelihood_loss)
 
-        elbo = log_likelihood_loss + kl
-        results['elbo'] = np.mean(-elbo)
-        results['elbo_sem'] = sem(-elbo)
 
         if verbose:
 
