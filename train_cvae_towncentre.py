@@ -64,7 +64,7 @@ def main():
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
-        for kl_weight in np.arange(0.1, 1.1, 0.1):
+        for kl_weight in np.arange(0.2, 1.2, 0.2):
 
             csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
