@@ -58,41 +58,40 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          kl_weight=0.5)
+                          kl_weight=1.0)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=20,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
-        for kl_weight in np.arange(0.75, 1.25, 0.25):
-
-            print('kl weight: %f' % kl_weight)
-
-            csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
-
-            model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
-                                                                  monitor='val_loss',
-                                                                  mode='min',
-                                                                  save_best_only=True,
-                                                                  save_weights_only=True,
-                                                                  period=1,
-                                                                  verbose=1)
-
-            cvae_model = CVAE(image_height=image_height,
-                              image_width=image_width,
-                              n_channels=n_channels,
-                              n_hidden_units=n_u,
-                              kl_weight=kl_weight)
-
-            cvae_model.full_model.load_weights(cvae_best_ckpt_path)
-
-            cvae_model.evaluate(xval, yval_deg, 'validation')
-            cvae_model.evaluate(xte, yte_deg, 'test')
-
-            cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=20,
-                                      validation_data=([xval, yval_bit], yval_bit),
-                                      callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
-
+        # for kl_weight in np.arange(0.75, 1.25, 0.25):
+        #
+        #     print('kl weight: %f' % kl_weight)
+        #
+        #     csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
+        #
+        #     model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
+        #                                                           monitor='val_loss',
+        #                                                           mode='min',
+        #                                                           save_best_only=True,
+        #                                                           save_weights_only=True,
+        #                                                           period=1,
+        #                                                           verbose=1)
+        #
+        #     cvae_model = CVAE(image_height=image_height,
+        #                       image_width=image_width,
+        #                       n_channels=n_channels,
+        #                       n_hidden_units=n_u,
+        #                       kl_weight=kl_weight)
+        #
+        #     cvae_model.full_model.load_weights(cvae_best_ckpt_path)
+        #
+        #     cvae_model.evaluate(xval, yval_deg, 'validation')
+        #     cvae_model.evaluate(xte, yte_deg, 'test')
+        #
+        #     cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=20,
+        #                               validation_data=([xval, yval_bit], yval_bit),
+        #                               callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = CVAE(image_height=image_height,
                           image_width=image_width,
