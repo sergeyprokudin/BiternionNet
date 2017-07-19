@@ -58,7 +58,7 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          kl_weight=0.9)
+                          kl_weight=0.8)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50,
                                   validation_data=([xval, yval_bit], yval_bit),
@@ -89,7 +89,7 @@ def main():
             cvae_model.evaluate(xval, yval_deg, 'validation')
             cvae_model.evaluate(xte, yte_deg, 'test')
 
-            cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=20,
+            cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50,
                                       validation_data=([xval, yval_bit], yval_bit),
                                       callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
