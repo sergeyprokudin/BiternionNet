@@ -32,6 +32,7 @@ def main():
     best_trial_id = 0
     n_trials = 1
     results = dict()
+    n_epochs = 50
 
     for tid in range(0, n_trials):
 
@@ -60,7 +61,7 @@ def main():
                           n_hidden_units=n_u,
                           kl_weight=0.5)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=200,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=n_epochs,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
@@ -89,7 +90,10 @@ def main():
             cvae_model.evaluate(xval, yval_deg, 'validation')
             cvae_model.evaluate(xte, yte_deg, 'test')
 
-            cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50,
+            if kl_weight == 1.0:
+                n_epochs = 100
+
+            cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=n_epochs,
                                       validation_data=([xval, yval_bit], yval_bit),
                                       callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
