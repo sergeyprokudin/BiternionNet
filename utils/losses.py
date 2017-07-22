@@ -47,7 +47,7 @@ def bessel_approx_np_0(x, m=5):
     x = np.asarray(x).reshape(-1, 1)
     deg = np.arange(0, m, 1)*2
     x_tiled = np.tile(x, [1, m])
-    deg_tiled = np.tile(deg, [x.shape[0],1])
+    deg_tiled = np.tile(deg, [x.shape[0], 1])
     coef_tiled = np.tile(bessel_taylor_coefs[0:m].reshape(1, m), [x.shape[0], 1])
     return np.sum(np.power(x_tiled, deg_tiled)*coef_tiled, axis=1)
 
