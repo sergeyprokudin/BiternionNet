@@ -32,7 +32,7 @@ def main():
     best_trial_id = 0
     n_trials = 1
     results = dict()
-    n_epochs = 50
+    n_epochs = 5
 
     for tid in range(0, n_trials):
 
@@ -65,7 +65,7 @@ def main():
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
-        for kl_weight in np.arange(0.75, 1.25, 0.25):
+        for kl_weight in np.arange(0.6, 1.1, 0.1):
 
             print('kl weight: %f' % kl_weight)
 
