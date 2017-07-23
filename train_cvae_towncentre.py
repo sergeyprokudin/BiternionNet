@@ -65,7 +65,9 @@ def main():
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
-        for kl_weight in np.arange(0.6, 1.1, 0.1):
+        kl_weight_range = [0.6, 0.7, 0.8, 0.9, 1.0]
+
+        for kl_weight in kl_weight_range:
 
             print('kl weight: %f' % kl_weight)
 
