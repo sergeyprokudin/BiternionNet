@@ -91,7 +91,7 @@ def main():
             cvae_model.evaluate(xte, yte_deg, 'test')
 
             if kl_weight == 1.0:
-                n_epochs = 100
+                n_epochs = 50
 
             cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=n_epochs,
                                       validation_data=([xval, yval_bit], yval_bit),
