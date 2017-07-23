@@ -50,7 +50,8 @@ class CVAE:
 
         self.mu_prior, self.log_sigma_prior = self._prior_mu_log_sigma()
 
-        self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_sigma_prior])
+        # self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_sigma_prior])
+        self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
         self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_sigma_encoder])
 
         self.x_vgg_u = concatenate([self.x_vgg, self.u_encoder])
@@ -103,6 +104,11 @@ class CVAE:
         eps = K.random_normal(shape=[self.n_u], mean=0., stddev=1.)
         return mu + K.exp(log_sigma / 2) * eps
 
+    def _sample_normal(self, args):
+        mu, log_sigma = args
+        eps = K.random_normal(shape=[self.n_u], mean=0., stddev=1.)
+        return mu*0 + eps
+
     def _decoder_net_seq(self):
         decoder_mu = Sequential()
         decoder_mu.add(Dense(512, activation='relu',input_shape=[self.x_vgg_shape + self.n_u]))
@@ -150,13 +156,16 @@ class CVAE:
         results = dict()
 
         cvae_preds = self.full_model.predict([x, ytrue_bit])
-        elbo, _, kl = self._cvae_elbo_loss_np(ytrue_bit, cvae_preds)
+        elbo, ll, kl = self._cvae_elbo_loss_np(ytrue_bit, cvae_preds)
 
         results['elbo'] = np.mean(elbo)
         results['elbo_sem'] = sem(elbo)
 
         results['kl'] = np.mean(kl)
         results['kl_sem'] = sem(kl)
+
+        results['log_likelihood'] = np.mean(ll)
+        results['log_likelihood_loss_sem'] = sem(ll)
 
         ypreds = self.decoder_model.predict(x)
         ypreds_bit = ypreds[:, 0:2]
@@ -168,11 +177,11 @@ class CVAE:
         results['maad_loss'] = np.mean(loss)
         results['maad_loss_sem'] = sem(loss)
 
-        log_likelihood_loss = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds,
-                                                          input_type='biternion')
+        # log_likelihood_loss = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds,
+        #                                                   input_type='biternion')
 
-        results['log_likelihood'] = np.mean(log_likelihood_loss)
-        results['log_likelihood_loss_sem'] = sem(log_likelihood_loss)
+        # results['log_likelihood'] = np.mean(log_likelihood_loss)
+        # results['log_likelihood_loss_sem'] = sem(log_likelihood_loss)
 
         if verbose:
 
@@ -182,7 +191,7 @@ class CVAE:
 
             print("KL-div (%s) : %f ± %fSEM" % (data_part, results['kl'], results['kl_sem']))
 
-            print("log-likelihood (%s) : %f±%fSEM" % (data_part,
-                                                      results['log_likelihood'],
-                                                      results['log_likelihood_loss_sem']))
+            # print("log-likelihood (%s) : %f±%fSEM" % (data_part,
+            #                                           results['log_likelihood'],
+            #                                           results['log_likelihood_loss_sem']))
         return results
