@@ -32,7 +32,7 @@ def main():
     best_trial_id = 0
     n_trials = 1
     results = dict()
-    n_epochs = 100
+    n_epochs = 50
 
     for tid in range(0, n_trials):
 
