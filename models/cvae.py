@@ -50,8 +50,8 @@ class CVAE:
 
         self.mu_prior, self.log_sigma_prior = self._prior_mu_log_sigma()
 
-        # self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_sigma_prior])
-        self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
+        self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_sigma_prior])
+        # self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
         self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_sigma_encoder])
 
         self.x_vgg_u = concatenate([self.x_vgg, self.u_encoder])
