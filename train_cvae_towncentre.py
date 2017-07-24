@@ -90,7 +90,7 @@ def main():
         encoder_preds_tr = cvae_model.encoder_model.predict([xtr, ytr_bit])
         encoder_preds_val = cvae_model.encoder_model.predict([xval, yval_bit])
 
-        cvae_model.prior_model.fit([xtr, ytr_bit], [encoder_preds_tr], batch_size=25, epochs=n_epochs,
+        cvae_model.prior_model.fit([xtr, ytr_bit], [encoder_preds_tr], batch_size=50, epochs=25,
                                   validation_data=([xval, yval_bit], encoder_preds_val),
                                   callbacks=[model_ckpt_callback])
 
