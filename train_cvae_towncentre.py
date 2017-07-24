@@ -4,7 +4,7 @@ import shutil
 import yaml
 import numpy as np
 
-from models.cvae import CVAE
+from models.cvae_mod import CVAE
 from utils.angles import deg2bit, bit2deg
 from utils.towncentre import load_towncentre
 from utils.experiements import get_experiment_id
