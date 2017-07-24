@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ModelAnalysis.ipynb" afterPath="$PROJECT_DIR$/ModelAnalysis.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/cvae_mod.py" afterPath="$PROJECT_DIR$/models/cvae_mod.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_cvae_towncentre.py" afterPath="$PROJECT_DIR$/train_cvae_towncentre.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -27,14 +30,14 @@
     <favorites_list name="BiternionNet" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.47051027">
+    <splitter split-orientation="horizontal" split-proportion="0.509609">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="cvae_mod.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/models/cvae_mod.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-0.9803094">
-                  <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.6919831">
+                  <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -95,8 +98,8 @@
           <file leaf-file-name="train_cvae_towncentre.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.57383966">
-                  <caret line="77" column="30" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
+                <state vertical-scroll-proportion="0.095639944">
+                  <caret line="64" column="39" selection-start-line="64" selection-start-column="39" selection-end-line="64" selection-end-column="39" />
                   <folding />
                 </state>
               </provider>
@@ -499,7 +502,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20537125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -507,7 +510,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24898374" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24898374" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -552,40 +555,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/utils/losses.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="221" column="28" selection-start-line="221" selection-start-column="28" selection-end-line="221" selection-end-column="28" />
-          <folding>
-            <marker date="1500886561000" expanded="true" signature="0:130" placeholder="import ..." />
-            <marker date="1500886561000" expanded="true" signature="170:230" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="267:336" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="376:522" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="574:705" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="757:960" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="1752:2048" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="2080:2397" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="2428:3431" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="2502:3117" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="3155:3256" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="3462:4317" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="3528:4139" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="4177:4218" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="4405:5321" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="4410:4835" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1500886561000" expanded="true" signature="5409:6542" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="5414:5860" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1500886561000" expanded="true" signature="6590:6966" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="6595:6794" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1500886561000" expanded="true" signature="7027:7351" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="7412:7801" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="7891:8321" placeholder="..." />
-            <marker date="1500886561000" expanded="true" signature="7896:8160" placeholder="&quot;&quot;&quot;...&quot;&quot;&quot;" />
-            <marker date="1500886561000" expanded="true" signature="8360:8480" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -972,18 +941,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/keras/layers/core.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="791" column="8" selection-start-line="791" selection-start-column="8" selection-end-line="791" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/models/cvae_mod.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.9803094">
-          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6919831">
+          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57383966">
-          <caret line="77" column="30" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.095639944">
+          <caret line="64" column="39" selection-start-line="64" selection-start-column="39" selection-end-line="64" selection-end-column="39" />
           <folding />
         </state>
       </provider>

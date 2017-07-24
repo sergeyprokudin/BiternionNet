@@ -74,7 +74,7 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          kl_weight=1.0,
+                          kl_weight=10.0,
                           rec_weight=1.0)
 
         model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,

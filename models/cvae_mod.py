@@ -50,7 +50,15 @@ class CVAE:
 
         self.mu_encoder, self.log_sigma_encoder = self._encoder_mu_log_sigma()
 
+        self.encoder_model = Model(inputs=[self.x, self.phi],
+                                   outputs=concatenate([self.mu_encoder,
+                                                        self.log_sigma_encoder]))
+
         self.mu_prior, self.log_sigma_prior = self._prior_mu_log_sigma()
+
+        self.prior_model = Model(inputs=[self.x, self.phi],
+                                 outputs=concatenate([self.mu_prior,
+                                                      self.log_sigma_prior]))
 
         self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_sigma_prior])
         # self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
@@ -150,6 +158,11 @@ class CVAE:
         kl = gaussian_kl_divergence_np(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
         elbo = log_likelihood - kl
         return elbo, log_likelihood, kl
+
+    def _prior_kl_div_tf(self, y_true, model_output):
+        mu_prior = model_output[:, 0:self.n_u]
+        log_sigma_prior = model_output[:, self.n_u:self.n_u*2]
+
 
     def evaluate(self, x, ytrue_deg, data_part, verbose=1):
 
