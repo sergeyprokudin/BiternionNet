@@ -60,6 +60,8 @@ class CVAE:
                                  outputs=concatenate([self.mu_prior,
                                                       self.log_sigma_prior]))
 
+        self.prior_model.compile(optimizer='adam', loss=self._prior_kl_div_tf)
+
         self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_sigma_prior])
         # self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
         self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_sigma_encoder])
@@ -79,8 +81,6 @@ class CVAE:
                                                      self.decoder_kappa_seq(self.x_vgg_u)]))
 
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
-
-        self.decoder_model.compile(optimizer='adam', loss=self._prior_kl_div_tf)
 
         self.decoder_input = concatenate([self.x_vgg_decoder, self.u_prior])
 
