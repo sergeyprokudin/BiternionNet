@@ -22,7 +22,8 @@ class CVAE:
                  image_width=50,
                  n_channels=3,
                  n_hidden_units=8,
-                 kl_weight=1.0):
+                 kl_weight=1.0,
+                 rec_weight=1.0):
 
         self.n_u = n_hidden_units
         self.image_height = image_height
@@ -30,21 +31,22 @@ class CVAE:
         self.n_channels = n_channels
         self.phi_shape = 2
         self.kl_weight = kl_weight
+        self.rec_weight = rec_weight
 
         self.x = Input(shape=[self.image_height, self.image_width, self.n_channels])
         self.phi = Input(shape=[self.phi_shape])
         self.u = Input(shape=[self.n_u])
 
-        self.x_vgg = vgg.vgg_model(image_height=self.image_height,
-                                   image_width=self.image_width)(self.x)
+        self.x_vgg_encoder = vgg.vgg_model(image_height=self.image_height,
+                                           image_width=self.image_width)(self.x)
 
-        # self.x_vgg_prior = vgg.vgg_model(image_height=self.image_height,
-        #                                  image_width=self.image_width)(self.x)
-        #
-        # self.x_vgg_decoder = vgg.vgg_model(image_height=self.image_height,
-        #                                    image_width=self.image_width)(self.x)
+        self.x_vgg_prior = vgg.vgg_model(image_height=self.image_height,
+                                         image_width=self.image_width)(self.x)
 
-        self.x_vgg_shape = self.x_vgg.get_shape().as_list()[1]
+        self.x_vgg_decoder = vgg.vgg_model(image_height=self.image_height,
+                                           image_width=self.image_width)(self.x)
+
+        self.x_vgg_shape = self.x_vgg_encoder.get_shape().as_list()[1]
 
         self.mu_encoder, self.log_sigma_encoder = self._encoder_mu_log_sigma()
 
@@ -54,7 +56,7 @@ class CVAE:
         # self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
         self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_sigma_encoder])
 
-        self.x_vgg_u = concatenate([self.x_vgg, self.u_encoder])
+        self.x_vgg_u = concatenate([self.x_vgg_decoder, self.u_encoder])
 
         self.decoder_mu_seq, self.decoder_kappa_seq = self._decoder_net_seq()
 
@@ -70,7 +72,7 @@ class CVAE:
 
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
-        self.decoder_input = concatenate([self.x_vgg, self.u_prior])
+        self.decoder_input = concatenate([self.x_vgg_decoder, self.u_prior])
 
         self.decoder_model = Model(inputs=[self.x],
                                    outputs=concatenate([
@@ -81,7 +83,7 @@ class CVAE:
 
     def _encoder_mu_log_sigma(self):
 
-        x_vgg_phi = concatenate([self.x_vgg, self.phi])
+        x_vgg_phi = concatenate([self.x_vgg_encoder, self.phi])
 
         hidden = Dense(512, activation='relu')(Dense(512, activation='relu')(x_vgg_phi))
 
@@ -92,7 +94,7 @@ class CVAE:
 
     def _prior_mu_log_sigma(self):
 
-        hidden = Dense(512, activation='relu')(self.x_vgg)
+        hidden = Dense(512, activation='relu')(self.x_vgg_prior)
 
         mu_prior = Dense(self.n_u, activation='linear')(hidden)
         log_sigma_prior = Dense(self.n_u, activation='linear')(hidden)
@@ -132,9 +134,9 @@ class CVAE:
         log_sigma_encoder = model_output[:, self.n_u*3:self.n_u*4]
         mu_pred = model_output[:, self.n_u*4:self.n_u*4+2]
         kappa_pred = model_output[:, self.n_u*4+2:]
-        log_likelihood = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion')
+        reconstruction_err = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion')
         kl = gaussian_kl_divergence_tf(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
-        elbo = log_likelihood - self.kl_weight*kl
+        elbo = self.rec_weight*reconstruction_err - self.kl_weight*kl
         return K.mean(-elbo)
 
     def _cvae_elbo_loss_np(self, y_true, y_pred):
