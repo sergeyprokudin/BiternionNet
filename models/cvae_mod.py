@@ -80,6 +80,8 @@ class CVAE:
 
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
+        self.decoder_model.compile(optimizer='adam', loss=self._prior_kl_div_tf)
+
         self.decoder_input = concatenate([self.x_vgg_decoder, self.u_prior])
 
         self.decoder_model = Model(inputs=[self.x],

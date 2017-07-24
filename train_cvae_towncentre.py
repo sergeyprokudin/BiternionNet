@@ -32,7 +32,7 @@ def main():
     best_trial_id = 0
     n_trials = 1
     results = dict()
-    n_epochs = 50
+    n_epochs = 10
 
     for tid in range(0, n_trials):
 
@@ -62,7 +62,7 @@ def main():
                           kl_weight=0.0,
                           rec_weight=1.0)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=10,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=5,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
@@ -87,10 +87,11 @@ def main():
 
         cvae_model.full_model.load_weights(cvae_best_ckpt_path)
 
-        cvae_model.decoder_model.compile(optimizer='adam', loss=cvae_model._prior_kl_div_tf)
+        encoder_preds_tr = cvae_model.encoder_model.predict([xtr, ytr_bit])
+        encoder_preds_val = cvae_model.encoder_model.predict([xval, yval_bit])
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=25, epochs=n_epochs,
-                                  validation_data=([xval, yval_bit], yval_bit),
+        cvae_model.decoder_model.fit([xtr, ytr_bit], [encoder_preds_tr], batch_size=25, epochs=n_epochs,
+                                  validation_data=([xval, yval_bit], encoder_preds_val),
                                   callbacks=[model_ckpt_callback])
 
         # kl_weight_range = [0.7, 0.8, 0.9, 1.0]
