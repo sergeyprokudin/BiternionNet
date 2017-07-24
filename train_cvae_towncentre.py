@@ -87,6 +87,8 @@ def main():
 
         cvae_model.full_model.load_weights(cvae_best_ckpt_path)
 
+        cvae_model.decoder_model.compile(optimizer='adam', loss=cvae_model._prior_kl_div_tf)
+
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=25, epochs=n_epochs,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[model_ckpt_callback])

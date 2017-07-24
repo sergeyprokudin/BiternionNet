@@ -159,10 +159,13 @@ class CVAE:
         elbo = log_likelihood - kl
         return elbo, log_likelihood, kl
 
-    def _prior_kl_div_tf(self, y_true, model_output):
-        mu_prior = model_output[:, 0:self.n_u]
-        log_sigma_prior = model_output[:, self.n_u:self.n_u*2]
-
+    def _prior_kl_div_tf(self, y_true, y_pred):
+        mu_encoder = y_true[:, 0:self.n_u]
+        log_sigma_encoder = y_true[:, self.n_u:self.n_u*2]
+        mu_prior = y_pred[:, 0:self.n_u]
+        log_sigma_prior = y_pred[:, self.n_u:self.n_u*2]
+        kl = gaussian_kl_divergence_tf(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
+        return -kl
 
     def evaluate(self, x, ytrue_deg, data_part, verbose=1):
 
