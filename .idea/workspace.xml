@@ -96,8 +96,8 @@
           <file leaf-file-name="train_cvae_towncentre.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.6455696">
-                  <caret line="76" column="14" selection-start-line="76" selection-start-column="14" selection-end-line="76" selection-end-column="14" />
+                <state vertical-scroll-proportion="0.57383966">
+                  <caret line="77" column="30" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
                   <folding />
                 </state>
               </provider>
@@ -983,8 +983,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6455696">
-          <caret line="76" column="14" selection-start-line="76" selection-start-column="14" selection-end-line="76" selection-end-column="14" />
+        <state vertical-scroll-proportion="0.57383966">
+          <caret line="77" column="30" selection-start-line="77" selection-start-column="30" selection-end-line="77" selection-end-column="30" />
           <folding />
         </state>
       </provider>

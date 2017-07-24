@@ -77,11 +77,19 @@ def main():
                           kl_weight=1.0,
                           rec_weight=1.0)
 
+        model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
+                                                              monitor='val_loss',
+                                                              mode='min',
+                                                              save_best_only=True,
+                                                              save_weights_only=True,
+                                                              period=1,
+                                                              verbose=1)
+
         cvae_model.full_model.load_weights(cvae_best_ckpt_path)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=25, epochs=n_epochs,
                                   validation_data=([xval, yval_bit], yval_bit),
-                                  callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+                                  callbacks=[model_ckpt_callback])
 
         # kl_weight_range = [0.7, 0.8, 0.9, 1.0]
 
