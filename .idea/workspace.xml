@@ -28,14 +28,14 @@
     <favorites_list name="BiternionNet" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.40424123">
+    <splitter split-orientation="horizontal" split-proportion="0.47051027">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file leaf-file-name="cvae_mod.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/models/cvae_mod.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.31082982">
-                  <caret line="70" column="35" selection-start-line="70" selection-start-column="35" selection-end-line="70" selection-end-column="35" />
+                <state vertical-scroll-proportion="-0.9803094">
+                  <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -96,8 +96,8 @@
           <file leaf-file-name="train_cvae_towncentre.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.38255978">
-                  <caret line="75" column="45" selection-start-line="75" selection-start-column="45" selection-end-line="75" selection-end-column="45" />
+                <state vertical-scroll-proportion="0.6455696">
+                  <caret line="76" column="14" selection-start-line="76" selection-start-column="14" selection-end-line="76" selection-end-column="14" />
                   <folding />
                 </state>
               </provider>
@@ -975,16 +975,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/cvae_mod.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31082982">
-          <caret line="70" column="35" selection-start-line="70" selection-start-column="35" selection-end-line="70" selection-end-column="35" />
+        <state vertical-scroll-proportion="-0.9803094">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38255978">
-          <caret line="75" column="45" selection-start-line="75" selection-start-column="45" selection-end-line="75" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.6455696">
+          <caret line="76" column="14" selection-start-line="76" selection-start-column="14" selection-end-line="76" selection-end-column="14" />
           <folding />
         </state>
       </provider>
