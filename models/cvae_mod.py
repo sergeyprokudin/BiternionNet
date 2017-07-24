@@ -1,6 +1,6 @@
 import numpy as np
 
-from keras.layers import Input, Dense, Lambda, Flatten
+from keras.layers import Input, Dense, Lambda
 from keras.layers.merge import concatenate
 from keras.models import Model, Sequential
 
@@ -51,9 +51,10 @@ class CVAE:
         self.mu_prior, self.log_sigma_prior = self._prior_mu_log_sigma()
 
         self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_sigma_prior])
+        # self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
         self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_sigma_encoder])
 
-        self.x_vgg_u = concatenate([Flatten()(self.x), self.u_encoder])
+        self.x_vgg_u = concatenate([self.x_vgg, self.u_encoder])
 
         self.decoder_mu_seq, self.decoder_kappa_seq = self._decoder_net_seq()
 
@@ -69,7 +70,7 @@ class CVAE:
 
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
-        self.decoder_input = concatenate([Flatten()(self.x), self.u_prior])
+        self.decoder_input = concatenate([self.x_vgg, self.u_prior])
 
         self.decoder_model = Model(inputs=[self.x],
                                    outputs=concatenate([
@@ -103,16 +104,21 @@ class CVAE:
         eps = K.random_normal(shape=[self.n_u], mean=0., stddev=1.)
         return mu + K.exp(log_sigma / 2) * eps
 
+    def _sample_normal(self, args):
+        mu, log_sigma = args
+        eps = K.random_normal(shape=[self.n_u], mean=0., stddev=1.)
+        return mu*0 + eps
+
     def _decoder_net_seq(self):
         decoder_mu = Sequential()
-        decoder_mu.add(Dense(512, activation='relu',input_shape=[50*50*3 + self.n_u]))
+        decoder_mu.add(Dense(512, activation='relu',input_shape=[self.x_vgg_shape + self.n_u]))
         # decoder_mu.add(Dense(512, activation='relu', input_shape=[self.n_u]))
         decoder_mu.add(Dense(512, activation='relu'))
         decoder_mu.add(Dense(2, activation='linear'))
         decoder_mu.add(Lambda(lambda x: K.l2_normalize(x, axis=1)))
 
         decoder_kappa = Sequential()
-        decoder_kappa.add(Dense(512, activation='relu', input_shape=[50*50*3 + self.n_u]))
+        decoder_kappa.add(Dense(512, activation='relu', input_shape=[self.x_vgg_shape + self.n_u]))
         # decoder_kappa.add(Dense(512, activation='relu', input_shape=[self.n_u]))
         decoder_kappa.add(Dense(512, activation='relu'))
         decoder_kappa.add(Dense(1, activation='linear'))
@@ -128,7 +134,8 @@ class CVAE:
         kappa_pred = model_output[:, self.n_u*4+2:]
         log_likelihood = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion')
         kl = gaussian_kl_divergence_tf(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
-        return K.mean(-log_likelihood + self.kl_weight*kl)
+        elbo = log_likelihood - self.kl_weight*kl
+        return K.mean(-elbo)
 
     def _cvae_elbo_loss_np(self, y_true, y_pred):
         mu_prior = y_pred[:, 0:self.n_u]
@@ -139,7 +146,7 @@ class CVAE:
         kappa_pred = y_pred[:, self.n_u*4+2:]
         log_likelihood = von_mises_log_likelihood_np(y_true, mu_pred, kappa_pred, input_type='biternion')
         kl = gaussian_kl_divergence_np(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
-        elbo = -log_likelihood + kl
+        elbo = log_likelihood - kl
         return elbo, log_likelihood, kl
 
     def evaluate(self, x, ytrue_deg, data_part, verbose=1):
@@ -149,17 +156,22 @@ class CVAE:
         results = dict()
 
         cvae_preds = self.full_model.predict([x, ytrue_bit])
-        elbo, _, kl = self._cvae_elbo_loss_np(ytrue_bit, cvae_preds)
+        elbo, ll, kl = self._cvae_elbo_loss_np(ytrue_bit, cvae_preds)
 
-        results['elbo'] = np.mean(-elbo)
-        results['elbo_sem'] = sem(-elbo)
+        results['elbo'] = np.mean(elbo)
+        results['elbo_sem'] = sem(elbo)
 
         results['kl'] = np.mean(kl)
         results['kl_sem'] = sem(kl)
 
-        ypreds = self.decoder_model.predict(x)
-        ypreds_bit = ypreds[:, 0:2]
-        kappa_preds = ypreds[:, 2:]
+        results['log_likelihood'] = np.mean(ll)
+        results['log_likelihood_loss_sem'] = sem(ll)
+
+        # ypreds = self.decoder_model.predict(x)
+        # ypreds_bit = ypreds[:, 0:2]
+        # kappa_preds = ypreds[:, 2:]
+
+        ypreds_bit = cvae_preds[:, self.n_u*4:self.n_u*4+2]
 
         ypreds_deg = bit2deg(ypreds_bit)
 
@@ -167,11 +179,11 @@ class CVAE:
         results['maad_loss'] = np.mean(loss)
         results['maad_loss_sem'] = sem(loss)
 
-        log_likelihood_loss = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds,
-                                                          input_type='biternion')
+        # log_likelihood_loss = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds,
+        #                                                   input_type='biternion')
 
-        results['log_likelihood'] = np.mean(log_likelihood_loss)
-        results['log_likelihood_loss_sem'] = sem(log_likelihood_loss)
+        # results['log_likelihood'] = np.mean(log_likelihood_loss)
+        # results['log_likelihood_loss_sem'] = sem(log_likelihood_loss)
 
         if verbose:
 
@@ -181,7 +193,7 @@ class CVAE:
 
             print("KL-div (%s) : %f ± %fSEM" % (data_part, results['kl'], results['kl_sem']))
 
-            print("log-likelihood (%s) : %f±%fSEM" % (data_part,
-                                                      results['log_likelihood'],
-                                                      results['log_likelihood_loss_sem']))
+            # print("log-likelihood (%s) : %f±%fSEM" % (data_part,
+            #                                           results['log_likelihood'],
+            #                                           results['log_likelihood_loss_sem']))
         return results
