@@ -32,7 +32,7 @@ def main():
     best_trial_id = 0
     n_trials = 1
     results = dict()
-    n_epochs = 10
+    n_epochs = 5
 
     for tid in range(0, n_trials):
 
@@ -97,7 +97,7 @@ def main():
             cvae_model.evaluate(xte, yte_deg, 'test')
 
             if kl_weight == 1.0:
-                n_epochs = 25
+                n_epochs = 50
 
             cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=n_epochs,
                                       validation_data=([xval, yval_bit], yval_bit),
