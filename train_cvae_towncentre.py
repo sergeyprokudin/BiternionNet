@@ -62,7 +62,7 @@ def main():
                           kl_weight=0.0,
                           rec_weight=1.0)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=5,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=3,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
@@ -73,11 +73,11 @@ def main():
         cvae_model = CVAE(image_height=image_height,
                           image_width=image_width,
                           n_channels=n_channels,
-                          n_hidden_units=n_u,
-                          kl_weight=10.0,
-                          rec_weight=1.0)
+                          n_hidden_units=n_u)
 
-        model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
+        prior_best_ckpt_path = os.path.join(trial_dir, 'cvae.prior.trial_%d.best.weights.hdf5' % tid)
+
+        model_ckpt_callback = keras.callbacks.ModelCheckpoint(prior_best_ckpt_path,
                                                               monitor='val_loss',
                                                               mode='min',
                                                               save_best_only=True,
@@ -134,6 +134,7 @@ def main():
                           n_hidden_units=n_u)
 
         best_model.full_model.load_weights(cvae_best_ckpt_path)
+        best_model.prior_model.load_weights(prior_best_ckpt_path)
 
         trial_results = dict()
         trial_results['ckpt_path'] = cvae_best_ckpt_path
