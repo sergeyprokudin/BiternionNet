@@ -59,13 +59,13 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          kl_weight=0.4)
+                          kl_weight=0.6)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=n_epochs,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
-        kl_weight_range = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        kl_weight_range = [0.7, 0.8, 0.9, 1.0]
 
         for kl_weight in kl_weight_range:
 
@@ -93,7 +93,7 @@ def main():
             cvae_model.evaluate(xte, yte_deg, 'test')
 
             if kl_weight == 1.0:
-                n_epochs = 50
+                n_epochs = 25
 
             cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=n_epochs,
                                       validation_data=([xval, yval_bit], yval_bit),
