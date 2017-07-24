@@ -32,7 +32,7 @@ def main():
     best_trial_id = 0
     n_trials = 1
     results = dict()
-    n_epochs = 2
+    n_epochs = 10
 
     for tid in range(0, n_trials):
 
@@ -59,7 +59,7 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          kl_weight=0.0,
+                          kl_weight=0.6,
                           rec_weight=1.0)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=n_epochs,
@@ -70,7 +70,7 @@ def main():
         cvae_model.evaluate(xval, yval_deg, 'validation')
         cvae_model.evaluate(xte, yte_deg, 'test')
 
-        kl_weight_range = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        kl_weight_range = [0.7, 0.8, 0.9, 1.0]
 
         for kl_weight in kl_weight_range:
 
@@ -90,7 +90,8 @@ def main():
                               image_width=image_width,
                               n_channels=n_channels,
                               n_hidden_units=n_u,
-                              kl_weight=kl_weight)
+                              kl_weight=kl_weight,
+                              rec_weight=1.0)
 
             cvae_model.full_model.load_weights(cvae_best_ckpt_path)
 
