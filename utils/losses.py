@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 from scipy.special import i0 as mod_bessel0
 from scipy.special import i1 as mod_bessel1
-
+from keras import backend as K
 
 def cosine_loss_np(y_target, y_pred):
     return 1 - np.sum(np.multiply(y_target, y_pred),axis=1)
@@ -209,7 +209,7 @@ def gaussian_kl_divergence_tf(mu1, ln_var1, mu2, ln_var2):
     return tf.reshape(kl_div, [-1, 1])
 
 
-from keras import backend as K
+
 
 def von_mises_neg_log_likelihood_keras(y_true, y_pred):
     '''
