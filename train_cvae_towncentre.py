@@ -35,7 +35,7 @@ def main():
 
     for tid in range(0, n_trials):
 
-        n_epochs = 5
+        n_epochs = 10
         batch_size = 10
 
         print("TRIAL %d" % tid)
@@ -99,7 +99,7 @@ def main():
             cvae_model.evaluate(xte, yte_deg, 'test')
 
             if kl_weight == 1.0:
-                n_epochs = 100
+                n_epochs = 60
                 batch_size = 10
 
             cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
