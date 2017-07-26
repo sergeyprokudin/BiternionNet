@@ -35,7 +35,7 @@ def main():
 
     for tid in range(0, n_trials):
 
-        n_epochs = 20
+        n_epochs = 50
         batch_size = 50
 
         print("TRIAL %d" % tid)
