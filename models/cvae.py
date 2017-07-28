@@ -131,8 +131,8 @@ class CVAE:
         log_sigma_prior = model_output[:, self.n_u:self.n_u*2]
         mu_encoder = model_output[:, self.n_u*2:self.n_u*3]
         log_sigma_encoder = model_output[:, self.n_u*3:self.n_u*4]
-        mu_pred = model_output[:, self.n_u*4:self.n_u*4+2]
-        kappa_pred = model_output[:, self.n_u*4+2:]
+        mu_pred = model_output[:, self.n_u*5:self.n_u*5+2]
+        kappa_pred = model_output[:, self.n_u*5+2:]
         log_likelihood = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred)
         kl = gaussian_kl_divergence_tf(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
         elbo = log_likelihood - self.kl_weight*kl
