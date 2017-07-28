@@ -111,8 +111,7 @@ class BiternionVGG:
         results['mean_kappa'] = float(np.mean(kappa_preds))
         results['std_kappa'] = float(np.std(kappa_preds))
 
-        log_likelihoods = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds,
-                                                      input_type='biternion')
+        log_likelihoods = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds)
 
         results['log_likelihood_mean'] = float(np.mean(log_likelihoods))
         results['log_likelihood_sem'] = float(sem(log_likelihoods, axis=None))

@@ -54,7 +54,7 @@ class CVAE:
         # self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
         self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_sigma_encoder])
 
-        self.x_vgg_u = concatenate([self.x_vgg, self.u_encoder])
+        self.x_vgg_enc_u = concatenate([self.x_vgg, self.u_encoder])
 
         self.decoder_mu_seq, self.decoder_kappa_seq = self._decoder_net_seq()
 
@@ -63,10 +63,11 @@ class CVAE:
                                                      self.log_sigma_prior,
                                                      self.mu_encoder,
                                                      self.log_sigma_encoder,
+                                                     self.u_encoder,
                                                      # self.decoder_mu_seq(self.u_encoder),
                                                      # self.decoder_kappa_seq(self.u_encoder)]))
-                                                     self.decoder_mu_seq(self.x_vgg_u),
-                                                     self.decoder_kappa_seq(self.x_vgg_u)]))
+                                                     self.decoder_mu_seq(self.x_vgg_enc_u),
+                                                     self.decoder_kappa_seq(self.x_vgg_enc_u)]))
 
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
@@ -132,7 +133,7 @@ class CVAE:
         log_sigma_encoder = model_output[:, self.n_u*3:self.n_u*4]
         mu_pred = model_output[:, self.n_u*4:self.n_u*4+2]
         kappa_pred = model_output[:, self.n_u*4+2:]
-        log_likelihood = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion')
+        log_likelihood = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred)
         kl = gaussian_kl_divergence_tf(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
         elbo = log_likelihood - self.kl_weight*kl
         return K.mean(-elbo)
@@ -142,12 +143,24 @@ class CVAE:
         log_sigma_prior = y_pred[:, self.n_u:self.n_u*2]
         mu_encoder = y_pred[:, self.n_u*2:self.n_u*3]
         log_sigma_encoder = y_pred[:, self.n_u*3:self.n_u*4]
-        mu_pred = y_pred[:, self.n_u*4:self.n_u*4+2]
-        kappa_pred = y_pred[:, self.n_u*4+2:]
-        log_likelihood = von_mises_log_likelihood_np(y_true, mu_pred, kappa_pred, input_type='biternion')
+        mu_pred = y_pred[:, self.n_u*5:self.n_u*5+2]
+        kappa_pred = y_pred[:, self.n_u*5+2:]
+        log_likelihood = von_mises_log_likelihood_np(y_true, mu_pred, kappa_pred)
         kl = gaussian_kl_divergence_np(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
         elbo = log_likelihood - kl
         return elbo, log_likelihood, kl
+
+    def get_full_output(self, x, y):
+        output = dict()
+        y_pred = self.full_model.predict([x, y])
+        output['mu_prior'] = y_pred[:, 0:self.n_u]
+        output['log_sigma_prior'] = y_pred[:, self.n_u:self.n_u*2]
+        output['mu_encoder'] = y_pred[:, self.n_u*2:self.n_u*3]
+        output['log_sigma_encoder'] = y_pred[:, self.n_u*3:self.n_u*4]
+        output['u_encoder'] = y_pred[:, self.n_u*4:self.n_u*5]
+        output['mu_pred'] = y_pred[:, self.n_u*5:self.n_u*5+2]
+        output['kappa_pred'] = y_pred[:, self.n_u*5+2:]
+        return output
 
     def evaluate(self, x, ytrue_deg, data_part, verbose=1):
 

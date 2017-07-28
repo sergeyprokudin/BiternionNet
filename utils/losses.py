@@ -3,6 +3,7 @@ import tensorflow as tf
 from scipy.special import i0 as mod_bessel0
 from scipy.special import i1 as mod_bessel1
 from keras import backend as K
+from scipy.stats import multivariate_normal
 
 def cosine_loss_np(y_target, y_pred):
     return 1 - np.sum(np.multiply(y_target, y_pred),axis=1)
@@ -114,26 +115,38 @@ def log_bessel_approx_tf(x):
     return res
 
 
-def von_mises_log_likelihood_np(y_true, mu_pred, kappa_pred, input_type='biternion'):
-    '''
-    Compute log-likelihood given data samples and predicted Von-Mises model parameters
-    :param y_true: true values of an angle in biternion (cos, sin) representation
-    :param mu_pred: predicted mean values of an angle in biternion (cos, sin) representation
-    :param log_kappa: predicted mean values of an angle in biternion (cos, sin) representation
-    :param radian_input:
-    :return:
-    log_likelihood
-    '''
-    if input_type == 'degree':
-        scaler = 0.0174533
-        cosin_dist = np.cos(scaler * (y_true - mu_pred))
-    elif input_type == 'radian':
-        cosin_dist = np.cos(y_true - mu_pred)
-    elif input_type == 'biternion':
-        cosin_dist = np.reshape(np.sum(np.multiply(y_true, mu_pred), axis=1), [-1, 1])
-    log_likelihood = kappa_pred * cosin_dist - \
-                     np.log(2 * np.pi) - log_bessel_approx_np(kappa_pred)
-    return np.reshape(log_likelihood, [-1,1])
+def von_mises_log_likelihood_np(y, mu, kappa):
+    """ Compute log-likelihood for multiple Von-Mises distributions
+
+    Parameters
+    ----------
+    y: numpy array of shape [n_points, 2]
+        angles in biternion (cos, sin) representation that will be used to compute likelihood
+    mu: numpy array of shape [n_points, 2]
+        mean values of Von-Mises distributions in biternion representation
+    kappa: numpy array of shape [n_points, 1]
+        kappa values (inverse variance) of multiple Von-Mises distributions
+
+    Returns
+    -------
+
+    log_likelihood: numpy array of shape [n_points, 1]
+        log-likelihood values for each sample
+    """
+
+    # if input_type == 'degree':
+    #     scaler = 0.0174533
+    #     cosin_dist = np.cos(scaler * (y - mu))
+    # elif input_type == 'radian':
+    #     cosin_dist = np.cos(y - mu)
+    # elif input_type == 'biternion':
+
+    cosin_dist = np.reshape(np.sum(np.multiply(y, mu), axis=1), [-1, 1])
+
+    log_likelihood = kappa * cosin_dist - \
+                     np.log(2 * np.pi) - log_bessel_approx_np(kappa)
+
+    return np.reshape(log_likelihood, [-1, 1])
 
 
 def von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion'):
@@ -209,6 +222,114 @@ def gaussian_kl_divergence_tf(mu1, ln_var1, mu2, ln_var2):
     return tf.reshape(kl_div, [-1, 1])
 
 
+def gaussian_log_likelihood_scipy(mu, std, samples):
+    """ Compute likelihood for multiple multivariate gaussians
+        (Slow SciPy implementation, for TESTS ONLY!)
+
+    Parameters
+    ----------
+
+    mu: numpy array of shape [n_points, n_dims]
+        mean values of multiple multivariate gaussians
+    std: numpy array of shape [n_points, n_dims]
+        stdev values of multiple multivariate gaussians
+    samples: numpy array of shape [n_points, n_samples, n_dims]
+        points to compute likelihood
+
+    Returns
+    -------
+
+    likelihood: numpy array of shape [n_points, n_samples]
+        likelihood values for each sample
+    """
+
+    n_points, n_samples, n_dims = samples.shape
+
+    log_likelihood = np.zeros([n_points, n_samples])
+
+    for pid in range(0, n_points):
+        cov = np.diag(np.square(std[pid]))
+        log_likelihood[pid, :] = np.log(multivariate_normal.pdf(samples[pid,:], mean=mu[pid], cov=cov,
+                                                               allow_singular=True))
+
+    return log_likelihood
+
+
+def gaussian_log_likelihood_np(mu, std, samples):
+    """ Compute likelihood for multiple multivariate gaussians
+
+    Parameters
+    ----------
+
+    mu: numpy array of shape [n_points, n_dims]
+        mean values of multiple multivariate gaussians
+    std: numpy array of shape [n_points, n_dims]
+        stdev values of multiple multivariate gaussians
+    samples: numpy array of shape [n_points, n_samples, n_dims]
+        points to compute likelihood
+
+    Returns
+    -------
+
+    likelihood: numpy array of shape [n_points, n_samples]
+        likelihood values for each sample
+    """
+
+    n_points, n_samples, n_dims = samples.shape
+
+    mu_tiled = np.tile(mu.reshape([n_points, 1, n_dims]), [1, n_samples, 1])
+    std_tiled = np.tile(std.reshape([n_points, 1, n_dims]), [1, n_samples, 1])
+    var_tiled = np.square(std_tiled)
+
+    diff = np.sum(np.square(samples-mu_tiled)/var_tiled, axis=2)
+
+    log_var = np.sum(np.log(var_tiled), axis=2)
+
+    log_2pi = np.ones([n_points, n_samples])*n_dims*np.log(2*np.pi)
+
+    log_likelihood = -0.5*(log_var + diff + log_2pi)
+
+    return log_likelihood
+
+
+def gaussian_log_likelihood_tf(mu, std, samples):
+    """ Compute likelihood for multiple multivariate gaussians
+
+    Parameters
+    ----------
+
+    mu: numpy array of shape [n_points, n_dims]
+        mean values of multiple multivariate gaussians
+    std: numpy array of shape [n_points, n_dims]
+        stdev values of multiple multivariate gaussians
+    samples: numpy array of shape [n_points, n_samples, n_dims]
+        points to compute likelihood
+
+    Returns
+    -------
+
+    likelihood: numpy array of shape [n_points, n_samples]
+        likelihood values for each sample
+    """
+
+    samples_shape = tf.shape(samples)
+    n_points = samples_shape[0]
+    n_samples = samples_shape[1]
+    n_dims = samples_shape[2]
+
+    mu_tiled = tf.tile(tf.reshape(mu, shape=[n_points, 1, n_dims]), [1, n_samples, 1])
+    std_tiled = tf.tile(tf.reshape(std, [n_points, 1, n_dims]), [1, n_samples, 1])
+    var_tiled = tf.square(std_tiled)
+
+    diff = tf.reduce_sum(tf.square(samples-mu_tiled)/var_tiled, axis=2)
+
+    log_var = tf.reduce_sum(tf.log(var_tiled), axis=2)
+
+    log_2pi = tf.ones(shape=[n_points, n_samples], dtype=tf.float32)*tf.to_float(n_dims)*np.log(2*np.pi)
+
+    log_likelihood = -0.5*(log_var + diff + log_2pi)
+
+    return log_likelihood
 
 
 def von_mises_neg_log_likelihood_keras(y_true, y_pred):

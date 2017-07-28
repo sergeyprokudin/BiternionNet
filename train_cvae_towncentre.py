@@ -71,7 +71,7 @@ def main():
         cvae_model.evaluate(xval, yval_deg, 'validation')
         cvae_model.evaluate(xte, yte_deg, 'test')
 
-        kl_weight_range = [0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+        kl_weight_range = [0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
         for kl_weight in kl_weight_range:
 
