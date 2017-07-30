@@ -35,7 +35,7 @@ def main():
 
     for tid in range(0, n_trials):
 
-        n_epochs = 50
+        n_epochs = 200
         batch_size = 10
 
         print("TRIAL %d" % tid)
@@ -61,7 +61,7 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          n_samples=32)
+                          n_samples=2)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=50,
                                   validation_data=([xval, yval_bit], yval_bit),

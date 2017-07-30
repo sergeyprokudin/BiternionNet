@@ -283,7 +283,7 @@ class CVAE:
             vm_likelihood = tf.exp(von_mises_log_likelihood_tf(y_true, mu_decoder[:,sid,:], kappa_decoder[:,sid,:]))
             vm_likelihoods.append(vm_likelihood)
 
-        vm_likelihoods = tf.squeeze(tf.stack(vm_likelihoods,axis=1), axis=2)
+        vm_likelihoods = tf.squeeze(tf.stack(vm_likelihoods, axis=1), axis=2)
 
         prior_log_likelihood = gaussian_log_likelihood_tf(mu_prior, std_prior, u_samples)
         encoder_log_likelihood = gaussian_log_likelihood_tf(mu_encoder, std_encoder, u_samples)
@@ -292,10 +292,12 @@ class CVAE:
 
         importance_log_likelihood = tf.log(tf.reduce_mean(vm_likelihoods*sample_weight, axis=1))
 
+        log_likelihood = von_mises_log_likelihood_tf(y_true, mu_decoder[:, 0, :], kappa_decoder[:, 0, :])
+
         kl = gaussian_kl_divergence_tf(mu_encoder, out_parsed['log_sigma_encoder'],
                                        mu_prior, out_parsed['log_sigma_prior'])
 
-        return K.mean(-importance_log_likelihood)
+        return K.mean(-log_likelihood+kl)
 
     def evaluate(self, x, ytrue_deg, data_part, verbose=1):
 
