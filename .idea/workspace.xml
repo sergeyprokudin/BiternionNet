@@ -102,8 +102,8 @@
           <file leaf-file-name="cvae_mod.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/models/cvae_mod.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.6122449">
-                  <caret line="291" column="0" selection-start-line="291" selection-start-column="0" selection-end-line="291" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.6530612">
+                  <caret line="294" column="0" selection-start-line="294" selection-start-column="0" selection-end-line="294" selection-end-column="0" />
                   <folding>
                     <element signature="e#0#18#0" expanded="true" />
                     <marker date="1501428788000" expanded="true" signature="14432:14534" placeholder="..." />
@@ -161,8 +161,8 @@
           <file leaf-file-name="train_cvaemod_towncentre.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_cvaemod_towncentre.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.5102041">
-                  <caret line="63" column="38" selection-start-line="63" selection-start-column="38" selection-end-line="63" selection-end-column="38" />
+                <state vertical-scroll-proportion="0.5510204">
+                  <caret line="65" column="73" selection-start-line="65" selection-start-column="73" selection-end-line="65" selection-end-column="73" />
                   <folding>
                     <element signature="e#0#12#0" expanded="true" />
                   </folding>
@@ -976,8 +976,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/cvae_mod.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6122449">
-          <caret line="291" column="0" selection-start-line="291" selection-start-column="0" selection-end-line="291" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.6530612">
+          <caret line="294" column="0" selection-start-line="294" selection-start-column="0" selection-end-line="294" selection-end-column="0" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
             <marker date="1501428788000" expanded="true" signature="14432:14534" placeholder="..." />
@@ -987,8 +987,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_cvaemod_towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5102041">
-          <caret line="63" column="38" selection-start-line="63" selection-start-column="38" selection-end-line="63" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.5510204">
+          <caret line="65" column="73" selection-start-line="65" selection-start-column="73" selection-end-line="65" selection-end-column="73" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
           </folding>

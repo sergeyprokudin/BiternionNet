@@ -61,9 +61,9 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          n_samples=32)
+                          n_samples=128)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=200,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
