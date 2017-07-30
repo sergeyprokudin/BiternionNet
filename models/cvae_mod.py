@@ -64,7 +64,7 @@ class CVAE:
             self.x_vgg_u_list.append(x_u)
             dec_mu_out = self.decoder_mu_seq(x_u)
             self.dec_mu_list.append(dec_mu_out)
-            dec_kappa_out = self.decoder_mu_seq(x_u)
+            dec_kappa_out = self.decoder_kappa_seq(x_u)
             self.dec_kappa_list.append(dec_kappa_out)
 
         self.u_samples = concatenate(self.u_encoder_list)
