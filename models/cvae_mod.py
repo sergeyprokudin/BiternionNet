@@ -67,9 +67,14 @@ class CVAE:
             dec_kappa_out = self.decoder_kappa_seq(x_u)
             self.dec_kappa_list.append(dec_kappa_out)
 
-        self.u_samples = concatenate(self.u_encoder_list)
-        self.dec_mus = concatenate(self.dec_mu_list)
-        self.dec_kappas = concatenate(self.dec_kappa_list)
+        if self.n_samples > 1:
+            self.u_samples = concatenate(self.u_encoder_list)
+            self.dec_mus = concatenate(self.dec_mu_list)
+            self.dec_kappas = concatenate(self.dec_kappa_list)
+        else:
+            self.u_samples = self.u_encoder_list[0]
+            self.dec_mus = self.dec_mu_list[0]
+            self.dec_kappas = self.dec_kappa_list[0]
 
         self.full_model = Model(inputs=[self.x, self.phi],
                                 outputs=concatenate([self.mu_prior,
@@ -275,30 +280,30 @@ class CVAE:
         mu_decoder = out_parsed['mu_preds']
         kappa_decoder = out_parsed['kappa_preds']
 
-        # n_points, n_samples, _ = u_samples.shape
+        n_points, n_samples, _ = u_samples.shape
 
-        # vm_likelihoods = []
-        #
-        # for sid in range(0, n_samples):
-        #     vm_likelihood = tf.exp(von_mises_log_likelihood_tf(y_true, mu_decoder[:,sid,:], kappa_decoder[:,sid,:]))
-        #     vm_likelihoods.append(vm_likelihood)
-        #
-        # vm_likelihoods = tf.squeeze(tf.stack(vm_likelihoods, axis=1), axis=2)
-        #
-        # prior_log_likelihood = gaussian_log_likelihood_tf(mu_prior, std_prior, u_samples)
-        # encoder_log_likelihood = gaussian_log_likelihood_tf(mu_encoder, std_encoder, u_samples)
-        #
-        # sample_weight = tf.exp(prior_log_likelihood - encoder_log_likelihood)
+        vm_likelihoods = []
 
-        # importance_log_likelihood = tf.log(tf.reduce_mean(vm_likelihoods*sample_weight, axis=1))
+        for sid in range(0, n_samples):
+            vm_likelihood = tf.exp(von_mises_log_likelihood_tf(y_true, mu_decoder[:,sid,:], kappa_decoder[:,sid,:]))
+            vm_likelihoods.append(vm_likelihood)
 
-        log_likelihood = von_mises_log_likelihood_tf(y_true, mu_decoder[:, 0, :], kappa_decoder[:, 0, :])
-        kl = gaussian_kl_divergence_tf(mu_encoder, out_parsed['log_sigma_encoder'],
-                                       mu_prior, out_parsed['log_sigma_prior'])
+        vm_likelihoods = tf.squeeze(tf.stack(vm_likelihoods, axis=1), axis=2)
 
-        elbo = log_likelihood - kl
+        prior_log_likelihood = gaussian_log_likelihood_tf(mu_prior, std_prior, u_samples)
+        encoder_log_likelihood = gaussian_log_likelihood_tf(mu_encoder, std_encoder, u_samples)
 
-        return K.mean(-elbo)
+        sample_weight = tf.exp(prior_log_likelihood - encoder_log_likelihood)
+
+        importance_log_likelihood = tf.log(tf.reduce_mean(vm_likelihoods*sample_weight, axis=1))
+
+        # log_likelihood = von_mises_log_likelihood_tf(y_true, mu_decoder[:, 0, :], kappa_decoder[:, 0, :])
+        # kl = gaussian_kl_divergence_tf(mu_encoder, out_parsed['log_sigma_encoder'],
+        #                                mu_prior, out_parsed['log_sigma_prior'])
+
+        # elbo = log_likelihood - kl
+
+        return K.mean(-importance_log_likelihood)
 
     def evaluate(self, x, ytrue_deg, data_part, verbose=1):
 
