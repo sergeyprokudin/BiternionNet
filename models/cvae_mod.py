@@ -303,7 +303,7 @@ class CVAE:
 
         # elbo = log_likelihood - kl
 
-        return K.mean(-importance_log_likelihood + kl)
+        return K.mean(-importance_log_likelihood)
 
     def evaluate(self, x, ytrue_deg, data_part, verbose=1):
 
