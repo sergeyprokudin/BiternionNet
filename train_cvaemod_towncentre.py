@@ -63,7 +63,7 @@ def main():
                           n_hidden_units=n_u,
                           n_samples=32)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=200,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=50, epochs=200,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
