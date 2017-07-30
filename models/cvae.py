@@ -46,13 +46,13 @@ class CVAE:
 
         self.x_vgg_shape = self.x_vgg.get_shape().as_list()[1]
 
-        self.mu_encoder, self.log_sigma_encoder = self._encoder_mu_log_sigma()
+        self.mu_encoder, self.log_var_encoder = self._encoder_mu_log_sigma()
 
-        self.mu_prior, self.log_sigma_prior = self._prior_mu_log_sigma()
+        self.mu_prior, self.log_var_prior = self._prior_mu_log_sigma()
 
-        self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_sigma_prior])
+        self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_var_prior])
         # self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
-        self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_sigma_encoder])
+        self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_var_encoder])
 
         self.x_vgg_enc_u = concatenate([self.x_vgg, self.u_encoder])
 
@@ -60,9 +60,9 @@ class CVAE:
 
         self.full_model = Model(inputs=[self.x, self.phi],
                                 outputs=concatenate([self.mu_prior,
-                                                     self.log_sigma_prior,
+                                                     self.log_var_prior,
                                                      self.mu_encoder,
-                                                     self.log_sigma_encoder,
+                                                     self.log_var_encoder,
                                                      self.u_encoder,
                                                      # self.decoder_mu_seq(self.u_encoder),
                                                      # self.decoder_kappa_seq(self.u_encoder)]))
@@ -87,23 +87,23 @@ class CVAE:
         hidden = Dense(512, activation='relu')(Dense(512, activation='relu')(x_vgg_phi))
 
         mu_encoder = Dense(self.n_u, activation='linear')(hidden)
-        log_sigma_encoder = Dense(self.n_u, activation='linear')(hidden)
+        log_var_encoder = Dense(self.n_u, activation='linear')(hidden)
 
-        return mu_encoder, log_sigma_encoder
+        return mu_encoder, log_var_encoder
 
     def _prior_mu_log_sigma(self):
 
         hidden = Dense(512, activation='relu')(self.x_vgg)
 
         mu_prior = Dense(self.n_u, activation='linear')(hidden)
-        log_sigma_prior = Dense(self.n_u, activation='linear')(hidden)
+        log_var_prior = Dense(self.n_u, activation='linear')(hidden)
 
-        return mu_prior, log_sigma_prior
+        return mu_prior, log_var_prior
 
     def _sample_u(self, args):
-        mu, log_sigma = args
+        mu, log_var = args
         eps = K.random_normal(shape=[self.n_u], mean=0., stddev=1.)
-        return mu + K.exp(log_sigma / 2) * eps
+        return mu + K.exp(log_var / 2) * eps
 
     def _sample_normal(self, args):
         mu, log_sigma = args
@@ -128,25 +128,25 @@ class CVAE:
 
     def _cvae_elbo_loss_tf(self, y_true, model_output):
         mu_prior = model_output[:, 0:self.n_u]
-        log_sigma_prior = model_output[:, self.n_u:self.n_u*2]
+        log_var_prior = model_output[:, self.n_u:self.n_u*2]
         mu_encoder = model_output[:, self.n_u*2:self.n_u*3]
-        log_sigma_encoder = model_output[:, self.n_u*3:self.n_u*4]
+        log_var_encoder = model_output[:, self.n_u*3:self.n_u*4]
         mu_pred = model_output[:, self.n_u*5:self.n_u*5+2]
         kappa_pred = model_output[:, self.n_u*5+2:]
         log_likelihood = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred)
-        kl = gaussian_kl_divergence_tf(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
+        kl = gaussian_kl_divergence_tf(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
         elbo = log_likelihood - self.kl_weight*kl
         return K.mean(-elbo)
 
     def _cvae_elbo_loss_np(self, y_true, y_pred):
         mu_prior = y_pred[:, 0:self.n_u]
-        log_sigma_prior = y_pred[:, self.n_u:self.n_u*2]
+        log_var_prior = y_pred[:, self.n_u:self.n_u*2]
         mu_encoder = y_pred[:, self.n_u*2:self.n_u*3]
-        log_sigma_encoder = y_pred[:, self.n_u*3:self.n_u*4]
+        log_var_encoder = y_pred[:, self.n_u*3:self.n_u*4]
         mu_pred = y_pred[:, self.n_u*5:self.n_u*5+2]
         kappa_pred = y_pred[:, self.n_u*5+2:]
         log_likelihood = von_mises_log_likelihood_np(y_true, mu_pred, kappa_pred)
-        kl = gaussian_kl_divergence_np(mu_encoder, log_sigma_encoder, mu_prior, log_sigma_prior)
+        kl = gaussian_kl_divergence_np(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
         elbo = log_likelihood - kl
         return elbo, log_likelihood, kl
 

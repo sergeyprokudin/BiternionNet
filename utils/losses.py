@@ -195,7 +195,7 @@ def gaussian_kl_divergence_np(mu1, ln_var1, mu2, ln_var2):
 
     log_var_diff = ln_var1 - ln_var2
 
-    var_diff_trace = np.sum(np.exp(log_var_diff),axis=1)
+    var_diff_trace = np.sum(np.exp(log_var_diff), axis=1)
 
     mudiff = np.sum(np.square(mu1-mu2) / np.exp(ln_var2), axis=1)
 
@@ -249,8 +249,8 @@ def gaussian_log_likelihood_scipy(mu, std, samples):
 
     for pid in range(0, n_points):
         cov = np.diag(np.square(std[pid]))
-        log_likelihood[pid, :] = np.log(multivariate_normal.pdf(samples[pid,:], mean=mu[pid], cov=cov,
-                                                               allow_singular=True))
+        log_likelihood[pid, :] = np.log(multivariate_normal.pdf(samples[pid, :], mean=mu[pid], cov=cov,
+                                                                allow_singular=True))
 
     return log_likelihood
 
