@@ -292,7 +292,10 @@ class CVAE:
 
         importance_log_likelihood = tf.log(tf.reduce_mean(vm_likelihoods*sample_weight, axis=1))
 
-        return K.mean(-importance_log_likelihood)
+        kl = gaussian_kl_divergence_tf(mu_encoder, out_parsed['log_sigma_encoder'],
+                                       mu_prior, out_parsed['log_sigma_prior'])
+
+        return K.mean(-importance_log_likelihood+kl)
 
     def evaluate(self, x, ytrue_deg, data_part, verbose=1):
 
