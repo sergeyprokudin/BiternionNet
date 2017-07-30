@@ -30,7 +30,7 @@ def main():
     phi_shape = yte_bit.shape[1]
 
     best_trial_id = 0
-    n_trials = 5
+    n_trials = 1
     results = dict()
 
     for tid in range(0, n_trials):
@@ -61,9 +61,9 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          n_samples=10)
+                          n_samples=32)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
+        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=10, epochs=50,
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
@@ -85,10 +85,10 @@ def main():
         # trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
         # results[tid] = trial_results
 
-        if tid > 0:
-            if trial_results['validation']['elbo'] > results[best_trial_id]['validation']['elbo']:
-                best_trial_id = tid
-                print("Better validation loss achieved, current best trial: %d" % best_trial_id)
+        # if tid > 0:
+        #     if trial_results['validation']['elbo'] > results[best_trial_id]['validation']['elbo']:
+        #         best_trial_id = tid
+        #         print("Better validation loss achieved, current best trial: %d" % best_trial_id)
 
     print("Loading best model (trial_id = %d)" % best_trial_id)
 
