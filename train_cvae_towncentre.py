@@ -61,7 +61,7 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          kl_weight=1.0)
+                          kl_weight=0.5)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
                                   validation_data=([xval, yval_bit], yval_bit),
