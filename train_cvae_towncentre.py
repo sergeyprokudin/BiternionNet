@@ -30,7 +30,7 @@ def main():
     phi_shape = yte_bit.shape[1]
 
     best_trial_id = 0
-    n_trials = 5
+    n_trials = 10
     results = dict()
 
     for tid in range(0, n_trials):
@@ -61,7 +61,7 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          kl_weight=0.5)
+                          kl_weight=1.0)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
                                   validation_data=([xval, yval_bit], yval_bit),
