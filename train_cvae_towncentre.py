@@ -10,6 +10,15 @@ from utils.towncentre import load_towncentre
 from utils.experiements import get_experiment_id
 
 
+def aug_data(x, y_deg, n_times=4, randomize_labels=True):
+    x_aug = np.tile(x, [n_times, 1, 1, 1])
+    y_deg_aug = np.tile(y_deg, [n_times])
+    if randomize_labels:
+        y_deg_aug = np.random.randint(0, 359, y_deg_aug.shape[0]).astype('float')
+        y_deg_aug[0:y_deg.shape[0]] = y_deg
+    return x_aug, y_deg_aug
+
+
 def main():
 
     n_u = 8
@@ -22,6 +31,11 @@ def main():
     xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre('data/TownCentre.pkl.gz',
                                                                  canonical_split=True,
                                                                  verbose=1)
+
+    xtr, ytr_deg = aug_data(xtr, ytr_deg)
+    xval, yval_deg = aug_data(xval, yval_deg)
+    xte, yte_deg = aug_data(xval, yval_deg)
+
     ytr_bit = deg2bit(ytr_deg)
     yval_bit = deg2bit(yval_deg)
     yte_bit = deg2bit(yte_deg)
@@ -99,7 +113,7 @@ def main():
         #     cvae_model.evaluate(xte, yte_deg, 'test')
         #
         #     if kl_weight == 1.0:
-        #         n_epochs = 60
+        #         n_epochs = 100
         #         batch_size = 10
         #
         #     cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
