@@ -10,8 +10,8 @@ from models import vgg
 
 from utils.losses import gaussian_kl_divergence_tf, gaussian_kl_divergence_np
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np
-from utils.angles import deg2bit, bit2deg
-from utils.losses import maad_from_deg
+from utils.angles import deg2bit, bit2deg, bit2deg_multi
+from utils.losses import maad_from_deg, maximum_expected_utility
 from scipy.stats import sem
 
 
@@ -133,10 +133,9 @@ class CVAE:
         log_var_encoder = model_output[:, self.n_u*3:self.n_u*4]
         mu_pred = model_output[:, self.n_u*5:self.n_u*5+2]
         kappa_pred = model_output[:, self.n_u*5+2:]
-        log_likelihood = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred)
-        # kl = gaussian_kl_divergence_tf(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
-        kl = gaussian_kl_divergence_tf(mu_prior, log_var_prior, mu_encoder, log_var_encoder)
-        elbo = log_likelihood - self.kl_weight*kl
+        reconstruction_err = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred)
+        kl = gaussian_kl_divergence_tf(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
+        elbo = reconstruction_err - self.kl_weight*kl
         return K.mean(-elbo)
 
     def _cvae_elbo_loss_np(self, y_true, y_pred):
@@ -146,10 +145,10 @@ class CVAE:
         log_var_encoder = y_pred[:, self.n_u*3:self.n_u*4]
         mu_pred = y_pred[:, self.n_u*5:self.n_u*5+2]
         kappa_pred = y_pred[:, self.n_u*5+2:]
-        log_likelihood = von_mises_log_likelihood_np(y_true, mu_pred, kappa_pred)
+        reconstruction_err = von_mises_log_likelihood_np(y_true, mu_pred, kappa_pred)
         kl = gaussian_kl_divergence_np(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
-        elbo = log_likelihood - kl
-        return elbo, log_likelihood, kl
+        elbo = reconstruction_err - kl
+        return elbo, reconstruction_err, kl
 
     def get_full_output(self, x, y):
         output = dict()
@@ -158,7 +157,7 @@ class CVAE:
         output['log_sigma_prior'] = y_pred[:, self.n_u:self.n_u*2]
         output['mu_encoder'] = y_pred[:, self.n_u*2:self.n_u*3]
         output['log_sigma_encoder'] = y_pred[:, self.n_u*3:self.n_u*4]
-        output['u_encoder'] = y_pred[:, self.n_u*4:self.n_u*5]
+        output['u_encoder_samples'] = y_pred[:, self.n_u*4:self.n_u*5]
         output['mu_pred'] = y_pred[:, self.n_u*5:self.n_u*5+2]
         output['kappa_pred'] = y_pred[:, self.n_u*5+2:]
         return output
@@ -178,62 +177,58 @@ class CVAE:
 
     def get_multiple_predictions(self, x, y_bit, n_samples=5):
 
-        mu_rad_preds = np.zeros([n_samples, x.shape[0], 1])
-        mu_bit_preds = np.zeros([n_samples, x.shape[0], 2])
-        kappa_preds  = np.zeros([n_samples, x.shape[0], 1])
-        reconstruction_errs = np.zeros([n_samples, x.shape[0], 1])
-        kl_preds = np.zeros([n_samples, x.shape[0], 1])
-        elbo_preds = np.zeros([n_samples, x.shape[0], 1])
+            n_points = x.shape[0]
 
-        mu_rad_preds_dec = np.zeros([n_samples, x.shape[0], 1])
-        mu_bit_preds_dec = np.zeros([n_samples, x.shape[0], 2])
-        kappa_preds_dec = np.zeros([n_samples, x.shape[0], 1])
+            mu_bit_preds = np.zeros([n_points, n_samples, 2])
+            kappa_preds  = np.zeros([n_points, n_samples, 1])
+            reconstruction_errs = np.zeros([n_points, n_samples, 1])
+            kl_preds = np.zeros([n_points, n_samples, 1])
+            elbo_preds = np.zeros([n_points, n_samples, 1])
+            u_encoder = np.zeros([n_points, n_samples, self.n_u])
 
-        for i in range(0, n_samples):
-            preds = self.full_model.predict([x, y_bit], batch_size=500)
-            mu_bit_preds[i, :, :] = preds[:, self.n_u*5:self.n_u*5+2]
-            mu_rad_preds[i, :, :] = np.deg2rad(bit2deg(preds[:, self.n_u*4:self.n_u*4+2])).reshape(-1, 1)
-            kappa_preds[i, :, :] = preds[:, self.n_u*5+2:].reshape(-1,1)
-            elbo, reconstruction, kl = self._cvae_elbo_loss_np(y_bit, preds)
-            reconstruction_errs[i, :, :] = reconstruction
-            kl_preds[i, :, :] = kl
-            elbo_preds[i, :, :] = elbo
-            preds_dec = self.decoder_model.predict(x, batch_size=500)
-            mu_bit_preds_dec[i, :, :] = preds_dec[:, 0:2]
-            mu_rad_preds_dec[i, :, :] = np.deg2rad(bit2deg(preds_dec[:, 0:2])).reshape(-1,1)
-            kappa_preds_dec[i, :, :] = preds_dec[:, 2:].reshape(-1,1)
+            mu_bit_preds_dec = np.zeros([n_points, n_samples, 2])
+            kappa_preds_dec = np.zeros([n_points, n_samples, 1])
 
-        res = dict()
+            for sid in range(0, n_samples):
+                preds = self.full_model.predict([x, y_bit])
+                mu_bit_preds[:, sid, :] = preds[:, self.n_u * 5:self.n_u * 5 + 2]
+                u_encoder[:, sid, :] = preds[:, self.n_u*4:self.n_u*5]
+                kappa_preds[:, sid, :] = preds[:, self.n_u * 5 + 2:].reshape(-1, 1)
+                elbo, reconstruction, kl = self._cvae_elbo_loss_np(y_bit, preds)
+                reconstruction_errs[:, sid, :] = reconstruction
+                kl_preds[:, sid, :] = kl
+                elbo_preds[:, sid, :] = elbo
+                preds_dec = self.decoder_model.predict(x, batch_size=100)
+                mu_bit_preds_dec[:, sid, :] = preds_dec[:, 0:2]
+                kappa_preds_dec[:, sid, :] = preds_dec[:, 2:].reshape(-1, 1)
 
-        res['mu_rad_preds'] = mu_rad_preds
-        res['mu_bit_preds'] = mu_bit_preds
-        res['kappa_preds'] = kappa_preds
-        res['recontruction_errs'] = reconstruction_errs
-        res['kl_preds'] = kl_preds
-        res['elbo_preds'] = elbo_preds
-        res['mu_rad_preds_dec'] = mu_rad_preds_dec
-        res['mu_bit_preds_dec'] = mu_bit_preds_dec
-        res['kappa_preds_dec'] = kappa_preds_dec
+            preds = dict()
 
-        return res
+            preds['mu_bit'] = mu_bit_preds
+            preds['kappa'] = kappa_preds
+            preds['reconstruction_err'] = reconstruction_errs
+            preds['kl_div'] = kl_preds
+            preds['elbo'] = elbo_preds
+            preds['mu_bit_dec'] = mu_bit_preds_dec
+            preds['kappa_dec'] = kappa_preds_dec
+            preds['mu_rad_dec'] = np.deg2rad(bit2deg_multi(preds['mu_bit_dec']))
+            preds['maxutil_deg_dec'] = maximum_expected_utility(np.rad2deg(preds['mu_rad_dec']))
 
-    def evaluate(self, x, ytrue_deg, data_part, verbose=1):
+            return preds
+
+    def evaluate_multi(self, x, ytrue_deg, data_part, n_samples=10, verbose=1):
 
         ytrue_bit = deg2bit(ytrue_deg)
 
         results = dict()
 
-        cvae_preds = self.full_model.predict([x, ytrue_bit])
-        elbo, ll, kl = self._cvae_elbo_loss_np(ytrue_bit, cvae_preds)
+        cvae_preds = self.get_multiple_predictions(x, ytrue_bit, n_samples=n_samples)
 
-        results['elbo'] = np.mean(elbo)
-        results['elbo_sem'] = sem(elbo)
+        results['elbo'] = np.mean(cvae_preds['elbo'])
+        results['elbo_sem'] = sem(np.mean(cvae_preds['elbo'], axis=1))
 
-        results['kl'] = np.mean(kl)
-        results['kl_sem'] = sem(kl)
-
-        results['log_likelihood'] = np.mean(ll)
-        results['log_likelihood_loss_sem'] = sem(ll)
+        results['kl_div'] = np.mean(cvae_preds['kl_div'])
+        results['kl_div_sem'] = sem(np.mean(cvae_preds['kl_div'], axis=1))
 
         ypreds = self.decoder_model.predict(x)
         ypreds_bit = ypreds[:, 0:2]
@@ -241,15 +236,9 @@ class CVAE:
 
         ypreds_deg = bit2deg(ypreds_bit)
 
-        loss = maad_from_deg(ytrue_deg, ypreds_deg)
+        loss = maad_from_deg(ytrue_deg, cvae_preds['maxutil_deg_dec'])
         results['maad_loss'] = np.mean(loss)
-        results['maad_loss_sem'] = sem(loss)
-
-        # log_likelihood_loss = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds,
-        #                                                   input_type='biternion')
-
-        # results['log_likelihood'] = np.mean(log_likelihood_loss)
-        # results['log_likelihood_loss_sem'] = sem(log_likelihood_loss)
+        results['maad_loss_sem'] = sem(loss, axis=None)
 
         if verbose:
 
@@ -257,9 +246,6 @@ class CVAE:
 
             print("ELBO (%s) : %f ± %fSEM" % (data_part, results['elbo'], results['elbo_sem']))
 
-            print("KL-div (%s) : %f ± %fSEM" % (data_part, results['kl'], results['kl_sem']))
+            print("KL-div (%s) : %f ± %fSEM" % (data_part, results['kl_div'], results['kl_div_sem']))
 
-            # print("log-likelihood (%s) : %f±%fSEM" % (data_part,
-            #                                           results['log_likelihood'],
-            #                                           results['log_likelihood_loss_sem']))
         return results
