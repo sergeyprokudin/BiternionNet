@@ -6,17 +6,8 @@ import numpy as np
 
 from models.cvae import CVAE
 from utils.angles import deg2bit, bit2deg
-from utils.towncentre import load_towncentre
+from utils.towncentre import load_towncentre, aug_data
 from utils.experiements import get_experiment_id
-
-
-def aug_data(x, y_deg, n_times=4, randomize_labels=True):
-    x_aug = np.tile(x, [n_times, 1, 1, 1])
-    y_deg_aug = np.tile(y_deg, [n_times])
-    if randomize_labels:
-        y_deg_aug = np.random.randint(0, 359, y_deg_aug.shape[0]).astype('float')
-        y_deg_aug[0:y_deg.shape[0]] = y_deg
-    return x_aug, y_deg_aug
 
 
 def main():

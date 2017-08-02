@@ -69,3 +69,15 @@ def load_towncentre(data_path,
         print("Number of test samples: %s" % xte.shape[0])
 
     return xtr, ytr, xval, yval, xte, yte
+
+
+def aug_data(x, y_deg, n_times=2, randomize_labels=True):
+    n_points = y_deg.shape[0]
+    x_aug = np.tile(x, [n_times, 1, 1, 1])
+    y_deg_aug = np.tile(y_deg, [n_times])
+    if randomize_labels:
+        y_deg_aug[0:n_points] = y_deg
+        y_deg_aug[n_points:n_points*2] = y_deg - 90
+        # y_deg_aug = np.random.randint(0, 359, y_deg_aug.shape[0]).astype('float')
+        y_deg_aug[0:y_deg.shape[0]] = y_deg
+    return x_aug, y_deg_aug
