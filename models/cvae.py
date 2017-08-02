@@ -162,6 +162,60 @@ class CVAE:
         output['kappa_pred'] = y_pred[:, self.n_u*5+2:]
         return output
 
+    def generate_multiple_samples(self, x, n_samples=10):
+
+        n_points = x.shape[0]
+        cvae_kappa_preds = np.zeros([n_points, n_samples, 1])
+        cvae_mu_preds = np.zeros([n_points, n_samples, 2])
+
+        for i in range(0, n_samples):
+            cvae_preds = self.decoder_model.predict(x)
+            cvae_mu_preds[:, i, :] = cvae_preds[:, 0:2]
+            cvae_kappa_preds[:, i, :] = cvae_preds[:, 2].reshape(-1, 1)
+
+        return cvae_mu_preds, cvae_kappa_preds
+
+    def get_multiple_predictions(self, x, y_bit, n_samples=5):
+
+        mu_rad_preds = np.zeros([n_samples, x.shape[0], 1])
+        mu_bit_preds = np.zeros([n_samples, x.shape[0], 2])
+        kappa_preds  = np.zeros([n_samples, x.shape[0], 1])
+        reconstruction_errs = np.zeros([n_samples, x.shape[0], 1])
+        kl_preds = np.zeros([n_samples, x.shape[0], 1])
+        elbo_preds = np.zeros([n_samples, x.shape[0], 1])
+
+        mu_rad_preds_dec = np.zeros([n_samples, x.shape[0], 1])
+        mu_bit_preds_dec = np.zeros([n_samples, x.shape[0], 2])
+        kappa_preds_dec = np.zeros([n_samples, x.shape[0], 1])
+
+        for i in range(0, n_samples):
+            preds = self.full_model.predict([x, y_bit], batch_size=500)
+            mu_bit_preds[i, :, :] =  preds[:, self.n_u*5:self.n_u*5+2]
+            mu_rad_preds[i, :, :] = np.deg2rad(bit2deg(preds[:, self.n_u*4:self.n_u*4+2])).reshape(-1,1)
+            kappa_preds[i, :, :] = preds[:, self.n_u*5+2:].reshape(-1,1)
+            elbo, reconstruction, kl = self._cvae_elbo_loss_np(y_bit, preds)
+            reconstruction_errs[i, :, :] = reconstruction
+            kl_preds[i, :, :] = kl
+            elbo_preds[i, :, :] = elbo
+            preds_dec = self.decoder_model.predict(x, batch_size=500)
+            mu_bit_preds_dec[i, :, :] = preds_dec[:, 0:2]
+            mu_rad_preds_dec[i, :, :] = np.deg2rad(bit2deg(preds_dec[:, 0:2])).reshape(-1,1)
+            kappa_preds_dec[i, :, :] = preds_dec[:, 2:].reshape(-1,1)
+
+        res = dict()
+
+        res['mu_rad_preds'] = mu_rad_preds
+        res['mu_bit_preds'] = mu_bit_preds
+        res['kappa_preds'] = kappa_preds
+        res['recontruction_errs'] = reconstruction_errs
+        res['kl_preds'] = kl_preds
+        res['elbo_preds'] = elbo_preds
+        res['mu_rad_preds_dec'] = mu_rad_preds_dec
+        res['mu_bit_preds_dec'] = mu_bit_preds_dec
+        res['kappa_preds_dec'] = kappa_preds_dec
+
+        return res
+
     def evaluate(self, x, ytrue_deg, data_part, verbose=1):
 
         ytrue_bit = deg2bit(ytrue_deg)

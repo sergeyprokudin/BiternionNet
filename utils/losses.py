@@ -354,3 +354,31 @@ def show_errs_deg(y_pred, y_target, epoch=-1):
     std_errs = np.std(errs, axis=1)
     print("Error: {:5.2f}°±{:5.2f}°".format(np.mean(mean_errs), np.mean(std_errs)))
     print("Stdev: {:5.2f}°±{:5.2f}°".format(np.std(mean_errs), np.std(std_errs)))
+
+
+def maximum_expected_utility(y_deg):
+    """ Summarize multiple predictions to one via Maximum Expected Utility estimation
+
+    Parameters
+    ----------
+    y_deg: numpy array of shape [n_points, n_predictions]
+        multiple predictions (in degrees)
+
+    Returns
+    -------
+
+    mae_preds: numpy array of shape [n_points, n_predictions]
+        mae predictions (in degrees)
+    """
+
+    def _point_mae(y):
+        y_tiled = np.tile(y.reshape(-1, 1), [1, y.shape[0]])
+        maad_dist = maad_from_deg(y_tiled.T, y_tiled)
+        ix = np.argmin(np.sum(maad_dist, axis=1))
+        return y[ix]
+
+    n_points = y_deg.shape[0]
+
+    mae_preds = np.asarray([_point_mae(y_deg[i]) for i in range(0, n_points)])
+
+    return np.squeeze(mae_preds)
