@@ -23,9 +23,9 @@ def main():
                                                                  canonical_split=True,
                                                                  verbose=1)
 
-    xtr, ytr_deg = aug_data(xtr, ytr_deg)
-    xval, yval_deg = aug_data(xval, yval_deg)
-    xte, yte_deg = aug_data(xval, yval_deg)
+    # xtr, ytr_deg = aug_data(xtr, ytr_deg)
+    # xval, yval_deg = aug_data(xval, yval_deg)
+    # xte, yte_deg = aug_data(xval, yval_deg)
 
     ytr_bit = deg2bit(ytr_deg)
     yval_bit = deg2bit(yval_deg)

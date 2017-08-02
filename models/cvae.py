@@ -134,7 +134,8 @@ class CVAE:
         mu_pred = model_output[:, self.n_u*5:self.n_u*5+2]
         kappa_pred = model_output[:, self.n_u*5+2:]
         log_likelihood = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred)
-        kl = gaussian_kl_divergence_tf(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
+        # kl = gaussian_kl_divergence_tf(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
+        kl = gaussian_kl_divergence_tf(mu_prior, log_var_prior, mu_encoder, log_var_encoder)
         elbo = log_likelihood - self.kl_weight*kl
         return K.mean(-elbo)
 
@@ -190,8 +191,8 @@ class CVAE:
 
         for i in range(0, n_samples):
             preds = self.full_model.predict([x, y_bit], batch_size=500)
-            mu_bit_preds[i, :, :] =  preds[:, self.n_u*5:self.n_u*5+2]
-            mu_rad_preds[i, :, :] = np.deg2rad(bit2deg(preds[:, self.n_u*4:self.n_u*4+2])).reshape(-1,1)
+            mu_bit_preds[i, :, :] = preds[:, self.n_u*5:self.n_u*5+2]
+            mu_rad_preds[i, :, :] = np.deg2rad(bit2deg(preds[:, self.n_u*4:self.n_u*4+2])).reshape(-1, 1)
             kappa_preds[i, :, :] = preds[:, self.n_u*5+2:].reshape(-1,1)
             elbo, reconstruction, kl = self._cvae_elbo_loss_np(y_bit, preds)
             reconstruction_errs[i, :, :] = reconstruction
