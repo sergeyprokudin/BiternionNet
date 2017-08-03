@@ -40,8 +40,8 @@ def main():
 
     for tid in range(0, n_trials):
 
-        n_epochs = 50
-        batch_size = 50
+        n_epochs = 100
+        batch_size = 10
 
         print("TRIAL %d" % tid)
         trial_dir = os.path.join(experiment_dir, str(tid))
@@ -66,7 +66,6 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          batch_size=batch_size,
                           kl_weight=1.0)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
