@@ -22,6 +22,7 @@ class CVAE:
                  image_width=50,
                  n_channels=3,
                  n_hidden_units=8,
+                 batch_size=32,
                  kl_weight=1.0):
 
         self.n_u = n_hidden_units
@@ -30,6 +31,7 @@ class CVAE:
         self.n_channels = n_channels
         self.phi_shape = 2
         self.kl_weight = kl_weight
+        self.batch_size = batch_size
 
         self.x = Input(shape=[self.image_height, self.image_width, self.n_channels])
         self.phi = Input(shape=[self.phi_shape])
@@ -53,6 +55,9 @@ class CVAE:
         self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_var_prior])
         # self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
         self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_var_encoder])
+
+        self.sampler = Model(inputs=[self.x, self.phi],
+                             outputs=self.u_encoder)
 
         self.x_vgg_enc_u = concatenate([self.x_vgg, self.u_encoder])
 
@@ -102,13 +107,8 @@ class CVAE:
 
     def _sample_u(self, args):
         mu, log_var = args
-        eps = K.random_normal(shape=[self.n_u], mean=0., stddev=1.)
+        eps = K.random_normal(shape=[self.batch_size, self.n_u], mean=0., stddev=1.)
         return mu + K.exp(log_var / 2) * eps
-
-    def _sample_normal(self, args):
-        mu, log_sigma = args
-        eps = K.random_normal(shape=[self.n_u], mean=0., stddev=1.)
-        return mu*0 + eps
 
     def _decoder_net_seq(self):
         decoder_mu = Sequential()
