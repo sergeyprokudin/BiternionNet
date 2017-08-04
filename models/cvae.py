@@ -11,7 +11,7 @@ from models import vgg
 from utils.losses import gaussian_kl_divergence_tf, gaussian_kl_divergence_np
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np
 from utils.angles import deg2bit, bit2deg, bit2deg_multi
-from utils.losses import maad_from_deg, maximum_expected_utility
+from utils.losses import maad_from_deg, maximum_expected_utility, importance_loglikelihood
 from scipy.stats import sem
 
 
@@ -230,13 +230,13 @@ class CVAE:
 
         results = dict()
 
-        cvae_preds = self.get_multiple_predictions(x, ytrue_bit, n_samples=n_samples)
+        preds = self.get_multiple_predictions(x, ytrue_bit, n_samples=n_samples)
 
-        results['elbo'] = np.mean(cvae_preds['elbo'])
-        results['elbo_sem'] = sem(np.mean(cvae_preds['elbo'], axis=1))
+        results['elbo'] = np.mean(preds['elbo'])
+        results['elbo_sem'] = sem(np.mean(preds['elbo'], axis=1))
 
-        results['kl_div'] = np.mean(cvae_preds['kl_div'])
-        results['kl_div_sem'] = sem(np.mean(cvae_preds['kl_div'], axis=1))
+        results['kl_div'] = np.mean(preds['kl_div'])
+        results['kl_div_sem'] = sem(np.mean(preds['kl_div'], axis=1))
 
         ypreds = self.decoder_model.predict(x)
         ypreds_bit = ypreds[:, 0:2]
@@ -244,15 +244,27 @@ class CVAE:
 
         ypreds_deg = bit2deg(ypreds_bit)
 
-        loss = maad_from_deg(ytrue_deg, cvae_preds['maxutil_deg_dec'])
+        loss = maad_from_deg(ytrue_deg, preds['maxutil_deg_dec'])
         results['maad_loss'] = np.mean(loss)
         results['maad_loss_sem'] = sem(loss, axis=None)
+
+        importance_loglikelihoods = importance_loglikelihood(preds['mu_encoder'], preds['log_sigma_encoder'],
+                                                     preds['mu_prior'], preds['log_sigma_prior'],
+                                                     preds['u_encoder'],
+                                                     preds['mu_bit'], preds['kappa'],
+                                                     ytrue_bit)
+
+        results['importance_log_likelihood'] = np.mean(importance_loglikelihoods)
+        results['importance_log_likelihood_sem'] = sem(importance_loglikelihoods, axis=None)
 
         if verbose:
 
             print("MAAD error (%s) : %f ± %fSEM" % (data_part, results['maad_loss'], results['maad_loss_sem']))
 
             print("ELBO (%s) : %f ± %fSEM" % (data_part, results['elbo'], results['elbo_sem']))
+
+            print("Approx Log-Likelihood, importance sampling (%s) : %f ± %fSEM" %
+                  (data_part, results['importance_log_likelihood'], results['importance_log_likelihood_sem']))
 
             print("KL-div (%s) : %f ± %fSEM" % (data_part, results['kl_div'], results['kl_div_sem']))
 
