@@ -190,6 +190,10 @@ class CVAE:
 
             for sid in range(0, n_samples):
                 preds = self.full_model.predict([x, y_bit])
+                mu_prior = preds[:, 0:self.n_u]
+                log_sigma_prior = preds[:, self.n_u:self.n_u*2]
+                mu_encoder = preds[:, self.n_u*2:self.n_u*3]
+                log_sigma_encoder = preds[:, self.n_u*3:self.n_u*4]
                 mu_bit_preds[:, sid, :] = preds[:, self.n_u * 5:self.n_u * 5 + 2]
                 u_encoder[:, sid, :] = preds[:, self.n_u*4:self.n_u*5]
                 kappa_preds[:, sid, :] = preds[:, self.n_u * 5 + 2:].reshape(-1, 1)
@@ -203,6 +207,8 @@ class CVAE:
 
             preds = dict()
 
+            preds['mu_encoder'] = mu_encoder
+            preds['log_sigma_encoder'] = log_sigma_encoder
             preds['mu_bit'] = mu_bit_preds
             preds['kappa'] = kappa_preds
             preds['reconstruction_err'] = reconstruction_errs
