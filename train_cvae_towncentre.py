@@ -72,9 +72,9 @@ def main():
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
-        cvae_model.evaluate(xtr, ytr_deg, 'train')
-        cvae_model.evaluate(xval, yval_deg, 'validation')
-        cvae_model.evaluate(xte, yte_deg, 'test')
+        cvae_model.evaluate_multi(xtr, ytr_deg, 'train')
+        cvae_model.evaluate_multi(xval, yval_deg, 'validation')
+        cvae_model.evaluate_multi(xte, yte_deg, 'test')
 
         kl_weight_range = [0.6, 0.7, 0.8, 0.9, 1.0]
 
