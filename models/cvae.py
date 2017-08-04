@@ -194,8 +194,8 @@ class CVAE:
                 log_sigma_prior = preds[:, self.n_u:self.n_u*2]
                 mu_encoder = preds[:, self.n_u*2:self.n_u*3]
                 log_sigma_encoder = preds[:, self.n_u*3:self.n_u*4]
-                mu_bit_preds[:, sid, :] = preds[:, self.n_u * 5:self.n_u * 5 + 2]
                 u_encoder[:, sid, :] = preds[:, self.n_u*4:self.n_u*5]
+                mu_bit_preds[:, sid, :] = preds[:, self.n_u * 5:self.n_u * 5 + 2]
                 kappa_preds[:, sid, :] = preds[:, self.n_u * 5 + 2:].reshape(-1, 1)
                 elbo, reconstruction, kl = self._cvae_elbo_loss_np(y_bit, preds)
                 reconstruction_errs[:, sid, :] = reconstruction
@@ -209,6 +209,9 @@ class CVAE:
 
             preds['mu_encoder'] = mu_encoder
             preds['log_sigma_encoder'] = log_sigma_encoder
+            preds['mu_prior'] = mu_prior
+            preds['log_sigma_prior'] = log_sigma_prior
+            preds['u_encoder'] = u_encoder
             preds['mu_bit'] = mu_bit_preds
             preds['kappa'] = kappa_preds
             preds['reconstruction_err'] = reconstruction_errs

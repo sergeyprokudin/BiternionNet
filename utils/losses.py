@@ -344,6 +344,29 @@ def von_mises_neg_log_likelihood_keras(y_true, y_pred):
     return -K.mean(von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biternion'))
 
 
+def importance_loglikelihood(mu_encoder, log_sigma_encoder,
+                             mu_prior, log_sigma_prior,
+                             u_encoder_samples,
+                             mu_vm, kappa_vm,
+                             ytrue_bit):
+
+    n_points, n_samples, n_u = u_encoder_samples.shape
+    vm_likelihood = np.zeros([n_points, n_samples])
+
+    for sid in range(0, n_samples):
+        vm_likelihood[:, sid] = np.squeeze(np.exp(
+                von_mises_log_likelihood_np(ytrue_bit, mu_vm[:,sid], kappa_vm[:, sid])))
+
+    enc_log_likelihood = gaussian_log_likelihood_np(mu_encoder, np.exp(log_sigma_encoder/2), u_encoder_samples)
+    prior_log_likelihood = gaussian_log_likelihood_np(mu_prior, np.exp(log_sigma_prior/2), u_encoder_samples)
+
+    weight = np.exp(prior_log_likelihood - enc_log_likelihood)
+
+    importance_loglikelihoods = np.log(np.mean(vm_likelihood*weight, axis=1))
+
+    return importance_loglikelihoods
+
+
 def maad_from_deg(y_pred, y_target):
     return np.rad2deg(np.abs(np.arctan2(np.sin(np.deg2rad(y_target - y_pred)), np.cos(np.deg2rad(y_target - y_pred)))))
 
