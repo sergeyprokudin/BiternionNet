@@ -38,11 +38,13 @@ class EvalCVAEModel(keras.callbacks.Callback):
         self.y_deg = y_deg
         self.data_title = data_title
         self.cvae_model = cvae_model
+        self.ckpt_path = ckpt_path
 
     def on_epoch_end(self, epoch, logs=None):
         results = self.cvae_model.evaluate_multi(self.x, self.y_deg, self.data_title)
         print("Evaluation is done.")
-        if results['importance_log_likelihood']>0.6:
+        if results['importance_log_likelihood'] > 0.6:
+            self.model.save_weights(self.ckpt_path)
             import ipdb; ipdb.set_trace()
 
 

@@ -69,7 +69,9 @@ def main():
                           n_hidden_units=n_u,
                           kl_weight=1.0)
 
-        eval_callback = EvalCVAEModel(xval, yval_deg, 'validation', cvae_model)
+        cvae_bestloglike_ckpt_path = os.path.join(trial_dir, 'cvae.full_model.trial_%d.best_likelihood.weights.hdf5'
+                                                  % tid)
+        eval_callback = EvalCVAEModel(xval, yval_deg, 'validation', cvae_model, cvae_bestloglike_ckpt_path)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
                                   validation_data=([xval, yval_bit], yval_bit),
@@ -102,7 +104,9 @@ def main():
                               n_hidden_units=n_u,
                               kl_weight=kl_weight)
 
-            eval_callback = EvalCVAEModel(xval, yval_deg, 'validation', cvae_model)
+            cvae_bestloglike_ckpt_path = os.path.join(trial_dir, 'cvae.full_model.trial_%d.best_likelihood.weights.hdf5'
+                                                  % tid)
+            eval_callback = EvalCVAEModel(xval, yval_deg, 'validation', cvae_model, cvae_bestloglike_ckpt_path)
 
             cvae_model.full_model.load_weights(cvae_best_ckpt_path)
 
