@@ -28,6 +28,21 @@ class SideModelCheckpoint(keras.callbacks.Callback):
                 self.model.save(filepath)
 
 
+class EvalCVAEModel(keras.callbacks.Callback):
+    """ Run CVAE evaluation on selected data
+
+    """
+
+    def __init__(self, x, y_deg, data_title, cvae_model):
+        self.x = x
+        self.y_deg = y_deg
+        self.data_title = data_title
+        self.cvae_model = cvae_model
+
+    def on_epoch_end(self, epoch, logs=None):
+        self.cvae_model.evaluate_multi(self.x, self.y_deg, self.data_title)
+
+
 class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
     """Save the model after every n batches, based on validation loss
 
