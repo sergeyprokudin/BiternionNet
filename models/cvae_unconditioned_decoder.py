@@ -53,10 +53,7 @@ class CVAE:
         self.mu_prior, self.log_var_prior = self._prior_mu_log_sigma()
 
         self.u_prior = Lambda(self._sample_u)([self.mu_prior, self.log_var_prior])
-        # self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
         self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_var_encoder])
-
-        self.x_vgg_enc_u = concatenate([self.x_vgg, self.u_encoder])
 
         self.decoder_mu_seq, self.decoder_kappa_seq = self._decoder_net_seq()
 
@@ -66,21 +63,14 @@ class CVAE:
                                                      self.mu_encoder,
                                                      self.log_var_encoder,
                                                      self.u_encoder,
-                                                     # self.decoder_mu_seq(self.u_encoder),
-                                                     # self.decoder_kappa_seq(self.u_encoder)]))
-                                                     self.decoder_mu_seq(self.x_vgg_enc_u),
-                                                     self.decoder_kappa_seq(self.x_vgg_enc_u)]))
+                                                     self.decoder_mu_seq(self.u_encoder),
+                                                     self.decoder_kappa_seq(self.u_encoder)]))
 
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
-        self.decoder_input = concatenate([self.x_vgg, self.u_prior])
-
         self.decoder_model = Model(inputs=[self.x],
-                                   outputs=concatenate([
-                                                        # self.decoder_mu_seq(self.u_prior),
-                                                        # self.decoder_kappa_seq(self.u_prior)]))
-                                                        self.decoder_mu_seq(self.decoder_input),
-                                                        self.decoder_kappa_seq(self.decoder_input)]))
+                                   outputs=concatenate([self.decoder_mu_seq(self.u_prior),
+                                                        self.decoder_kappa_seq(self.u_prior)]))
 
     def _encoder_mu_log_sigma(self):
 

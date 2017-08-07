@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/cvae_unconditioned_decoder.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_cvae_unconditioned_decoder_towncentre.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_cvae_klanneal_towncentre.py" afterPath="$PROJECT_DIR$/train_cvae_klanneal_towncentre.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/cvae_unconditioned_decoder.py" afterPath="$PROJECT_DIR$/models/cvae_unconditioned_decoder.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -35,17 +35,27 @@
         <entry file="file://$PROJECT_DIR$/models/cvae.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="14" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
+              <caret line="243" column="0" selection-start-line="243" selection-start-column="0" selection-end-line="243" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cvae_unconditioned_decoder.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cvae_unconditioned_decoder.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/cvae_unconditioned_decoder.py">
           <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.36306533">
+              <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_cvae_unconditioned_decoder_towncentre.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_cvae_unconditioned_decoder_towncentre.py">
+          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="122" column="53" selection-start-line="122" selection-start-column="53" selection-end-line="122" selection-end-column="53" />
+              <caret line="99" column="55" selection-start-line="99" selection-start-column="55" selection-end-line="99" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -55,27 +65,17 @@
         <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="32" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
+              <caret line="107" column="45" selection-start-line="107" selection-start-column="45" selection-end-line="107" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_cvae_klanneal_towncentre.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train_cvae_klanneal_towncentre.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_cvae_klanneal_towncentre.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.72613066">
-              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="towncentre.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/towncentre.py">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="70" column="41" selection-start-line="70" selection-start-column="41" selection-end-line="70" selection-end-column="41" />
+              <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -148,7 +148,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/training_utils_tf.py" />
         <option value="$PROJECT_DIR$/py_env/lib/python3.6/site-packages/lbtoolbox/util.py" />
         <option value="$USER_HOME$/knet/scripts/dbash.sh" />
         <option value="$USER_HOME$/knet/.gitignore" />
@@ -197,8 +196,9 @@
         <option value="$PROJECT_DIR$/models/cvae.py" />
         <option value="$PROJECT_DIR$/utils/custom_keras_callbacks.py" />
         <option value="$PROJECT_DIR$/train_cvae_towncentre.py" />
-        <option value="$PROJECT_DIR$/models/cvae_unconditioned_decoder.py" />
         <option value="$PROJECT_DIR$/train_cvae_klanneal_towncentre.py" />
+        <option value="$PROJECT_DIR$/models/cvae_unconditioned_decoder.py" />
+        <option value="$PROJECT_DIR$/train_cvae_unconditioned_decoder_towncentre.py" />
       </list>
     </option>
   </component>
@@ -324,8 +324,8 @@
       <recent name="$PROJECT_DIR$/train_configs" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/models" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/models" />
       <recent name="$PROJECT_DIR$/train_scripts" />
       <recent name="$PROJECT_DIR$/train_configs" />
       <recent name="$PROJECT_DIR$/scripts" />
@@ -548,13 +548,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/train_configs/train_vgg_towncentre_likelihood_learned_kappa.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/train_vgg_towncentre_cosine.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -879,14 +872,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="32" selection-start-line="34" selection-start-column="32" selection-end-line="34" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/cvae_mod.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -898,23 +883,39 @@
     <entry file="file://$PROJECT_DIR$/models/cvae.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="14" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/cvae_unconditioned_decoder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="122" column="53" selection-start-line="122" selection-start-column="53" selection-end-line="122" selection-end-column="53" />
+          <caret line="243" column="0" selection-start-line="243" selection-start-column="0" selection-end-line="243" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train_cvae_klanneal_towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.72613066">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="85" column="0" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_cvae_unconditioned_decoder_towncentre.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="99" column="55" selection-start-line="99" selection-start-column="55" selection-end-line="99" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="107" column="45" selection-start-line="107" selection-start-column="45" selection-end-line="107" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/cvae_unconditioned_decoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36306533">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
           <folding />
         </state>
       </provider>
