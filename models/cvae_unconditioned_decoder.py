@@ -95,7 +95,7 @@ class CVAE:
     def _sample_u(self, args):
         mu, log_var = args
         eps = K.random_normal(shape=K.shape(mu), mean=0., stddev=1.)
-        return mu + K.exp(log_var / 2) * eps
+        return mu #+ K.exp(log_var / 2) * eps
 
     def _decoder_net_seq(self):
         decoder_mu = Sequential()
