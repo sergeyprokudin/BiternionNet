@@ -33,15 +33,17 @@ class EvalCVAEModel(keras.callbacks.Callback):
 
     """
 
-    def __init__(self, x, y_deg, data_title, cvae_model):
+    def __init__(self, x, y_deg, data_title, cvae_model, ckpt_path):
         self.x = x
         self.y_deg = y_deg
         self.data_title = data_title
         self.cvae_model = cvae_model
 
     def on_epoch_end(self, epoch, logs=None):
-        self.cvae_model.evaluate_multi(self.x, self.y_deg, self.data_title)
+        results = self.cvae_model.evaluate_multi(self.x, self.y_deg, self.data_title)
         print("Evaluation is done.")
+        if results['importance_log_likelihood']>0.6:
+            import ipdb; ipdb.set_trace()
 
 
 class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
