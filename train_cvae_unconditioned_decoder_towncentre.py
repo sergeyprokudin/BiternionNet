@@ -68,7 +68,8 @@ def main():
         cvae_model = CVAE(image_height=image_height,
                           image_width=image_width,
                           n_channels=n_channels,
-                          n_hidden_units=n_u)
+                          n_hidden_units=n_u,
+                          kl_weight=0.1)
 
         eval_callback = EvalCVAEModel(xval, yval_deg, 'validation', cvae_model, cvae_bestloglike_ckpt_path)
 
