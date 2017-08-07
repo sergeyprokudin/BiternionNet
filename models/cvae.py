@@ -266,6 +266,7 @@ class CVAE:
             print("Approx Log-Likelihood, importance sampling (%s) : %f ± %fSEM" %
                   (data_part, results['importance_log_likelihood'], results['importance_log_likelihood_sem']))
 
-            print("KL-div (%s) : %f ± %fSEM" % (data_part, results['kl_div'], results['kl_div_sem']))
+            print("KL-div (%s) : %f ± %fSEM \n" % (data_part, results['kl_div'], results['kl_div_sem']))
+
 
         return results
