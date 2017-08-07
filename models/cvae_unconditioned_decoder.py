@@ -69,8 +69,8 @@ class CVAE:
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
         self.decoder_model = Model(inputs=[self.x],
-                                   outputs=concatenate([self.decoder_mu_seq(self.u_prior),
-                                                        self.decoder_kappa_seq(self.u_prior)]))
+                                   outputs=concatenate([self.decoder_mu_seq(self.mu_prior),
+                                                        self.decoder_kappa_seq(self.mu_prior)]))
 
     def _encoder_mu_log_sigma(self):
 
