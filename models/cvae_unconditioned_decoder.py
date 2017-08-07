@@ -63,8 +63,8 @@ class CVAE:
                                                      self.mu_encoder,
                                                      self.log_var_encoder,
                                                      self.u_encoder,
-                                                     self.decoder_mu_seq(self.u_encoder),
-                                                     self.decoder_kappa_seq(self.u_encoder)]))
+                                                     self.decoder_mu_seq(self.mu_prior),
+                                                     self.decoder_kappa_seq(self.mu_prior)]))
 
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
