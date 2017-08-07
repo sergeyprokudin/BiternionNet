@@ -13,7 +13,7 @@ from utils.custom_keras_callbacks import EvalCVAEModel
 
 def main():
 
-    n_u = 8
+    n_u = 32
     exp_id = get_experiment_id()
     root_log_dir = 'logs/cvae/'
 
