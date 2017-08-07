@@ -41,8 +41,8 @@ def main():
 
     for tid in range(0, n_trials):
 
-        n_epochs = 100
-        batch_size = 10
+        n_epochs = 50
+        batch_size = 50
 
         print("TRIAL %d" % tid)
         trial_dir = os.path.join(experiment_dir, str(tid))
