@@ -8,6 +8,7 @@ from models.cvae import CVAE
 from utils.angles import deg2bit, bit2deg
 from utils.towncentre import load_towncentre, aug_data
 from utils.experiements import get_experiment_id
+from utils.custom_keras_callbacks import EvalCVAEModel
 
 
 def main():
@@ -68,9 +69,12 @@ def main():
                           n_hidden_units=n_u,
                           kl_weight=1.0)
 
+        eval_callback = EvalCVAEModel(xval, yval_deg, 'validation', cvae_model)
+
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
                                   validation_data=([xval, yval_bit], yval_bit),
-                                  callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+                                  callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback,
+                                             eval_callback])
 
         cvae_model.evaluate_multi(xtr, ytr_deg, 'train')
         cvae_model.evaluate_multi(xval, yval_deg, 'validation')
@@ -98,6 +102,8 @@ def main():
                               n_hidden_units=n_u,
                               kl_weight=kl_weight)
 
+            eval_callback = EvalCVAEModel(xval, yval_deg, 'validation', cvae_model)
+
             cvae_model.full_model.load_weights(cvae_best_ckpt_path)
 
             if kl_weight == 1.0:
@@ -106,7 +112,8 @@ def main():
 
             cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
                                       validation_data=([xval, yval_bit], yval_bit),
-                                      callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+                                      callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback,
+                                                 eval_callback])
 
         best_model = CVAE(image_height=image_height,
                           image_width=image_width,
