@@ -67,7 +67,7 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          kl_weight=1.0)
+                          kl_weight=0.1)
 
         cvae_bestloglike_ckpt_path = os.path.join(trial_dir, 'cvae.full_model.trial_%d.best_likelihood.weights.hdf5'
                                                   % tid)
@@ -82,7 +82,7 @@ def main():
         cvae_model.evaluate_multi(xval, yval_deg, 'validation')
         cvae_model.evaluate_multi(xte, yte_deg, 'test')
 
-        kl_weight_range = [0.6, 0.7, 0.8, 0.9, 1.0]
+        kl_weight_range = [1.0]
 
         for kl_weight in kl_weight_range:
 
