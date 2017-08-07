@@ -53,7 +53,6 @@ def main():
 
         train_csv_log = os.path.join(trial_dir, 'train.csv')
         csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
-        eval_callback = EvalCVAEModel(xval, yval_deg, 'validation', cvae_model)
 
         model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
                                                               monitor='val_loss',
@@ -67,6 +66,8 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u)
+
+        eval_callback = EvalCVAEModel(xval, yval_deg, 'validation', cvae_model)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
                                   validation_data=([xval, yval_bit], yval_bit),
