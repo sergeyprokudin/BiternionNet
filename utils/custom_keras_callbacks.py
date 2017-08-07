@@ -41,6 +41,7 @@ class EvalCVAEModel(keras.callbacks.Callback):
 
     def on_epoch_end(self, epoch, logs=None):
         self.cvae_model.evaluate_multi(self.x, self.y_deg, self.data_title)
+        print("Evaluation is done.")
 
 
 class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
