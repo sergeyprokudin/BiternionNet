@@ -43,12 +43,12 @@ class EvalCVAEModel(keras.callbacks.Callback):
 
     def on_epoch_end(self, epoch, logs=None):
         results = self.cvae_model.evaluate_multi(self.x, self.y_deg, self.data_title)
-        print("Evaluation is done.")
         if results['importance_log_likelihood'] > self.max_log_likelihood:
             print('max log likelihood improved from %f to %f' % (self.max_log_likelihood,
                                                                  results['importance_log_likelihood']))
             self.max_log_likelihood = results['importance_log_likelihood']
             self.model.save_weights(self.ckpt_path)
+        print("Evaluation is done.")
 
 
 class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
