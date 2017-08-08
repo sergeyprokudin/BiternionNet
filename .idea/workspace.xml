@@ -42,8 +42,8 @@
       <file leaf-file-name="cvae_unconditioned_decoder.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/cvae_unconditioned_decoder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28035983">
-              <caret line="126" column="11" selection-start-line="126" selection-start-column="11" selection-end-line="126" selection-end-column="11" />
+            <state vertical-scroll-proportion="0.30584708">
+              <caret line="124" column="45" selection-start-line="124" selection-start-column="45" selection-end-line="124" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -911,8 +911,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/cvae_unconditioned_decoder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28035983">
-          <caret line="126" column="11" selection-start-line="126" selection-start-column="11" selection-end-line="126" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.30584708">
+          <caret line="124" column="45" selection-start-line="124" selection-start-column="45" selection-end-line="124" selection-end-column="45" />
           <folding />
         </state>
       </provider>
