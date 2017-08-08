@@ -49,7 +49,6 @@ class EvalCVAEModel(keras.callbacks.Callback):
                                                                  results['importance_log_likelihood']))
             self.max_log_likelihood = results['importance_log_likelihood']
             self.model.save_weights(self.ckpt_path)
-            import ipdb; ipdb.set_trace()
 
 
 class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
