@@ -1,5 +1,4 @@
 import numpy as np
-import tensorflow as tf
 
 from keras.layers import Input, Dense, Lambda
 from keras.layers.merge import concatenate
