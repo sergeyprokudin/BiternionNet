@@ -63,14 +63,14 @@ class CVAE:
                                                      self.mu_encoder,
                                                      self.log_var_encoder,
                                                      self.u_encoder,
-                                                     self.decoder_mu_seq(self.mu_prior),
-                                                     self.decoder_kappa_seq(self.mu_prior)]))
+                                                     self.decoder_mu_seq(self.mu_encoder),
+                                                     self.decoder_kappa_seq(self.mu_encoder)]))
 
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
         self.decoder_model = Model(inputs=[self.x],
-                                   outputs=concatenate([self.decoder_mu_seq(self.mu_prior),
-                                                        self.decoder_kappa_seq(self.mu_prior)]))
+                                   outputs=concatenate([self.decoder_mu_seq(self.mu_encoder),
+                                                        self.decoder_kappa_seq(self.mu_encoder)]))
 
     def _encoder_mu_log_sigma(self):
 
