@@ -41,8 +41,8 @@ def main():
 
     for tid in range(0, n_trials):
 
-        n_epochs = 50
-        batch_size = 50
+        n_epochs = 100
+        batch_size = 10
 
         print("TRIAL %d" % tid)
         trial_dir = os.path.join(experiment_dir, str(tid))
@@ -124,7 +124,7 @@ def main():
                           n_channels=n_channels,
                           n_hidden_units=n_u)
 
-        best_model.full_model.load_weights(cvae_best_ckpt_path)
+        best_model.full_model.load_weights(cvae_bestloglike_ckpt_path)
 
         trial_results = dict()
         trial_results['ckpt_path'] = cvae_best_ckpt_path

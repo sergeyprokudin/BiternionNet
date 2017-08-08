@@ -39,11 +39,15 @@ class EvalCVAEModel(keras.callbacks.Callback):
         self.data_title = data_title
         self.cvae_model = cvae_model
         self.ckpt_path = ckpt_path
+        self.max_log_likelihood = float('-inf')
 
     def on_epoch_end(self, epoch, logs=None):
         results = self.cvae_model.evaluate_multi(self.x, self.y_deg, self.data_title)
         print("Evaluation is done.")
-        if results['importance_log_likelihood'] > 0.6:
+        if results['importance_log_likelihood'] > self.max_log_likelihood:
+            print('max log likelihood improved from %f to %f' % (self.max_log_likelihood,
+                                                                 results['importance_log_likelihood']))
+            self.max_log_likelihood = results['importance_log_likelihood']
             self.model.save_weights(self.ckpt_path)
             import ipdb; ipdb.set_trace()
 
