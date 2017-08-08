@@ -63,8 +63,8 @@ class CVAE:
                                                      self.mu_encoder,
                                                      self.log_var_encoder,
                                                      self.u_encoder,
-                                                     self.decoder_mu_seq(self.mu_prior),
-                                                     self.decoder_kappa_seq(self.mu_prior)]))
+                                                     self.decoder_mu_seq(self.mu_encoder),
+                                                     self.decoder_kappa_seq(self.mu_encoder)]))
 
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
@@ -121,8 +121,8 @@ class CVAE:
         mu_pred = model_output[:, self.n_u*5:self.n_u*5+2]
         kappa_pred = model_output[:, self.n_u*5+2:]
         reconstruction_err = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred)
-        # kl = K.sum(K.abs(mu_prior-mu_encoder))
-        kl = gaussian_kl_divergence_tf(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
+        kl = K.sum(K.abs(mu_prior-mu_encoder))
+        # kl = gaussian_kl_divergence_tf(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
         elbo = reconstruction_err - self.kl_weight*kl
         return K.mean(-elbo)
 
