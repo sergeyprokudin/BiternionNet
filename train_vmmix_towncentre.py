@@ -15,7 +15,10 @@ def main():
 
     n_components = 10
     exp_id = get_experiment_id()
+
     root_log_dir = 'logs/vmmix/'
+    if not os.path.exists(root_log_dir):
+        os.mkdir(root_log_dir)
 
     experiment_dir = os.path.join(root_log_dir, exp_id)
     os.mkdir(experiment_dir)
@@ -68,8 +71,8 @@ def main():
                                            n_channels=n_channels,
                                            n_components=n_components)
 
-        vggmix_model.model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
-                               validation_data=([xval, yval_bit], yval_bit),
+        vggmix_model.model.fit(xtr, ytr_bit, batch_size=batch_size, epochs=n_epochs,
+                               validation_data=(xval, yval_bit),
                                callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = BiternionVGGMixture(image_height=image_height,
