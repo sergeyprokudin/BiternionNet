@@ -8,7 +8,6 @@ from models.vgg_vmmix import BiternionVGGMixture
 from utils.angles import deg2bit, bit2deg
 from utils.towncentre import load_towncentre, aug_data
 from utils.experiements import get_experiment_id
-from utils.custom_keras_callbacks import EvalCVAEModel
 
 
 def main():

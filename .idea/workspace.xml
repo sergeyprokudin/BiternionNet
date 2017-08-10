@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ModelAnalysis1.ipynb" afterPath="$PROJECT_DIR$/ModelAnalysis1.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Von-Mises mixture model.ipynb" afterPath="$PROJECT_DIR$/Von-Mises mixture model.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_cvae_klanneal_towncentre.py" afterPath="$PROJECT_DIR$/train_cvae_klanneal_towncentre.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vmmix_towncentre.py" afterPath="$PROJECT_DIR$/train_vmmix_towncentre.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
@@ -54,7 +56,7 @@
         <entry file="file://$PROJECT_DIR$/models/vgg_vmmix.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="175" column="36" selection-start-line="175" selection-start-column="17" selection-end-line="175" selection-end-column="36" />
+              <caret line="105" column="73" selection-start-line="105" selection-start-column="73" selection-end-line="105" selection-end-column="73" />
               <folding />
             </state>
           </provider>
@@ -102,23 +104,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_vmmix_towncentre.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train_vmmix_towncentre.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_vmmix_towncentre.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5470219">
-              <caret line="78" column="65" selection-start-line="78" selection-start-column="65" selection-end-line="78" selection-end-column="65" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding>
-                <marker date="1502360591000" expanded="true" signature="3262:3499" placeholder="..." />
+                <marker date="1502360764000" expanded="true" signature="3207:3444" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_cvae_klanneal_towncentre.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="train_cvae_klanneal_towncentre.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train_cvae_klanneal_towncentre.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.38714734">
+              <caret line="48" column="25" selection-start-line="48" selection-start-column="25" selection-end-line="48" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -196,10 +198,10 @@
         <option value="$PROJECT_DIR$/train_cvae_unconditioned_decoder_towncentre.py" />
         <option value="$PROJECT_DIR$/models/cvae_unconditioned_decoder.py" />
         <option value="$PROJECT_DIR$/utils/custom_keras_callbacks.py" />
-        <option value="$PROJECT_DIR$/train_cvae_klanneal_towncentre.py" />
         <option value="$PROJECT_DIR$/models/cvae.py" />
         <option value="$PROJECT_DIR$/models/vgg_vmmix.py" />
         <option value="$PROJECT_DIR$/train_vmmix_towncentre.py" />
+        <option value="$PROJECT_DIR$/train_cvae_klanneal_towncentre.py" />
       </list>
     </option>
   </component>
@@ -867,14 +869,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_cvae_klanneal_towncentre.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/cvae.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -912,18 +906,26 @@
     <entry file="file://$PROJECT_DIR$/models/vgg_vmmix.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="175" column="36" selection-start-line="175" selection-start-column="17" selection-end-line="175" selection-end-column="36" />
+          <caret line="105" column="73" selection-start-line="105" selection-start-column="73" selection-end-line="105" selection-end-column="73" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train_vmmix_towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5470219">
-          <caret line="78" column="65" selection-start-line="78" selection-start-column="65" selection-end-line="78" selection-end-column="65" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding>
-            <marker date="1502360591000" expanded="true" signature="3262:3499" placeholder="..." />
+            <marker date="1502360764000" expanded="true" signature="3207:3444" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_cvae_klanneal_towncentre.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38714734">
+          <caret line="48" column="25" selection-start-line="48" selection-start-column="25" selection-end-line="48" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
