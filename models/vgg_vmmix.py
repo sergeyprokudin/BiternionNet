@@ -85,7 +85,8 @@ class BiternionVGGMixture:
             mu_pred_normalized = Lambda(lambda x: K.l2_normalize(x, axis=1))(mu_pred)
             # mu_pred_norm_reshaped = Lambda(lambda x: K.reshape(x, [-1, 1, N_BITERNION_OUTPUT]))(mu_pred_normalized)
             mu_preds.append(mu_pred_normalized)
-        self.mu_preds = concatenate(mu_preds, axis=1)
+
+        self.mu_preds = concatenate(mu_preds)
 
         self.kappa_preds = Lambda(lambda x: K.abs(x))(Dense(self.n_components)(Dense(256)(vgg_x)))
         # kappa_preds = Lambda(lambda x: K.reshape(x, [-1, self.n_components, 1]))(kappa_preds)
@@ -93,19 +94,35 @@ class BiternionVGGMixture:
         self.component_probs = Lambda(lambda x: K.softmax(x))(Dense(self.n_components)(Dense(256)(vgg_x)))
         # self.component_probs = Lambda(lambda x: K.reshape(x, [-1, self.n_components, 1]))(component_probs)
 
-        self.y_pred = concatenate([self.mu_preds, self.kappa_preds, self.component_probs], axis=1)
+        self.y_pred = concatenate([self.mu_preds, self.kappa_preds, self.component_probs])
 
         self.model = Model(inputs=self.X, outputs=self.y_pred)
 
-        self.model.compile(optimizer='adam', loss=self._von_mises_mixture_log_likelihood_tf)
+        self.model.compile(optimizer='adam', loss=self._neg_mean_vmm_loglikelihood_tf)
 
+    def parse_output_tf(self, y_preds):
 
-    @staticmethod
-    def parse_output(y_preds):
+        mu_preds = K.reshape(y_preds[:, 0:self.n_components*N_BITERNION_OUTPUT],
+                             [-1, self.n_components, N_BITERNION_OUTPUT])
 
-        mu_preds = y_preds[:, :, 0:2]
-        kappa_preds = y_preds[:, :, 2:3]
-        component_probs = y_preds[:, :, 3:4]
+        kappa_ptr = self.n_components*N_BITERNION_OUTPUT
+        kappa_preds = K.reshape(y_preds[:, kappa_ptr:kappa_ptr+self.n_components], [-1, self.n_components, 1])
+
+        cprobs_ptr = kappa_ptr + self.n_components
+        component_probs = K.reshape(y_preds[:, cprobs_ptr:cprobs_ptr+self.n_components], [-1, self.n_components])
+
+        return mu_preds, kappa_preds, component_probs
+
+    def parse_output_np(self, y_preds):
+
+        mu_preds = np.reshape(y_preds[:, 0:self.n_components*N_BITERNION_OUTPUT],
+                             [-1, self.n_components, N_BITERNION_OUTPUT])
+
+        kappa_ptr = self.n_components*N_BITERNION_OUTPUT
+        kappa_preds = np.reshape(y_preds[:, kappa_ptr:kappa_ptr+self.n_components], [-1, self.n_components, 1])
+
+        cprobs_ptr = kappa_ptr + self.n_components
+        component_probs = np.reshape(y_preds[:, cprobs_ptr:cprobs_ptr+self.n_components], [-1, self.n_components])
 
         return mu_preds, kappa_preds, component_probs
 
@@ -113,7 +130,7 @@ class BiternionVGGMixture:
 
         component_log_likelihoods = []
 
-        mu, kappa, comp_probs = BiternionVGGMixture.parse_output(y_pred)
+        mu, kappa, comp_probs = self.parse_output_np(y_pred)
 
         comp_probs = np.squeeze(comp_probs)
 
@@ -130,9 +147,7 @@ class BiternionVGGMixture:
 
         component_log_likelihoods = []
 
-        mu = y_pred[:, :, 0:2]
-        kappa = y_pred[:, :, 2:3]
-        comp_probs = tf.squeeze(y_pred[:, :, 3:4], axis=2)
+        mu, kappa, comp_probs = self.parse_output_tf(y_pred)
 
         for cid in range(0, self.n_components):
             component_log_likelihoods.append(von_mises_log_likelihood_tf(y_true, mu[:, cid], kappa[:, cid]))
@@ -142,6 +157,12 @@ class BiternionVGGMixture:
         log_likelihoods = tf.log(tf.reduce_sum(comp_probs*tf.exp(component_log_likelihoods), axis=1))
 
         return log_likelihoods
+
+    def _neg_mean_vmm_loglikelihood_tf(self, y_true, y_pred):
+
+        log_likelihoods = self._von_mises_mixture_log_likelihood_tf(y_true, y_pred)
+
+        return -tf.reduce_mean(log_likelihoods)
 
     def evaluate(self, x, ytrue_deg, data_part):
 
