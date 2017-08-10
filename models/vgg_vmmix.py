@@ -11,7 +11,7 @@ from keras.models import Model
 from keras.layers.merge import concatenate
 
 from utils.angles import deg2bit, bit2deg
-from utils.losses import maad_from_deg, von_mises_log_likelihood_np
+from utils.losses import maad_from_deg, von_mises_log_likelihood_np, von_mises_log_likelihood_tf
 from scipy.stats import sem
 
 N_BITERNION_OUTPUT = 2
@@ -83,22 +83,65 @@ class BiternionVGGMixture:
         for i in range(0, self.n_components):
             mu_pred = Dense(N_BITERNION_OUTPUT)(Dense(self.hlayer_size)(vgg_x))
             mu_pred_normalized = Lambda(lambda x: K.l2_normalize(x, axis=1))(mu_pred)
-            mu_pred_norm_reshaped = K.reshape(mu_pred_normalized, [-1, 1, N_BITERNION_OUTPUT])
-            mu_preds.append(mu_pred_norm_reshaped)
+            # mu_pred_norm_reshaped = Lambda(lambda x: K.reshape(x, [-1, 1, N_BITERNION_OUTPUT]))(mu_pred_normalized)
+            mu_preds.append(mu_pred_normalized)
         self.mu_preds = concatenate(mu_preds, axis=1)
 
         self.kappa_preds = Lambda(lambda x: K.abs(x))(Dense(self.n_components)(Dense(256)(vgg_x)))
-        #self.kappa_preds = K.reshape(kappa_preds, [-1, self.n_components, 1])
+        # kappa_preds = Lambda(lambda x: K.reshape(x, [-1, self.n_components, 1]))(kappa_preds)
 
         self.component_probs = Lambda(lambda x: K.softmax(x))(Dense(self.n_components)(Dense(256)(vgg_x)))
-        #self.component_probs = K.reshape(component_probs, [-1, self.n_components, 1])
+        # self.component_probs = Lambda(lambda x: K.reshape(x, [-1, self.n_components, 1]))(component_probs)
 
-        self.y_pred = concatenate([self.kappa_preds, self.component_probs])
+        self.y_pred = concatenate([self.mu_preds, self.kappa_preds, self.component_probs], axis=1)
 
-        self.model = Model(self.X, self.y_pred)
+        self.model = Model(inputs=self.X, outputs=self.y_pred)
 
-    def parse(self, y_preds):
-        return
+        self.model.compile(optimizer='adam', loss=self._von_mises_mixture_log_likelihood_tf)
+
+
+    @staticmethod
+    def parse_output(y_preds):
+
+        mu_preds = y_preds[:, :, 0:2]
+        kappa_preds = y_preds[:, :, 2:3]
+        component_probs = y_preds[:, :, 3:4]
+
+        return mu_preds, kappa_preds, component_probs
+
+    def _von_mises_mixture_log_likelihood_np(self, y_true, y_pred):
+
+        component_log_likelihoods = []
+
+        mu, kappa, comp_probs = BiternionVGGMixture.parse_output(y_pred)
+
+        comp_probs = np.squeeze(comp_probs)
+
+        for cid in range(0, self.n_components):
+            component_log_likelihoods.append(von_mises_log_likelihood_np(y_true, mu[:, cid], kappa[:, cid]))
+
+        component_log_likelihoods = np.concatenate(component_log_likelihoods, axis=1)
+
+        log_likelihoods = np.log(np.sum(comp_probs*np.exp(component_log_likelihoods), axis=1))
+
+        return log_likelihoods
+
+    def _von_mises_mixture_log_likelihood_tf(self, y_true, y_pred):
+
+        component_log_likelihoods = []
+
+        mu = y_pred[:, :, 0:2]
+        kappa = y_pred[:, :, 2:3]
+        comp_probs = tf.squeeze(y_pred[:, :, 3:4], axis=2)
+
+        for cid in range(0, self.n_components):
+            component_log_likelihoods.append(von_mises_log_likelihood_tf(y_true, mu[:, cid], kappa[:, cid]))
+
+        component_log_likelihoods = tf.concat(component_log_likelihoods, axis=1, name='component_likelihoods')
+
+        log_likelihoods = tf.log(tf.reduce_sum(comp_probs*tf.exp(component_log_likelihoods), axis=1))
+
+        return log_likelihoods
 
     def evaluate(self, x, ytrue_deg, data_part):
 
