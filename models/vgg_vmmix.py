@@ -64,7 +64,7 @@ class BiternionVGGMixture:
                  image_height=50,
                  image_width=50,
                  n_channels=3,
-                 n_components=5,
+                 n_components=10,
                  hlayer_size=256):
 
         self.image_height = image_height
@@ -168,28 +168,10 @@ class BiternionVGGMixture:
 
         ytrue_bit = deg2bit(ytrue_deg)
         ypreds = self.model.predict(x)
-        ypreds_bit = ypreds[:, 0:N_BITERNION_OUTPUT]
-        ypreds_deg = bit2deg(ypreds_bit)
 
-        if self.predict_kappa:
-            kappa_preds = ypreds[:, 2:]
-        else:
-            kappa_preds = np.ones([ytrue_deg.shape[0], 1]) * self.fixed_kappa_value
-
-        loss = maad_from_deg(ypreds_deg, ytrue_deg)
+        log_likelihoods = self._von_mises_mixture_log_likelihood_np(ytrue_bit, ypreds)
 
         results = dict()
-
-        results['maad_loss'] = float(np.mean(loss))
-        results['maad_loss_sem'] = float(sem(loss))
-        print("MAAD error (%s) : %f ± %fSEM" % (data_part,
-                                             results['maad_loss'],
-                                             results['maad_loss_sem']))
-
-        results['mean_kappa'] = float(np.mean(kappa_preds))
-        results['std_kappa'] = float(np.std(kappa_preds))
-
-        log_likelihoods = von_mises_log_likelihood_np(ytrue_bit, ypreds_bit, kappa_preds)
 
         results['log_likelihood_mean'] = float(np.mean(log_likelihoods))
         results['log_likelihood_sem'] = float(sem(log_likelihoods, axis=None))
