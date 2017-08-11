@@ -12,7 +12,7 @@ from utils.experiements import get_experiment_id
 
 def main():
 
-    n_components = 30
+    n_components = 5
     exp_id = get_experiment_id()
 
     root_log_dir = 'logs/vmmix/'
