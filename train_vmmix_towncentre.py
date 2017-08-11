@@ -41,8 +41,8 @@ def main():
     n_trials = 5
     results = dict()
 
-    n_epochs = 100
-    batch_size = 10
+    n_epochs = 30
+    batch_size = 128
 
     for tid in range(0, n_trials):
 
