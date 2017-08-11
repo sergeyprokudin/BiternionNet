@@ -44,7 +44,7 @@ def main():
     for tid in range(0, n_trials):
 
         n_epochs = 100
-        batch_size = 16
+        batch_size = 10
 
         print("TRIAL %d" % tid)
         trial_dir = os.path.join(experiment_dir, str(tid))
@@ -69,7 +69,7 @@ def main():
                           image_width=image_width,
                           n_channels=n_channels,
                           n_hidden_units=n_u,
-                          kl_weight=0.65)
+                          kl_weight=0.7)
 
         cvae_bestloglike_ckpt_path = os.path.join(trial_dir, 'cvae.full_model.trial_%d.best_likelihood.weights.hdf5'
                                                   % tid)
