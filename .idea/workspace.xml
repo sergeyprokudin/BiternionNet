@@ -85,10 +85,10 @@
       <file leaf-file-name="train_vmmix_towncentre.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train_vmmix_towncentre.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8714734">
-              <caret line="43" column="18" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.52507836">
+              <caret line="46" column="19" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
               <folding>
-                <marker date="1502442915000" expanded="true" signature="3207:3444" placeholder="..." />
+                <marker date="1502443343000" expanded="true" signature="3207:3444" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -899,10 +899,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_vmmix_towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8714734">
-          <caret line="43" column="18" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.52507836">
+          <caret line="46" column="19" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
           <folding>
-            <marker date="1502442915000" expanded="true" signature="3207:3444" placeholder="..." />
+            <marker date="1502443343000" expanded="true" signature="3207:3444" placeholder="..." />
           </folding>
         </state>
       </provider>

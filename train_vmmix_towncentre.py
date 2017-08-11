@@ -12,7 +12,7 @@ from utils.experiements import get_experiment_id
 
 def main():
 
-    n_components = 5
+    n_components = 10
     exp_id = get_experiment_id()
 
     root_log_dir = 'logs/vmmix/'
@@ -42,7 +42,7 @@ def main():
     results = dict()
 
     n_epochs = 100
-    batch_size = 128
+    batch_size = 32
 
     for tid in range(0, n_trials):
 
