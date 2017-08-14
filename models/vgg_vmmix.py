@@ -10,9 +10,11 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import Model
 from keras.layers.merge import concatenate
 
-from utils.angles import deg2bit, bit2deg
+from utils.angles import deg2bit, bit2deg_multi
 from utils.losses import maad_from_deg, von_mises_log_likelihood_np, von_mises_log_likelihood_tf
 from scipy.stats import sem
+from utils.sampling import sample_von_mises_mixture_multi
+from utils.losses import maximum_expected_utility
 
 N_BITERNION_OUTPUT = 2
 
@@ -169,12 +171,22 @@ class BiternionVGGMixture:
         ytrue_bit = deg2bit(ytrue_deg)
         ypreds = self.model.predict(x)
 
-        log_likelihoods = self._von_mises_mixture_log_likelihood_np(ytrue_bit, ypreds)
-
         results = dict()
 
+        vmmix_mu, vmmix_kappas, vmmix_probs = self.parse_output_np(ypreds)
+        vmmix_mu_rad = np.deg2rad(bit2deg_multi(vmmix_mu))
+        samples = sample_von_mises_mixture_multi(vmmix_mu_rad, vmmix_kappas, vmmix_probs, n_samples=1000)
+        maad_errs = maad_from_deg(maximum_expected_utility(np.rad2deg(samples)), ytrue_deg)
+        results['maad_mean'] = float(np.mean(maad_errs))
+        results['maad_sem'] = float(sem(maad_errs))
+
+        log_likelihoods = self._von_mises_mixture_log_likelihood_np(ytrue_bit, ypreds)
         results['log_likelihood_mean'] = float(np.mean(log_likelihoods))
         results['log_likelihood_sem'] = float(sem(log_likelihoods, axis=None))
+
+        print("MAAD error (%s) : %f ± %fSEM" % (data_part,
+                                                results['maad_mean'],
+                                                results['maad_sem']))
         print("log-likelihood (%s) : %f ± %fSEM" % (data_part,
                                                     results['log_likelihood_mean'],
                                                     results['log_likelihood_sem']))

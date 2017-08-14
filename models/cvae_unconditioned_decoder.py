@@ -212,7 +212,7 @@ class CVAE:
 
             return preds
 
-    def evaluate_multi(self, x, ytrue_deg, data_part, n_samples=10, verbose=1):
+    def evaluate_multi(self, x, ytrue_deg, data_part, n_samples=50, verbose=1):
 
         ytrue_bit = deg2bit(ytrue_deg)
 
