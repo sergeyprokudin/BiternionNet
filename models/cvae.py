@@ -268,5 +268,4 @@ class CVAE:
 
             print("KL-div (%s) : %f ± %fSEM" % (data_part, results['kl_div'], results['kl_div_sem']))
 
-
         return results
