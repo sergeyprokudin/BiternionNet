@@ -43,7 +43,7 @@ def main():
 
     n_epochs = 100
     batch_size = 32
-    n_components = 5
+    n_components = 2
 
     for tid in range(0, n_trials):
 
@@ -105,7 +105,7 @@ def main():
                                      image_width=image_width,
                                      n_channels=n_channels,
                                      n_components=n_components)
-    best_model.full_model.load_weights(overall_best_ckpt_path)
+    best_model.model.load_weights(overall_best_ckpt_path)
 
     best_results = dict()
     best_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
