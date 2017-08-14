@@ -43,7 +43,7 @@ def main():
 
     n_epochs = 100
     batch_size = 32
-    n_components = 2
+    n_components = 3
 
     for tid in range(0, n_trials):
 
