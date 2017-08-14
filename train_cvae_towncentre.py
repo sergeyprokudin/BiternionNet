@@ -39,7 +39,7 @@ def main():
     results = dict()
 
     n_epochs = 100
-    batch_size = 10
+    batch_size = 32
 
     for tid in range(0, n_trials):
 
