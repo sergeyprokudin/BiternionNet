@@ -81,10 +81,10 @@ def main():
                           n_channels=n_channels,
                           n_hidden_units=n_u)
 
-        best_model.full_model.load_weights(cvae_bestloglike_ckpt_path)
+        best_model.full_model.load_weights(cvae_best_ckpt_path)
 
         trial_results = dict()
-        trial_results['ckpt_path'] = cvae_bestloglike_ckpt_path
+        trial_results['ckpt_path'] = cvae_best_ckpt_path
         trial_results['train'] = best_model.evaluate_multi(xtr, ytr_deg, 'train')
         trial_results['validation'] = best_model.evaluate_multi(xval, yval_deg, 'validation')
         trial_results['test'] = best_model.evaluate_multi(xte, yte_deg, 'test')
