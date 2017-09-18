@@ -8,6 +8,7 @@ import re
 import inspect
 import json
 import pickle
+import joblib
 import gzip
 from os.path import join as pjoin
 
@@ -254,7 +255,7 @@ if __name__ == '__main__':
         # Since this one appears to already have been flipped horizontally, there's nothing to be done.
         data = load_tosato_idiap(pjoin(datadir, 'IHDPHeadPose'), 'or_label_full.mat')
         # Can't gzip due to this [Python bug](https://bugs.python.org/issue23306).
-        pickle.dump(data, open(pjoin(datadir, 'IDIAP.pkl'), 'wb+'))
+        joblib.dump(data, pjoin(datadir, 'IDIAP.pkl'))
         print(len(data[0][0]))
 
     if 'CAVIAR' in todos:
@@ -265,7 +266,6 @@ if __name__ == '__main__':
         data = load_tosato_caviar(pjoin(datadir, 'CAVIARShoppingCenterFullOccl'), 'or_label.mat')
         pickle.dump(data, gzip.open(pjoin(datadir, 'CAVIAR-o.pkl.gz'), 'wb+'))
         print(len(data[0][0]))
-
 
     if 'TownCentre' in todos:
         print("Augmenting TownCentre... ")

@@ -1,6 +1,10 @@
 import numpy as np
 
 
+def rad2bit(angles_rad):
+    return np.array([np.cos(angles_rad), np.sin(angles_rad)]).T
+
+
 def deg2bit(angles_deg):
     angles_rad = np.deg2rad(angles_deg)
     return np.array([np.cos(angles_rad), np.sin(angles_rad)]).T

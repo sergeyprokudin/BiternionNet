@@ -17,6 +17,7 @@ from scipy.stats import sem
 
 def vgg_model(n_outputs=1, final_layer=False, l2_normalize_final=False,
               image_height=50, image_width=50):
+
     model = Sequential()
 
     model.add(Conv2D(24, kernel_size=(3, 3),
