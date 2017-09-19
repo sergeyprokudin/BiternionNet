@@ -150,15 +150,14 @@ def train():
                                                               period=1,
                                                               verbose=1)
 
-        vgg_model.model.fit(x=xtr, y=ytr,
-                            batch_size=config['batch_size'],
-                            epochs=config['n_epochs'],
-                            verbose=1,
-                            validation_data=(xval, yval),
-                            callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+        vgg_model.model.save_weights(best_model_weights_file)
 
-        # final_model_ckpt_file = os.path.join(trial_dir, 'vgg_bit_' + config['loss'] + '_town.final.weigths.h5')
-        # vgg_model.model.save_weights(final_model_ckpt_file)
+        # vgg_model.model.fit(x=xtr, y=ytr,
+        #                     batch_size=config['batch_size'],
+        #                     epochs=config['n_epochs'],
+        #                     verbose=1,
+        #                     validation_data=(xval, yval),
+        #                     callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = vgg.BiternionVGG(image_height=image_height,
                                       image_width=image_width,
@@ -170,9 +169,9 @@ def train():
 
         trial_results = dict()
         trial_results['ckpt_path'] = best_model_weights_file
-        trial_results['train'] = best_model.evaluate(xtr, ytr, 'train')
-        trial_results['validation'] = best_model.evaluate(xval, yval, 'validation')
-        trial_results['test'] = best_model.evaluate(xte, yte, 'test')
+        trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+        trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
+        trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
         results[tid] = trial_results
 
         if tid > 0:

@@ -114,12 +114,12 @@ def train():
 
         vgg_model.model.save_weights(best_model_weights_file)
 
-        # vgg_model.model.fit(x=xtr, y=ytr_deg,
-        #                     batch_size=config['batch_size'],
-        #                     epochs=config['n_epochs'],
-        #                     verbose=1,
-        #                     validation_data=(xval, yval_deg),
-        #                     callbacks=[csv_callback, model_ckpt_callback])
+        vgg_model.model.fit(x=xtr, y=ytr_deg,
+                            batch_size=config['batch_size'],
+                            epochs=config['n_epochs'],
+                            verbose=1,
+                            validation_data=(xval, yval_deg),
+                            callbacks=[csv_callback, model_ckpt_callback])
 
         print("loading trials' best model...")
 
