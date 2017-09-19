@@ -80,8 +80,8 @@ def train():
         yte = pte_bit
     elif net_output == 'radian':
         ytr = ptr_rad
-        yval = ptr_rad
-        yte = ptr_rad
+        yval = pval_rad
+        yte = pte_rad
     else:
         raise ValueError("net_output should be 'biternion' or 'radian'")
 
