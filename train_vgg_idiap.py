@@ -69,9 +69,9 @@ def train():
     pval_bit = rad2bit(pval_rad)
     pte_bit = rad2bit(pte_rad)
 
-    ptr_deg = np.rad2deg(ptr_rad)
-    pval_deg = np.rad2deg(pval_rad)
-    pte_deg = np.rad2deg(pte_rad)
+    ytr_deg = np.rad2deg(ptr_rad)
+    yval_deg = np.rad2deg(pval_rad)
+    yte_deg = np.rad2deg(pte_rad)
 
     net_output = config['net_output']
     if net_output == 'biternion':
