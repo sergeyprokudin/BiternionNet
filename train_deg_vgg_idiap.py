@@ -95,8 +95,6 @@ def train():
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
-        vgg_model.evaluate(xte, yte_deg, 'test')
-
         tensorboard_callback = keras.callbacks.TensorBoard(log_dir=trial_dir)
 
         train_csv_log = os.path.join(trial_dir, 'train.csv')
@@ -137,8 +135,8 @@ def train():
         results[tid] = trial_results
 
         if tid > 0:
-            if trial_results['validation']['log_likelihood_mean'] > \
-                    results[best_trial_id]['validation']['log_likelihood_mean']:
+            if trial_results['validation']['maad_loss'] > \
+                    results[best_trial_id]['validation']['maad_loss']:
                 best_trial_id = tid
                 print("Better validation loss achieved, current best trial: %d" % best_trial_id)
 

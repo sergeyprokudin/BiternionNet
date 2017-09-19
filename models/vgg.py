@@ -86,6 +86,8 @@ class DegreeVGG:
 
         loss = maad_from_deg(ypreds_deg, ytrue_deg)
 
+        import ipdb; ipdb.set_trace()
+
         results = dict()
 
         results['maad_loss'] = float(np.mean(loss))
