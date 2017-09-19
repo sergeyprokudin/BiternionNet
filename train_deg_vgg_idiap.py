@@ -112,12 +112,16 @@ def train():
                                                               period=1,
                                                               verbose=1)
 
+        vgg_model.model.save_weights(best_model_weights_file)
+
         vgg_model.model.fit(x=xtr, y=ytr_deg,
                             batch_size=config['batch_size'],
                             epochs=config['n_epochs'],
                             verbose=1,
                             validation_data=(xval, yval_deg),
                             callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+
+        print("loading trials' best model...")
 
         best_model = vgg.DegreeVGG(image_width=image_width,
                                    image_height=image_height,
@@ -128,6 +132,8 @@ def train():
 
         trial_results = dict()
         trial_results['ckpt_path'] = best_model_weights_file
+
+        print("evaluating trials' best model...")
         trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
         trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
         trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
