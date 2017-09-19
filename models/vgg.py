@@ -82,11 +82,9 @@ class DegreeVGG:
 
     def evaluate(self, x, ytrue_deg, data_part):
 
-        ypreds_deg = self.model.predict(x)
+        ypreds_deg = np.squeeze(self.model.predict(x))
 
         loss = maad_from_deg(ypreds_deg, ytrue_deg)
-
-        import ipdb; ipdb.set_trace()
 
         results = dict()
 
