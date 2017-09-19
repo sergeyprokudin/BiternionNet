@@ -73,7 +73,7 @@ class DegreeVGG:
 
         self.X = Input(shape=[image_height, image_width, 3])
 
-        vgg_x = vgg_model(n_outputs=1,
+        self.vgg_x = vgg_model(n_outputs=1,
                           final_layer=True,
                           image_height=self.image_height,
                           image_width=self.image_width)(self.X)
