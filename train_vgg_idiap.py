@@ -195,9 +195,9 @@ def train():
     best_model.model.load_weights(overall_best_ckpt_path)
 
     best_results = dict()
-    best_results['train'] = best_model.evaluate(xtr, ytr, 'train')
-    best_results['validation'] = best_model.evaluate(xval, yval, 'validation')
-    best_results['test'] = best_model.evaluate(xte, yte, 'test')
+    best_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+    best_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
+    best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
     results['best'] = best_results
 
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
