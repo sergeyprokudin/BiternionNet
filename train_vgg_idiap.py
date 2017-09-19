@@ -68,12 +68,21 @@ def train():
     pval_bit = rad2bit(pval_rad)
     pte_bit = rad2bit(pte_rad)
 
-    ytr = ptr_bit
-    ytr_deg = np.rad2deg(ptr_rad)
-    yval = pval_bit
-    yval_deg = np.rad2deg(pval_rad)
-    yte = pte_bit
-    yte_deg = np.rad2deg(pte_rad)
+    ptr_deg = np.rad2deg(ptr_rad)
+    pval_deg = np.rad2deg(pval_rad)
+    pte_deg = np.rad2deg(pte_rad)
+
+    net_output = config['net_output']
+    if net_output == 'biternion':
+        ytr = ptr_bit
+        yval = pval_bit
+        yte = pte_bit
+    elif net_output == 'degrees':
+        ytr = ptr_deg
+        yval = pval_deg
+        yte = pte_deg
+    else:
+        raise ValueError("net_output should be 'biternion' or 'degrees'")
 
     net_output = config['net_output']
 
@@ -107,7 +116,7 @@ def train():
     optimizer = get_optimizer(config['optimizer_params'])
 
     best_trial_id = 0
-    n_trials = 1
+    n_trials = 5
     results = dict()
 
     for tid in range(0, n_trials):
@@ -160,9 +169,9 @@ def train():
 
         trial_results = dict()
         trial_results['ckpt_path'] = best_model_weights_file
-        trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
-        trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
-        trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
+        trial_results['train'] = best_model.evaluate(xtr, ytr, 'train')
+        trial_results['validation'] = best_model.evaluate(xval, yval, 'validation')
+        trial_results['test'] = best_model.evaluate(xte, yte, 'test')
         results[tid] = trial_results
 
         if tid > 0:
@@ -185,9 +194,9 @@ def train():
     best_model.model.load_weights(overall_best_ckpt_path)
 
     best_results = dict()
-    best_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
-    best_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
-    best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
+    best_results['train'] = best_model.evaluate(xtr, ytr, 'train')
+    best_results['validation'] = best_model.evaluate(xval, yval, 'validation')
+    best_results['test'] = best_model.evaluate(xte, yte, 'test')
     results['best'] = best_results
 
     results_yml_file = os.path.join(experiment_dir, 'results.yml')

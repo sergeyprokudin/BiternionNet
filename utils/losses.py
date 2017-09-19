@@ -5,6 +5,7 @@ from scipy.special import i1 as mod_bessel1
 from keras import backend as K
 from scipy.stats import multivariate_normal
 
+
 def cosine_loss_np(y_target, y_pred):
     return 1 - np.sum(np.multiply(y_target, y_pred),axis=1)
 
