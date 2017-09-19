@@ -78,14 +78,12 @@ def train():
         ytr = ptr_bit
         yval = pval_bit
         yte = pte_bit
-    elif net_output == 'degrees':
-        ytr = ptr_deg
-        yval = pval_deg
-        yte = pte_deg
+    elif net_output == 'radian':
+        ytr = ptr_rad
+        yval = ptr_rad
+        yte = ptr_rad
     else:
-        raise ValueError("net_output should be 'biternion' or 'degrees'")
-
-    import ipdb; ipdb.set_trace()
+        raise ValueError("net_output should be 'biternion' or 'radian'")
 
     net_output = config['net_output']
 
