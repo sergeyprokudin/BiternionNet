@@ -57,6 +57,44 @@ def vgg_model(n_outputs=1, final_layer=False, l2_normalize_final=False,
     return model
 
 
+class DegreeVGG:
+
+    def __init__(self,
+             image_height=50,
+             image_width=50,
+             n_channels=3,
+             n_outputs=1,
+             predict_kappa=False,
+             fixed_kappa_value=1.0):
+
+        self.image_height = image_height
+        self.image_width = image_width
+        self.n_channels = n_channels
+
+        self.X = Input(shape=[image_height, image_width, 3])
+
+        vgg_x = vgg_model(n_outputs=1,
+                          final_layer=True,
+                          image_height=self.image_height,
+                          image_width=self.image_width)(self.X)
+
+        self.model = Model(self.X, self.vgg_x)
+
+    def evaluate(self, x, ytrue_deg, data_part):
+
+        ypreds_deg = self.model.predict(x)
+
+        loss = maad_from_deg(ypreds_deg, ytrue_deg)
+
+        results = dict()
+
+        results['maad_loss'] = float(np.mean(loss))
+        results['maad_loss_sem'] = float(sem(loss))
+        print("MAAD error (%s) : %f ± %fSEM" % (data_part,
+                                             results['maad_loss'],
+                                             results['maad_loss_sem']))
+
+
 class BiternionVGG:
 
     def __init__(self,

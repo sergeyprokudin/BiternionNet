@@ -88,10 +88,10 @@ def train():
         os.mkdir(trial_dir)
         print("logs could be found at %s" % trial_dir)
 
-        vgg_model = vgg.vgg_model(n_outputs=1,
-                                  final_layer=True,
-                                  image_width=image_width,
-                                  image_height=image_height)
+        vgg_model = vgg.DegreeVGG(image_width=image_width,
+                                  image_height=image_height,
+                                  n_outputs=1,
+                                  n_channels=3)
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
@@ -117,10 +117,10 @@ def train():
                             validation_data=(xval, yval_deg),
                             callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
-        best_model = vgg.vgg_model(n_outputs=1,
-                                   final_layer=True,
-                                   image_width=image_width,
-                                   image_height=image_height)
+        best_model = vgg.DegreeVGG(image_width=image_width,
+                                   image_height=image_height,
+                                   n_outputs=1,
+                                   n_channels=3)
 
         best_model.model.load_weights(best_model_weights_file)
 
@@ -142,10 +142,10 @@ def train():
     overall_best_ckpt_path = os.path.join(experiment_dir, 'vgg.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
-    best_model = vgg.vgg_model(n_outputs=1,
-                               final_layer=True,
-                               image_width=image_width,
-                               image_height=image_height)
+    best_model = vgg.DegreeVGG(image_width=image_width,
+                               image_height=image_height,
+                               n_outputs=1,
+                               n_channels=3)
 
     best_model.model.load_weights(overall_best_ckpt_path)
 
