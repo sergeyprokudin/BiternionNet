@@ -94,6 +94,8 @@ class DegreeVGG:
                                              results['maad_loss'],
                                              results['maad_loss_sem']))
 
+        return results
+
 
 class BiternionVGG:
 

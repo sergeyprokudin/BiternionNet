@@ -119,7 +119,7 @@ def train():
         #                     epochs=config['n_epochs'],
         #                     verbose=1,
         #                     validation_data=(xval, yval_deg),
-        #                     callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+        #                     callbacks=[csv_callback, model_ckpt_callback])
 
         print("loading trials' best model...")
 
