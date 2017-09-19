@@ -64,6 +64,7 @@ def train():
     (xte, pte_rad, tte_rad, rte_rad, names_te) = load_idiap('data//IDIAP.pkl')
 
     image_height, image_width = xtr.shape[1], xtr.shape[2]
+
     ptr_bit = rad2bit(ptr_rad)
     pval_bit = rad2bit(pval_rad)
     pte_bit = rad2bit(pte_rad)
@@ -83,6 +84,8 @@ def train():
         yte = pte_deg
     else:
         raise ValueError("net_output should be 'biternion' or 'degrees'")
+
+    import ipdb; ipdb.set_trace()
 
     net_output = config['net_output']
 
