@@ -121,8 +121,6 @@ def train():
                             validation_data=(xval, yval_deg),
                             callbacks=[csv_callback, model_ckpt_callback])
 
-        print("loading trials' best model...")
-
         best_model = vgg.DegreeVGG(image_width=image_width,
                                    image_height=image_height,
                                    n_outputs=1,
@@ -133,7 +131,6 @@ def train():
         trial_results = dict()
         trial_results['ckpt_path'] = best_model_weights_file
 
-        print("evaluating trials' best model...")
         trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
         trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
         trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
