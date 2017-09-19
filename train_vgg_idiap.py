@@ -135,8 +135,6 @@ def train():
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
-        vgg_model.evaluate(xtr, ytr_deg, 'train')
-
         tensorboard_callback = keras.callbacks.TensorBoard(log_dir=trial_dir)
 
         train_csv_log = os.path.join(trial_dir, 'train.csv')

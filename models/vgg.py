@@ -88,10 +88,8 @@ class DegreeVGG:
 
         results = dict()
 
-        import ipdb; ipdb.set_trace()
-
         results['maad_loss'] = float(np.mean(loss))
-        results['maad_loss_sem'] = float(sem(loss))
+        results['maad_loss_sem'] = float(sem(loss, axis=None))
         print("MAAD error (%s) : %f ± %fSEM" % (data_part,
                                              results['maad_loss'],
                                              results['maad_loss_sem']))
@@ -138,8 +136,6 @@ class BiternionVGG:
             kappa_preds = ypreds[:, 2:]
         else:
             kappa_preds = np.ones([ytrue_deg.shape[0], 1]) * self.fixed_kappa_value
-
-        import ipdb; ipdb.set_trace()
 
         loss = maad_from_deg(ypreds_deg, ytrue_deg)
 
