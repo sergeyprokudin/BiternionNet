@@ -88,6 +88,8 @@ class DegreeVGG:
 
         results = dict()
 
+        import ipdb; ipdb.set_trace()
+
         results['maad_loss'] = float(np.mean(loss))
         results['maad_loss_sem'] = float(sem(loss))
         print("MAAD error (%s) : %f ± %fSEM" % (data_part,
