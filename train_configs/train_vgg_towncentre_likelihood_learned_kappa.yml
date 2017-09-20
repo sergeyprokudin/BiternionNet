@@ -3,9 +3,9 @@ root_log_dir: 'logs'
 log_to_stdout: True
 data_path: 'data//IDIAP.pkl'
 canonical_split: True
-n_epochs: 10
-batch_size: 1000
-net_output: biternion # possible choices: degrees, biternion
+n_epochs: 50
+batch_size: 50
+net_output: pan # possible choices: pan, tilt, roll
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: True
 fixed_kappa_value: 1.0 #kappa value for vm_likelihood loss in case if it's not predicted by network.

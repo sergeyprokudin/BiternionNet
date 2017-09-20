@@ -65,23 +65,29 @@ def train():
 
     image_height, image_width = xtr.shape[1], xtr.shape[2]
 
-    ptr_bit = rad2bit(ptr_rad)
-    pval_bit = rad2bit(pval_rad)
-    pte_bit = rad2bit(pte_rad)
-
-    ytr_deg = np.rad2deg(ptr_rad)
-    yval_deg = np.rad2deg(pval_rad)
-    yte_deg = np.rad2deg(pte_rad)
-
     net_output = config['net_output']
-    if net_output == 'biternion':
-        ytr = ptr_bit
-        yval = pval_bit
-        yte = pte_bit
-    elif net_output == 'radian':
-        ytr = ptr_rad
-        yval = pval_rad
-        yte = pte_rad
+
+    if net_output == 'pan':
+        ytr = rad2bit(ptr_rad)
+        yval = rad2bit(pval_rad)
+        yte = rad2bit(pte_rad)
+        ytr_deg = np.rad2deg(ptr_rad)
+        yval_deg = np.rad2deg(pval_rad)
+        yte_deg = np.rad2deg(pte_rad)
+    elif net_output == 'tilt':
+        ytr = rad2bit(ttr_rad)
+        yval = rad2bit(tval_rad)
+        yte = rad2bit(tte_rad)
+        ytr_deg = np.rad2deg(ttr_rad)
+        yval_deg = np.rad2deg(tval_rad)
+        yte_deg = np.rad2deg(tte_rad)
+    elif net_output == 'roll':
+        ytr = rad2bit(rtr_rad)
+        yval = rad2bit(rval_rad)
+        yte = rad2bit(rte_rad)
+        ytr_deg = np.rad2deg(rtr_rad)
+        yval_deg = np.rad2deg(rval_rad)
+        yte_deg = np.rad2deg(rte_rad)
     else:
         raise ValueError("net_output should be 'biternion' or 'radian'")
 

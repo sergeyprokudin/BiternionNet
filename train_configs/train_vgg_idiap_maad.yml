@@ -3,8 +3,8 @@ root_log_dir: 'logs/IDIAP'
 log_to_stdout: True
 data_path: 'data//IDIAP.pkl'
 canonical_split: True
-n_epochs: 10
-batch_size: 10
+n_epochs: 50
+batch_size: 50
 net_output: degrees # possible choices: degrees
 loss: mad # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: False
