@@ -3,7 +3,7 @@ root_log_dir: 'logs'
 log_to_stdout: True
 data_path: 'data//IDIAP.pkl'
 canonical_split: True
-n_epochs: 10
+n_epochs: 50
 batch_size: 10
 net_output: pan # possible choices: pan, tilt, roll
 loss: cosine # possible choices : cosine, von_mises, mad, vm_likelihood
