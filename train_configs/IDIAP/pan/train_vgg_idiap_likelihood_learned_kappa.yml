@@ -1,7 +1,7 @@
 experiment_name: 'vggbit_likelihood_learned_kappa_Adadelta_batch10'
 root_log_dir: 'logs/IDIAP/pan'
 log_to_stdout: True
-data_path: 'data/TownCentre.pkl.gz'
+data_path: 'data//IDIAP.pkl'
 canonical_split: True
 n_epochs: 5
 batch_size: 1000
