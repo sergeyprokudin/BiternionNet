@@ -114,7 +114,7 @@ def train():
             def _von_mises_neg_log_likelihood_keras_fixed(y_true, y_pred):
                 mu_pred = y_pred[:, 0:2]
                 kappa_pred = tf.ones([tf.shape(y_pred[:, 2:])[0], 1])*fixed_kappa_value
-                return -K.mean(von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, net_output))
+                return -K.mean(von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred))
 
             loss_te = _von_mises_neg_log_likelihood_keras_fixed
     else:
