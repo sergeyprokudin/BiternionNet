@@ -89,7 +89,7 @@ def train():
         yval_deg = np.rad2deg(rval_rad)
         yte_deg = np.rad2deg(rte_rad)
     else:
-        raise ValueError("net_output should be 'biternion' or 'radian'")
+        raise ValueError("net_output should be 'pan', 'tilt' or 'roll'")
 
     net_output = config['net_output']
 

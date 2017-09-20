@@ -65,9 +65,21 @@ def train():
 
     image_height, image_width = xtr.shape[1], xtr.shape[2]
 
-    ytr_deg = np.rad2deg(ptr_rad)
-    yval_deg = np.rad2deg(pval_rad)
-    yte_deg = np.rad2deg(pte_rad)
+    net_output = config['net_output']
+    if net_output == 'pan':
+        ytr_deg = np.rad2deg(ptr_rad)
+        yval_deg = np.rad2deg(pval_rad)
+        yte_deg = np.rad2deg(pte_rad)
+    elif net_output == 'tilt':
+        ytr_deg = np.rad2deg(ttr_rad)
+        yval_deg = np.rad2deg(tval_rad)
+        yte_deg = np.rad2deg(tte_rad)
+    elif net_output == 'roll':
+        ytr_deg = np.rad2deg(rtr_rad)
+        yval_deg = np.rad2deg(rval_rad)
+        yte_deg = np.rad2deg(rte_rad)
+    else:
+        raise ValueError("net_output should be 'pan', 'tilt' or 'roll'")
 
     if config['loss'] == 'mad':
         print("using mad loss..")
