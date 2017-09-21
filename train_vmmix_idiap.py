@@ -69,7 +69,7 @@ def main():
     n_trials = 5
     results = dict()
 
-    n_epochs = 20
+    n_epochs = 50
     batch_size = 64
     n_components = 5
     learning_rate = 1.0e-6
