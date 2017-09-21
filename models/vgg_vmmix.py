@@ -102,7 +102,7 @@ class BiternionVGGMixture:
 
         self.model = Model(inputs=self.X, outputs=self.y_pred)
 
-        self.optimizer = keras.optimizers.Adam(learning_rate=self.learning_rate)
+        self.optimizer = keras.optimizers.Adam(lr=self.learning_rate)
 
         self.model.compile(optimizer=self.optimizer, loss=self._neg_mean_vmm_loglikelihood_tf)
 
