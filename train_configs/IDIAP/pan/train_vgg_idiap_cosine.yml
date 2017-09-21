@@ -4,7 +4,7 @@ log_to_stdout: True
 data_path: 'data//IDIAP.pkl'
 canonical_split: True
 n_epochs: 20
-batch_size: 64
+batch_size: 256
 net_output: pan # possible choices: pan, tilt, roll
 loss: cosine # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: False
@@ -13,7 +13,7 @@ tune_params: True #if True, we would tune params (learning rate, batch size) rat
 n_trials: 20
 optimizer_params:
   name: Adam
-  learning_rate: 1.0e-7
+  learning_rate: 1.0e-5
   rho: 0.95
   epsilon: 1.0e-07
   decay: 0.0
