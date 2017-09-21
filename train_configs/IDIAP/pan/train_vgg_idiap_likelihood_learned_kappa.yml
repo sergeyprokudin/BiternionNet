@@ -11,7 +11,7 @@ predict_kappa: True
 fixed_kappa_value: 1.0 #kappa value for vm_likelihood loss in case if it's not predicted by network. Use 0.0 for predicting kappa
 optimizer_params:
   name: Adam
-  learning_rate: 1e-7
+  learning_rate: 1.0e-7
   rho: 0.95
   epsilon: 1.0e-07
   decay: 0.0
