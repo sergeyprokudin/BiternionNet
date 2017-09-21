@@ -12,7 +12,6 @@ from utils.experiements import get_experiment_id
 
 def main():
 
-
     exp_id = get_experiment_id()
 
     root_log_dir = 'logs/vmmix/'
