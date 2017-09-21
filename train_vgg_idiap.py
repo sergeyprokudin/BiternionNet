@@ -15,7 +15,6 @@ from utils.experiements import get_experiment_id
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np, von_mises_neg_log_likelihood_keras
 
 from keras import backend as K
-from sklearn.model_selection import GridSearchCV
 
 
 def get_optimizer(optimizer_params):
@@ -35,12 +34,12 @@ def make_lr_batch_size_grid():
 
     max_lr = 1.0
     lr_step = 0.1
-    min_lr_factor = 1 # 10
+    min_lr_factor = 10
     possible_learning_rates = np.asarray([max_lr * lr_step ** (n - 1) for n in range(1, min_lr_factor + 1)])
 
     min_batch_size = 4
     bs_step = 2
-    max_size_factor = 2 # 8
+    max_size_factor = 8
     possible_batch_sizes = np.asarray([min_batch_size * bs_step ** (n - 1) for n in range(1, max_size_factor + 1)])
 
     grid = list(itertools.product(possible_learning_rates, possible_batch_sizes))
@@ -139,8 +138,6 @@ def train():
     else:
         raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
 
-
-
     best_trial_id = 0
     n_trials = config['n_trials']
 
@@ -191,19 +188,12 @@ def train():
 
         vgg_model.model.save_weights(best_model_weights_file)
 
-        # vgg_model.model.fit(x=xtr, y=ytr,
-        #                     batch_size=config['batch_size'],
-        #                     epochs=config['n_epochs'],
-        #                     verbose=1,
-        #                     validation_data=(xval, yval),
-        #                     callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
-
-        # vgg_model.model.fit(x=xtr, y=ytr,
-        #                     batch_size=batch_size,
-        #                     epochs=config['n_epochs'],
-        #                     verbose=1,
-        #                     validation_data=(xval, yval),
-        #                     callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+        vgg_model.model.fit(x=xtr, y=ytr,
+                            batch_size=batch_size,
+                            epochs=config['n_epochs'],
+                            verbose=1,
+                            validation_data=(xval, yval),
+                            callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = vgg.BiternionVGG(image_height=image_height,
                                       image_width=image_width,
@@ -217,9 +207,9 @@ def train():
         trial_results['learning_rate'] = float(learning_rate)
         trial_results['batch_size'] = float(batch_size)
         trial_results['ckpt_path'] = best_model_weights_file
-        # trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+        trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
         trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
-        # trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
+        trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
         results[tid] = trial_results
 
         if tid > 0:
@@ -246,9 +236,9 @@ def train():
     best_results['batch_size'] = results[best_trial_id]['batch_size']
 
     print("evaluating best model..")
-    #best_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+    best_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
     best_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
-    #best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
+    best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
     results['best'] = best_results
 
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
