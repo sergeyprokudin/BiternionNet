@@ -1,17 +1,17 @@
-experiment_name: 'vggbit_cosine_Adadelta_batch10'
-root_log_dir: 'logs'
+experiment_name: 'vggbit_likelihood_fixed_kappa_Adam_20epochs_batch10'
+root_log_dir: 'logs/IDIAP/pan'
 log_to_stdout: True
 data_path: 'data//IDIAP.pkl'
 canonical_split: True
 n_epochs: 20
 batch_size: 50
-net_output: pan # possible choices: pan, tilt, roll
-loss: cosine # possible choices : cosine, von_mises, mad, vm_likelihood
+net_output: pan
+loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: False
 fixed_kappa_value: 3.0 #kappa value for vm_likelihood loss in case if it's not predicted by network. Use 0.0 for predicting kappa
 optimizer_params:
   name: Adam
-  learning_rate: 0.0001
+  learning_rate: 0.001
   rho: 0.95
   epsilon: 1.0e-07
   decay: 0.0
