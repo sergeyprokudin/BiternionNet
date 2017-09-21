@@ -214,8 +214,8 @@ def train():
         best_model.model.load_weights(best_model_weights_file)
 
         trial_results = dict()
-        trial_results['learning_rate'] = learning_rate
-        trial_results['batch_size'] = batch_size
+        trial_results['learning_rate'] = float(learning_rate)
+        trial_results['batch_size'] = float(batch_size)
         trial_results['ckpt_path'] = best_model_weights_file
         # trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
         trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
@@ -228,7 +228,7 @@ def train():
                 best_trial_id = tid
                 print("Better validation loss achieved, current best trial: %d" % best_trial_id)
 
-    print("evaluating model..")
+    print("loading best model..")
     best_ckpt_path = results[best_trial_id]['ckpt_path']
     overall_best_ckpt_path = os.path.join(experiment_dir, 'vgg.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
@@ -244,9 +244,11 @@ def train():
     best_results = dict()
     best_results['learning_rate'] = results[best_trial_id]['learning_rate']
     best_results['batch_size'] = results[best_trial_id]['batch_size']
-    best_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+
+    print("evaluating best model..")
+    #best_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
     best_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
-    best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
+    #best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
     results['best'] = best_results
 
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
