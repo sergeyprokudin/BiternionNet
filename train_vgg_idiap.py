@@ -5,6 +5,7 @@ import os
 import sys
 import yaml
 import shutil
+import itertools
 
 from models import vgg
 from utils.angles import rad2bit
@@ -14,6 +15,7 @@ from utils.experiements import get_experiment_id
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np, von_mises_neg_log_likelihood_keras
 
 from keras import backend as K
+from sklearn.model_selection import GridSearchCV
 
 
 def get_optimizer(optimizer_params):
@@ -27,6 +29,23 @@ def get_optimizer(optimizer_params):
                                           lr=optimizer_params['learning_rate'],
                                           decay=optimizer_params['decay'])
     return optimizer
+
+
+def make_lr_batch_size_grid():
+
+    max_lr = 1.0
+    lr_step = 0.1
+    min_lr_factor = 10
+    possible_learning_rates = np.asarray([max_lr * lr_step ** (n - 1) for n in range(1, min_lr_factor + 1)])
+
+    min_batch_size = 4
+    bs_step = 2
+    max_size_factor = 8
+    possible_batch_sizes = np.asarray([min_batch_size * bs_step ** (n - 1) for n in range(1, max_size_factor + 1)])
+
+    grid = list(itertools.product(possible_learning_rates, possible_batch_sizes))
+
+    return grid
 
 
 def finetune_kappa(x, y_bit, model):
@@ -120,15 +139,25 @@ def train():
     else:
         raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
 
-    optimizer = get_optimizer(config['optimizer_params'])
+
 
     best_trial_id = 0
-    n_trials = 5
+    n_trials = config['n_trials']
+
+    params_grid = make_lr_batch_size_grid()
+
     results = dict()
 
-    for tid in range(0, n_trials):
+    # for tid in range(0, n_trials):
 
-        print("TRIAL %d" % tid)
+    for tid, params in enumerate(params_grid):
+
+        learning_rate = params[0]
+        batch_size = params[1]
+        print("TRIAL %d // %d" % (tid, len(params_grid)))
+        print("batch_size: %d" % batch_size)
+        print("learning_rate: %f" % learning_rate)
+
         trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
         print("logs could be found at %s" % trial_dir)
@@ -138,6 +167,10 @@ def train():
                                      n_channels=3,
                                      predict_kappa=predict_kappa,
                                      fixed_kappa_value=fixed_kappa_value)
+
+        optimizer = keras.optimizers.Adam(epsilon=1.0e-07,
+                                          lr=learning_rate,
+                                          decay=0.0)
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
@@ -158,12 +191,19 @@ def train():
 
         vgg_model.model.save_weights(best_model_weights_file)
 
-        vgg_model.model.fit(x=xtr, y=ytr,
-                            batch_size=config['batch_size'],
-                            epochs=config['n_epochs'],
-                            verbose=1,
-                            validation_data=(xval, yval),
-                            callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+        # vgg_model.model.fit(x=xtr, y=ytr,
+        #                     batch_size=config['batch_size'],
+        #                     epochs=config['n_epochs'],
+        #                     verbose=1,
+        #                     validation_data=(xval, yval),
+        #                     callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+
+        # vgg_model.model.fit(x=xtr, y=ytr,
+        #                     batch_size=batch_size,
+        #                     epochs=config['n_epochs'],
+        #                     verbose=1,
+        #                     validation_data=(xval, yval),
+        #                     callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = vgg.BiternionVGG(image_height=image_height,
                                       image_width=image_width,
@@ -174,10 +214,12 @@ def train():
         best_model.model.load_weights(best_model_weights_file)
 
         trial_results = dict()
+        trial_results['learning_rate'] = learning_rate
+        trial_results['batch_size'] = batch_size
         trial_results['ckpt_path'] = best_model_weights_file
-        trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+        #trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
         trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
-        trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
+        #trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
         results[tid] = trial_results
 
         if tid > 0:
@@ -200,6 +242,8 @@ def train():
     best_model.model.load_weights(overall_best_ckpt_path)
 
     best_results = dict()
+    best_results['learning_rate'] = results[best_trial_id]['learning_rate']
+    best_results['batch_size'] = results[best_trial_id]['batch_size']
     best_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
     best_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
     best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')

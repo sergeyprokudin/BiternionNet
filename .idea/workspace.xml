@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine.yml" afterPath="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/train_vgg_towncentre_cosine.yml" afterPath="$PROJECT_DIR$/train_configs/train_vgg_towncentre_cosine.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg_idiap.py" afterPath="$PROJECT_DIR$/train_vgg_idiap.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -29,11 +32,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="train_vgg_idiap.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="train_vgg_idiap.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train_vgg_idiap.py">
           <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.046728972">
+              <caret line="221" column="9" selection-start-line="221" selection-start-column="9" selection-end-line="221" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vgg.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/vgg.py">
+          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
+              <caret line="101" column="8" selection-start-line="101" selection-start-column="8" selection-end-line="101" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="builtins.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Library/Caches/PyCharm50/python_stubs/455223188/builtins.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="2899" column="8" selection-start-line="2899" selection-start-column="8" selection-end-line="2899" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_vgg_towncentre_cosine.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_configs/train_vgg_towncentre_cosine.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.807693">
+              <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_vgg_idiap_likelihood_learned_kappa_best.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_best.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.5">
+              <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -49,11 +92,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_vgg_idiap_cosine.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train_vgg_idiap_cosine.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.21161826">
-              <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+            <state vertical-scroll-proportion="-11.115385">
+              <caret line="17" column="18" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -69,54 +112,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_vgg_idiap_likelihood_fixed_kappa.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_fixed_kappa.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.461538">
-              <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train_vgg_idiap_von_mises_best.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises_best.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.5">
-              <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train_vgg_idiap_von_mises.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.2692308">
-              <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-              <folding>
-                <marker date="1506004604000" expanded="true" signature="505:511" placeholder="1" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="train_vgg_idiap_likelihood_learned_kappa.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-10.461538">
               <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train_vgg_idiap_likelihood_learned_kappa_best.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_best.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.5">
-              <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
-              <folding />
+              <folding>
+                <marker date="1506004973000" expanded="true" signature="530:536" placeholder="1" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -146,7 +149,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/train_scripts/train_vgg_cosine_debug.sh" />
         <option value="$PROJECT_DIR$/train_scripts/train_vgg_debug.sh" />
         <option value="$PROJECT_DIR$/train_scripts/train_vgg_likelihood_fixed_kappa.sh" />
         <option value="$PROJECT_DIR$/train_scripts/train_vgg_likelihood_learned_kappa.sh" />
@@ -155,7 +157,6 @@
         <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_debug.yml" />
         <option value="$PROJECT_DIR$/py_env/lib/python3.6/site-packages/keras/callbacks.py" />
         <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_von_mises.yml" />
-        <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_cosine.yml" />
         <option value="$PROJECT_DIR$/train_vgg_towncentre.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/models/cvae_mod.py" />
@@ -184,7 +185,6 @@
         <option value="$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_idiap_von_mises.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_idiap_maad.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_idiap_likelihood_learned_kappa.yml" />
-        <option value="$PROJECT_DIR$/train_vgg_idiap.py" />
         <option value="$PROJECT_DIR$/train_vmmix_towncentre.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_maad.yml" />
         <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_likelihood_fixed_kappa.yml" />
@@ -196,7 +196,10 @@
         <option value="$PROJECT_DIR$/train_vmmix_idiap.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_fixed_kappa.yml" />
+        <option value="$PROJECT_DIR$/utils/hyper_tune.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine.yml" />
+        <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_cosine.yml" />
+        <option value="$PROJECT_DIR$/train_vgg_idiap.py" />
       </list>
     </option>
   </component>
@@ -275,6 +278,46 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="train_configs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="train_configs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="IDIAP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="train_configs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="IDIAP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pan" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -558,16 +601,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/data/IHDPHeadPose/test/MEETING8-r1166.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/IHDPHeadPose/test/MEETING8-r1168.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/IHDPHeadPose/test/MEETING8-r1170.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -626,14 +659,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="55" column="56" selection-start-line="55" selection-start-column="56" selection-end-line="55" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/vgg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -823,22 +848,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/vgg_vmmix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="104" column="49" selection-start-line="104" selection-start-column="49" selection-end-line="104" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises_best.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5">
-          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.2692308">
@@ -849,34 +858,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_vmmix_idiap.py">
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_fixed_kappa.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="80" column="20" selection-start-line="80" selection-start-column="20" selection-end-line="80" selection-end-column="20" />
+        <state vertical-scroll-proportion="0.37621024">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa.yml">
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises_best.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.461538">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_best.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.5">
-          <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_vgg_idiap.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.30567083">
+          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
           <folding />
         </state>
       </provider>
@@ -889,18 +882,76 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_fixed_kappa.yml">
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.461538">
-          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+          <folding>
+            <marker date="1506004973000" expanded="true" signature="530:536" placeholder="1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/vgg_vmmix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="104" column="49" selection-start-line="104" selection-start-column="49" selection-end-line="104" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_best.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.5">
+          <caret line="13" column="21" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm50/python_stubs/455223188/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2899" column="8" selection-start-line="2899" selection-start-column="8" selection-end-line="2899" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/vgg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="101" column="8" selection-start-line="101" selection-start-column="8" selection-end-line="101" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_vmmix_idiap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="20" selection-start-line="80" selection-start-column="20" selection-end-line="80" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21161826">
-          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        <state vertical-scroll-proportion="-11.115385">
+          <caret line="17" column="18" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/train_vgg_towncentre_cosine.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.807693">
+          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_vgg_idiap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.046728972">
+          <caret line="221" column="9" selection-start-line="221" selection-start-column="9" selection-end-line="221" selection-end-column="9" />
           <folding />
         </state>
       </provider>
