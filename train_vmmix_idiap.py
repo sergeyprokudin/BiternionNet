@@ -72,6 +72,7 @@ def main():
     n_epochs = 20
     batch_size = 64
     n_components = 5
+    learning_rate = 1e-5
 
     for tid in range(0, n_trials):
 
@@ -97,7 +98,8 @@ def main():
         vggmix_model = BiternionVGGMixture(image_height=image_height,
                                            image_width=image_width,
                                            n_channels=n_channels,
-                                           n_components=n_components)
+                                           n_components=n_components,
+                                           learning_rate=learning_rate)
 
         vggmix_model.model.fit(xtr, ytr_bit, batch_size=batch_size, epochs=n_epochs,
                                validation_data=(xval, yval_bit),

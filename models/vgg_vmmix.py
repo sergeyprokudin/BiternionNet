@@ -67,13 +67,15 @@ class BiternionVGGMixture:
                  image_width=50,
                  n_channels=3,
                  n_components=10,
-                 hlayer_size=256):
+                 hlayer_size=256,
+                 learning_rate=1e-3):
 
         self.image_height = image_height
         self.image_width = image_width
         self.n_channels = n_channels
         self.n_components = n_components
         self.hlayer_size = hlayer_size
+        self.learning_rate = learning_rate
 
         self.X = Input(shape=[image_height, image_width, 3])
 
@@ -100,7 +102,9 @@ class BiternionVGGMixture:
 
         self.model = Model(inputs=self.X, outputs=self.y_pred)
 
-        self.model.compile(optimizer='adam', loss=self._neg_mean_vmm_loglikelihood_tf)
+        self.optimizer = keras.optimizers.Adam(learning_rate=self.learning_rate)
+
+        self.model.compile(optimizer=self.optimizer, loss=self._neg_mean_vmm_loglikelihood_tf)
 
     def parse_output_tf(self, y_preds):
 

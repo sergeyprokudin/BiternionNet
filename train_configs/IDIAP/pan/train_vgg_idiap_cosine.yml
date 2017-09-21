@@ -4,7 +4,7 @@ log_to_stdout: True
 data_path: 'data//IDIAP.pkl'
 canonical_split: True
 n_epochs: 10
-batch_size: 10
+batch_size: 16
 net_output: pan # possible choices: pan, tilt, roll
 loss: cosine # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: False

@@ -4,7 +4,7 @@ log_to_stdout: True
 data_path: 'data//IDIAP.pkl'
 canonical_split: True
 n_epochs: 20
-batch_size: 50
+batch_size: 64
 net_output: pan
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: False
