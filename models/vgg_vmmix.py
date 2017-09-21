@@ -68,7 +68,7 @@ class BiternionVGGMixture:
                  n_channels=3,
                  n_components=10,
                  hlayer_size=256,
-                 learning_rate=1e-3):
+                 learning_rate=1.0e-3):
 
         self.image_height = image_height
         self.image_width = image_width
