@@ -14,7 +14,8 @@ def main():
 
     exp_id = get_experiment_id()
 
-    root_log_dir = 'logs/vmmix/'
+    root_log_dir = 'logs/IDIAP/vmmix'
+
     if not os.path.exists(root_log_dir):
         os.mkdir(root_log_dir)
 
@@ -68,8 +69,8 @@ def main():
     n_trials = 5
     results = dict()
 
-    n_epochs = 100
-    batch_size = 32
+    n_epochs = 20
+    batch_size = 64
     n_components = 5
 
     for tid in range(0, n_trials):
