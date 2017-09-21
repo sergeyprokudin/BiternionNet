@@ -4,14 +4,14 @@ log_to_stdout: True
 data_path: 'data//IDIAP.pkl'
 canonical_split: True
 n_epochs: 5
-batch_size: 100
+batch_size: 50
 net_output: pan # possible choices: pan, tilt, roll
 loss: cosine # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: False
 fixed_kappa_value: 3.0 #kappa value for vm_likelihood loss in case if it's not predicted by network. Use 0.0 for predicting kappa
 optimizer_params:
   name: Adam
-  learning_rate: 0.00001
+  learning_rate: 0.000001
   rho: 0.95
   epsilon: 1.0e-07
   decay: 0.0
