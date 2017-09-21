@@ -74,7 +74,6 @@ def main():
     n_components = 5
     learning_rate = 1.0e-6
 
-
     for tid in range(0, n_trials):
 
         print("TRIAL %d" % tid)
