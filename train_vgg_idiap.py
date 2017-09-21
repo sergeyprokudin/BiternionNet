@@ -139,7 +139,7 @@ def train():
         raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
 
     best_trial_id = 0
-    n_trials = config['n_trials']
+    # n_trials = config['n_trials']
 
     params_grid = make_lr_batch_size_grid()
 
