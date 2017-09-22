@@ -117,9 +117,9 @@ def main():
 
         vggmix_model.model.save_weights(vmmix_best_ckpt_path)
 
-        # vggmix_model.model.fit(xtr, ytr_bit, batch_size=batch_size, epochs=n_epochs,
-        #                        validation_data=(xval, yval_bit),
-        #                        callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+        vggmix_model.model.fit(xtr, ytr_bit, batch_size=batch_size, epochs=n_epochs,
+                               validation_data=(xval, yval_bit),
+                               callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = BiternionVGGMixture(image_height=image_height,
                                          image_width=image_width,
