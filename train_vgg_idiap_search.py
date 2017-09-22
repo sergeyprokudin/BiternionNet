@@ -6,6 +6,7 @@ import sys
 import yaml
 import shutil
 import itertools
+import pandas as pd
 
 from models import vgg
 from utils.angles import rad2bit
@@ -34,12 +35,12 @@ def make_lr_batch_size_grid():
 
     max_lr = 1.0
     lr_step = 0.1
-    min_lr_factor = 10
+    min_lr_factor = 1 #10
     possible_learning_rates = np.asarray([max_lr * lr_step ** (n - 1) for n in range(1, min_lr_factor + 1)])
 
     min_batch_size = 4
     bs_step = 2
-    max_size_factor = 8
+    max_size_factor = 2 #8
     possible_batch_sizes = np.asarray([min_batch_size * bs_step ** (n - 1) for n in range(1, max_size_factor + 1)])
 
     grid = list(itertools.product(possible_learning_rates, possible_batch_sizes))
@@ -144,7 +145,9 @@ def train():
     params_grid = make_lr_batch_size_grid()
 
     results = dict()
-
+    res_cols = ['trial_id', 'batch_size', 'learning_rate', 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
+    results_df = pd.DataFrame(columns=res_cols)
+    results_csv = os.path.join(experiment_dir, 'results.csv')
     # for tid in range(0, n_trials):
 
     for tid, params in enumerate(params_grid):
@@ -188,12 +191,12 @@ def train():
 
         vgg_model.model.save_weights(best_model_weights_file)
 
-        vgg_model.model.fit(x=xtr, y=ytr,
-                            batch_size=batch_size,
-                            epochs=config['n_epochs'],
-                            verbose=1,
-                            validation_data=(xval, yval),
-                            callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+        # vgg_model.model.fit(x=xtr, y=ytr,
+        #                     batch_size=batch_size,
+        #                     epochs=config['n_epochs'],
+        #                     verbose=1,
+        #                     validation_data=(xval, yval),
+        #                     callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = vgg.BiternionVGG(image_height=image_height,
                                       image_width=image_width,
@@ -204,6 +207,7 @@ def train():
         best_model.model.load_weights(best_model_weights_file)
 
         trial_results = dict()
+
         trial_results['learning_rate'] = float(learning_rate)
         trial_results['batch_size'] = float(batch_size)
         trial_results['ckpt_path'] = best_model_weights_file
@@ -212,11 +216,22 @@ def train():
         trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
         results[tid] = trial_results
 
+        results_np = np.asarray([tid, batch_size, learning_rate,
+                                 trial_results['validation']['maad_loss'],
+                                 trial_results['validation']['log_likelihood_mean'],
+                                 trial_results['test']['maad_loss'],
+                                 trial_results['test']['log_likelihood_mean']]).reshape([1, 7])
+
+        trial_res_df = pd.DataFrame(results_np, columns=res_cols)
+        results_df.append(trial_res_df)
+
         if tid > 0:
             if trial_results['validation']['log_likelihood_mean'] > \
                     results[best_trial_id]['validation']['log_likelihood_mean']:
                 best_trial_id = tid
                 print("Better validation loss achieved, current best trial: %d" % best_trial_id)
+
+        results_df.to_csv(results_csv)
 
     print("loading best model..")
     best_ckpt_path = results[best_trial_id]['ckpt_path']
@@ -244,6 +259,8 @@ def train():
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
     with open(results_yml_file, 'w') as results_yml_file:
         yaml.dump(results, results_yml_file, default_flow_style=False)
+
+    results_df.to_csv(results_csv)
 
     return
 
