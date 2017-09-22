@@ -1,5 +1,5 @@
 experiment_name: 'vggbit_cosine_Adadelta_batch10'
-root_log_dir: 'logs/IDIAP/pan'
+root_log_dir: 'logs/IDIAP/tilt'
 log_to_stdout: True
 data_path: 'data//IDIAP.pkl'
 canonical_split: True
