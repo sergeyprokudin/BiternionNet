@@ -11,6 +11,7 @@ from utils.idiap import load_idiap
 from utils.experiements import get_experiment_id
 from utils.hyper_tune import make_lr_batch_size_grid
 
+
 def main():
 
     exp_id = get_experiment_id()
@@ -114,9 +115,9 @@ def main():
                                            n_components=n_components,
                                            learning_rate=learning_rate)
 
-        vggmix_model.model.fit(xtr, ytr_bit, batch_size=batch_size, epochs=n_epochs,
-                               validation_data=(xval, yval_bit),
-                               callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+        # vggmix_model.model.fit(xtr, ytr_bit, batch_size=batch_size, epochs=n_epochs,
+        #                        validation_data=(xval, yval_bit),
+        #                        callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = BiternionVGGMixture(image_height=image_height,
                                          image_width=image_width,
