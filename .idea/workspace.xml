@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/hyper_tune.py" afterPath="$PROJECT_DIR$/utils/hyper_tune.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/vgg_vmmix.py" afterPath="$PROJECT_DIR$/models/vgg_vmmix.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -39,10 +39,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="hyper_tune.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="hyper_tune.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/hyper_tune.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3858478">
+            <state vertical-scroll-proportion="0.0">
               <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
               <folding />
             </state>
@@ -83,7 +83,7 @@
         <entry file="file://$PROJECT_DIR$/train_vmmix_idiap.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="79" column="29" selection-start-line="79" selection-start-column="29" selection-end-line="79" selection-end-column="29" />
+              <caret line="133" column="52" selection-start-line="133" selection-start-column="52" selection-end-line="133" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -119,11 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vgg_vmmix.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="vgg_vmmix.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/vgg_vmmix.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="185" column="0" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.71829104">
+              <caret line="189" column="0" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -192,9 +192,9 @@
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_best.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises.yml" />
         <option value="$PROJECT_DIR$/train_vgg_idiap_search.py" />
-        <option value="$PROJECT_DIR$/models/vgg_vmmix.py" />
         <option value="$PROJECT_DIR$/train_vmmix_idiap.py" />
         <option value="$PROJECT_DIR$/utils/hyper_tune.py" />
+        <option value="$PROJECT_DIR$/models/vgg_vmmix.py" />
       </list>
     </option>
   </component>
@@ -877,30 +877,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.769231">
-          <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/vgg_vmmix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="185" column="0" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.461538">
-          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_best.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.461538">
@@ -917,18 +893,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_vmmix_idiap.py">
+    <entry file="file://$PROJECT_DIR$/utils/hyper_tune.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="79" column="29" selection-start-line="79" selection-start-column="29" selection-end-line="79" selection-end-column="29" />
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/hyper_tune.py">
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3858478">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        <state vertical-scroll-proportion="-11.769231">
+          <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.461538">
+          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_vmmix_idiap.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="133" column="52" selection-start-line="133" selection-start-column="52" selection-end-line="133" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/vgg_vmmix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71829104">
+          <caret line="189" column="0" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
           <folding />
         </state>
       </provider>
