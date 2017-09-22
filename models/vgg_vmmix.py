@@ -181,7 +181,7 @@ class BiternionVGGMixture:
         vmmix_mu_rad = np.deg2rad(bit2deg_multi(vmmix_mu))
         samples = sample_von_mises_mixture_multi(vmmix_mu_rad, vmmix_kappas, vmmix_probs, n_samples=1000)
         maad_errs = maad_from_deg(maximum_expected_utility(np.rad2deg(samples)), ytrue_deg)
-        results['maad_mean'] = float(np.mean(maad_errs))
+        results['maad_loss'] = float(np.mean(maad_errs))
         results['maad_sem'] = float(sem(maad_errs))
 
         log_likelihoods = self._von_mises_mixture_log_likelihood_np(ytrue_bit, ypreds)
