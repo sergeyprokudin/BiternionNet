@@ -9,6 +9,7 @@ net_output: pan # possible choices: degrees, biternion
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: True
 fixed_kappa_value: 1.0 #kappa value for vm_likelihood loss in case if it's not predicted by network. Use 0.0 for predicting kappa
+n_trials: 5
 optimizer_params:
   name: Adam
   learning_rate: 1.0e-7
