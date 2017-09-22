@@ -139,15 +139,19 @@ def train():
         raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
 
     best_trial_id = 0
-    n_trials = config['n_trials']
-    batch_size = config['batch_size']
-    learning_rate = config['optimizer']['learning_rate']
+    # n_trials = config['n_trials']
+
+    params_grid = make_lr_batch_size_grid()
 
     results = dict()
 
-    for tid in range(0, n_trials):
+    # for tid in range(0, n_trials):
 
-        print("TRIAL %d // %d" % (tid, n_trials))
+    for tid, params in enumerate(params_grid):
+
+        learning_rate = params[0]
+        batch_size = params[1]
+        print("TRIAL %d // %d" % (tid, len(params_grid)))
         print("batch_size: %d" % batch_size)
         print("learning_rate: %f" % learning_rate)
 
