@@ -115,6 +115,8 @@ def main():
                                            n_components=n_components,
                                            learning_rate=learning_rate)
 
+        vggmix_model.model.save_weights(vmmix_best_ckpt_path)
+
         # vggmix_model.model.fit(xtr, ytr_bit, batch_size=batch_size, epochs=n_epochs,
         #                        validation_data=(xval, yval_bit),
         #                        callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
