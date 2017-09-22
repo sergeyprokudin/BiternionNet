@@ -141,7 +141,7 @@ def train():
     best_trial_id = 0
     n_trials = config['n_trials']
     batch_size = config['batch_size']
-    learning_rate = config['optimizer']['learning_rate']
+    learning_rate = config['optimizer_params']['learning_rate']
 
     results = dict()
 
