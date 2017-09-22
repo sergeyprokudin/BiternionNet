@@ -35,12 +35,12 @@ def make_lr_batch_size_grid():
 
     max_lr = 1.0
     lr_step = 0.1
-    min_lr_factor = 1 #10
+    min_lr_factor = 10
     possible_learning_rates = np.asarray([max_lr * lr_step ** (n - 1) for n in range(1, min_lr_factor + 1)])
 
     min_batch_size = 4
     bs_step = 2
-    max_size_factor = 2 #8
+    max_size_factor = 8
     possible_batch_sizes = np.asarray([min_batch_size * bs_step ** (n - 1) for n in range(1, max_size_factor + 1)])
 
     grid = list(itertools.product(possible_learning_rates, possible_batch_sizes))
@@ -140,9 +140,10 @@ def train():
         raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
 
     best_trial_id = 0
-    # n_trials = config['n_trials']
 
-    params_grid = make_lr_batch_size_grid()
+    n_trials = config['n_trials']
+
+    params_grid = make_lr_batch_size_grid()*n_trials
 
     results = dict()
     res_cols = ['trial_id', 'batch_size', 'learning_rate', 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
@@ -191,12 +192,12 @@ def train():
 
         vgg_model.model.save_weights(best_model_weights_file)
 
-        # vgg_model.model.fit(x=xtr, y=ytr,
-        #                     batch_size=batch_size,
-        #                     epochs=config['n_epochs'],
-        #                     verbose=1,
-        #                     validation_data=(xval, yval),
-        #                     callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+        vgg_model.model.fit(x=xtr, y=ytr,
+                            batch_size=batch_size,
+                            epochs=config['n_epochs'],
+                            verbose=1,
+                            validation_data=(xval, yval),
+                            callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = vgg.BiternionVGG(image_height=image_height,
                                       image_width=image_width,
@@ -231,8 +232,6 @@ def train():
                     results[best_trial_id]['validation']['log_likelihood_mean']:
                 best_trial_id = tid
                 print("Better validation loss achieved, current best trial: %d" % best_trial_id)
-
-
 
     print("loading best model..")
     best_ckpt_path = results[best_trial_id]['ckpt_path']
