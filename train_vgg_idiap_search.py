@@ -223,7 +223,8 @@ def train():
                                  trial_results['test']['log_likelihood_mean']]).reshape([1, 7])
 
         trial_res_df = pd.DataFrame(results_np, columns=res_cols)
-        results_df.append(trial_res_df)
+        results_df = results_df.append(trial_res_df)
+        results_df.to_csv(results_csv)
 
         if tid > 0:
             if trial_results['validation']['log_likelihood_mean'] > \
@@ -231,7 +232,7 @@ def train():
                 best_trial_id = tid
                 print("Better validation loss achieved, current best trial: %d" % best_trial_id)
 
-        results_df.to_csv(results_csv)
+
 
     print("loading best model..")
     best_ckpt_path = results[best_trial_id]['ckpt_path']
