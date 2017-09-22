@@ -68,3 +68,25 @@ def load_idiap(data_path,
     names_te = [names_valte[ix] for ix in te_ix]
 
     return (xtr, ptr, ttr, rtr, names_tr), (xval, pval, tval, rval, names_val), (xte, pte, tte, rte, names_te)
+
+
+def load_idiap_part(data_path,
+                    net_output,
+                    val_split=0.5,
+                    canonical_split=True,
+                    verbose=0):
+
+    (xtr, ptr_rad, ttr_rad, rtr_rad, names_tr), \
+    (xval, pval_rad, tval_rad, rval_rad, names_val), \
+    (xte, pte_rad, tte_rad, rte_rad, names_te) = load_idiap('data//IDIAP.pkl')
+
+    image_height, image_width = xtr.shape[1], xtr.shape[2]
+
+    if net_output == 'pan':
+        return (xtr, ptr_rad), (xval, pval_rad), (xte, pte_rad)
+    elif net_output == 'tilt':
+        return (xtr, ttr_rad), (xval, tval_rad), (xte, tte_rad)
+    elif net_output == 'roll':
+        return (xtr, rtr_rad), (xval, rval_rad), (xte, rte_rad)
+    else:
+        raise ValueError("net_output should be 'pan', 'tilt' or 'roll'")

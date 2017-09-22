@@ -6,22 +6,22 @@ import numpy as np
 
 from models.cvae import CVAE
 from utils.angles import deg2bit, bit2deg
-from utils.towncentre import load_towncentre, aug_data
+from utils.idiap import load_idiap_part
 from utils.experiements import get_experiment_id
 from utils.custom_keras_callbacks import EvalCVAEModel
+
 
 def main():
 
     n_u = 8
     exp_id = get_experiment_id()
-    root_log_dir = 'logs/cvae/'
+    root_log_dir = 'logs/IDIAP/cvae/'
 
     experiment_dir = os.path.join(root_log_dir, exp_id)
     os.mkdir(experiment_dir)
 
-    xtr, ytr_deg, xval, yval_deg, xte, yte_deg = load_towncentre('data/TownCentre.pkl.gz',
-                                                                 canonical_split=True,
-                                                                 verbose=1)
+    net_output = 'pan'
+    (xtr, ytr_rad), (xval, yval_rad), (xte, yte_rad) = load_idiap_part('data//IDIAP.pkl', net_output)
 
     # xtr, ytr_deg = aug_data(xtr, ytr_deg)
     # xval, yval_deg = aug_data(xval, yval_deg)
