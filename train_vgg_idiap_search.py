@@ -14,6 +14,7 @@ from utils.losses import mad_loss_tf, cosine_loss_tf, von_mises_loss_tf
 from utils.idiap import load_idiap
 from utils.experiements import get_experiment_id
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np, von_mises_neg_log_likelihood_keras
+from utils.hyper_tune import make_lr_batch_size_grid
 
 from keras import backend as K
 
@@ -29,23 +30,6 @@ def get_optimizer(optimizer_params):
                                           lr=optimizer_params['learning_rate'],
                                           decay=optimizer_params['decay'])
     return optimizer
-
-
-def make_lr_batch_size_grid():
-
-    max_lr = 1.0
-    lr_step = 0.1
-    min_lr_factor = 10
-    possible_learning_rates = np.asarray([max_lr * lr_step ** (n - 1) for n in range(1, min_lr_factor + 1)])
-
-    min_batch_size = 4
-    bs_step = 2
-    max_size_factor = 8
-    possible_batch_sizes = np.asarray([min_batch_size * bs_step ** (n - 1) for n in range(1, max_size_factor + 1)])
-
-    grid = list(itertools.product(possible_learning_rates, possible_batch_sizes))
-
-    return grid
 
 
 def finetune_kappa(x, y_bit, model):

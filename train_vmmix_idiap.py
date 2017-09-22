@@ -3,12 +3,13 @@ import os
 import shutil
 import yaml
 import numpy as np
+import pandas as pd
 
 from models.vgg_vmmix import BiternionVGGMixture
 from utils.angles import deg2bit, rad2bit, bit2deg
 from utils.idiap import load_idiap
 from utils.experiements import get_experiment_id
-
+from utils.hyper_tune import make_lr_batch_size_grid
 
 def main():
 
@@ -69,14 +70,26 @@ def main():
     n_trials = 5
     results = dict()
 
-    n_epochs = 50
-    batch_size = 64
+    # best so far
+    n_epochs = 20
+    # batch_size = 64
     n_components = 5
-    learning_rate = 1.0e-6
+    # learning_rate = 1.0e-6
 
-    for tid in range(0, n_trials):
+    params_grid = make_lr_batch_size_grid()*n_trials
 
-        print("TRIAL %d" % tid)
+    res_cols = ['trial_id', 'batch_size', 'learning_rate', 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
+    results_df = pd.DataFrame(columns=res_cols)
+    results_csv = os.path.join(experiment_dir, 'results.csv')
+
+    for tid, params in enumerate(params_grid):
+
+        learning_rate = params[0]
+        batch_size = params[1]
+        print("TRIAL %d // %d" % (tid, len(params_grid)))
+        print("batch_size: %d" % batch_size)
+        print("learning_rate: %f" % learning_rate)
+
         trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
 
@@ -119,6 +132,16 @@ def main():
         trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
         results[tid] = trial_results
 
+        results_np = np.asarray([tid, batch_size, learning_rate,
+                                 trial_results['validation']['maad_loss'],
+                                 trial_results['validation']['log_likelihood_mean'],
+                                 trial_results['test']['maad_loss'],
+                                 trial_results['test']['log_likelihood_mean']]).reshape([1, 7])
+
+        trial_res_df = pd.DataFrame(results_np, columns=res_cols)
+        results_df = results_df.append(trial_res_df)
+        results_df.to_csv(results_csv)
+
         if tid > 0:
             if trial_results['validation']['log_likelihood_mean'] > \
                     results[best_trial_id]['validation']['log_likelihood_mean']:
@@ -147,6 +170,8 @@ def main():
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
     with open(results_yml_file, 'w') as results_yml_file:
         yaml.dump(results, results_yml_file, default_flow_style=False)
+
+    results_df.to_csv(results_csv)
 
 
 if __name__ == '__main__':
