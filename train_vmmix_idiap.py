@@ -74,13 +74,14 @@ def main():
 
     # best so far
     n_epochs = 50
-    batch_size = 64
+    # batch_size = 64
     n_components = 5
     # learning_rate = 1.0e-6
 
-    batch_size = [64, 128, 256]
+    batch_sizes = [64, 128, 256]
     learning_rates = [1.0e-6, 1.0e-7, 1.0e-5]
-    params_grid = list(itertools.product(learning_rates, batch_size))*n_trials
+    n_components = [5, 10, 3]
+    params_grid = list(itertools.product(learning_rates, batch_sizes))*n_trials
 
     res_cols = ['trial_id', 'batch_size', 'learning_rate', 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
     results_df = pd.DataFrame(columns=res_cols)
