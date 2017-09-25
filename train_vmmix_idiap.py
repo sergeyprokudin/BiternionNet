@@ -16,7 +16,7 @@ def main():
 
     exp_id = get_experiment_id()
 
-    root_log_dir = 'logs/IDIAP/vmmix'
+    root_log_dir = 'logs/IDIAP/pan/vmmix'
 
     if not os.path.exists(root_log_dir):
         os.mkdir(root_log_dir)
@@ -68,16 +68,17 @@ def main():
     phi_shape = yte_bit.shape[1]
 
     best_trial_id = 0
-    n_trials = 5
+    n_trials = 4
     results = dict()
 
     # best so far
-    n_epochs = 20
-    # batch_size = 64
+    n_epochs = 50
+    batch_size = 64
     n_components = 5
     # learning_rate = 1.0e-6
 
-    params_grid = make_lr_batch_size_grid()*n_trials
+    params_grid = make_lr_batch_size_grid(max_lr=1.0e-5, min_lr_factor=7,
+                                          min_batch_size=64, max_batch_size_factor=6)*n_trials
 
     res_cols = ['trial_id', 'batch_size', 'learning_rate', 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
     results_df = pd.DataFrame(columns=res_cols)
