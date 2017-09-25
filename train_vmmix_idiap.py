@@ -1,5 +1,6 @@
 import keras
 import os
+import sys
 import shutil
 import yaml
 import numpy as np
@@ -17,7 +18,11 @@ def main():
 
     exp_id = get_experiment_id()
 
-    root_log_dir = 'logs/IDIAP/pan/vmmix'
+    config_path = sys.argv[1]
+
+    with open(config_path, 'r') as f:
+        config = yaml.load(f)
+    root_log_dir = config['root_log_dir']
 
     if not os.path.exists(root_log_dir):
         os.mkdir(root_log_dir)
@@ -31,7 +36,7 @@ def main():
 
     image_height, image_width = xtr.shape[1], xtr.shape[2]
 
-    net_output = 'pan'
+    net_output = config['net_output']
 
     if net_output == 'pan':
         ytr = rad2bit(ptr_rad)
