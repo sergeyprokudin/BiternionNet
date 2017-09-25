@@ -81,7 +81,7 @@ def main():
     batch_sizes = [64, 128, 256]
     learning_rates = [1.0e-6, 1.0e-7, 1.0e-5]
     n_components = [5, 10, 3]
-    params_grid = list(itertools.product(learning_rates, batch_sizes))*n_trials
+    params_grid = list(itertools.product(learning_rates, batch_sizes, n_components))*n_trials
 
     res_cols = ['trial_id', 'batch_size', 'learning_rate',  'n_components',
                 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
