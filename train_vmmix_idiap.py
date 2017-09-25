@@ -152,7 +152,7 @@ def main():
                                  trial_results['validation']['maad_loss'],
                                  trial_results['validation']['log_likelihood_mean'],
                                  trial_results['test']['maad_loss'],
-                                 trial_results['test']['log_likelihood_mean']]).reshape([1, 7])
+                                 trial_results['test']['log_likelihood_mean']]).reshape([1, 8])
 
         trial_res_df = pd.DataFrame(results_np, columns=res_cols)
         results_df = results_df.append(trial_res_df)
