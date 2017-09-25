@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_configs/IDIAP/roll/train_vmmix_idiap.yml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vmmix_idiap.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vmmix_idiap.yml" afterPath="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vmmix_idiap.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vmmix_idiap.py" afterPath="$PROJECT_DIR$/train_vmmix_idiap.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
@@ -45,8 +48,28 @@
           <file leaf-file-name="train_vmmix_idiap.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_vmmix_idiap.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.56666666">
-                  <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.49866667">
+                  <caret line="87" column="33" selection-start-line="87" selection-start-column="33" selection-end-line="87" selection-end-column="33" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="train_vmmix_idiap.yml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vmmix_idiap.yml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-0.65384614">
+                  <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="29" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="train_vmmix_idiap.yml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/roll/train_vmmix_idiap.yml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-0.65384614">
+                  <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
                   <folding />
                 </state>
               </provider>
@@ -66,7 +89,7 @@
             <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vmmix_idiap.yml">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="-0.0">
-                  <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
+                  <caret line="0" column="29" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
                   <folding />
                 </state>
               </provider>
@@ -88,18 +111,6 @@
                 <state vertical-scroll-proportion="0.0">
                   <caret line="5" column="89" selection-start-line="5" selection-start-column="89" selection-end-line="5" selection-end-column="89" />
                   <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="train_vgg_idiap_likelihood_learned_kappa.yml" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_idiap_likelihood_learned_kappa.yml">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-11.115385">
-                  <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="12" />
-                  <folding>
-                    <marker date="1506087208000" expanded="true" signature="211:215" placeholder="r" />
-                  </folding>
                 </state>
               </provider>
             </entry>
@@ -165,7 +176,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/py_env/lib/python3.6/site-packages/keras/callbacks.py" />
         <option value="$PROJECT_DIR$/train_configs/train_vgg_towncentre_von_mises.yml" />
         <option value="$PROJECT_DIR$/train_vgg_towncentre.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
@@ -215,6 +225,7 @@
         <option value="$PROJECT_DIR$/train_cvae_idiap.py" />
         <option value="$PROJECT_DIR$/utils/hyper_tune.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vmmix_idiap.yml" />
+        <option value="$PROJECT_DIR$/train_configs/IDIAP/roll/train_vmmix_idiap.yml" />
         <option value="$PROJECT_DIR$/train_vmmix_idiap.py" />
       </list>
     </option>
@@ -416,13 +427,14 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/train_configs/IDIAP/roll" />
       <recent name="$PROJECT_DIR$/train_configs/IDIAP/pan" />
       <recent name="$PROJECT_DIR$/train_configs/IDIAP/tilt" />
-      <recent name="$PROJECT_DIR$/train_configs/IDIAP/roll" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/train_configs/IDIAP" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/train_configs/IDIAP/tilt" />
       <recent name="$PROJECT_DIR$/train_configs/IDIAP/pan" />
       <recent name="$PROJECT_DIR$/train_configs/IDIAP" />
       <recent name="$PROJECT_DIR$/train_configs" />
@@ -669,22 +681,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/train_cvae_towncentre.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="116" column="52" selection-start-line="116" selection-start-column="52" selection-end-line="116" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_vgg_towncentre.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22696929">
-          <caret line="70" column="37" selection-start-line="70" selection-start-column="4" selection-end-line="70" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/towncentre.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1016,14 +1012,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vmmix_idiap.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="30" selection-start-line="0" selection-start-column="30" selection-end-line="0" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_vgg_idiap_search.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6346667">
@@ -1032,10 +1020,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vmmix_idiap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="29" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vmmix_idiap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.65384614">
+          <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/roll/train_vmmix_idiap.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.65384614">
+          <caret line="1" column="16" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/train_vmmix_idiap.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56666666">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.49866667">
+          <caret line="87" column="33" selection-start-line="87" selection-start-column="33" selection-end-line="87" selection-end-column="33" />
           <folding />
         </state>
       </provider>

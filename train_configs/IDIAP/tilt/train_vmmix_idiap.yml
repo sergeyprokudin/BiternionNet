@@ -1,0 +1,2 @@
+root_log_dir: 'logs/IDIAP/tilt/vmmix'
+net_output: tilt # possible choices: pan, tilt, roll
