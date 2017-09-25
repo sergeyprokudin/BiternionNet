@@ -83,7 +83,8 @@ def main():
     n_components = [5, 10, 3]
     params_grid = list(itertools.product(learning_rates, batch_sizes))*n_trials
 
-    res_cols = ['trial_id', 'batch_size', 'learning_rate', 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
+    res_cols = ['trial_id', 'batch_size', 'learning_rate',  'n_components',
+                'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
     results_df = pd.DataFrame(columns=res_cols)
     results_csv = os.path.join(experiment_dir, 'results.csv')
 
@@ -91,6 +92,8 @@ def main():
 
         learning_rate = params[0]
         batch_size = params[1]
+        n_components = params[2]
+
         print("TRIAL %d // %d" % (tid, len(params_grid)))
         print("batch_size: %d" % batch_size)
         print("learning_rate: %f" % learning_rate)
@@ -139,7 +142,7 @@ def main():
         trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
         results[tid] = trial_results
 
-        results_np = np.asarray([tid, batch_size, learning_rate,
+        results_np = np.asarray([tid, batch_size, learning_rate, n_components,
                                  trial_results['validation']['maad_loss'],
                                  trial_results['validation']['log_likelihood_mean'],
                                  trial_results['test']['maad_loss'],
