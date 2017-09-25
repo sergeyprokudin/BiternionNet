@@ -4,6 +4,7 @@ import shutil
 import yaml
 import numpy as np
 import pandas as pd
+import itertools
 
 from models.vgg_vmmix import BiternionVGGMixture
 from utils.angles import deg2bit, rad2bit, bit2deg
@@ -77,8 +78,9 @@ def main():
     n_components = 5
     # learning_rate = 1.0e-6
 
-    params_grid = make_lr_batch_size_grid(max_lr=1.0e-5, min_lr_factor=7,
-                                          min_batch_size=64, max_batch_size_factor=6)*n_trials
+    batch_size = [64, 128, 256]
+    learning_rates = [1.0e-6, 1.0e-7, 1.0e-5]
+    params_grid = list(itertools.product(learning_rates, batch_size))*n_trials
 
     res_cols = ['trial_id', 'batch_size', 'learning_rate', 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
     results_df = pd.DataFrame(columns=res_cols)
