@@ -2,6 +2,8 @@ import joblib
 import numpy as np
 import joblib
 
+from utils.angles import rad2bit
+
 
 def load_idiap(data_path,
                val_split=0.5,
@@ -71,22 +73,21 @@ def load_idiap(data_path,
 
 
 def load_idiap_part(data_path,
-                    net_output,
+                    data_part,
                     val_split=0.5,
-                    canonical_split=True,
-                    verbose=0):
+                    canonical_split=True):
 
-    (xtr, ptr_rad, ttr_rad, rtr_rad, names_tr), \
-    (xval, pval_rad, tval_rad, rval_rad, names_val), \
-    (xte, pte_rad, tte_rad, rte_rad, names_te) = load_idiap('data//IDIAP.pkl')
+    (xtr, ptr_rad, ttr_rad, rtr_rad, names_tr),\
+    (xval, pval_rad, tval_rad, rval_rad, names_val),\
+    (xte, pte_rad, tte_rad, rte_rad, names_te) = load_idiap('data//IDIAP.pkl',
+                                                            val_split=val_split,
+                                                            canonical_split=canonical_split)
 
-    image_height, image_width = xtr.shape[1], xtr.shape[2]
-
-    if net_output == 'pan':
+    if data_part == 'pan':
         return (xtr, ptr_rad), (xval, pval_rad), (xte, pte_rad)
-    elif net_output == 'tilt':
+    elif data_part == 'tilt':
         return (xtr, ttr_rad), (xval, tval_rad), (xte, tte_rad)
-    elif net_output == 'roll':
+    elif data_part == 'roll':
         return (xtr, rtr_rad), (xval, rval_rad), (xte, rte_rad)
     else:
         raise ValueError("net_output should be 'pan', 'tilt' or 'roll'")

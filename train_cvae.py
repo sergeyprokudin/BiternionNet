@@ -1,11 +1,14 @@
-import keras
 import os
+import sys
 import shutil
 import yaml
+import itertools
 import numpy as np
+import pandas as pd
+import keras
 
 from models.cvae import CVAE
-from utils.angles import deg2bit, bit2deg
+from utils.angles import rad2bit
 from utils.idiap import load_idiap_part
 from utils.experiements import get_experiment_id
 from utils.custom_keras_callbacks import EvalCVAEModel
@@ -13,37 +16,63 @@ from utils.custom_keras_callbacks import EvalCVAEModel
 
 def main():
 
-    n_u = 8
     exp_id = get_experiment_id()
-    root_log_dir = 'logs/IDIAP/cvae/'
+
+    config_path = sys.argv[1]
+
+    with open(config_path, 'r') as f:
+        config = yaml.load(f)
+    root_log_dir = config['root_log_dir']
+
+    if not os.path.exists(root_log_dir):
+        os.mkdir(root_log_dir)
 
     experiment_dir = os.path.join(root_log_dir, exp_id)
     os.mkdir(experiment_dir)
 
-    net_output = 'pan'
-    (xtr, ytr_rad), (xval, yval_rad), (xte, yte_rad) = load_idiap_part('data//IDIAP.pkl', net_output)
+    net_output = config['net_output']
+    data_path = config['data_path']
+    (xtr, ytr_rad), (xval, yval_rad), (xte, yte_rad) = load_idiap_part(data_path,
+                                                                       net_output)
 
-    # xtr, ytr_deg = aug_data(xtr, ytr_deg)
-    # xval, yval_deg = aug_data(xval, yval_deg)
-    # xte, yte_deg = aug_data(xval, yval_deg)
+    image_height, image_width, n_channels = xtr.shape[1], xtr.shape[2], xtr.shape[3]
 
-    ytr_bit = deg2bit(ytr_deg)
-    yval_bit = deg2bit(yval_deg)
-    yte_bit = deg2bit(yte_deg)
-
-    image_height, image_width, n_channels = xtr.shape[1:]
-    phi_shape = yte_bit.shape[1]
+    ytr = rad2bit(ytr_rad)
+    yval = rad2bit(yval_rad)
+    yte = rad2bit(yte_rad)
+    ytr_deg = np.rad2deg(ytr_rad)
+    yval_deg = np.rad2deg(yval_rad)
+    yte_deg = np.rad2deg(yte_rad)
 
     best_trial_id = 0
-    n_trials = 5
+
     results = dict()
 
-    n_epochs = 100
-    batch_size = 10
+    n_epochs = config['n_epochs']
+    n_trials = config['n_trials']
+    batch_sizes = config['batch_sizes']
+    learning_rates = config['learning_rates']
+    n_hidden_units_lst = config['n_cvae_hidden_units']
+    params_grid = list(itertools.product(learning_rates, batch_sizes, n_hidden_units_lst))*n_trials
 
-    for tid in range(0, n_trials):
+    res_cols = ['trial_id', 'batch_size', 'learning_rate',  'n_hidden_units',
+                'val_maad', 'val_elbo', 'val_importance_likelihood',
+                'test_maad', 'test_likelihood', 'te_importance_likelihood']
 
-        print("TRIAL %d" % tid)
+    results_df = pd.DataFrame(columns=res_cols)
+    results_csv = os.path.join(experiment_dir, 'results.csv')
+
+    for tid, params in enumerate(params_grid):
+
+        learning_rate = params[0]
+        batch_size = params[1]
+        n_cvae_hidden_units = params[2]
+
+        print("TRIAL %d // %d" % (tid, len(params_grid)))
+        print("batch_size: %d" % batch_size)
+        print("learning_rate: %f" % learning_rate)
+        print("n_hidden_units: %f" % n_cvae_hidden_units)
+
         trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
 
@@ -64,22 +93,23 @@ def main():
 
         cvae_model = CVAE(image_height=image_height,
                           image_width=image_width,
-                          n_channels=n_channels,
-                          n_hidden_units=n_u)
+                          n_channels=3,
+                          n_hidden_units=n_cvae_hidden_units,
+                          learning_rate=learning_rate)
 
         cvae_bestloglike_ckpt_path = os.path.join(trial_dir, 'cvae.full_model.trial_%d.best_likelihood.weights.hdf5'
                                                   % tid)
 
         eval_callback = EvalCVAEModel(xval, yval_deg, 'validation', cvae_model, cvae_bestloglike_ckpt_path)
 
-        cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=n_epochs,
-                                  validation_data=([xval, yval_bit], yval_bit),
+        cvae_model.full_model.fit([xtr, ytr], [ytr], batch_size=batch_size, epochs=n_epochs,
+                                  validation_data=([xval, yval], yval),
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback, eval_callback])
 
         best_model = CVAE(image_height=image_height,
                           image_width=image_width,
                           n_channels=n_channels,
-                          n_hidden_units=n_u)
+                          n_hidden_units=n_cvae_hidden_units)
 
         best_model.full_model.load_weights(cvae_best_ckpt_path)
 
@@ -89,6 +119,18 @@ def main():
         trial_results['validation'] = best_model.evaluate_multi(xval, yval_deg, 'validation')
         trial_results['test'] = best_model.evaluate_multi(xte, yte_deg, 'test')
         results[tid] = trial_results
+
+        results_np = np.asarray([tid, batch_size, learning_rate, n_cvae_hidden_units,
+                                 trial_results['validation']['maad_loss'],
+                                 trial_results['validation']['elbo'],
+                                 trial_results['validation']['importance_log_likelihood'],
+                                 trial_results['test']['maad_loss'],
+                                 trial_results['test']['elbo'],
+                                 trial_results['test']['importance_log_likelihood']]).reshape([1, 10])
+
+        trial_res_df = pd.DataFrame(results_np, columns=res_cols)
+        results_df = results_df.append(trial_res_df)
+        results_df.to_csv(results_csv)
 
         if tid > 0:
             if trial_results['validation']['elbo'] > results[best_trial_id]['validation']['elbo']:
@@ -101,10 +143,13 @@ def main():
     overall_best_ckpt_path = os.path.join(experiment_dir, 'cvae.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
+    best_model_n_hidden_units = params_grid[best_trial_id][2]
+
     best_model = CVAE(image_height=image_height,
                       image_width=image_width,
                       n_channels=n_channels,
-                      n_hidden_units=n_u)
+                      n_hidden_units=best_model_n_hidden_units)
+
     best_model.full_model.load_weights(overall_best_ckpt_path)
 
     best_results = dict()

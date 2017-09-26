@@ -1,4 +1,5 @@
 import numpy as np
+import keras
 
 from keras.layers import Input, Dense, Lambda
 from keras.layers.merge import concatenate
@@ -22,6 +23,7 @@ class CVAE:
                  image_width=50,
                  n_channels=3,
                  n_hidden_units=8,
+                 learning_rate=1.0e-3,
                  kl_weight=1.0):
 
         self.n_u = n_hidden_units
@@ -29,6 +31,7 @@ class CVAE:
         self.image_width = image_width
         self.n_channels = n_channels
         self.phi_shape = 2
+        self.learning_rate = learning_rate
         self.kl_weight = kl_weight
 
         self.x = Input(shape=[self.image_height, self.image_width, self.n_channels])
@@ -56,8 +59,6 @@ class CVAE:
         # self.u_prior = Lambda(self._sample_normal)([self.mu_prior, self.log_sigma_prior])
         self.u_encoder = Lambda(self._sample_u)([self.mu_encoder, self.log_var_encoder])
 
-        # import ipdb; ipdb.set_trace()
-
         self.x_vgg_enc_u = concatenate([self.x_vgg, self.u_encoder])
 
         self.decoder_mu_seq, self.decoder_kappa_seq = self._decoder_net_seq()
@@ -72,6 +73,8 @@ class CVAE:
                                                      # self.decoder_kappa_seq(self.u_encoder)]))
                                                      self.decoder_mu_seq(self.x_vgg_enc_u),
                                                      self.decoder_kappa_seq(self.x_vgg_enc_u)]))
+
+        self.optimizer = keras.optimizers.Adam(lr=self.learning_rate)
 
         self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
 
