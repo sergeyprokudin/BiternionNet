@@ -234,7 +234,7 @@ def train():
     print("finetuning kappa values..")
     best_kappa = fixed_kappa_value
     if not predict_kappa:
-        best_kappa = finetune_kappa(best_model, xval, yval)
+        best_kappa = finetune_kappa(xval, yval, best_model)
         print("best kappa: %f" % best_kappa)
 
     best_model = vgg.BiternionVGG(image_height=image_height,
