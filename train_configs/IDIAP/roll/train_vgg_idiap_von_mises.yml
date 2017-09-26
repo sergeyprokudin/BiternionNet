@@ -1,8 +1,8 @@
 experiment_name: 'vggbit_von_mises'
-root_log_dir: 'logs/IDIAP/tilt'
+root_log_dir: 'logs/IDIAP/roll'
 data_path: 'data//IDIAP.pkl'
 canonical_split: True
-net_output: tilt # possible choices: pan, tilt, roll
+net_output: roll # possible choices: pan, tilt, roll
 loss: von_mises # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: False
 fixed_kappa_value: 5.0
