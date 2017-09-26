@@ -38,8 +38,8 @@ def finetune_kappa(x, y_bit, vgg_model):
     log_likelihoods = np.zeros(kappa_vals.shape)
     for i, kappa_val in enumerate(kappa_vals):
         kappa_preds = np.ones([x.shape[0], 1]) * kappa_val
-        log_likelihoods[i] = von_mises_log_likelihood_np(y_bit, ytr_preds_bit, kappa_preds, input_type='biternion')
-        print("kappa: %f, log-likelihood: %f" %(kappa_val, log_likelihoods[i]))
+        log_likelihoods[i] = np.mean(von_mises_log_likelihood_np(y_bit, ytr_preds_bit, kappa_preds))
+        print("kappa: %f, log-likelihood: %f" % (kappa_val, log_likelihoods[i]))
     max_ix = np.argmax(log_likelihoods)
     kappa = kappa_vals[max_ix]
     return kappa
