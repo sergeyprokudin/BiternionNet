@@ -34,7 +34,7 @@ def get_optimizer(optimizer_params):
 
 def finetune_kappa(x, y_bit, vgg_model):
     ytr_preds_bit = vgg_model.model.predict(x)
-    kappa_vals = np.arange(0, 50, 0.1)
+    kappa_vals = np.arange(0, 100, 0.1)
     log_likelihoods = np.zeros(kappa_vals.shape)
     for i, kappa_val in enumerate(kappa_vals):
         kappa_preds = np.ones([x.shape[0], 1]) * kappa_val
