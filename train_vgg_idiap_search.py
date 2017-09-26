@@ -34,7 +34,7 @@ def get_optimizer(optimizer_params):
 
 def finetune_kappa(x, y_bit, vgg_model):
     ytr_preds_bit = vgg_model.model.predict(x)
-    kappa_vals = np.arange(0, 10, 0.5)
+    kappa_vals = np.arange(0, 10, 0.1)
     log_likelihoods = np.zeros(kappa_vals.shape)
     for i, kappa_val in enumerate(kappa_vals):
         kappa_preds = np.ones([x.shape[0], 1]) * kappa_val
@@ -126,8 +126,8 @@ def train():
     best_trial_id = 0
 
     n_trials = config['n_trials']
-    batch_sizes = config['batch_sizes'] #[int(bs) for bs in config['batch_sizes'].split(',')]
-    learning_rates = config['learning_rates'] #[int(lr) for lr in config['learning_rates'].split(',')]
+    batch_sizes = config['batch_sizes']
+    learning_rates = config['learning_rates']
     params_grid = list(itertools.product(learning_rates, batch_sizes))*n_trials
 
     results = dict()
