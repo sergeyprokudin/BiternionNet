@@ -34,7 +34,7 @@ def get_optimizer(optimizer_params):
 
 def finetune_kappa(x, y_bit, model):
     ytr_preds_bit = model.predict(x)
-    kappa_vals = np.arange(0, 10, 0.1)
+    kappa_vals = np.arange(0, 10, 0.5)
     log_likelihoods = np.zeros(kappa_vals.shape)
     for i, kappa_val in enumerate(kappa_vals):
         kappa_preds = np.ones([x.shape[0], 1]) * kappa_val
@@ -64,7 +64,7 @@ def train():
 
     (xtr, ptr_rad, ttr_rad, rtr_rad, names_tr), \
     (xval, pval_rad, tval_rad, rval_rad, names_val), \
-    (xte, pte_rad, tte_rad, rte_rad, names_te) = load_idiap('data//IDIAP.pkl')
+    (xte, pte_rad, tte_rad, rte_rad, names_te) = load_idiap(config['data_path'])
 
     image_height, image_width = xtr.shape[1], xtr.shape[2]
 
@@ -125,9 +125,12 @@ def train():
 
     best_trial_id = 0
 
-    n_trials = config['n_trials']
+    import ipdb; ipdb.set_trace()
 
-    params_grid = make_lr_batch_size_grid()*n_trials
+    n_trials = config['n_trials']
+    batch_sizes = [int(bs) for bs in config['batch_sizes'].split(',')]
+    learning_rates = [int(bs) for bs in config['learning_rates'].split(',')]
+    params_grid = list(itertools.product(learning_rates, batch_sizes))*n_trials
 
     results = dict()
     res_cols = ['trial_id', 'batch_size', 'learning_rate', 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
@@ -222,11 +225,17 @@ def train():
     overall_best_ckpt_path = os.path.join(experiment_dir, 'vgg.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
+    print("finetuning kappa values..")
+    best_kappa = fixed_kappa_value
+    if not predict_kappa:
+        best_kappa = finetune_kappa(xval, yval)
+        print("best kappa: %f" % best_kappa)
+
     best_model = vgg.BiternionVGG(image_height=image_height,
                                   image_width=image_width,
                                   n_channels=3,
                                   predict_kappa=predict_kappa,
-                                  fixed_kappa_value=fixed_kappa_value)
+                                  fixed_kappa_value=best_kappa)
 
     best_model.model.load_weights(overall_best_ckpt_path)
 

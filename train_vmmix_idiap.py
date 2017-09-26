@@ -71,21 +71,16 @@ def main():
     yte_bit = deg2bit(yte_deg)
 
     image_height, image_width, n_channels = xtr.shape[1:]
-    phi_shape = yte_bit.shape[1]
 
     best_trial_id = 0
-    n_trials = 4
+
     results = dict()
 
-    # best so far
     n_epochs = 50
-    # batch_size = 64
-    n_components = 5
-    # learning_rate = 1.0e-6
-
+    n_trials = 4
     batch_sizes = [64, 128, 256]
-    learning_rates = [1.0e-6, 1.0e-7, 1.0e-5]
-    n_components_lst = [5, 10, 3]
+    learning_rates = [1.0e-3, 1.0e-5, 1.0e-6, 1.0e-7]
+    n_components_lst = [1, 3, 5, 10]
     params_grid = list(itertools.product(learning_rates, batch_sizes, n_components_lst))*n_trials
 
     res_cols = ['trial_id', 'batch_size', 'learning_rate',  'n_components',
@@ -170,10 +165,12 @@ def main():
     overall_best_ckpt_path = os.path.join(experiment_dir, 'vmmix.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
+    best_model_n_components = params_grid[best_trial_id][2]
+
     best_model = BiternionVGGMixture(image_height=image_height,
                                      image_width=image_width,
                                      n_channels=n_channels,
-                                     n_components=n_components)
+                                     n_components=best_model_n_components)
     best_model.model.load_weights(overall_best_ckpt_path)
 
     best_results = dict()
