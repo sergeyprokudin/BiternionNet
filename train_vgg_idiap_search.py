@@ -223,10 +223,18 @@ def train():
     overall_best_ckpt_path = os.path.join(experiment_dir, 'vgg.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
+    best_model = vgg.BiternionVGG(image_height=image_height,
+                                  image_width=image_width,
+                                  n_channels=3,
+                                  predict_kappa=predict_kappa,
+                                  fixed_kappa_value=fixed_kappa_value)
+
+    best_model.model.load_weights(overall_best_ckpt_path)
+
     print("finetuning kappa values..")
     best_kappa = fixed_kappa_value
     if not predict_kappa:
-        best_kappa = finetune_kappa(xval, yval)
+        best_kappa = finetune_kappa(best_model, xval, yval)
         print("best kappa: %f" % best_kappa)
 
     best_model = vgg.BiternionVGG(image_height=image_height,
