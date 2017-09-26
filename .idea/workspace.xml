@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg_idiap.py" afterPath="$PROJECT_DIR$/train_vgg_idiap.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg_idiap_search.py" afterPath="$PROJECT_DIR$/train_vgg_idiap_search.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vgg_idiap_cosine.yml" afterPath="$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vgg_idiap_cosine.yml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -132,7 +131,7 @@
             <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vgg_idiap_cosine.yml">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.2737921">
-                  <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+                  <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
                   <folding />
                 </state>
               </provider>
@@ -238,7 +237,6 @@
         <option value="$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vgg_idiap_likelihood_learned_kappa.yml" />
         <option value="$PROJECT_DIR$/utils/hyper_tune.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine.yml" />
-        <option value="$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vgg_idiap_cosine.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vgg_idiap_von_mises.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vmmix_idiap.yml" />
@@ -258,6 +256,7 @@
         <option value="$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_idiap_cosine.yml" />
         <option value="$PROJECT_DIR$/train_vgg_idiap.py" />
         <option value="$PROJECT_DIR$/train_vgg_idiap_search.py" />
+        <option value="$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vgg_idiap_cosine.yml" />
       </list>
     </option>
   </component>
@@ -1004,14 +1003,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vgg_idiap_cosine.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2737921">
-          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_vgg_idiap.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-15.333333">
@@ -1024,6 +1015,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5923836">
           <caret line="256" column="0" selection-start-line="256" selection-start-column="0" selection-end-line="256" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vgg_idiap_cosine.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2737921">
+          <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
           <folding />
         </state>
       </provider>
