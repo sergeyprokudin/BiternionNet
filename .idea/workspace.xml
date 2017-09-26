@@ -118,8 +118,8 @@
           <file leaf-file-name="train_vgg_idiap_von_mises.yml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.25900277">
-                  <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+                <state vertical-scroll-proportion="0.14127424">
+                  <caret line="6" column="20" selection-start-line="5" selection-start-column="26" selection-end-line="6" selection-end-column="20" />
                   <folding />
                 </state>
               </provider>
@@ -932,8 +932,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25900277">
-          <caret line="11" column="12" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.14127424">
+          <caret line="6" column="20" selection-start-line="5" selection-start-column="26" selection-end-line="6" selection-end-column="20" />
           <folding />
         </state>
       </provider>
