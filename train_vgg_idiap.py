@@ -47,9 +47,9 @@ def make_lr_batch_size_grid():
     return grid
 
 
-def finetune_kappa(x, y_bit, model):
-    ytr_preds_bit = model.predict(x)
-    kappa_vals = np.arange(0, 10, 0.1)
+def finetune_kappa(x, y_bit, vgg_model):
+    ytr_preds_bit = vgg_model.model.predict(x)
+    kappa_vals = np.arange(0, 50, 0.1)
     log_likelihoods = np.zeros(kappa_vals.shape)
     for i, kappa_val in enumerate(kappa_vals):
         kappa_preds = np.ones([x.shape[0], 1]) * kappa_val
@@ -220,8 +220,17 @@ def train():
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
     print("finetuning kappa values..")
+    best_model = vgg.BiternionVGG(image_height=image_height,
+                                  image_width=image_width,
+                                  n_channels=3,
+                                  predict_kappa=predict_kappa,
+                                  fixed_kappa_value=fixed_kappa_value)
+
+    best_model.model.load_weights(overall_best_ckpt_path)
+    best_kappa = fixed_kappa_value
+
     if not predict_kappa:
-        best_kappa = finetune_kappa(xval, yval)
+        best_kappa = finetune_kappa(xval, yval, best_model)
         print("best kappa: %f" % best_kappa)
 
     best_model = vgg.BiternionVGG(image_height=image_height,
