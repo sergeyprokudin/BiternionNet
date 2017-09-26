@@ -49,7 +49,7 @@ def make_lr_batch_size_grid():
 
 def finetune_kappa(x, y_bit, model):
     ytr_preds_bit = model.predict(x)
-    kappa_vals = np.arange(0, 10, 0.1)
+    kappa_vals = np.arange(0, 50, 0.1)
     log_likelihoods = np.zeros(kappa_vals.shape)
     for i, kappa_val in enumerate(kappa_vals):
         kappa_preds = np.ones([x.shape[0], 1]) * kappa_val
@@ -84,9 +84,10 @@ def train():
 
         (xtr, ytr_rad), (xval, yval_rad), (xte, yte_rad) = load_idiap_part(data_path,
                                                                            net_output)
-    elif dataset_name == 'CAVIAR-o':
 
+    else:
 
+        raise ValueError("invalid dataset name!")
 
     image_height, image_width, n_channels = xtr.shape[1], xtr.shape[2], xtr.shape[3]
 

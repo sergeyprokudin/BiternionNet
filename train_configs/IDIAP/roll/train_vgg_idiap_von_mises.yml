@@ -6,7 +6,7 @@ net_output: roll # possible choices: pan, tilt, roll
 loss: von_mises # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: False
 fixed_kappa_value: 5.0
-n_epochs: 20
+n_epochs: 10
 batch_sizes: [16, 32, 64, 128, 256]
 learning_rates: [1.0e-0, 1.0e-1, 1.0e-2, 1.0e-3, 1.0e-4, 1.0e-5]
-n_trials: 4
+n_trials: 1
