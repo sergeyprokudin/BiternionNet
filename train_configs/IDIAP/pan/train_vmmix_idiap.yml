@@ -1,5 +1,7 @@
 root_log_dir: 'logs/IDIAP/pan/vmmix'
 net_output: pan # possible choices: pan, tilt, roll
 batch_sizes: [16, 32, 64, 128, 256]
-learning_rates: [1.0e-0, 1.0e-1, 1.0e-2, 1.0e-3, 1.0e-4, 1.0e-5, 1.0e-6, 1.0e-7]
+learning_rates: [1.0e-4, 1.0e-5, 1.0e-6, 1.0e-7]
+n_components: [2, 3, 4, 5, 7, 10]
 n_trials: 10
+n_epochs: 20

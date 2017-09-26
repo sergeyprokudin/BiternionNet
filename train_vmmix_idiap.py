@@ -76,15 +76,16 @@ def main():
 
     results = dict()
 
-    n_epochs = 50
-    n_trials = 4
-    batch_sizes = [64, 128, 256]
-    learning_rates = [1.0e-3, 1.0e-5, 1.0e-6, 1.0e-7]
-    n_components_lst = [1, 3, 5, 10]
+    n_epochs = config['n_epochs']
+    n_trials = config['n_trials']
+    batch_sizes = config['batch_sizes']
+    learning_rates = config['learning_rates']
+    n_components_lst = config['n_components']
     params_grid = list(itertools.product(learning_rates, batch_sizes, n_components_lst))*n_trials
 
     res_cols = ['trial_id', 'batch_size', 'learning_rate',  'n_components',
                 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
+
     results_df = pd.DataFrame(columns=res_cols)
     results_csv = os.path.join(experiment_dir, 'results.csv')
 
@@ -97,7 +98,7 @@ def main():
         print("TRIAL %d // %d" % (tid, len(params_grid)))
         print("batch_size: %d" % batch_size)
         print("learning_rate: %f" % learning_rate)
-        print("learning_rate: %f" % learning_rate)
+        print("n_components: %f" % n_components)
 
         trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
