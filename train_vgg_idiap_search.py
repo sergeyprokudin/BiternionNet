@@ -125,11 +125,9 @@ def train():
 
     best_trial_id = 0
 
-    import ipdb; ipdb.set_trace()
-
     n_trials = config['n_trials']
-    batch_sizes = [int(bs) for bs in config['batch_sizes'].split(',')]
-    learning_rates = [int(bs) for bs in config['learning_rates'].split(',')]
+    batch_sizes = config['batch_sizes'] #[int(bs) for bs in config['batch_sizes'].split(',')]
+    learning_rates = config['learning_rates'] #[int(lr) for lr in config['learning_rates'].split(',')]
     params_grid = list(itertools.product(learning_rates, batch_sizes))*n_trials
 
     results = dict()
