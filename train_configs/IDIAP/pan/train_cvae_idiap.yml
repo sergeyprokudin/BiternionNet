@@ -3,8 +3,8 @@ data: IDIAP # IDIAP, TownCentre, CAVIAR-o, CAVIAR-c
 root_log_dir: 'logs/IDIAP/pan/cvae'
 data_path: 'data//IDIAP.pkl'
 net_output: pan # possible choices: pan, tilt, roll
-batch_sizes: [256]
-learning_rates: [1.0e-6]
+batch_sizes: [16, 64, 128, 256]
+learning_rates: [1.0e-3, 1.0e-4, 1.0e-5, 1.0e-6]
 n_cvae_hidden_units: [8]
 n_trials: 1
-n_epochs: 1
+n_epochs: 20

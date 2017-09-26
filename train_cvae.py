@@ -152,6 +152,7 @@ def main():
 
     best_model.full_model.load_weights(overall_best_ckpt_path)
 
+    print("Evaluating best model..")
     best_results = dict()
     best_results['train'] = best_model.evaluate_multi(xtr, ytr_deg, 'train')
     best_results['validation'] = best_model.evaluate_multi(xval, yval_deg, 'validation')
