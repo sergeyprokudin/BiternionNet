@@ -98,7 +98,6 @@ def train():
     yval_deg = np.rad2deg(yval_rad)
     yte_deg = np.rad2deg(yte_rad)
 
-
     predict_kappa = config['predict_kappa']
     fixed_kappa_value = config['fixed_kappa_value']
 
