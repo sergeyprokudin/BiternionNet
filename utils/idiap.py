@@ -1,8 +1,5 @@
-import joblib
 import numpy as np
 import joblib
-
-from utils.angles import rad2bit
 
 
 def load_idiap(data_path,

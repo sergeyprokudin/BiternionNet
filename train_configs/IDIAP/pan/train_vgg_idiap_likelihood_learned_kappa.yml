@@ -1,0 +1,12 @@
+experiment_name: 'vggbit_cosine'
+root_log_dir: 'logs/IDIAP/pan'
+data_path: 'data//IDIAP.pkl'
+canonical_split: True
+net_output: pan # possible choices: pan, tilt, roll
+loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
+predict_kappa: False
+fixed_kappa_value: 10.0
+n_epochs: 20
+batch_sizes: [8]
+learning_rates: [1.0e-1]
+n_trials: 5
