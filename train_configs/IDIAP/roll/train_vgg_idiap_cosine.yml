@@ -9,4 +9,4 @@ fixed_kappa_value: 10.0
 n_epochs: 20
 batch_sizes: [256]
 learning_rates: [1.0e-1]
-n_trials: 1
+n_trials: 10
