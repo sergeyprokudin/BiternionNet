@@ -4,7 +4,7 @@ data_path: 'data//IDIAP.pkl'
 canonical_split: True
 net_output: pan # possible choices: pan, tilt, roll
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
-predict_kappa: False
+predict_kappa: True
 fixed_kappa_value: 10.0
 n_epochs: 20
 batch_sizes: [8]
