@@ -49,7 +49,7 @@ def make_lr_batch_size_grid():
 
 def finetune_kappa(x, y_bit, model):
     ytr_preds_bit = model.predict(x)
-    kappa_vals = np.arange(0, 200, 0.2)
+    kappa_vals = np.arange(0, 1000, 1.0)
     log_likelihoods = np.zeros(kappa_vals.shape)
     for i, kappa_val in enumerate(kappa_vals):
         kappa_preds = np.ones([x.shape[0], 1]) * kappa_val
