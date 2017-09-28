@@ -1,4 +1,4 @@
-dataset: IDIAP
+dataset: IDIAP # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
 net_output: pan # possible choices: pan, tilt, roll
 root_log_dir: 'logs/IDIAP/pan'
 data_path: 'data//IDIAP.pkl'
@@ -12,4 +12,4 @@ batch_sizes: [128]
 learning_rates: [1.0e-5]
 weight_decay: [0.0, 1.0]
 n_trials: 20
-random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
+random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters

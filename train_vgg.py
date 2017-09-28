@@ -14,6 +14,7 @@ from utils.losses import mad_loss_tf, cosine_loss_tf, von_mises_loss_tf
 from utils.idiap import load_idiap_part
 from utils.experiements import get_experiment_id
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np, von_mises_neg_log_likelihood_keras
+from utils import hyper_tune as ht
 
 from keras import backend as K
 
@@ -182,7 +183,17 @@ def train():
 
         batch_sizes = config['batch_sizes']
         learning_rates = config['learning_rates']
-        params_grid = list(itertools.product(learning_rates, batch_sizes))*n_trials
+        params_grid = np.asarray(list(itertools.product(learning_rates, batch_sizes))*n_trials)
+        learning_rates = params_grid[0]
+        batch_sizes = params_grid[1]
+
+    else:
+        batch_sizes = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
+        learning_rates = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
+
+        # weight_decays = np.random.rand(n_trials)
+
+    import ipdb; ipdb.set_trace()
 
     results = dict()
     res_cols = ['trial_id', 'batch_size', 'learning_rate',
@@ -196,8 +207,8 @@ def train():
 
     for tid, params in enumerate(params_grid):
 
-        learning_rate = params[0]
-        batch_size = params[1]
+        learning_rate = learning_rates[tid]
+        batch_size = batch_sizes[tid]
         print("TRIAL %d // %d" % (tid, n_trials))
         print("batch_size: %d" % batch_size)
         print("learning_rate: %f" % learning_rate)

@@ -14,15 +14,29 @@ def make_lr_batch_size_grid(max_lr=1.0, lr_step=0.1, min_lr_factor=10,
     return grid
 
 
+def sample_exp_float(n_samples, base, min_factor, max_factor):
+
+    samples = np.power(np.ones(n_samples)*base, np.random.rand(n_samples)*(max_factor-min_factor) + min_factor)
+
+    return samples
+
+
+def sample_exp_int(n_samples, base, min_factor, max_factor):
+
+    samples = sample_exp_float(n_samples, base, min_factor, max_factor)
+
+    return samples.astype('int')
+
+
 def sample_batch_size(n_samples, min_batch_factor=1, max_batch_size_factor=10):
 
-    samples = np.power(np.ones(n_samples)*2, np.random.rand(n_samples)*(max_batch_size_factor-min_batch_factor) + min_batch_factor).astype('int')
+    samples = sample_exp_int(n_samples, base=2, min_factor=min_batch_factor, max_factor=max_batch_size_factor)
 
     return samples
 
 
 def sample_learning_rates(n_samples, min_lr_factor=-10, max_lr_factor=0):
 
-    samples = np.power(np.ones(n_samples)*10, np.random.rand(n_samples)*(max_lr_factor-min_lr_factor) + min_lr_factor)
+    samples = sample_exp_float(n_samples, base=10, min_factor=min_lr_factor, max_factor=max_lr_factor)
 
     return samples

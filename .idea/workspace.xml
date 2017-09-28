@@ -4,6 +4,7 @@
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa.yml" afterPath="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg.py" afterPath="$PROJECT_DIR$/train_vgg.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/hyper_tune.py" afterPath="$PROJECT_DIR$/utils/hyper_tune.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -35,15 +36,14 @@
           <file leaf-file-name="train_vgg.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_vgg.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.52045137">
-                  <caret line="205" column="27" selection-start-line="205" selection-start-column="27" selection-end-line="205" selection-end-column="27" />
+                <state vertical-scroll-proportion="0.3112676">
+                  <caret line="272" column="0" selection-start-line="272" selection-start-column="0" selection-end-line="272" selection-end-column="0" />
                   <folding>
-                    <element signature="e#660#1236#0" expanded="false" />
-                    <element signature="e#1267#2261#0" expanded="false" />
-                    <element signature="e#2305#2968#0" expanded="false" />
-                    <element signature="e#3007#3449#0" expanded="false" />
-                    <element signature="e#4047#5164#0" expanded="false" />
-                    <element signature="e#5209#5333#0" expanded="false" />
+                    <element signature="e#695#1271#0" expanded="false" />
+                    <element signature="e#1302#2296#0" expanded="false" />
+                    <element signature="e#2340#3003#0" expanded="false" />
+                    <element signature="e#3042#3484#0" expanded="false" />
+                    <element signature="e#5244#5368#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -118,7 +118,9 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="-6.5384617">
                   <caret line="10" column="19" selection-start-line="0" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-                  <folding />
+                  <folding>
+                    <marker date="1506603573000" expanded="true" signature="326:330" placeholder="1" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -126,8 +128,8 @@
           <file leaf-file-name="train_vgg_idiap_likelihood_learned_kappa.yml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.02489019">
-                  <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
+                <state vertical-scroll-proportion="0.24853802">
+                  <caret line="10" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -157,7 +159,7 @@
             <entry file="file://$PROJECT_DIR$/utils/hyper_tune.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+                  <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -224,13 +226,13 @@
         <option value="$PROJECT_DIR$/train_vgg_idiap_search.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_idiap_cosine.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vgg_idiap_cosine.yml" />
-        <option value="$PROJECT_DIR$/utils/hyper_tune.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_von_mises.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_idiap_likelihood_learned_kappa.yml" />
         <option value="$PROJECT_DIR$/models/vgg.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine.yml" />
-        <option value="$PROJECT_DIR$/train_vgg.py" />
+        <option value="$PROJECT_DIR$/utils/hyper_tune.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa.yml" />
+        <option value="$PROJECT_DIR$/train_vgg.py" />
       </list>
     </option>
   </component>
@@ -564,7 +566,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25101626" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22064245" sideWeight="0.5045045" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -631,8 +633,13 @@
           <line>39</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file://$PROJECT_DIR$/train_vgg.py</url>
+          <line>120</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="9" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -889,14 +896,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/hyper_tune.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_vmmix_idiap.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4315938">
@@ -993,34 +992,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_vgg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.52045137">
-          <caret line="205" column="27" selection-start-line="205" selection-start-column="27" selection-end-line="205" selection-end-column="27" />
-          <folding>
-            <element signature="e#660#1236#0" expanded="false" />
-            <element signature="e#1267#2261#0" expanded="false" />
-            <element signature="e#2305#2968#0" expanded="false" />
-            <element signature="e#3007#3449#0" expanded="false" />
-            <element signature="e#4047#5164#0" expanded="false" />
-            <element signature="e#5209#5333#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.5384617">
           <caret line="10" column="19" selection-start-line="0" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding>
+            <marker date="1506603573000" expanded="true" signature="326:330" placeholder="1" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/hyper_tune.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02489019">
-          <caret line="1" column="8" selection-start-line="1" selection-start-column="8" selection-end-line="1" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.24853802">
+          <caret line="10" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_vgg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3112676">
+          <caret line="272" column="0" selection-start-line="272" selection-start-column="0" selection-end-line="272" selection-end-column="0" />
+          <folding>
+            <element signature="e#695#1271#0" expanded="false" />
+            <element signature="e#1302#2296#0" expanded="false" />
+            <element signature="e#2340#3003#0" expanded="false" />
+            <element signature="e#3042#3484#0" expanded="false" />
+            <element signature="e#5244#5368#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
