@@ -198,8 +198,8 @@ def train():
     else:
         learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
         batch_sizes = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
-        weight_decays = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
-        epsilons = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
+        weight_decays = ht.sample_exp_float(n_trials, base=10, min_factor=-3, max_factor=0)
+        epsilons = ht.sample_exp_float(n_trials, base=10, min_factor=-9, max_factor=0)
         conv_dropouts = np.random.rand(n_trials)
         fc_dropouts = np.random.rand(n_trials)
 
@@ -304,7 +304,7 @@ def train():
 
         trial_res_df = pd.DataFrame(results_np, columns=res_cols)
         results_df = results_df.append(trial_res_df)
-        results_df.to_csv(results_csv_path)
+        results_df.to_csv(results_csv_path, sep=';')
         save_results_yml(results, results_yml_path)
 
         if tid > 0:
