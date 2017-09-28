@@ -119,7 +119,7 @@ def finetune_kappa(x, y_bit, vgg_model):
 
 def results_to_np(trial_results):
 
-    results_np = np.asarray([trial_results['id'],
+    results_np = np.asarray([trial_results['tid'],
                              trial_results['learning_rate'],
                              trial_results['batch_size'],
                              trial_results['train']['maad_loss'],
