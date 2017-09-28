@@ -219,8 +219,8 @@ def train():
                                      n_channels=n_channels,
                                      predict_kappa=predict_kappa,
                                      fixed_kappa_value=fixed_kappa_value,
-                                     fc_dropout_val=0.0,
-                                     conv_dropout_val=0.0)
+                                     fc_dropout_val=0.5,
+                                     conv_dropout_val=0.2)
 
         optimizer = keras.optimizers.Adam(lr=learning_rate,
                                           epsilon=1.0e-07,
@@ -235,16 +235,16 @@ def train():
 
         best_model_weights_file = os.path.join(trial_dir, 'vgg_bit_' + config['loss'] + '_town.best.weights.h5')
 
-        model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
-                                                              monitor='val_loss',
-                                                              mode='min',
-                                                              save_best_only=True,
-                                                              save_weights_only=True,
-                                                              period=1,
-                                                              verbose=1)
+        # model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
+        #                                                       monitor='val_loss',
+        #                                                       mode='min',
+        #                                                       save_best_only=True,
+        #                                                       save_weights_only=True,
+        #                                                       period=1,
+        #                                                       verbose=1)
 
-        # model_ckpt_callback = ModelCheckpointEveryNBatch(best_model_weights_file, xval, yval_bit,
-        #                                                  verbose=1, save_best_only=True, period=20)
+        model_ckpt_callback = ModelCheckpointEveryNBatch(best_model_weights_file, xval, yval_bit,
+                                                         verbose=1, save_best_only=True, period=20)
 
         vgg_model.model.save_weights(best_model_weights_file)
 

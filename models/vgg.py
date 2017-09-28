@@ -128,8 +128,7 @@ class BiternionVGG:
         self.y_pred = Lambda(lambda x: K.l2_normalize(x, axis=1))(Dense(2)(vgg_x))
 
         if self.predict_kappa:
-            # self.kappa_pred = Lambda(lambda x: K.abs(x))(Dense(1)(vgg_x))
-            self.kappa_pred = Lambda(lambda x: K.abs(x))(Dense(1)(Dense(256)(vgg_x)))
+            self.kappa_pred = Lambda(lambda x: K.abs(x))(Dense(1)(vgg_x))
             self.model = Model(self.X, concatenate([self.y_pred, self.kappa_pred]))
         else:
             self.model = Model(self.X, self.y_pred)
