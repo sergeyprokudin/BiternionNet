@@ -8,7 +8,8 @@ canonical_split: True
 predict_kappa: False
 fixed_kappa_value: 10.0
 n_epochs: 20
-batch_sizes: [128]
+batch_sizes: [1024]
 learning_rates: [1.0e-3]
+weight_decay: [0.0, 1.0]
 n_trials: 1
 random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters

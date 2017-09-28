@@ -104,17 +104,48 @@ def make_lr_batch_size_grid():
     return grid
 
 
-def finetune_kappa(x, y_bit, model):
-    ytr_preds_bit = model.predict(x)
+def finetune_kappa(x, y_bit, vgg_model):
+    ytr_preds_bit = vgg_model.model.predict(x)
     kappa_vals = np.arange(0, 1000, 1.0)
     log_likelihoods = np.zeros(kappa_vals.shape)
     for i, kappa_val in enumerate(kappa_vals):
         kappa_preds = np.ones([x.shape[0], 1]) * kappa_val
-        log_likelihoods[i] = von_mises_log_likelihood_np(y_bit, ytr_preds_bit, kappa_preds, input_type='biternion')
-        print("kappa: %f, log-likelihood: %f" %(kappa_val, log_likelihoods[i]))
+        log_likelihoods[i] = np.mean(von_mises_log_likelihood_np(y_bit, ytr_preds_bit, kappa_preds))
+        print("kappa: %f, log-likelihood: %f" % (kappa_val, log_likelihoods[i]))
     max_ix = np.argmax(log_likelihoods)
     kappa = kappa_vals[max_ix]
     return kappa
+
+
+def results_to_np(trial_results):
+
+    results_np = np.asarray([trial_results['id'],
+                             trial_results['learning_rate'],
+                             trial_results['batch_size'],
+                             trial_results['train']['maad_loss'],
+                             trial_results['train']['maad_loss_sem'],
+                             trial_results['train']['log_likelihood_mean'],
+                             trial_results['train']['log_likelihood_sem'],
+                             trial_results['validation']['maad_loss'],
+                             trial_results['validation']['maad_loss_sem'],
+                             trial_results['validation']['log_likelihood_mean'],
+                             trial_results['validation']['log_likelihood_sem'],
+                             trial_results['test']['maad_loss'],
+                             trial_results['test']['maad_loss_sem'],
+                             trial_results['test']['log_likelihood_mean'],
+                             trial_results['test']['log_likelihood_sem']])
+
+    n_cols = len(results_np)
+
+    return results_np.reshape([1, n_cols])
+
+
+def save_results_yml(results, path):
+
+    with open(path, 'w') as results_yml_file:
+        yaml.dump(results, results_yml_file, default_flow_style=False)
+
+    return
 
 
 def train():
@@ -144,17 +175,24 @@ def train():
     predict_kappa = config['predict_kappa']
     fixed_kappa_value = config['fixed_kappa_value']
 
+    n_trials = config['n_trials']
     best_trial_id = 0
 
-    n_trials = config['n_trials']
-    batch_sizes = config['batch_sizes']
-    learning_rates = config['learning_rates']
-    params_grid = list(itertools.product(learning_rates, batch_sizes))*n_trials
+    if not config['random_hyp_search']:
+
+        batch_sizes = config['batch_sizes']
+        learning_rates = config['learning_rates']
+        params_grid = list(itertools.product(learning_rates, batch_sizes))*n_trials
 
     results = dict()
-    res_cols = ['trial_id', 'batch_size', 'learning_rate', 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
+    res_cols = ['trial_id', 'batch_size', 'learning_rate',
+                'tr_maad_mean', 'tr_maad_sem', 'tr_likelihood', 'tr_likelihood_sem',
+                'val_maad_mean', 'val_maad_sem', 'val_likelihood', 'val_likelihood_sem',
+                'val_maad_mean', 'val_maad_sem', 'val_likelihood', 'val_likelihood_sem']
+
     results_df = pd.DataFrame(columns=res_cols)
-    results_csv = os.path.join(experiment_dir, 'results.csv')
+    results_csv_path = os.path.join(experiment_dir, 'results.csv')
+    results_yml_path = os.path.join(experiment_dir, 'results.yml')
 
     for tid, params in enumerate(params_grid):
 
@@ -174,8 +212,8 @@ def train():
                                      predict_kappa=predict_kappa,
                                      fixed_kappa_value=fixed_kappa_value)
 
-        optimizer = keras.optimizers.Adam(epsilon=1.0e-07,
-                                          lr=learning_rate,
+        optimizer = keras.optimizers.Adam(lr=learning_rate,
+                                          epsilon=1.0e-07,
                                           decay=0.0)
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
@@ -197,12 +235,12 @@ def train():
 
         vgg_model.model.save_weights(best_model_weights_file)
 
-        vgg_model.model.fit(x=xtr, y=ytr_bit,
-                            batch_size=batch_size,
-                            epochs=config['n_epochs'],
-                            verbose=1,
-                            validation_data=(xval, yval_bit),
-                            callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+        # vgg_model.model.fit(x=xtr, y=ytr_bit,
+        #                     batch_size=batch_size,
+        #                     epochs=config['n_epochs'],
+        #                     verbose=1,
+        #                     validation_data=(xval, yval_bit),
+        #                     callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = vgg.BiternionVGG(image_height=image_height,
                                       image_width=image_width,
@@ -213,7 +251,7 @@ def train():
         best_model.model.load_weights(best_model_weights_file)
 
         trial_results = dict()
-
+        trial_results['tid'] = tid
         trial_results['learning_rate'] = float(learning_rate)
         trial_results['batch_size'] = float(batch_size)
         trial_results['ckpt_path'] = best_model_weights_file
@@ -222,21 +260,24 @@ def train():
         trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
         results[tid] = trial_results
 
-        results_np = np.asarray([tid, batch_size, learning_rate,
-                                 trial_results['validation']['maad_loss'],
-                                 trial_results['validation']['log_likelihood_mean'],
-                                 trial_results['test']['maad_loss'],
-                                 trial_results['test']['log_likelihood_mean']]).reshape([1, 7])
+        results_np = results_to_np(trial_results)
 
         trial_res_df = pd.DataFrame(results_np, columns=res_cols)
         results_df = results_df.append(trial_res_df)
-        results_df.to_csv(results_csv)
+        results_df.to_csv(results_csv_path)
+        save_results_yml(results, results_yml_path)
 
         if tid > 0:
-            if trial_results['validation']['log_likelihood_mean'] > \
-                    results[best_trial_id]['validation']['log_likelihood_mean']:
-                best_trial_id = tid
-                print("Better validation loss achieved, current best trial: %d" % best_trial_id)
+            if config['loss'] == 'vm_likelihood':
+                if trial_results['validation']['log_likelihood_mean'] > \
+                        results[best_trial_id]['validation']['log_likelihood_mean']:
+                    best_trial_id = tid
+                    print("Better log likelihood achieved, current best trial: %d" % best_trial_id)
+            else:
+                if trial_results['validation']['maad'] < \
+                        results[best_trial_id]['validation']['maad']:
+                    best_trial_id = tid
+                    print("Better MAAD achieved, current best trial: %d" % best_trial_id)
 
     print("loading best model..")
     best_ckpt_path = results[best_trial_id]['ckpt_path']
@@ -275,11 +316,8 @@ def train():
     best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
     results['best'] = best_results
 
-    results_yml_file = os.path.join(experiment_dir, 'results.yml')
-    with open(results_yml_file, 'w') as results_yml_file:
-        yaml.dump(results, results_yml_file, default_flow_style=False)
-
-    results_df.to_csv(results_csv)
+    save_results_yml(results, results_yml_path)
+    results_df.to_csv(results_csv_path)
 
     return
 
