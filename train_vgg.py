@@ -184,16 +184,12 @@ def train():
         batch_sizes = config['batch_sizes']
         learning_rates = config['learning_rates']
         params_grid = np.asarray(list(itertools.product(learning_rates, batch_sizes))*n_trials)
-        learning_rates = params_grid[0]
-        batch_sizes = params_grid[1]
+        learning_rates = params_grid[:, 0]
+        batch_sizes = params_grid[:, 1].astype('int')
 
     else:
         batch_sizes = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
         learning_rates = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
-
-        # weight_decays = np.random.rand(n_trials)
-
-    import ipdb; ipdb.set_trace()
 
     results = dict()
     res_cols = ['trial_id', 'batch_size', 'learning_rate',
@@ -205,10 +201,11 @@ def train():
     results_csv_path = os.path.join(experiment_dir, 'results.csv')
     results_yml_path = os.path.join(experiment_dir, 'results.yml')
 
-    for tid, params in enumerate(params_grid):
+    for tid in range(0, n_trials):
 
         learning_rate = learning_rates[tid]
         batch_size = batch_sizes[tid]
+
         print("TRIAL %d // %d" % (tid, n_trials))
         print("batch_size: %d" % batch_size)
         print("learning_rate: %f" % learning_rate)
