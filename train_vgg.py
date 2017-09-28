@@ -15,7 +15,7 @@ from utils.idiap import load_idiap_part
 from utils.experiements import get_experiment_id
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np, von_mises_neg_log_likelihood_keras
 from utils import hyper_tune as ht
-
+from utils.custom_keras_callbacks import ModelCheckpointEveryNBatch
 from keras import backend as K
 
 
@@ -233,13 +233,16 @@ def train():
 
         best_model_weights_file = os.path.join(trial_dir, 'vgg_bit_' + config['loss'] + '_town.best.weights.h5')
 
-        model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
-                                                              monitor='val_loss',
-                                                              mode='min',
-                                                              save_best_only=True,
-                                                              save_weights_only=True,
-                                                              period=1,
-                                                              verbose=1)
+        # model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
+        #                                                       monitor='val_loss',
+        #                                                       mode='min',
+        #                                                       save_best_only=True,
+        #                                                       save_weights_only=True,
+        #                                                       period=1,
+        #                                                       verbose=1)
+
+        model_ckpt_callback = ModelCheckpointEveryNBatch(best_model_weights_file, xval, yval_bit,
+                                                         verbose=1, save_best_only=True, period=50)
 
         vgg_model.model.save_weights(best_model_weights_file)
 

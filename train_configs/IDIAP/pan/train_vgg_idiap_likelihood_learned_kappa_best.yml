@@ -1,0 +1,15 @@
+dataset: IDIAP # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
+net_output: pan # possible choices: pan, tilt, roll
+root_log_dir: 'logs/IDIAP/pan'
+data_path: 'data//IDIAP.pkl'
+loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
+experiment_name: 'vggbit_likelihood'
+canonical_split: True
+predict_kappa: True
+fixed_kappa_value: 10.0
+n_epochs: 50
+random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
+batch_sizes: [128]
+learning_rates: [1.0e-4]
+weight_decay: [0.0, 1.0]
+n_trials: 20
