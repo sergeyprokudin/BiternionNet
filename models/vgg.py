@@ -16,7 +16,8 @@ from scipy.stats import sem
 
 
 def vgg_model(n_outputs=1, final_layer=False, l2_normalize_final=False,
-              image_height=50, image_width=50):
+              image_height=50, image_width=50,
+              conv_dropout_val=0.2, fc_dropout_val=0.5):
 
     model = Sequential()
 
@@ -44,10 +45,10 @@ def vgg_model(n_outputs=1, final_layer=False, l2_normalize_final=False,
     model.add(Conv2D(64, (3, 3), activation=None))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dropout(0.2))
+    model.add(Dropout(conv_dropout_val))
     model.add(Flatten())
     model.add(Dense(512, activation='relu'))
-    model.add(Dropout(0.5))
+    model.add(Dropout(fc_dropout_val))
 
     if final_layer:
         model.add(Dense(n_outputs, activation=None))
@@ -104,19 +105,25 @@ class BiternionVGG:
                  image_width=50,
                  n_channels=3,
                  predict_kappa=False,
-                 fixed_kappa_value=1.0):
+                 fixed_kappa_value=1.0,
+                 conv_dropout_val=0.2,
+                 fc_dropout_val=0.5):
 
         self.image_height = image_height
         self.image_width = image_width
         self.n_channels = n_channels
         self.predict_kappa = predict_kappa
         self.fixed_kappa_value = fixed_kappa_value
+        self.conv_dropout_val = conv_dropout_val
+        self.fc_dropout_val = fc_dropout_val
 
         self.X = Input(shape=[image_height, image_width, 3])
 
         vgg_x = vgg_model(final_layer=False,
                           image_height=self.image_height,
-                          image_width=self.image_width)(self.X)
+                          image_width=self.image_width,
+                          conv_dropout_val=self.conv_dropout_val,
+                          fc_dropout_val=self.fc_dropout_val)(self.X)
 
         self.y_pred = Lambda(lambda x: K.l2_normalize(x, axis=1))(Dense(2)(vgg_x))
 
