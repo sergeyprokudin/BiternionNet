@@ -188,8 +188,8 @@ def train():
         batch_sizes = params_grid[:, 1].astype('int')
 
     else:
-        batch_sizes = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
-        learning_rates = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
+        learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
+        batch_sizes = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
 
     results = dict()
     res_cols = ['trial_id', 'batch_size', 'learning_rate',
