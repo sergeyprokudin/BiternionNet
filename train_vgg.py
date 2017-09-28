@@ -242,7 +242,7 @@ def train():
         #                                                       verbose=1)
 
         model_ckpt_callback = ModelCheckpointEveryNBatch(best_model_weights_file, xval, yval_bit,
-                                                         verbose=1, save_best_only=True, period=50)
+                                                         verbose=1, save_best_only=True, period=20)
 
         vgg_model.model.save_weights(best_model_weights_file)
 
