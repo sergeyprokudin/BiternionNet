@@ -1,12 +1,14 @@
-experiment_name: 'vggbit_cosine'
+dataset: IDIAP
+net_output: pan # possible choices: pan, tilt, roll
 root_log_dir: 'logs/IDIAP/pan'
 data_path: 'data//IDIAP.pkl'
-canonical_split: True
-net_output: pan # possible choices: pan, tilt, roll
 loss: cosine # possible choices : cosine, von_mises, mad, vm_likelihood
+experiment_name: 'vggbit_cosine'
+canonical_split: True
 predict_kappa: False
-fixed_kappa_value: 120.0
+fixed_kappa_value: 10.0
 n_epochs: 20
 batch_sizes: [128]
-learning_rates: [1.0e-1]
-n_trials: 10
+learning_rates: [1.0e-3]
+n_trials: 1
+random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters

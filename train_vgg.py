@@ -18,6 +18,62 @@ from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_n
 from keras import backend as K
 
 
+def load_config(config_path):
+
+    with open(config_path, 'r') as f:
+        config = yaml.load(f)
+
+    return config
+
+def load_dataset(config):
+
+    if config['dataset'] == 'IDIAP':
+
+        (xtr, ytr_rad), (xval, yval_rad), (xte, yte_rad) = load_idiap_part(config['data_path'],
+                                                                           config['net_output'])
+    else:
+
+        raise ValueError("invalid dataset name!")
+
+    ytr_bit = rad2bit(ytr_rad)
+    yval_bit = rad2bit(yval_rad)
+    yte_bit = rad2bit(yte_rad)
+    ytr_deg = np.rad2deg(ytr_rad)
+    yval_deg = np.rad2deg(yval_rad)
+    yte_deg = np.rad2deg(yte_rad)
+
+    return (xtr, ytr_bit, ytr_deg), (xval, yval_bit, yval_deg), (xte, yte_bit, yte_deg)
+
+
+def pick_loss(config):
+
+    if config['loss'] == 'cosine':
+        print("using cosine loss..")
+        loss_te = cosine_loss_tf
+    elif config['loss'] == 'von_mises':
+        print("using von-mises loss..")
+        loss_te = von_mises_loss_tf
+    elif config['loss'] == 'mad':
+        print("using mad loss..")
+        loss_te = mad_loss_tf
+    elif config['loss'] == 'vm_likelihood':
+        print("using likelihood loss..")
+        if config['predict_kappa']:
+            loss_te = von_mises_neg_log_likelihood_keras
+        else:
+
+            def _von_mises_neg_log_likelihood_keras_fixed(y_true, y_pred):
+                mu_pred = y_pred[:, 0:2]
+                kappa_pred = tf.ones([tf.shape(y_pred[:, 2:])[0], 1])*config['fixed_kappa_value']
+                return -K.mean(von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred))
+
+            loss_te = _von_mises_neg_log_likelihood_keras_fixed
+    else:
+        raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
+
+    return loss_te
+
+
 def get_optimizer(optimizer_params):
     if optimizer_params['name'] == 'Adadelta':
         optimizer = keras.optimizers.Adadelta(rho=optimizer_params['rho'],
@@ -63,67 +119,30 @@ def finetune_kappa(x, y_bit, model):
 
 def train():
 
-    exp_id = get_experiment_id()
+    if len(sys.argv) != 2:
+        print("Ivalid number of params! Usage: python train_vgg.py config_path")
 
-    config_path = sys.argv[1]
+    config = load_config(sys.argv[1])
 
-    with open(config_path, 'r') as f:
-        config = yaml.load(f)
     root_log_dir = config['root_log_dir']
 
     if not os.path.exists(root_log_dir):
-        os.mkdir(root_log_dir)
+        os.makedirs(root_log_dir, exist_ok=True)
 
-    experiment_dir = os.path.join(root_log_dir, exp_id)
+    experiment_name = '_'.join([config['experiment_name'], get_experiment_id()])
+
+    experiment_dir = os.path.join(root_log_dir, experiment_name)
+
     os.mkdir(experiment_dir)
 
-    dataset_name = config['dataset']
-    net_output = config['net_output']
-    data_path = config['data_path']
+    (xtr, ytr_bit, ytr_deg), (xval, yval_bit, yval_deg), (xte, yte_bit, yte_deg) = load_dataset(config)
 
-    if dataset_name == 'IDIAP':
-
-        (xtr, ytr_rad), (xval, yval_rad), (xte, yte_rad) = load_idiap_part(data_path,
-                                                                           net_output)
-    else:
-
-        raise ValueError("invalid dataset name!")
+    loss_te = pick_loss(config)
 
     image_height, image_width, n_channels = xtr.shape[1], xtr.shape[2], xtr.shape[3]
 
-    ytr = rad2bit(ytr_rad)
-    yval = rad2bit(yval_rad)
-    yte = rad2bit(yte_rad)
-    ytr_deg = np.rad2deg(ytr_rad)
-    yval_deg = np.rad2deg(yval_rad)
-    yte_deg = np.rad2deg(yte_rad)
-
     predict_kappa = config['predict_kappa']
     fixed_kappa_value = config['fixed_kappa_value']
-
-    if config['loss'] == 'cosine':
-        print("using cosine loss..")
-        loss_te = cosine_loss_tf
-    elif config['loss'] == 'von_mises':
-        print("using von-mises loss..")
-        loss_te = von_mises_loss_tf
-    elif config['loss'] == 'mad':
-        print("using mad loss..")
-        loss_te = mad_loss_tf
-    elif config['loss'] == 'vm_likelihood':
-        print("using likelihood loss..")
-        if predict_kappa:
-            loss_te = von_mises_neg_log_likelihood_keras
-        else:
-
-            def _von_mises_neg_log_likelihood_keras_fixed(y_true, y_pred):
-                mu_pred = y_pred[:, 0:2]
-                kappa_pred = tf.ones([tf.shape(y_pred[:, 2:])[0], 1])*fixed_kappa_value
-                return -K.mean(von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred))
-
-            loss_te = _von_mises_neg_log_likelihood_keras_fixed
-    else:
-        raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
 
     best_trial_id = 0
 
@@ -136,7 +155,6 @@ def train():
     res_cols = ['trial_id', 'batch_size', 'learning_rate', 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
     results_df = pd.DataFrame(columns=res_cols)
     results_csv = os.path.join(experiment_dir, 'results.csv')
-    # for tid in range(0, n_trials):
 
     for tid, params in enumerate(params_grid):
 
@@ -152,7 +170,7 @@ def train():
 
         vgg_model = vgg.BiternionVGG(image_height=image_height,
                                      image_width=image_width,
-                                     n_channels=3,
+                                     n_channels=n_channels,
                                      predict_kappa=predict_kappa,
                                      fixed_kappa_value=fixed_kappa_value)
 
@@ -179,22 +197,23 @@ def train():
 
         vgg_model.model.save_weights(best_model_weights_file)
 
-        vgg_model.model.fit(x=xtr, y=ytr,
+        vgg_model.model.fit(x=xtr, y=ytr_bit,
                             batch_size=batch_size,
                             epochs=config['n_epochs'],
                             verbose=1,
-                            validation_data=(xval, yval),
+                            validation_data=(xval, yval_bit),
                             callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = vgg.BiternionVGG(image_height=image_height,
                                       image_width=image_width,
-                                      n_channels=3,
+                                      n_channels=n_channels,
                                       predict_kappa=predict_kappa,
                                       fixed_kappa_value=fixed_kappa_value)
 
         best_model.model.load_weights(best_model_weights_file)
 
         trial_results = dict()
+
         trial_results['learning_rate'] = float(learning_rate)
         trial_results['batch_size'] = float(batch_size)
         trial_results['ckpt_path'] = best_model_weights_file
@@ -202,6 +221,16 @@ def train():
         trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
         trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
         results[tid] = trial_results
+
+        results_np = np.asarray([tid, batch_size, learning_rate,
+                                 trial_results['validation']['maad_loss'],
+                                 trial_results['validation']['log_likelihood_mean'],
+                                 trial_results['test']['maad_loss'],
+                                 trial_results['test']['log_likelihood_mean']]).reshape([1, 7])
+
+        trial_res_df = pd.DataFrame(results_np, columns=res_cols)
+        results_df = results_df.append(trial_res_df)
+        results_df.to_csv(results_csv)
 
         if tid > 0:
             if trial_results['validation']['log_likelihood_mean'] > \
@@ -214,14 +243,23 @@ def train():
     overall_best_ckpt_path = os.path.join(experiment_dir, 'vgg.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
+    best_model = vgg.BiternionVGG(image_height=image_height,
+                                  image_width=image_width,
+                                  n_channels=n_channels,
+                                  predict_kappa=predict_kappa,
+                                  fixed_kappa_value=fixed_kappa_value)
+
+    best_model.model.load_weights(overall_best_ckpt_path)
+
     print("finetuning kappa values..")
+    best_kappa = fixed_kappa_value
     if not predict_kappa:
-        best_kappa = finetune_kappa(xval, yval)
+        best_kappa = finetune_kappa(xval, yval_bit, best_model)
         print("best kappa: %f" % best_kappa)
 
     best_model = vgg.BiternionVGG(image_height=image_height,
                                   image_width=image_width,
-                                  n_channels=3,
+                                  n_channels=n_channels,
                                   predict_kappa=predict_kappa,
                                   fixed_kappa_value=best_kappa)
 
@@ -240,6 +278,8 @@ def train():
     results_yml_file = os.path.join(experiment_dir, 'results.yml')
     with open(results_yml_file, 'w') as results_yml_file:
         yaml.dump(results, results_yml_file, default_flow_style=False)
+
+    results_df.to_csv(results_csv)
 
     return
 
