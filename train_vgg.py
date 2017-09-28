@@ -121,8 +121,9 @@ def finetune_kappa(x, y_bit, vgg_model):
 def results_to_np(trial_results):
 
     results_np = np.asarray([trial_results['tid'],
-                             trial_results['learning_rate'],
                              trial_results['batch_size'],
+                             trial_results['learning_rate'],
+                             trial_results['weight_decay'],
                              trial_results['train']['maad_loss'],
                              trial_results['train']['maad_loss_sem'],
                              trial_results['train']['log_likelihood_mean'],
@@ -186,13 +187,22 @@ def train():
         params_grid = np.asarray(list(itertools.product(learning_rates, batch_sizes))*n_trials)
         learning_rates = params_grid[:, 0]
         batch_sizes = params_grid[:, 1].astype('int')
+        weight_decays = np.ones(n_trials)*1.0e-4
+        epsilons = np.ones(n_trials)*1.0e-7
+        conv_dropouts = np.random.rand(n_trials)
+        fc_dropouts = np.random.rand(n_trials)
 
     else:
         learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
         batch_sizes = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
+        weight_decays = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
+        epsilons = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
+        conv_dropouts = np.random.rand(n_trials)
+        fc_dropouts = np.random.rand(n_trials)
 
     results = dict()
-    res_cols = ['trial_id', 'batch_size', 'learning_rate',
+    res_cols = ['trial_id', 'batch_size', 'learning_rate', 'weight_decay', 'epsilon',
+                'conv_dropout', 'fc_dropout',
                 'tr_maad_mean', 'tr_maad_sem', 'tr_likelihood', 'tr_likelihood_sem',
                 'val_maad_mean', 'val_maad_sem', 'val_likelihood', 'val_likelihood_sem',
                 'val_maad_mean', 'val_maad_sem', 'val_likelihood', 'val_likelihood_sem']
@@ -205,10 +215,18 @@ def train():
 
         learning_rate = learning_rates[tid]
         batch_size = batch_sizes[tid]
+        weight_decay = weight_decays[tid]
+        epsilon = epsilons[tid]
+        fc_dropout = fc_dropouts[tid]
+        conv_dropout = conv_dropouts[tid]
 
         print("TRIAL %d // %d" % (tid, n_trials))
         print("batch_size: %d" % batch_size)
         print("learning_rate: %f" % learning_rate)
+        print("weight decay: %f" % weight_decay)
+        print("epsilons: %f" % epsilon)
+        print("conv dropout value: %f" % conv_dropout)
+        print("fc dropout value: %f" % fc_dropout)
 
         trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
@@ -219,12 +237,12 @@ def train():
                                      n_channels=n_channels,
                                      predict_kappa=predict_kappa,
                                      fixed_kappa_value=fixed_kappa_value,
-                                     fc_dropout_val=0.5,
-                                     conv_dropout_val=0.2)
+                                     fc_dropout_val=fc_dropout,
+                                     conv_dropout_val=conv_dropout)
 
         optimizer = keras.optimizers.Adam(lr=learning_rate,
-                                          epsilon=1.0e-07,
-                                          decay=0.0)
+                                          epsilon=epsilon,
+                                          decay=weight_decay)
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
@@ -259,7 +277,9 @@ def train():
                                       image_width=image_width,
                                       n_channels=n_channels,
                                       predict_kappa=predict_kappa,
-                                      fixed_kappa_value=fixed_kappa_value)
+                                      fixed_kappa_value=fixed_kappa_value,
+                                      fc_dropout_val=fc_dropout,
+                                      conv_dropout_val=conv_dropout)
 
         best_model.model.load_weights(best_model_weights_file)
 
@@ -267,6 +287,10 @@ def train():
         trial_results['tid'] = tid
         trial_results['learning_rate'] = float(learning_rate)
         trial_results['batch_size'] = float(batch_size)
+        trial_results['weight_decay'] = float(weight_decay)
+        trial_results['epsilon'] = float(epsilon)
+        trial_results['conv_dropout'] = float(conv_dropout)
+        trial_results['fc_dropout'] = float(fc_dropout)
         trial_results['ckpt_path'] = best_model_weights_file
         trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
         trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
@@ -301,7 +325,9 @@ def train():
                                   image_width=image_width,
                                   n_channels=n_channels,
                                   predict_kappa=predict_kappa,
-                                  fixed_kappa_value=fixed_kappa_value)
+                                  fixed_kappa_value=fixed_kappa_value,
+                                  fc_dropout_val=fc_dropouts[best_trial_id],
+                                  conv_dropout_val=conv_dropouts[best_trial_id])
 
     best_model.model.load_weights(overall_best_ckpt_path)
 
@@ -315,7 +341,9 @@ def train():
                                   image_width=image_width,
                                   n_channels=n_channels,
                                   predict_kappa=predict_kappa,
-                                  fixed_kappa_value=best_kappa)
+                                  fixed_kappa_value=best_kappa,
+                                  fc_dropout_val=fc_dropouts[best_trial_id],
+                                  conv_dropout_val=conv_dropouts[best_trial_id])
 
     best_model.model.load_weights(overall_best_ckpt_path)
 
