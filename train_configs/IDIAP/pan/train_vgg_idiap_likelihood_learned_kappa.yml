@@ -1,4 +1,5 @@
-experiment_name: 'vggbit_cosine'
+experiment_name: 'vggbit_likelihood'
+dataset: IDIAP
 root_log_dir: 'logs/IDIAP/pan'
 data_path: 'data//IDIAP.pkl'
 canonical_split: True

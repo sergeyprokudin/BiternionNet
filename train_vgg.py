@@ -6,6 +6,7 @@ import sys
 import yaml
 import shutil
 import itertools
+import pandas as pd
 
 from models import vgg
 from utils.angles import rad2bit
@@ -84,7 +85,6 @@ def train():
 
         (xtr, ytr_rad), (xval, yval_rad), (xte, yte_rad) = load_idiap_part(data_path,
                                                                            net_output)
-
     else:
 
         raise ValueError("invalid dataset name!")
@@ -126,14 +126,22 @@ def train():
         raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
 
     best_trial_id = 0
+
     n_trials = config['n_trials']
-    batch_size = config['batch_size']
-    learning_rate = config['optimizer_params']['learning_rate']
+    batch_sizes = config['batch_sizes']
+    learning_rates = config['learning_rates']
+    params_grid = list(itertools.product(learning_rates, batch_sizes))*n_trials
 
     results = dict()
+    res_cols = ['trial_id', 'batch_size', 'learning_rate', 'val_maad', 'val_likelihood', 'test_maad', 'test_likelihood']
+    results_df = pd.DataFrame(columns=res_cols)
+    results_csv = os.path.join(experiment_dir, 'results.csv')
+    # for tid in range(0, n_trials):
 
-    for tid in range(0, n_trials):
+    for tid, params in enumerate(params_grid):
 
+        learning_rate = params[0]
+        batch_size = params[1]
         print("TRIAL %d // %d" % (tid, n_trials))
         print("batch_size: %d" % batch_size)
         print("learning_rate: %f" % learning_rate)

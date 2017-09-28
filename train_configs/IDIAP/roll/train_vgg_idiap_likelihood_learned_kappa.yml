@@ -1,18 +1,13 @@
-experiment_name: 'vggbit_likelihood_learned_kappa_Adadelta_batch10'
-root_log_dir: 'logs/IDIAP/roll'
-log_to_stdout: True
+experiment_name: 'vggbit_likelihood'
+dataset: IDIAP
+root_log_dir: 'logs/IDIAP/pan'
 data_path: 'data//IDIAP.pkl'
 canonical_split: True
-n_epochs: 20
-batch_size: 64
-net_output: roll # possible choices: degrees, biternion
+net_output: pan # possible choices: pan, tilt, roll
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: True
-fixed_kappa_value: 1.0 #kappa value for vm_likelihood loss in case if it's not predicted by network. Use 0.0 for predicting kappa
-n_trials: 5
-optimizer_params:
-  name: Adam
-  learning_rate: 1.0e-7
-  rho: 0.95
-  epsilon: 1.0e-07
-  decay: 0.0
+fixed_kappa_value: 10.0
+n_epochs: 20
+batch_sizes: [64]
+learning_rates: [1.0e-7]
+n_trials: 10
