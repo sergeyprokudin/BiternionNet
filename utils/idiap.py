@@ -51,6 +51,8 @@ def load_idiap(data_path,
     val_size = int(n_valtest_images * val_split)
     rix = np.random.choice(n_valtest_images, n_valtest_images, replace=False)
 
+    np.random.seed(None)
+
     val_ix = rix[0:val_size]
     te_ix = rix[val_size:]
 
