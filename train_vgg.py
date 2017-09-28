@@ -124,6 +124,9 @@ def results_to_np(trial_results):
                              trial_results['batch_size'],
                              trial_results['learning_rate'],
                              trial_results['weight_decay'],
+                             trial_results['epsilon'],
+                             trial_results['conv_dropout'],
+                             trial_results['fc_dropout'],
                              trial_results['train']['maad_loss'],
                              trial_results['train']['maad_loss_sem'],
                              trial_results['train']['log_likelihood_mean'],
@@ -358,7 +361,7 @@ def train():
     results['best'] = best_results
 
     save_results_yml(results, results_yml_path)
-    results_df.to_csv(results_csv_path)
+    results_df.to_csv(results_csv_path, sep=';')
 
     return
 
