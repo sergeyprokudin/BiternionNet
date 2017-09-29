@@ -98,7 +98,7 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
         self.batches_since_last_save = 0
         self.min_val_loss = float('inf')
         self.n_steps = 0
-        self.log_cols = ['train_step', 'val_loss', 'tr_loss']
+        self.log_cols = ['train_step', 'val_loss', 'batch_loss']
         self.log_df = pd.DataFrame(columns=self.log_cols)
 
     def on_batch_end(self, batch, logs=None):
