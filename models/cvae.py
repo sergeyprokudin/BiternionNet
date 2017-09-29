@@ -41,7 +41,9 @@ class CVAE:
         self.u = Input(shape=[self.n_u])
 
         self.x_vgg = vgg.vgg_model(image_height=self.image_height,
-                                   image_width=self.image_width)(self.x)
+                                   image_width=self.image_width,
+                                   fc_dropout_val=0.0,
+                                   conv_dropout_val=0.0)(self.x)
 
         self.x_vgg_shape = self.x_vgg.get_shape().as_list()[1]
 

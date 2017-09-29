@@ -11,6 +11,7 @@ from models.cvae import CVAE
 from utils.angles import rad2bit
 from utils.idiap import load_idiap_part
 from utils.experiements import get_experiment_id
+from utils.custom_keras_callbacks import ModelCheckpointEveryNBatch
 from utils.custom_keras_callbacks import EvalCVAEModel
 
 
@@ -90,6 +91,13 @@ def main():
                                                               save_weights_only=True,
                                                               period=1,
                                                               verbose=1)
+
+        val_loss_log_path = os.path.join(trial_dir, 'val_loss.csv')
+
+        model_ckpt_callback = ModelCheckpointEveryNBatch(cvae_best_ckpt_path, val_loss_log_path,
+                                                         xval, yval,
+                                                         verbose=1, save_best_only=True,
+                                                         period=config['val_check_period'])
 
         cvae_model = CVAE(image_height=image_height,
                           image_width=image_width,
