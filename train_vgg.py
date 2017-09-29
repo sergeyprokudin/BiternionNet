@@ -204,7 +204,7 @@ def train():
         fc_dropouts = np.ones(n_trials)*config['fc_dropout']
 
     else:
-        learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
+        learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-7, max_factor=0)
         batch_sizes = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
         lr_decays = np.ones(n_trials)*0.0
         epsilons = np.ones(n_trials)*1.0e-7

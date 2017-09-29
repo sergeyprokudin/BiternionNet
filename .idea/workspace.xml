@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml" afterPath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg.py" afterPath="$PROJECT_DIR$/train_vgg.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -31,11 +31,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.5831081">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="train_vgg.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="train_vgg.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_vgg.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="43" column="67" selection-start-line="43" selection-start-column="67" selection-end-line="43" selection-end-column="67" />
+                <state vertical-scroll-proportion="0.67702705">
+                  <caret line="206" column="76" selection-start-line="206" selection-start-column="76" selection-end-line="206" selection-end-column="76" />
                   <folding>
                     <element signature="e#1605#2599#0" expanded="false" />
                     <element signature="e#2643#3306#0" expanded="false" />
@@ -81,10 +81,7 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="-7.1923075">
                   <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-                  <folding>
-                    <marker date="1506688689000" expanded="true" signature="404:407" placeholder="0" />
-                    <marker date="1506688689000" expanded="true" signature="420:423" placeholder="0" />
-                  </folding>
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -119,10 +116,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="caviar.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="caviar.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/utils/caviar.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.5972973">
+                <state vertical-scroll-proportion="0.0">
                   <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
                   <folding />
                 </state>
@@ -303,10 +300,10 @@
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_search_no_drop.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine_best.yml" />
         <option value="$PROJECT_DIR$/utils/caviar.py" />
-        <option value="$PROJECT_DIR$/train_vgg.py" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine.yml" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine_search.yml" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml" />
+        <option value="$PROJECT_DIR$/train_vgg.py" />
       </list>
     </option>
   </component>
@@ -1057,29 +1054,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_search_no_drop.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.1923075">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding>
-            <marker date="1506688689000" expanded="true" signature="404:407" placeholder="0" />
-            <marker date="1506688689000" expanded="true" signature="420:423" placeholder="0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/keras/optimizers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="368" column="8" selection-start-line="368" selection-start-column="8" selection-end-line="368" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/vgg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="138" column="38" selection-start-line="138" selection-start-column="38" selection-end-line="138" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -1116,24 +1094,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_vgg.py">
+    <entry file="file://$PROJECT_DIR$/utils/caviar.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="67" selection-start-line="43" selection-start-column="67" selection-end-line="43" selection-end-column="67" />
+          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_search_no_drop.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.1923075">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/vgg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="138" column="38" selection-start-line="138" selection-start-column="38" selection-end-line="138" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_vgg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.67702705">
+          <caret line="206" column="76" selection-start-line="206" selection-start-column="76" selection-end-line="206" selection-end-column="76" />
           <folding>
             <element signature="e#1605#2599#0" expanded="false" />
             <element signature="e#2643#3306#0" expanded="false" />
             <element signature="e#3345#3787#0" expanded="false" />
             <element signature="e#5776#5900#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/caviar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5972973">
-          <caret line="26" column="0" selection-start-line="26" selection-start-column="0" selection-end-line="26" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
