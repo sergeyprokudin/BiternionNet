@@ -1,6 +1,8 @@
 import keras
 import numpy as np
+import pandas as pd
 import warnings
+
 
 class SideModelCheckpoint(keras.callbacks.Callback):
 
@@ -82,34 +84,44 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
         period: Interval (number of batches) between checkpoints.
     """
 
-    def __init__(self, filepath, xval, yval, verbose=0,
+    def __init__(self, ckpt_path, log_path, xval, yval, verbose=0,
                  save_best_only=False, save_weights_only=False, period=1):
         super(ModelCheckpointEveryNBatch, self).__init__()
         self.xval = xval
         self.yval = yval
         self.verbose = verbose
-        self.filepath = filepath
+        self.ckpt_path = ckpt_path
+        self.log_path = log_path
         self.save_best_only = save_best_only
         self.save_weights_only = save_weights_only
         self.period = period
         self.batches_since_last_save = 0
         self.min_val_loss = float('inf')
+        self.n_steps = 0
+        self.log_cols = ['train_step', 'val_loss', 'tr_loss']
+        self.log_df = pd.DataFrame(columns=self.log_cols)
 
     def on_batch_end(self, batch, logs=None):
         logs = logs or {}
+        self.n_steps += 1
         self.batches_since_last_save += 1
         if self.batches_since_last_save >= self.period:
             self.batches_since_last_save = 0
-            filepath = self.filepath
+            filepath = self.ckpt_path
             if self.save_best_only:
-                current_loss = self.model.evaluate(self.xval, self.yval, verbose=0)
-                if current_loss < self.min_val_loss:
+                curr_batch_loss = logs.get('loss')
+                curr_val_loss = self.model.evaluate(self.xval, self.yval, verbose=0)
+                log_entry_np = np.asarray([self.n_steps, curr_val_loss, curr_batch_loss]).reshape([1, -1])
+                log_entry_df = pd.DataFrame(log_entry_np, columns=self.log_cols)
+                self.log_df = self.log_df.append(log_entry_df)
+                self.log_df.to_csv(self.log_path, sep=';')
+                if curr_val_loss < self.min_val_loss:
                     if self.verbose > 0:
                         print('Batch %05d: val_loss improved from %0.5f to %0.5f,'
                               ' saving model to %s'
                               % (batch, self.min_val_loss,
-                                 current_loss, filepath))
-                    self.min_val_loss = current_loss
+                                 curr_val_loss, filepath))
+                    self.min_val_loss = curr_val_loss
                     if self.save_weights_only:
                         self.model.save_weights(filepath, overwrite=True)
                     else:

@@ -7,6 +7,7 @@ experiment_name: 'vggbit_likelihood'
 canonical_split: True
 predict_kappa: True
 fixed_kappa_value: 10.0
-n_epochs: 10
+n_epochs: 3
+val_check_period: 1
 random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
 n_trials: 100

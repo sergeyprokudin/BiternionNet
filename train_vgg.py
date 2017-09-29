@@ -192,16 +192,19 @@ def train():
         batch_sizes = params_grid[:, 1].astype('int')
         weight_decays = np.ones(n_trials)*1.0e-4
         epsilons = np.ones(n_trials)*1.0e-7
-        conv_dropouts = np.random.rand(n_trials)
-        fc_dropouts = np.random.rand(n_trials)
+        conv_dropouts = np.ones(n_trials)*0.0
+        fc_dropouts = np.ones(n_trials)*0.0
 
     else:
         learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
         batch_sizes = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
         weight_decays = ht.sample_exp_float(n_trials, base=10, min_factor=-3, max_factor=0)
-        epsilons = ht.sample_exp_float(n_trials, base=10, min_factor=-9, max_factor=0)
-        conv_dropouts = np.random.rand(n_trials)
-        fc_dropouts = np.random.rand(n_trials)
+        epsilons = np.ones(n_trials)*1.0e-7
+        conv_dropouts = np.ones(n_trials)*0.0
+        fc_dropouts = np.ones(n_trials)*0.0
+        # epsilons = ht.sample_exp_float(n_trials, base=10, min_factor=-9, max_factor=0)
+        # conv_dropouts = np.random.rand(n_trials)
+        # fc_dropouts = np.random.rand(n_trials)
 
     results = dict()
     res_cols = ['trial_id', 'batch_size', 'learning_rate', 'weight_decay', 'epsilon',
@@ -249,23 +252,28 @@ def train():
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
-        tensorboard_callback = keras.callbacks.TensorBoard(log_dir=trial_dir)
+        tensorboard_callback = keras.callbacks.TensorBoard(log_dir=trial_dir,
+                                                           write_images=True)
 
         train_csv_log = os.path.join(trial_dir, 'train.csv')
         csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
         best_model_weights_file = os.path.join(trial_dir, 'vgg_bit_' + config['loss'] + '_town.best.weights.h5')
 
-        # model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
-        #                                                       monitor='val_loss',
-        #                                                       mode='min',
-        #                                                       save_best_only=True,
-        #                                                       save_weights_only=True,
-        #                                                       period=1,
-        #                                                       verbose=1)
+        model_ckpt_callback = keras.callbacks.ModelCheckpoint(best_model_weights_file,
+                                                              monitor='val_loss',
+                                                              mode='min',
+                                                              save_best_only=True,
+                                                              save_weights_only=True,
+                                                              period=1,
+                                                              verbose=1)
 
-        model_ckpt_callback = ModelCheckpointEveryNBatch(best_model_weights_file, xval, yval_bit,
-                                                         verbose=1, save_best_only=True, period=64)
+        val_loss_log_path = os.path.join(trial_dir, 'val_loss.csv')
+
+        model_ckpt_callback = ModelCheckpointEveryNBatch(best_model_weights_file, val_loss_log_path,
+                                                         xval, yval_bit,
+                                                         verbose=1, save_best_only=True,
+                                                         period=config['val_check_period'])
 
         vgg_model.model.save_weights(best_model_weights_file)
 
