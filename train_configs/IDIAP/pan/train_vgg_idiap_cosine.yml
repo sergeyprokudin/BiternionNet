@@ -9,6 +9,8 @@ predict_kappa: False
 fixed_kappa_value: 100.0
 n_epochs: 5
 val_check_period: 256
+conv_dropout: 0.2
+fc_dropout: 0.5
 random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
 batch_sizes: [128]
 learning_rates: [1.0e-1]
