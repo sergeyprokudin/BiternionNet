@@ -192,16 +192,16 @@ def train():
         batch_sizes = params_grid[:, 1].astype('int')
         weight_decays = np.ones(n_trials)*1.0e-4
         epsilons = np.ones(n_trials)*1.0e-7
-        conv_dropouts = np.ones(n_trials)*0.0
-        fc_dropouts = np.ones(n_trials)*0.0
+        conv_dropouts = np.ones(n_trials)*config['conv_dropout']
+        fc_dropouts = np.ones(n_trials)*config['fc_dropout']
 
     else:
         learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
         batch_sizes = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
         weight_decays = ht.sample_exp_float(n_trials, base=10, min_factor=-3, max_factor=0)
         epsilons = np.ones(n_trials)*1.0e-7
-        conv_dropouts = np.ones(n_trials)*0.0
-        fc_dropouts = np.ones(n_trials)*0.0
+        conv_dropouts = np.ones(n_trials)*config['conv_dropout']
+        fc_dropouts = np.ones(n_trials)*config['fc_dropout']
         # epsilons = ht.sample_exp_float(n_trials, base=10, min_factor=-9, max_factor=0)
         # conv_dropouts = np.random.rand(n_trials)
         # fc_dropouts = np.random.rand(n_trials)
