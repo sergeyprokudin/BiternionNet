@@ -7,7 +7,7 @@ experiment_name: 'vggbit_cosine'
 canonical_split: True
 predict_kappa: False
 fixed_kappa_value: 10.0
-n_epochs: 20
+n_epochs: 50
 val_check_period: 32
 conv_dropout: 0.2
 fc_dropout: 0.5
