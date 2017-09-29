@@ -2,8 +2,8 @@ dataset: CAVIAR-o # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
 net_output: pan # possible choices: pan, tilt, roll
 root_log_dir: 'logs/CAVIAR-o'
 data_path: 'data//CAVIAR-o.pkl.gz'
-loss: cosine # possible choices : cosine, von_mises, mad, vm_likelihood
-experiment_name: 'vggbit_cosine'
+loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
+experiment_name: 'vggbit_likelihood'
 canonical_split: True
 predict_kappa: False
 fixed_kappa_value: 10.0
