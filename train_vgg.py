@@ -331,8 +331,8 @@ def train():
                     best_trial_id = tid
                     print("Better log likelihood achieved, current best trial: %d" % best_trial_id)
             else:
-                if trial_results['validation']['maad'] < \
-                        results[best_trial_id]['validation']['maad']:
+                if trial_results['validation']['maad_loss'] < \
+                        results[best_trial_id]['validation']['maad_loss']:
                     best_trial_id = tid
                     print("Better MAAD achieved, current best trial: %d" % best_trial_id)
 
