@@ -3,7 +3,7 @@ net_output: pan # possible choices: pan, tilt, roll
 root_log_dir: 'logs/IDIAP/pan'
 data_path: 'data//IDIAP.pkl'
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
-experiment_name: 'vggbit_likelihood'
+experiment_name: 'vggbit_likelihood_best'
 canonical_split: True
 predict_kappa: True
 fixed_kappa_value: 10.0
