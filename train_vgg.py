@@ -190,7 +190,7 @@ def train():
         params_grid = np.asarray(list(itertools.product(learning_rates, batch_sizes))*n_trials)
         learning_rates = params_grid[:, 0]
         batch_sizes = params_grid[:, 1].astype('int')
-        weight_decays = np.ones(n_trials)*1.0e-4
+        lr_decays = np.ones(n_trials)*0.0
         epsilons = np.ones(n_trials)*1.0e-7
         conv_dropouts = np.ones(n_trials)*config['conv_dropout']
         fc_dropouts = np.ones(n_trials)*config['fc_dropout']
@@ -198,17 +198,17 @@ def train():
     else:
         learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-10, max_factor=0)
         batch_sizes = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
-        weight_decays = np.ones(n_trials)*1.0e-4
+        lr_decays = np.ones(n_trials)*0.0
         epsilons = np.ones(n_trials)*1.0e-7
         conv_dropouts = np.ones(n_trials)*config['conv_dropout']
         fc_dropouts = np.ones(n_trials)*config['fc_dropout']
-        # weight_decays = ht.sample_exp_float(n_trials, base=10, min_factor=-3, max_factor=0)
+        # lr_decays = ht.sample_exp_float(n_trials, base=10, min_factor=-3, max_factor=0)
         # epsilons = ht.sample_exp_float(n_trials, base=10, min_factor=-9, max_factor=0)
         # conv_dropouts = np.random.rand(n_trials)
         # fc_dropouts = np.random.rand(n_trials)
 
     results = dict()
-    res_cols = ['trial_id', 'batch_size', 'learning_rate', 'weight_decay', 'epsilon',
+    res_cols = ['trial_id', 'batch_size', 'learning_rate', 'lr_decay', 'epsilon',
                 'conv_dropout', 'fc_dropout',
                 'tr_maad_mean', 'tr_maad_sem', 'tr_likelihood', 'tr_likelihood_sem',
                 'val_maad_mean', 'val_maad_sem', 'val_likelihood', 'val_likelihood_sem',
@@ -222,7 +222,7 @@ def train():
 
         learning_rate = learning_rates[tid]
         batch_size = batch_sizes[tid]
-        weight_decay = weight_decays[tid]
+        lr_decay = lr_decays[tid]
         epsilon = epsilons[tid]
         fc_dropout = fc_dropouts[tid]
         conv_dropout = conv_dropouts[tid]
@@ -230,7 +230,7 @@ def train():
         print("TRIAL %d // %d" % (tid, n_trials))
         print("batch_size: %d" % batch_size)
         print("learning_rate: %f" % learning_rate)
-        print("weight decay: %f" % weight_decay)
+        print("weight decay: %f" % lr_decay)
         print("epsilons: %f" % epsilon)
         print("conv dropout value: %f" % conv_dropout)
         print("fc dropout value: %f" % fc_dropout)
@@ -248,7 +248,8 @@ def train():
                                      conv_dropout_val=conv_dropout)
 
         optimizer = keras.optimizers.Adam(lr=learning_rate,
-                                          epsilon=epsilon)
+                                          epsilon=epsilon,
+                                          decay=lr_decay)
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
@@ -298,7 +299,7 @@ def train():
         trial_results['tid'] = tid
         trial_results['learning_rate'] = float(learning_rate)
         trial_results['batch_size'] = float(batch_size)
-        trial_results['weight_decay'] = float(weight_decay)
+        trial_results['lr_decay'] = float(lr_decay)
         trial_results['epsilon'] = float(epsilon)
         trial_results['conv_dropout'] = float(conv_dropout)
         trial_results['fc_dropout'] = float(fc_dropout)
