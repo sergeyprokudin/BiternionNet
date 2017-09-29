@@ -14,4 +14,4 @@ fc_dropout: 0.5
 random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
 batch_sizes: [128]
 learning_rates: [1.0e-1]
-n_trials: 1
+n_trials: 10
