@@ -181,8 +181,6 @@ def train():
 
     (xtr, ytr_bit, ytr_deg), (xval, yval_bit, yval_deg), (xte, yte_bit, yte_deg) = load_dataset(config)
 
-    import ipdb; ipdb.set_trace()
-
     loss_te = pick_loss(config)
 
     image_height, image_width, n_channels = xtr.shape[1], xtr.shape[2], xtr.shape[3]
