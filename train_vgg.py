@@ -255,9 +255,13 @@ def train():
                                      fc_dropout_val=fc_dropout,
                                      conv_dropout_val=conv_dropout)
 
-        optimizer = keras.optimizers.Adam(lr=learning_rate,
-                                          epsilon=epsilon,
-                                          decay=lr_decay)
+        optimizer = keras.optimizers.Adadelta(lr=1.0,
+                                              epsilon=1.0e-7,
+                                              decay=lr_decay)
+        #
+        # optimizer = keras.optimizers.Adam(lr=learning_rate,
+        #                                   epsilon=epsilon,
+        #                                   decay=lr_decay)
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
