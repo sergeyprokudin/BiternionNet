@@ -110,6 +110,7 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
             filepath = self.ckpt_path
             if self.save_best_only:
                 curr_batch_loss = logs.get('loss')
+                import ipdb; ipdb.set_trace()
                 curr_val_loss = self.model.evaluate(self.xval, self.yval, verbose=0)
                 log_entry_np = np.asarray([self.n_steps, curr_val_loss, curr_batch_loss]).reshape([1, -1])
                 log_entry_df = pd.DataFrame(log_entry_np, columns=self.log_cols)
