@@ -220,7 +220,7 @@ def train():
                 'conv_dropout', 'fc_dropout',
                 'tr_maad_mean', 'tr_maad_sem', 'tr_likelihood', 'tr_likelihood_sem',
                 'val_maad_mean', 'val_maad_sem', 'val_likelihood', 'val_likelihood_sem',
-                'val_maad_mean', 'val_maad_sem', 'val_likelihood', 'val_likelihood_sem']
+                'te_maad_mean', 'te_maad_sem', 'te_likelihood', 'te_likelihood_sem']
 
     results_df = pd.DataFrame(columns=res_cols)
     results_csv_path = os.path.join(experiment_dir, 'results.csv')
