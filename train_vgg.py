@@ -290,12 +290,12 @@ def train():
 
         vgg_model.model.save_weights(best_model_weights_file)
 
-        # vgg_model.model.fit(x=xtr, y=ytr_bit,
-        #                     batch_size=batch_size,
-        #                     epochs=config['n_epochs'],
-        #                     verbose=1,
-        #                     validation_data=(xval, yval_bit),
-        #                     callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+        vgg_model.model.fit(x=xtr, y=ytr_bit,
+                            batch_size=batch_size,
+                            epochs=config['n_epochs'],
+                            verbose=1,
+                            validation_data=(xval, yval_bit),
+                            callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
 
         best_model = vgg.BiternionVGG(image_height=image_height,
                                       image_width=image_width,
