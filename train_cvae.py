@@ -92,12 +92,12 @@ def main():
                                                               period=1,
                                                               verbose=1)
 
-        # val_loss_log_path = os.path.join(trial_dir, 'val_loss.csv')
+        val_loss_log_path = os.path.join(trial_dir, 'val_loss.csv')
 
-        # model_ckpt_callback = ModelCheckpointEveryNBatch(cvae_best_ckpt_path, val_loss_log_path,
-        #                                                  xval, yval,
-        #                                                  verbose=1, save_best_only=True,
-        #                                                  period=config['val_check_period'])
+        model_ckpt_callback = ModelCheckpointEveryNBatch(cvae_best_ckpt_path, val_loss_log_path,
+                                                         xval, [xval, yval],
+                                                         verbose=1, save_best_only=True,
+                                                         period=config['val_check_period'])
 
         cvae_model = CVAE(image_height=image_height,
                           image_width=image_width,
