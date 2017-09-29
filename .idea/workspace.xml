@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg.py" afterPath="$PROJECT_DIR$/train_vgg.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine.yml" afterPath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine_search.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -31,11 +33,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.5831081">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="train_vgg.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="train_vgg.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/train_vgg.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.5054054">
-                  <caret line="181" column="103" selection-start-line="181" selection-start-column="103" selection-end-line="181" selection-end-column="103" />
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="195" column="43" selection-start-line="195" selection-start-column="43" selection-end-line="195" selection-end-column="43" />
                   <folding>
                     <element signature="e#1605#2599#0" expanded="false" />
                     <element signature="e#2643#3306#0" expanded="false" />
@@ -56,11 +58,21 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="train_vgg_cavairo_cosine.yml" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine.yml">
+          <file leaf-file-name="train_vgg_cavairo_cosine_search.yml" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine_search.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-10.461538">
-                  <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+                <state vertical-scroll-proportion="-9.153846">
+                  <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="train_vgg_cavairo_likelihood_search.yml" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.33333334">
+                  <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
                   <folding />
                 </state>
               </provider>
@@ -104,16 +116,6 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
                   <caret line="356" column="15" selection-start-line="356" selection-start-column="15" selection-end-line="356" selection-end-column="15" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="custom_keras_callbacks.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/utils/custom_keras_callbacks.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="118" column="40" selection-start-line="118" selection-start-column="40" selection-end-line="118" selection-end-column="40" />
                   <folding />
                 </state>
               </provider>
@@ -256,7 +258,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/utils/losses.py" />
         <option value="$PROJECT_DIR$/train_configs/train_vgg_idiap_likelihood_learned_kappa.yml" />
         <option value="$PROJECT_DIR$/problemA.py" />
         <option value="$PROJECT_DIR$/train_configs/train_vgg_idiap_von_mises.yml" />
@@ -304,9 +305,10 @@
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_search.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_search_no_drop.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_cosine_best.yml" />
-        <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine.yml" />
         <option value="$PROJECT_DIR$/utils/caviar.py" />
         <option value="$PROJECT_DIR$/train_vgg.py" />
+        <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine.yml" />
+        <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine_search.yml" />
       </list>
     </option>
   </component>
@@ -438,6 +440,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="data" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -451,8 +467,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/train_configs/IDIAP/pan" />
       <recent name="$PROJECT_DIR$/train_configs/CAVIAR-o" />
+      <recent name="$PROJECT_DIR$/train_configs/IDIAP/pan" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/train_configs/IDIAP/tilt" />
       <recent name="$PROJECT_DIR$/train_configs/IDIAP/roll" />
@@ -623,7 +639,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22064245" sideWeight="0.4954955" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -632,7 +648,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2195122" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2195122" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22064245" sideWeight="0.5045045" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -710,11 +726,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/data/CAVIARShoppingCenterFullOccl/test/OneShopOneWait2cor0794_4.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/CAVIARShoppingCenterFullOccl/test/OneShopOneWait2cor0589_3.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -1099,24 +1110,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.461538">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_vgg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5054054">
-          <caret line="181" column="103" selection-start-line="181" selection-start-column="103" selection-end-line="181" selection-end-column="103" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="195" column="43" selection-start-line="195" selection-start-column="43" selection-end-line="195" selection-end-column="43" />
           <folding>
             <element signature="e#1605#2599#0" expanded="false" />
             <element signature="e#2643#3306#0" expanded="false" />
             <element signature="e#3345#3787#0" expanded="false" />
             <element signature="e#5776#5900#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine_search.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.153846">
+          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334">
+          <caret line="14" column="12" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
