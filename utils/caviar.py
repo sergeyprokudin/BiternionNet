@@ -8,7 +8,7 @@ def load_caviar(data_path,
                 canonical_split=True,
                 verbose=0):
 
-    (xtr, ytr, *_), (xvalte, yvalte, *_) = pickle.load(gzip.open(data_path, 'rb'))
+    (xtr, ytr_deg, *_), (xvalte, yvalte_deg, *_) = pickle.load(gzip.open(data_path, 'rb'))
 
     # [channels, height, width] -> [height, width, channels]
     xtr = xtr.transpose([0, 2, 3, 1])
@@ -29,9 +29,9 @@ def load_caviar(data_path,
     te_ix = rix[val_size:]
 
     xval = xvalte[val_ix]
-    yval = yvalte[val_ix]
+    yval_deg = yvalte_deg[val_ix]
 
     xte = xvalte[te_ix]
-    yte = yvalte[te_ix]
+    yte_deg = yvalte_deg[te_ix]
 
-    return (xtr, ytr), (xval, yval), (xte, yte)
+    return (xtr, ytr_deg), (xval, yval_deg), (xte, yte_deg)
