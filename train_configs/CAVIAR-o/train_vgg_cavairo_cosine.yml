@@ -1,13 +1,17 @@
-dataset: CAVIAR-o
-experiment_name: 'vggbit_cosine'
-root_log_dir: 'logs/CAVIAR-o'
-data_path: 'data//IDIAP.pkl'
-canonical_split: True
+dataset: CAVIAR-o # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
 net_output: pan # possible choices: pan, tilt, roll
+root_log_dir: 'logs/CAVIAR-o'
+data_path: 'data//CAVIAR-c.pkl.gz'
 loss: cosine # possible choices : cosine, von_mises, mad, vm_likelihood
+experiment_name: 'vggbit_cosine'
+canonical_split: True
 predict_kappa: False
 fixed_kappa_value: 1.0
-n_epochs: 20
+n_epochs: 10
+val_check_period: 128
+conv_dropout: 0.2
+fc_dropout: 0.5
+random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
 batch_sizes: [128]
 learning_rates: [1.0e-1]
 n_trials: 10

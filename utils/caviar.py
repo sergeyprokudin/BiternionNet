@@ -23,13 +23,15 @@ def load_caviar(data_path,
     val_size = int(n_valtest_images * val_split)
     rix = np.random.choice(n_valtest_images, n_valtest_images, replace=False)
 
+    np.random.seed(None)
+
     val_ix = rix[0:val_size]
     te_ix = rix[val_size:]
 
     xval = xvalte[val_ix]
-    pval = yvalte[val_ix]
+    yval = yvalte[val_ix]
 
     xte = xvalte[te_ix]
-    pte = yvalte[te_ix]
+    yte = yvalte[te_ix]
 
-    return
+    return (xtr, ytr), (xval, yval), (xte, yte)
