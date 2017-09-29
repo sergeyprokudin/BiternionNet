@@ -9,7 +9,7 @@ predict_kappa: True
 fixed_kappa_value: 10.0
 n_epochs: 10
 val_check_period: 64
-conv_dropout: 0.2
-fc_dropout: 0.5
+conv_dropout: 0.0
+fc_dropout: 0.0
 random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
 n_trials: 50

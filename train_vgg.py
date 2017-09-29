@@ -248,8 +248,7 @@ def train():
                                      conv_dropout_val=conv_dropout)
 
         optimizer = keras.optimizers.Adam(lr=learning_rate,
-                                          epsilon=epsilon,
-                                          decay=weight_decay)
+                                          epsilon=epsilon)
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
