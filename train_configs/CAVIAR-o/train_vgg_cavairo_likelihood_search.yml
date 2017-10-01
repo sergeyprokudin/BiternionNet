@@ -12,4 +12,4 @@ val_check_period: 32
 conv_dropout: 0.2
 fc_dropout: 0.5
 random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
-n_trials: 20
+n_trials: 50
