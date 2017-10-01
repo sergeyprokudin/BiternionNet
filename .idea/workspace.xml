@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml" afterPath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_vgg.py" afterPath="$PROJECT_DIR$/train_vgg.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -34,8 +35,8 @@
           <file leaf-file-name="train_cvae.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_cvae.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.08108108">
-                  <caret line="135" column="19" selection-start-line="135" selection-start-column="19" selection-end-line="135" selection-end-column="19" />
+                <state vertical-scroll-proportion="0.73513514">
+                  <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -95,11 +96,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="train_vgg.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="train_vgg.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_vgg.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="298" column="0" selection-start-line="298" selection-start-column="0" selection-end-line="298" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.8040541">
+                  <caret line="180" column="0" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
                   <folding>
                     <element signature="e#1605#2599#0" expanded="false" />
                     <element signature="e#2643#3306#0" expanded="false" />
@@ -151,11 +152,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="train_vgg_cavairo_likelihood_search.yml" pinned="false" current-in-tab="true">
+          <file leaf-file-name="train_vgg_cavairo_likelihood_search.yml" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.16666667">
-                  <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+                <state vertical-scroll-proportion="-6.5384617">
+                  <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
                   <folding />
                 </state>
               </provider>
@@ -246,9 +247,9 @@
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine_search.yml" />
         <option value="$PROJECT_DIR$/utils/custom_keras_callbacks.py" />
+        <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml" />
         <option value="$PROJECT_DIR$/train_cvae.py" />
         <option value="$PROJECT_DIR$/train_vgg.py" />
-        <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml" />
       </list>
     </option>
   </component>
@@ -1055,10 +1056,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/train_cvae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.73513514">
+          <caret line="32" column="0" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.5384617">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/train_vgg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="298" column="0" selection-start-line="298" selection-start-column="0" selection-end-line="298" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.8040541">
+          <caret line="180" column="0" selection-start-line="180" selection-start-column="0" selection-end-line="180" selection-end-column="0" />
           <folding>
             <element signature="e#1605#2599#0" expanded="false" />
             <element signature="e#2643#3306#0" expanded="false" />
@@ -1066,22 +1083,6 @@
             <element signature="e#3835#4343#0" expanded="false" />
             <element signature="e#5776#5900#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16666667">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_cvae.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08108108">
-          <caret line="135" column="19" selection-start-line="135" selection-start-column="19" selection-end-line="135" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>

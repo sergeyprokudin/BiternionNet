@@ -166,7 +166,9 @@ def train():
     if len(sys.argv) != 2:
         print("Ivalid number of params! Usage: python train_vgg.py config_path")
 
-    config = load_config(sys.argv[1])
+    config_path = sys.argv[1]
+
+    config = load_config(config_path)
 
     root_log_dir = config['root_log_dir']
 
@@ -176,6 +178,8 @@ def train():
     experiment_name = '_'.join([config['experiment_name'], get_experiment_id()])
 
     experiment_dir = os.path.join(root_log_dir, experiment_name)
+
+    shutil.copy2(config_path, experiment_dir)
 
     os.mkdir(experiment_dir)
 
