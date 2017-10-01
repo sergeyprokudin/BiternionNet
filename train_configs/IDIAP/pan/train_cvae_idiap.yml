@@ -1,6 +1,6 @@
 experiment_name: 'cvae'
 data: IDIAP # IDIAP, TownCentre, CAVIAR-o, CAVIAR-c
-root_log_dir: 'logs/IDIAP/pan/cvae_no_drop'
+root_log_dir: 'logs/IDIAP/pan/cvae'
 data_path: 'data//IDIAP.pkl'
 net_output: pan # possible choices: pan, tilt, roll
 batch_sizes: [16, 64, 128, 256]
