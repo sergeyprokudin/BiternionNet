@@ -179,7 +179,7 @@ def train():
 
     experiment_dir = os.path.join(root_log_dir, experiment_name)
 
-    shutil.copy2(config_path, experiment_dir)
+    shutil.copy2(config_path, os.path.join(experiment_dir, 'config.yml'))
 
     os.mkdir(experiment_dir)
 
