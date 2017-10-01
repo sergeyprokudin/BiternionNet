@@ -98,8 +98,8 @@
           <file leaf-file-name="train_vgg.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_vgg.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.85">
-                  <caret line="182" column="0" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.7810811">
+                  <caret line="179" column="64" selection-start-line="179" selection-start-column="64" selection-end-line="179" selection-end-column="64" />
                   <folding>
                     <element signature="e#1605#2599#0" expanded="false" />
                     <element signature="e#2643#3306#0" expanded="false" />
@@ -107,6 +107,16 @@
                     <element signature="e#3835#4343#0" expanded="false" />
                     <element signature="e#5776#5900#0" expanded="false" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="shutil.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/shutil.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="244" column="4" selection-start-line="244" selection-start-column="4" selection-end-line="244" selection-end-column="4" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -674,11 +684,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/data/IHDPHeadPose/test/MEETING1-l110.jpg">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_deg_vgg_idiap.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1071,10 +1076,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/shutil.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="244" column="4" selection-start-line="244" selection-start-column="4" selection-end-line="244" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/train_vgg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.85">
-          <caret line="182" column="0" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.7810811">
+          <caret line="179" column="64" selection-start-line="179" selection-start-column="64" selection-end-line="179" selection-end-column="64" />
           <folding>
             <element signature="e#1605#2599#0" expanded="false" />
             <element signature="e#2643#3306#0" expanded="false" />
