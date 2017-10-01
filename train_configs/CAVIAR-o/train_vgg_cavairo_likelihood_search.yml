@@ -5,7 +5,7 @@ data_path: 'data//CAVIAR-o.pkl.gz'
 loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
 experiment_name: 'vggbit_likelihood'
 canonical_split: True
-predict_kappa: False
+predict_kappa: True
 fixed_kappa_value: 10.0
 n_epochs: 50
 val_check_period: 32
