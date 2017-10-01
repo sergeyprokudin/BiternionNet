@@ -78,7 +78,7 @@ class CVAE:
 
         self.optimizer = keras.optimizers.Adam(lr=self.learning_rate)
 
-        self.full_model.compile(optimizer='adam', loss=self._cvae_elbo_loss_tf)
+        self.full_model.compile(optimizer=self.optimizer, loss=self._cvae_elbo_loss_tf)
 
         self.decoder_input = concatenate([self.x_vgg, self.u_prior])
 
