@@ -122,7 +122,7 @@ def main():
         val_loss_log_path = os.path.join(trial_dir, 'val_loss.csv')
 
         model_ckpt_callback = ModelCheckpointEveryNBatch(cvae_best_ckpt_path, val_loss_log_path,
-                                                         xval, yval_bit,
+                                                         [xval, yval_bit], yval_bit,
                                                          verbose=1, save_best_only=True,
                                                          period=config['val_check_period'])
 
