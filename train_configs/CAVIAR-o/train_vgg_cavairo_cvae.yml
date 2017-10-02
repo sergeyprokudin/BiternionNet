@@ -4,7 +4,7 @@ root_log_dir: 'logs/CAVIAR-o'
 data_path: 'data//CAVIAR-o.pkl.gz'
 experiment_name: 'vggbit_cvae'
 canonical_split: True
-n_epochs: 50
+n_epochs: 10
 val_check_period: 32
 conv_dropout: 0.2
 fc_dropout: 0.5
