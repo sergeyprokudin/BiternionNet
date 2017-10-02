@@ -11,6 +11,8 @@ import pandas as pd
 from models import vgg
 from utils.angles import rad2bit, deg2bit
 from utils.losses import mad_loss_tf, cosine_loss_tf, von_mises_loss_tf
+from utils.idiap import load_idiap_part
+from utils.caviar import load_caviar
 from utils.experiements import get_experiment_id
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np, von_mises_neg_log_likelihood_keras
 from utils import hyper_tune as ht
@@ -24,6 +26,32 @@ def load_config(config_path):
         config = yaml.load(f)
 
     return config
+
+
+def load_dataset(config):
+
+    if config['dataset'] == 'IDIAP':
+
+        (xtr, ytr_rad), (xval, yval_rad), (xte, yte_rad) = load_idiap_part(config['data_path'],
+                                                                           config['net_output'])
+
+        ytr_deg = np.rad2deg(ytr_rad)
+        yval_deg = np.rad2deg(yval_rad)
+        yte_deg = np.rad2deg(yte_rad)
+
+    elif (config['dataset'] == 'CAVIAR-o') or (config['dataset'] == 'CAVIAR-c'):
+
+        (xtr, ytr_deg), (xval, yval_deg), (xte, yte_deg) = load_caviar(config['data_path'])
+
+    else:
+
+        raise ValueError("invalid dataset name!")
+
+    ytr_bit = deg2bit(ytr_deg)
+    yval_bit = deg2bit(yval_deg)
+    yte_bit = deg2bit(yte_deg)
+
+    return (xtr, ytr_bit, ytr_deg), (xval, yval_bit, yval_deg), (xte, yte_bit, yte_deg)
 
 
 def pick_loss(config):
@@ -133,10 +161,86 @@ def save_results_yml(results, path):
     return
 
 
+def get_trial_params(config):
+
+    n_trials = config['n_trials']
+
+    params = dict()
+    model_type = config['model']
+
+    if not config['random_hyp_search']:
+
+        batch_sizes = config['batch_sizes']
+        learning_rates = config['learning_rates']
+        params_grid = np.asarray(list(itertools.product(learning_rates, batch_sizes))*n_trials)
+        params['learning_rates'] = params_grid[:, 0]
+        params['batch_sizes'] = params_grid[:, 1].astype('int')
+        params['lr_decays'] = np.ones(n_trials)*0.0
+        params['epsilons'] = np.ones(n_trials)*1.0e-7
+        params['conv_dropouts'] = np.ones(n_trials)*config['conv_dropout']
+        params['fc_dropouts'] = np.ones(n_trials)*config['fc_dropout']
+        if model_type == 'cvae':
+            params['n_cvae_hidden_units'] = np.ones(n_trials)*config['n_hidden_units']
+        elif model_type == 'vmmix':
+            params['n_components'] = np.ones(n_trials)*config['n_components']
+
+    else:
+        params['learning_rates'] = ht.sample_exp_float(n_trials, base=10, min_factor=-7, max_factor=0)
+        params['batch_sizes'] = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
+        params['lr_decays'] = np.ones(n_trials)*0.0
+        params['epsilons'] = np.ones(n_trials)*1.0e-8
+        params['conv_dropouts'] = np.ones(n_trials)*config['conv_dropout']
+        params['fc_dropouts'] = np.ones(n_trials)*config['fc_dropout']
+        if model_type == 'cvae':
+            params['n_cvae_hidden_units'] = np.ones(n_trials)*config['n_hidden_units']
+        elif model_type == 'vmmix':
+            params['n_components'] = np.ones(n_trials)*config['n_components']
+    return params
+
+
+def get_res_cols(model_type):
+
+    if model_type == 'bivgg':
+        res_cols = ['trial_id', 'batch_size', 'learning_rate', 'lr_decay', 'epsilon',
+                    'conv_dropout', 'fc_dropout',
+                    'tr_maad_mean', 'tr_maad_sem', 'tr_likelihood', 'tr_likelihood_sem',
+                    'val_maad_mean', 'val_maad_sem', 'val_likelihood', 'val_likelihood_sem',
+                    'te_maad_mean', 'te_maad_sem', 'te_likelihood', 'te_likelihood_sem']
+    elif model_type == 'vm_mixture':
+        res_cols = ['trial_id', 'batch_size', 'learning_rate', 'lr_decay', 'epsilon',
+                    'conv_dropout', 'fc_dropout',
+                    'tr_maad_mean', 'tr_maad_sem', 'tr_likelihood', 'tr_likelihood_sem',
+                    'val_maad_mean', 'val_maad_sem', 'val_likelihood', 'val_likelihood_sem',
+                    'te_maad_mean', 'te_maad_sem', 'te_likelihood', 'te_likelihood_sem']
+    elif model_type == 'cvae':
+        res_cols = ['trial_id', 'batch_size', 'learning_rate',  'n_hidden_units',
+                    'val_maad', 'val_elbo', 'val_importance_likelihood',
+                    'test_maad', 'test_likelihood', 'te_importance_likelihood']
+
+    return res_cols
+
+
+def print_trial_params(config, tid, n_trials, params):
+
+    print("TRIAL %d // %d" % (tid, n_trials))
+    print("batch_size: %d" % params['batch_size'][tid])
+    print("learning_rate: %f" % params['learning_rates'][tid])
+    print("epsilons: %f" % params['epsilons'][tid])
+    print("conv dropout value: %f" % params['conv_dropouts'][tid])
+    print("fc dropout value: %f" % params['fc_dropouts'][tid])
+
+    if config['model'] == 'cvae':
+        print("n_hidden_units: %f" % params['n_hidden_units'][tid])
+    elif config['model'] == 'vm_mixture':
+        print("n_cvae_hidden_units: %f" % params['n_cvae_hidden_units'][tid])
+
+    return
+
+
 def train():
 
     if len(sys.argv) != 2:
-        print("Invalid number of params! Usage: python train_vgg.py config_path")
+        print("Ivalid number of params! Usage: python train_vgg.py config_path")
 
     config_path = sys.argv[1]
 
@@ -159,42 +263,19 @@ def train():
 
     image_height, image_width, n_channels = xtr.shape[1], xtr.shape[2], xtr.shape[3]
 
+    model_type = config['model_type']
+
     predict_kappa = config['predict_kappa']
     fixed_kappa_value = config['fixed_kappa_value']
 
     n_trials = config['n_trials']
     best_trial_id = 0
 
-    if not config['random_hyp_search']:
-
-        batch_sizes = config['batch_sizes']
-        learning_rates = config['learning_rates']
-        params_grid = np.asarray(list(itertools.product(learning_rates, batch_sizes))*n_trials)
-        learning_rates = params_grid[:, 0]
-        batch_sizes = params_grid[:, 1].astype('int')
-        lr_decays = np.ones(n_trials)*0.0
-        epsilons = np.ones(n_trials)*1.0e-7
-        conv_dropouts = np.ones(n_trials)*config['conv_dropout']
-        fc_dropouts = np.ones(n_trials)*config['fc_dropout']
-
-    else:
-        learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-7, max_factor=0)
-        batch_sizes = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=10)
-        lr_decays = np.ones(n_trials)*0.0
-        epsilons = np.ones(n_trials)*1.0e-7
-        conv_dropouts = np.ones(n_trials)*config['conv_dropout']
-        fc_dropouts = np.ones(n_trials)*config['fc_dropout']
-        # lr_decays = ht.sample_exp_float(n_trials, base=10, min_factor=-3, max_factor=0)
-        # epsilons = ht.sample_exp_float(n_trials, base=10, min_factor=-9, max_factor=0)
-        # conv_dropouts = np.random.rand(n_trials)
-        # fc_dropouts = np.random.rand(n_trials)
+    params = get_trial_params(config)
 
     results = dict()
-    res_cols = ['trial_id', 'batch_size', 'learning_rate', 'lr_decay', 'epsilon',
-                'conv_dropout', 'fc_dropout',
-                'tr_maad_mean', 'tr_maad_sem', 'tr_likelihood', 'tr_likelihood_sem',
-                'val_maad_mean', 'val_maad_sem', 'val_likelihood', 'val_likelihood_sem',
-                'te_maad_mean', 'te_maad_sem', 'te_likelihood', 'te_likelihood_sem']
+
+    res_cols = get_res_cols(model_type)
 
     results_df = pd.DataFrame(columns=res_cols)
     results_csv_path = os.path.join(experiment_dir, 'results.csv')
@@ -202,24 +283,22 @@ def train():
 
     for tid in range(0, n_trials):
 
-        learning_rate = learning_rates[tid]
-        batch_size = batch_sizes[tid]
-        lr_decay = lr_decays[tid]
-        epsilon = epsilons[tid]
-        fc_dropout = fc_dropouts[tid]
-        conv_dropout = conv_dropouts[tid]
+        learning_rate = params['learning_rates'][tid]
+        batch_size = params['batch_sizes'][tid]
+        lr_decay = params['lr_decays'][tid]
+        epsilon = params['epsilons'][tid]
+        fc_dropout = params['fc_dropouts'][tid]
+        conv_dropout = params['conv_dropouts'][tid]
+        n_cvae_hidden_units = params['n_hidden_units'][tid]
 
-        print("TRIAL %d // %d" % (tid, n_trials))
-        print("batch_size: %d" % batch_size)
-        print("learning_rate: %f" % learning_rate)
-        print("weight decay: %f" % lr_decay)
-        print("epsilons: %f" % epsilon)
-        print("conv dropout value: %f" % conv_dropout)
-        print("fc dropout value: %f" % fc_dropout)
 
         trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
         print("logs could be found at %s" % trial_dir)
+
+        optimizer = keras.optimizers.Adam(lr=learning_rate,
+                                          epsilon=epsilon,
+                                          decay=lr_decay)
 
         vgg_model = vgg.BiternionVGG(image_height=image_height,
                                      image_width=image_width,
@@ -228,14 +307,6 @@ def train():
                                      fixed_kappa_value=fixed_kappa_value,
                                      fc_dropout_val=fc_dropout,
                                      conv_dropout_val=conv_dropout)
-
-        # optimizer = keras.optimizers.Adadelta(lr=1.0,
-        #                                       epsilon=1.0e-7,
-        #                                       decay=lr_decay)
-
-        optimizer = keras.optimizers.Adam(lr=learning_rate,
-                                          epsilon=epsilon,
-                                          decay=lr_decay)
 
         vgg_model.model.compile(loss=loss_te, optimizer=optimizer)
 
