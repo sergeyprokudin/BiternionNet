@@ -111,26 +111,26 @@ def main():
         train_csv_log = os.path.join(trial_dir, 'train.csv')
         csv_callback = keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False)
 
-        model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
-                                                              monitor='val_loss',
-                                                              mode='min',
-                                                              save_best_only=True,
-                                                              save_weights_only=True,
-                                                              period=1,
-                                                              verbose=1)
+        # model_ckpt_callback = keras.callbacks.ModelCheckpoint(cvae_best_ckpt_path,
+        #                                                       monitor='val_loss',
+        #                                                       mode='min',
+        #                                                       save_best_only=True,
+        #                                                       save_weights_only=True,
+        #                                                       period=1,
+        #                                                       verbose=1)
 
-        # import ipdb; ipdb.set_trace()
+        val_loss_log_path = os.path.join(trial_dir, 'val_loss.csv')
+
+        model_ckpt_callback = ModelCheckpointEveryNBatch(cvae_best_ckpt_path, val_loss_log_path,
+                                                         xval, yval_bit,
+                                                         verbose=1, save_best_only=True,
+                                                         period=config['val_check_period'])
 
         cvae_model = CVAE(image_height=image_height,
                           image_width=image_width,
                           n_channels=3,
                           n_hidden_units=n_hidden_units,
                           learning_rate=learning_rate)
-
-        cvae_bestloglike_ckpt_path = os.path.join(trial_dir, 'cvae.full_model.trial_%d.best_likelihood.weights.hdf5'
-                                                  % tid)
-
-        # eval_callback = EvalCVAEModel(xval, yval_deg, 'validation', cvae_model, cvae_bestloglike_ckpt_path)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=config['n_epochs'],
                                   validation_data=([xval, yval_bit], yval_bit),
