@@ -56,9 +56,11 @@ def main():
 
         batch_sizes = config['batch_sizes']
         learning_rates = config['learning_rates']
-        params_grid = np.asarray(list(itertools.product(learning_rates, batch_sizes))*n_trials)
+        beta1_lst = config['beta1']
+        params_grid = np.asarray(list(itertools.product(learning_rates, batch_sizes, beta1_lst))*n_trials)
         learning_rates = params_grid[:, 0]
         batch_sizes = params_grid[:, 1].astype('int')
+        beta1_lst = params_grid[:, 2]
         lr_decays = np.ones(n_trials)*0.0
         epsilons = np.ones(n_trials)*1.0e-7
         conv_dropouts = np.ones(n_trials)*config['conv_dropout']
@@ -76,7 +78,7 @@ def main():
 
     res_cols = ['trial_id', 'batch_size', 'learning_rate',  'n_hidden_units',
                 'val_maad', 'val_elbo', 'val_importance_likelihood',
-                'test_maad', 'test_likelihood', 'te_importance_likelihood']
+                'test_maad', 'test_elbo', 'te_importance_likelihood']
 
     results_df = pd.DataFrame(columns=res_cols)
     results_csv = os.path.join(experiment_dir, 'results.csv')
@@ -85,6 +87,7 @@ def main():
 
         learning_rate = learning_rates[tid]
         batch_size = batch_sizes[tid]
+        beta1 = beta1_lst[tid]
         lr_decay = lr_decays[tid]
         epsilon = epsilons[tid]
         fc_dropout = fc_dropouts[tid]
@@ -94,6 +97,7 @@ def main():
         print("TRIAL %d // %d" % (tid, n_trials))
         print("batch_size: %d" % batch_size)
         print("learning_rate: %f" % learning_rate)
+        print("beta1: %f" % beta1)
         print("weight decay: %f" % lr_decay)
         print("epsilons: %f" % epsilon)
         print("conv dropout value: %f" % conv_dropout)
@@ -129,6 +133,7 @@ def main():
         cvae_model = CVAE(image_height=image_height,
                           image_width=image_width,
                           n_channels=3,
+                          beta1=beta1,
                           n_hidden_units=n_hidden_units,
                           learning_rate=learning_rate)
 
