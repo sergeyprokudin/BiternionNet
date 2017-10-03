@@ -68,15 +68,16 @@ def main():
         n_hidden_units_lst = np.ones(n_trials, dtype=int)*config['n_hidden_units']
 
     else:
-        learning_rates = np.ones(n_trials)*1.0e-4
-        # learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-7, max_factor=0)
+        # learning_rates = np.ones(n_trials)*1.0e-4
+        learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-5, max_factor=-3)
         batch_sizes = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=8)
         # lr_decays = np.ones(n_trials)*0.0
         beta1_lst = np.random.rand(n_trials)
-        epsilons = np.ones(n_trials)*1.0e-7
-        conv_dropouts = np.ones(n_trials)*config['conv_dropout']
-        fc_dropouts = np.ones(n_trials)*config['fc_dropout']
-        n_hidden_units_lst = np.ones(n_trials, dtype=int)*config['n_hidden_units']
+        epsilons = ht.sample_exp_float(n_trials, base=10, min_factor=-6, max_factor=-8)
+        conv_dropouts = np.random.rand(n_trials)
+        fc_dropouts = np.random.rand(n_trials)
+        n_hidden_units_lst = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=4)
+        # n_hidden_units_lst = np.ones(n_trials, dtype=int)*config['n_hidden_units']
 
     res_cols = ['trial_id', 'batch_size', 'learning_rate',  'n_hidden_units',
                 'val_maad', 'val_elbo', 'val_importance_likelihood',
@@ -137,7 +138,9 @@ def main():
                           n_channels=3,
                           beta1=beta1,
                           n_hidden_units=n_hidden_units,
-                          learning_rate=learning_rate)
+                          learning_rate=learning_rate,
+                          conv_dropout=conv_dropout,
+                          fc_dropout=fc_dropout)
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=config['n_epochs'],
                                   validation_data=([xval, yval_bit], yval_bit),
@@ -180,7 +183,7 @@ def main():
     overall_best_ckpt_path = os.path.join(experiment_dir, 'cvae.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
 
-    best_model_n_hidden_units = params_grid[best_trial_id][2]
+    best_model_n_hidden_units = n_hidden_units_lst[best_trial_id]
 
     best_model = CVAE(image_height=image_height,
                       image_width=image_width,

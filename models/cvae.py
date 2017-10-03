@@ -25,6 +25,8 @@ class CVAE:
                  n_hidden_units=8,
                  learning_rate=1.0e-3,
                  beta1=0.9,
+                 conv_dropout=0.5,
+                 fc_dropout=0.2,
                  kl_weight=1.0):
 
         self.n_u = n_hidden_units
@@ -34,6 +36,8 @@ class CVAE:
         self.phi_shape = 2
         self.learning_rate = learning_rate
         self.beta1 = beta1
+        self.conv_dropout = conv_dropout
+        self.fc_dropout = fc_dropout
         self.kl_weight = kl_weight
 
         self.x = Input(shape=[self.image_height, self.image_width, self.n_channels])
@@ -44,8 +48,8 @@ class CVAE:
 
         self.x_vgg = vgg.vgg_model(image_height=self.image_height,
                                    image_width=self.image_width,
-                                   fc_dropout_val=0.5,
-                                   conv_dropout_val=0.2)(self.x)
+                                   fc_dropout_val=self.fc_dropout,
+                                   conv_dropout_val=self.conv_dropout)(self.x)
 
         self.x_vgg_shape = self.x_vgg.get_shape().as_list()[1]
 
