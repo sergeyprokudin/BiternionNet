@@ -91,7 +91,7 @@ def main():
         learning_rate = learning_rates[tid]
         batch_size = batch_sizes[tid]
         beta1 = beta1_lst[tid]
-        lr_decay = lr_decays[tid]
+        # lr_decay = lr_decays[tid]
         epsilon = epsilons[tid]
         fc_dropout = fc_dropouts[tid]
         conv_dropout = conv_dropouts[tid]
@@ -101,7 +101,7 @@ def main():
         print("batch_size: %d" % batch_size)
         print("learning_rate: %f" % learning_rate)
         print("beta1: %f" % beta1)
-        print("weight decay: %f" % lr_decay)
+        # print("weight decay: %f" % lr_decay)
         print("epsilons: %f" % epsilon)
         print("conv dropout value: %f" % conv_dropout)
         print("fc dropout value: %f" % fc_dropout)
