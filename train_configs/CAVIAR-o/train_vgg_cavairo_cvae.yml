@@ -5,11 +5,12 @@ data_path: 'data//CAVIAR-o.pkl.gz'
 experiment_name: 'vggbit_cvae'
 canonical_split: True
 n_epochs: 50
-val_check_period: 32
+val_check_period: 64
+n_trials: 50
+random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
+n_hidden_units: 8
+batch_sizes: [64]
+learning_rates: [0.0001]
+beta1: [0.0]
 conv_dropout: 0.2
 fc_dropout: 0.5
-n_trials: 20
-n_hidden_units: 8
-random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
-batch_sizes: [4]
-learning_rates: [0.0001]
