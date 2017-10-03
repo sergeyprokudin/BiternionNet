@@ -133,6 +133,10 @@ def main():
                                                          verbose=1, save_best_only=True,
                                                          period=config['val_check_period'])
 
+        early_stop_callback = keras.callbacks.EarlyStopping(monitor='val_loss',
+                                                            min_delta=0, patience=3,
+                                                            verbose=0, mode='auto')
+
         cvae_model = CVAE(image_height=image_height,
                           image_width=image_width,
                           n_channels=3,
@@ -144,7 +148,8 @@ def main():
 
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=config['n_epochs'],
                                   validation_data=([xval, yval_bit], yval_bit),
-                                  callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback])
+                                  callbacks=[tensorboard_callback, csv_callback,
+                                             model_ckpt_callback, early_stop_callback])
 
         best_model = CVAE(image_height=image_height,
                           image_width=image_width,

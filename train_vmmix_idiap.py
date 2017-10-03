@@ -8,67 +8,46 @@ import pandas as pd
 import itertools
 
 from models.vgg_vmmix import BiternionVGGMixture
-from utils.angles import deg2bit, rad2bit, bit2deg
-from utils.idiap import load_idiap
+from utils.load_datasets import load_dataset
 from utils.experiements import get_experiment_id
-from utils.hyper_tune import make_lr_batch_size_grid
+
+
+def load_config(config_path):
+
+    with open(config_path, 'r') as f:
+        config = yaml.load(f)
+
+    return config
 
 
 def main():
 
-    exp_id = get_experiment_id()
+    if len(sys.argv) != 2:
+        print("Invalid number of params! Usage: python train_vgg.py config_path")
 
     config_path = sys.argv[1]
 
-    with open(config_path, 'r') as f:
-        config = yaml.load(f)
+    config = load_config(config_path)
+
     root_log_dir = config['root_log_dir']
 
     if not os.path.exists(root_log_dir):
-        os.mkdir(root_log_dir)
+        os.makedirs(root_log_dir, exist_ok=True)
 
-    experiment_dir = os.path.join(root_log_dir, exp_id)
+    experiment_name = '_'.join([config['experiment_name'], get_experiment_id()])
+
+    experiment_dir = os.path.join(root_log_dir, experiment_name)
+
     os.mkdir(experiment_dir)
 
-    (xtr, ptr_rad, ttr_rad, rtr_rad, names_tr), \
-    (xval, pval_rad, tval_rad, rval_rad, names_val), \
-    (xte, pte_rad, tte_rad, rte_rad, names_te) = load_idiap('data//IDIAP.pkl')
+    (xtr, ytr_bit, ytr_deg), (xval, yval_bit, yval_deg), (xte, yte_bit, yte_deg) = load_dataset(config)
 
-    image_height, image_width = xtr.shape[1], xtr.shape[2]
+    image_height, image_width, n_channels = xtr.shape[1], xtr.shape[2], xtr.shape[3]
 
-    net_output = config['net_output']
+    n_trials = config['n_trials']
+    best_trial_id = 0
 
-    if net_output == 'pan':
-        ytr = rad2bit(ptr_rad)
-        yval = rad2bit(pval_rad)
-        yte = rad2bit(pte_rad)
-        ytr_deg = np.rad2deg(ptr_rad)
-        yval_deg = np.rad2deg(pval_rad)
-        yte_deg = np.rad2deg(pte_rad)
-    elif net_output == 'tilt':
-        ytr = rad2bit(ttr_rad)
-        yval = rad2bit(tval_rad)
-        yte = rad2bit(tte_rad)
-        ytr_deg = np.rad2deg(ttr_rad)
-        yval_deg = np.rad2deg(tval_rad)
-        yte_deg = np.rad2deg(tte_rad)
-    elif net_output == 'roll':
-        ytr = rad2bit(rtr_rad)
-        yval = rad2bit(rval_rad)
-        yte = rad2bit(rte_rad)
-        ytr_deg = np.rad2deg(rtr_rad)
-        yval_deg = np.rad2deg(rval_rad)
-        yte_deg = np.rad2deg(rte_rad)
-    else:
-        raise ValueError("net_output should be 'pan', 'tilt' or 'roll'")
-
-    # xtr, ytr_deg = aug_data(xtr, ytr_deg)
-    # xval, yval_deg = aug_data(xval, yval_deg)
-    # xte, yte_deg = aug_data(xval, yval_deg)
-
-    ytr_bit = deg2bit(ytr_deg)
-    yval_bit = deg2bit(yval_deg)
-    yte_bit = deg2bit(yte_deg)
+    results = dict()
 
     image_height, image_width, n_channels = xtr.shape[1:]
 

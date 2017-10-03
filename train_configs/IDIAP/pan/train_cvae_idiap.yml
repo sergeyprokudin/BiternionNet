@@ -4,7 +4,7 @@ root_log_dir: 'logs/IDIAP'
 data_path: 'data//IDIAP.pkl'
 experiment_name: 'vggbit_cvae'
 canonical_split: True
-n_epochs: 5
+n_epochs: 50
 val_check_period: 64
 n_trials: 50
 random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
