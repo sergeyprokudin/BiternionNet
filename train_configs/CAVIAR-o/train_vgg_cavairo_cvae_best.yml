@@ -1,16 +1,17 @@
-dataset: IDIAP # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
+dataset: CAVIAR-o # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
 net_output: pan # possible choices: pan, tilt, roll
-root_log_dir: 'logs/IDIAP'
-data_path: 'data//IDIAP.pkl'
+root_log_dir: 'logs/CAVIAR-o'
+data_path: 'data//CAVIAR-o.pkl.gz'
 experiment_name: 'vggbit_cvae'
 canonical_split: True
 n_epochs: 100
-val_check_period: 64
-n_trials: 50
+val_check_period: 32
+n_trials: 10
 random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
 n_hidden_units: 8
-batch_sizes: [64]
-learning_rates: [0.0001]
-beta1: [0.0]
+batch_sizes: [23]
+learning_rates: [0.00004]
+beta1: [0.9]
+epsilons: [1.0e-8]
 conv_dropout: 0.2
 fc_dropout: 0.5

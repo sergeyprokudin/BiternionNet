@@ -62,7 +62,7 @@ def main():
         batch_sizes = params_grid[:, 1].astype('int')
         beta1_lst = params_grid[:, 2]
         lr_decays = np.ones(n_trials)*0.0
-        epsilons = np.ones(n_trials)*1.0e-7
+        epsilons = np.ones(n_trials)*config['epsilons']
         conv_dropouts = np.ones(n_trials)*config['conv_dropout']
         fc_dropouts = np.ones(n_trials)*config['fc_dropout']
         n_hidden_units_lst = np.ones(n_trials, dtype=int)*config['n_hidden_units']
@@ -80,6 +80,7 @@ def main():
         # n_hidden_units_lst = np.ones(n_trials, dtype=int)*config['n_hidden_units']
 
     res_cols = ['trial_id', 'batch_size', 'learning_rate',  'n_hidden_units',
+                'beta_1', 'conv_dropout', 'fc_dropout',
                 'val_maad', 'val_elbo', 'val_importance_likelihood',
                 'test_maad', 'test_elbo', 'te_importance_likelihood']
 
@@ -166,6 +167,7 @@ def main():
         results[tid] = trial_results
 
         results_np = np.asarray([tid, batch_size, learning_rate, n_hidden_units,
+                                 beta1, conv_dropout, fc_dropout,
                                  trial_results['validation']['maad_loss'],
                                  trial_results['validation']['elbo'],
                                  trial_results['validation']['importance_log_likelihood'],
