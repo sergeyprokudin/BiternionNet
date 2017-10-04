@@ -6,11 +6,12 @@ experiment_name: 'vggbit_cvae'
 canonical_split: True
 n_epochs: 100
 val_check_period: 64
+patience: 5 # number of epochs with no imrpovement before train will be stopped
 n_trials: 50
 random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
 n_hidden_units: 8
 batch_sizes: [64]
 learning_rates: [0.0001]
-beta1: [0.0]
+beta1: [0.9]
 conv_dropout: 0.2
 fc_dropout: 0.5
