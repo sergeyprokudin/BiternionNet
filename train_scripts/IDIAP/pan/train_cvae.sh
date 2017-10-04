@@ -8,7 +8,6 @@ source "${PROJECT_DIR}/scripts/dbash.sh" || exit 1
 
 CUDNNPATH="/lustre/shared/caffe_shared/cuda_stuff/cudnn-5.1_for_cuda8.0rc"
 CUDAPATH="/lustre/shared/caffe_shared/cuda_stuff/cuda-8.0.27.1_RC"
-
 export PATH=${CUDAPATH}/bin:$PATH
 export CPATH=${CUDAPATH}/include:$CPATH
 export PATH='/lustre/shared/caffe_shared/cuda_stuff/cudnn-5.1_for_cuda8.0rc/bin':$PATH
