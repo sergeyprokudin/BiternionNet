@@ -134,7 +134,7 @@ def main():
                                                          period=config['val_check_period'])
 
         early_stop_callback = keras.callbacks.EarlyStopping(monitor='val_loss',
-                                                            min_delta=0, patience=3,
+                                                            min_delta=0, patience=10,
                                                             verbose=0, mode='auto')
 
         cvae_model = CVAE(image_height=image_height,
@@ -172,7 +172,7 @@ def main():
                                  trial_results['validation']['importance_log_likelihood'],
                                  trial_results['test']['maad_loss'],
                                  trial_results['test']['elbo'],
-                                 trial_results['test']['importance_log_likelihood']]).reshape([1, 10])
+                                 trial_results['test']['importance_log_likelihood']]).reshape([1, 13])
 
         trial_res_df = pd.DataFrame(results_np, columns=res_cols)
         results_df = results_df.append(trial_res_df)

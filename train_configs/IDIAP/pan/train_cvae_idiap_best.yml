@@ -11,7 +11,7 @@ random_hyp_search: False #if True, ignore config params and perform random searc
 n_hidden_units: 2
 batch_sizes: [32]
 epsilons: [1.0e-8]
-learning_rates: [0.0004]
+learning_rates: [0.001]
 beta1: [0.95]
 conv_dropout: 0.2
 fc_dropout: 0.5
