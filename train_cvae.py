@@ -11,7 +11,6 @@ from models.cvae import CVAE
 from utils.load_datasets import load_dataset
 from utils.experiements import get_experiment_id
 from utils.custom_keras_callbacks import ModelCheckpointEveryNBatch
-from utils.custom_keras_callbacks import EvalCVAEModel
 from utils import hyper_tune as ht
 
 
