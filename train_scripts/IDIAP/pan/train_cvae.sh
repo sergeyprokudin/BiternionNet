@@ -17,7 +17,8 @@ export LD_LIBRARY_PATH=${CUDAPATH}/lib64:$LD_LIBRARY_PATH
 export LIBRARY_PATH='/lustre/shared/caffe_shared/cuda_stuff/cudnn-5.1_for_cuda8.0rc/lib64':$LIBRARY_PATH
 export LIBRARY_PATH=${CUDAPATH}/lib64:$LIBRARY_PATH
 
-
 source ${PYENV}/bin/activate
+
+cd ${PROJECT_DIR}
 
 python "${PROJECT_DIR}/train_cvae.py" "${PROJECT_DIR}/train_configs/IDIAP/pan/train_cvae_idiap_best.yml"
