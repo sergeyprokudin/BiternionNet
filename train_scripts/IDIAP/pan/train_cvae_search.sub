@@ -1,5 +1,5 @@
 executable = /bin/bash
-arguments = train_cvae_best.sh
+arguments = train_cvae_search.sh
 error = train_idiap_cvae.job.err
 output = train_idiap_cvae.job.out
 log = train_idiap_cvae.job.log
