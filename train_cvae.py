@@ -134,7 +134,7 @@ def main():
                                                          period=config['val_check_period'])
 
         early_stop_callback = keras.callbacks.EarlyStopping(monitor='val_loss',
-                                                            min_delta=0, patience=10,
+                                                            min_delta=0, patience=5,
                                                             verbose=0, mode='auto')
 
         cvae_model = CVAE(image_height=image_height,
