@@ -10,7 +10,7 @@ n_trials: 10
 random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
 n_hidden_units: 10
 batch_sizes: [23]
-learning_rates: [0.001]
+learning_rates: [0.000036]
 beta1: [0.9]
 epsilons: [1.0e-8]
 conv_dropout: 0.2
