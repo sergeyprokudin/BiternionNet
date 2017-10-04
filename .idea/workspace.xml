@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/pan/train_cvae.sub" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_cosine_loss.sh" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_cosine_loss.sub" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/train.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/pan/train_cvae.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_cosine_loss.sub" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_cosine_loss.sub" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_debug.sh" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_debug.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_likelihood_fixed_kappa.sh" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_likelihood_fixed_kappa.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_likelihood_learned_kappa.sh" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_likelihood_learned_kappa.sh" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/towncentre_train_scripts/train_vgg_von_mises_loss.sh" afterPath="$PROJECT_DIR$/train_scripts/train_vgg_von_mises_loss.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_cvae.py" afterPath="$PROJECT_DIR$/train_cvae.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/IDIAP/pan/train_cvae.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/pan/train_cvae.sh" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -86,7 +75,7 @@
             <entry file="file://$PROJECT_DIR$/train_scripts/IDIAP/pan/train_cvae.sh">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.18304172">
-                  <caret line="8" column="54" selection-start-line="8" selection-start-column="54" selection-end-line="8" selection-end-column="54" />
+                  <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
                   <folding />
                 </state>
               </provider>
@@ -1061,7 +1050,7 @@
     <entry file="file://$PROJECT_DIR$/train_scripts/IDIAP/pan/train_cvae.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.18304172">
-          <caret line="8" column="54" selection-start-line="8" selection-start-column="54" selection-end-line="8" selection-end-column="54" />
+          <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
           <folding />
         </state>
       </provider>
