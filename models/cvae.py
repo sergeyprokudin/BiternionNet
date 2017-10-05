@@ -27,6 +27,8 @@ class CVAE:
                  beta1=0.9,
                  conv_dropout=0.5,
                  fc_dropout=0.2,
+                 vgg_fc_layer_size=512,
+                 cvae_fc_layer_size=512,
                  kl_weight=1.0):
 
         self.n_u = n_hidden_units
@@ -38,6 +40,8 @@ class CVAE:
         self.beta1 = beta1
         self.conv_dropout = conv_dropout
         self.fc_dropout = fc_dropout
+        self.vgg_fc_layer_size = vgg_fc_layer_size
+        self.cvae_fc_layer_size = cvae_fc_layer_size
         self.kl_weight = kl_weight
 
         self.x = Input(shape=[self.image_height, self.image_width, self.n_channels])
@@ -49,7 +53,8 @@ class CVAE:
         self.x_vgg = vgg.vgg_model(image_height=self.image_height,
                                    image_width=self.image_width,
                                    fc_dropout_val=self.fc_dropout,
-                                   conv_dropout_val=self.conv_dropout)(self.x)
+                                   conv_dropout_val=self.conv_dropout,
+                                   fc_layer_size=self.vgg_fc_layer_size)(self.x)
 
         self.x_vgg_shape = self.x_vgg.get_shape().as_list()[1]
 
@@ -108,7 +113,7 @@ class CVAE:
 
     def _prior_mu_log_sigma(self):
 
-        hidden = Dense(512, activation='relu')(self.x_vgg)
+        hidden = Dense(self.cvae_fc_layer_size, activation='relu')(self.x_vgg)
 
         mu_prior = Dense(self.n_u, activation='linear')(hidden)
         log_var_prior = Dense(self.n_u, activation='linear')(hidden)
@@ -122,15 +127,15 @@ class CVAE:
 
     def _decoder_net_seq(self):
         decoder_mu = Sequential()
-        decoder_mu.add(Dense(512, activation='relu',input_shape=[self.x_vgg_shape + self.n_u]))
-        decoder_mu.add(Dense(512, activation='relu', input_shape=[self.n_u]))
+        decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu',input_shape=[self.x_vgg_shape + self.n_u]))
+        decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.n_u]))
         # decoder_mu.add(Dense(512, activation='relu'))
         decoder_mu.add(Dense(2, activation='linear'))
         decoder_mu.add(Lambda(lambda x: K.l2_normalize(x, axis=1)))
 
         decoder_kappa = Sequential()
-        decoder_kappa.add(Dense(512, activation='relu', input_shape=[self.x_vgg_shape + self.n_u]))
-        decoder_kappa.add(Dense(512, activation='relu', input_shape=[self.n_u]))
+        decoder_kappa.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.x_vgg_shape + self.n_u]))
+        decoder_kappa.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.n_u]))
         # decoder_kappa.add(Dense(512, activation='relu'))
         decoder_kappa.add(Dense(1, activation='linear'))
         decoder_kappa.add(Lambda(lambda x: K.abs(x)))

@@ -22,10 +22,48 @@ def load_config(config_path):
     return config
 
 
+def load_hyper_params(n_trials):
+    return
+
+def generate_hyper_params(n_trials):
+
+    hyp_params = dict()
+    hyp_params['learning_rates'] = ht.sample_exp_float(n_trials, base=10, min_factor=-5, max_factor=-3)
+    hyp_params['batch_sizes'] = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=8)
+    hyp_params['beta1_lst'] = np.random.rand(n_trials)
+    hyp_params['beta2_lst'] = np.random.rand(n_trials)
+    hyp_params['epsilons'] = ht.sample_exp_float(n_trials, base=10, min_factor=-6, max_factor=-8)
+    hyp_params['conv_dropouts'] = np.random.rand(n_trials)
+    hyp_params['fc_dropouts'] = np.random.rand(n_trials)
+    hyp_params['n_hidden_units_lst'] = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=4)
+    hyp_params['vgg_fc_layer_sizes'] = ht.sample_exp_int(n_trials, base=2, min_factor=5, max_factor=10)
+    hyp_params['cvae_fc_layer_sizes'] = ht.sample_exp_int(n_trials, base=2, min_factor=5, max_factor=10)
+
+    return hyp_params
+
+
+def print_hyp_params(hyp_params, tid):
+
+    n_trials = len(hyp_params['learning_rates'])
+    print("TRIAL %d // %d" % (tid, n_trials))
+    print("batch_size: %d" % hyp_params['batch_sizes'][tid])
+    print("learning_rate: %f" % hyp_params['batch_sizes'][tid])
+    print("beta1: %f" % hyp_params['batch_sizes'][tid])
+    # print("weight decay: %f" % lr_decay)
+    print("epsilons: %f" % hyp_params['epsilons'][tid])
+    print("conv dropout value: %f" % hyp_params['conv_dropouts'][tid])
+    print("fc dropout value: %f" % hyp_params['fc_dropouts'][tid])
+    print("n_hidden_units: %d" % hyp_params['n_hidden_units_lst'][tid])
+    print("vgg_fc_layer_sizes: %d" % hyp_params['vgg_fc_layer_sizes'][tid])
+    print("cvae_fc_layer_sizes: %d" % hyp_params['cvae_fc_layer_sizes'][tid])
+
+    return
+
+
 def main():
 
     if len(sys.argv) != 2:
-        print("Invalid number of params! Usage: python train_vgg.py config_path")
+        print("Invalid number of params! Usage: python train_cvae.py config_path")
 
     config_path = sys.argv[1]
 
@@ -60,26 +98,20 @@ def main():
         learning_rates = params_grid[:, 0]
         batch_sizes = params_grid[:, 1].astype('int')
         beta1_lst = params_grid[:, 2]
-        lr_decays = np.ones(n_trials)*0.0
         epsilons = np.ones(n_trials)*config['epsilons']
         conv_dropouts = np.ones(n_trials)*config['conv_dropout']
         fc_dropouts = np.ones(n_trials)*config['fc_dropout']
+        #vgg_fc_layer_sizes = np.ones(n_trials)*config['vgg_fc_layer_size']
+        #cvae_fc_layer_sizes = np.ones(n_trials)*config['cvae_fc_layer_size']
+
         n_hidden_units_lst = np.ones(n_trials, dtype=int)*config['n_hidden_units']
 
     else:
-        # learning_rates = np.ones(n_trials)*1.0e-4
-        learning_rates = ht.sample_exp_float(n_trials, base=10, min_factor=-5, max_factor=-3)
-        batch_sizes = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=8)
-        # lr_decays = np.ones(n_trials)*0.0
-        beta1_lst = np.random.rand(n_trials)
-        epsilons = ht.sample_exp_float(n_trials, base=10, min_factor=-6, max_factor=-8)
-        conv_dropouts = np.random.rand(n_trials)
-        fc_dropouts = np.random.rand(n_trials)
-        n_hidden_units_lst = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=4)
-        # n_hidden_units_lst = np.ones(n_trials, dtype=int)*config['n_hidden_units']
+
+        params = generate_hyper_params(n_trials)
 
     res_cols = ['trial_id', 'batch_size', 'learning_rate',  'n_hidden_units',
-                'beta_1', 'conv_dropout', 'fc_dropout',
+                'beta_1', 'conv_dropout', 'fc_dropout', 'vgg_fc_layer_size', 'cvae_fc_layer_size',
                 'val_maad', 'val_elbo', 'val_importance_likelihood',
                 'test_maad', 'test_elbo', 'te_importance_likelihood']
 
@@ -96,16 +128,6 @@ def main():
         fc_dropout = fc_dropouts[tid]
         conv_dropout = conv_dropouts[tid]
         n_hidden_units = n_hidden_units_lst[tid]
-
-        print("TRIAL %d // %d" % (tid, n_trials))
-        print("batch_size: %d" % batch_size)
-        print("learning_rate: %f" % learning_rate)
-        print("beta1: %f" % beta1)
-        # print("weight decay: %f" % lr_decay)
-        print("epsilons: %f" % epsilon)
-        print("conv dropout value: %f" % conv_dropout)
-        print("fc dropout value: %f" % fc_dropout)
-        print("n_hidden_units: %f" % n_hidden_units)
 
         trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
@@ -172,7 +194,7 @@ def main():
                                  trial_results['validation']['importance_log_likelihood'],
                                  trial_results['test']['maad_loss'],
                                  trial_results['test']['elbo'],
-                                 trial_results['test']['importance_log_likelihood']]).reshape([1, 13])
+                                 trial_results['test']['importance_log_likelihood']]).reshape([1, 15])
 
         trial_res_df = pd.DataFrame(results_np, columns=res_cols)
         results_df = results_df.append(trial_res_df)
