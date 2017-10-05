@@ -15,3 +15,5 @@ learning_rates: [0.001]
 beta1: [0.95]
 conv_dropout: 0.2
 fc_dropout: 0.5
+vgg_fc_layer_size: 512
+cvae_fc_layer_size: 512

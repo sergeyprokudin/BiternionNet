@@ -101,8 +101,8 @@ def main():
         epsilons = np.ones(n_trials)*config['epsilons']
         conv_dropouts = np.ones(n_trials)*config['conv_dropout']
         fc_dropouts = np.ones(n_trials)*config['fc_dropout']
-        #vgg_fc_layer_sizes = np.ones(n_trials)*config['vgg_fc_layer_size']
-        #cvae_fc_layer_sizes = np.ones(n_trials)*config['cvae_fc_layer_size']
+        vgg_fc_layer_sizes = np.ones(n_trials)*config['vgg_fc_layer_size']
+        cvae_fc_layer_sizes = np.ones(n_trials)*config['cvae_fc_layer_size']
 
         n_hidden_units_lst = np.ones(n_trials, dtype=int)*config['n_hidden_units']
 
@@ -128,6 +128,8 @@ def main():
         fc_dropout = fc_dropouts[tid]
         conv_dropout = conv_dropouts[tid]
         n_hidden_units = n_hidden_units_lst[tid]
+        vgg_fc_layer_size = vgg_fc_layer_sizes[tid]
+        cvae_fc_layer_size = cvae_fc_layer_sizes[tid]
 
         trial_dir = os.path.join(experiment_dir, str(tid))
         os.mkdir(trial_dir)
@@ -155,9 +157,9 @@ def main():
                                                          verbose=1, save_best_only=True,
                                                          period=config['val_check_period'])
 
-        early_stop_callback = keras.callbacks.EarlyStopping(monitor='val_loss',
-                                                            min_delta=0, patience=config['patience'],
-                                                            verbose=0, mode='auto')
+        # early_stop_callback = keras.callbacks.EarlyStopping(monitor='val_loss',
+        #                                                     min_delta=0, patience=config['patience'],
+        #                                                     verbose=0, mode='auto')
 
         cvae_model = CVAE(image_height=image_height,
                           image_width=image_width,
@@ -171,7 +173,7 @@ def main():
         cvae_model.full_model.fit([xtr, ytr_bit], [ytr_bit], batch_size=batch_size, epochs=config['n_epochs'],
                                   validation_data=([xval, yval_bit], yval_bit),
                                   callbacks=[tensorboard_callback, csv_callback,
-                                             model_ckpt_callback, early_stop_callback])
+                                             model_ckpt_callback])
 
         best_model = CVAE(image_height=image_height,
                           image_width=image_width,
@@ -189,6 +191,7 @@ def main():
 
         results_np = np.asarray([tid, batch_size, learning_rate, n_hidden_units,
                                  beta1, conv_dropout, fc_dropout,
+                                 vgg_fc_layer_size, cvae_fc_layer_size,
                                  trial_results['validation']['maad_loss'],
                                  trial_results['validation']['elbo'],
                                  trial_results['validation']['importance_log_likelihood'],
