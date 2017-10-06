@@ -119,7 +119,7 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
                 self.log_df.to_csv(self.log_path, sep=';')
                 if curr_val_loss < self.min_val_loss:
                     if self.verbose > 0:
-                        print('\nBatch %05d: val_loss improved from %0.5f to %0.5f,'
+                        print('Batch %05d: val_loss improved from %0.5f to %0.5f,'
                               ' saving model to %s'
                               % (batch, self.min_val_loss,
                                  curr_val_loss, filepath))
@@ -131,9 +131,9 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
                     self.n_epochs_no_improvement = 0
                 else:
                     if self.verbose > 0:
-                        print('\nBatch %05d: val_loss did not improve' % batch)
+                        print('Batch %05d: val_loss did not improve' % batch)
                         self.n_epochs_no_improvement += 1
-                        print('\n number of steps with no improvement: %d' % self.n_epochs_no_improvement)
+                        print('number of steps with no improvement: %d' % self.n_epochs_no_improvement)
                         if self.n_epochs_no_improvement > self.patience:
                             self.model.terminate_training = True
             else:
