@@ -33,6 +33,7 @@ class CVAE:
         self.learning_rate = kwargs.get('learning_rate', 1.0e-3)
         self.beta1 = kwargs.get('beta1', 0.9)
         self.beta2 = kwargs.get('beta2', 0.999)
+        self.epsilon = kwargs.get('epsilon', 1.0e-7)
         self.conv_dropout = kwargs.get('conv_dropout', 0.2)
         self.fc_dropout = kwargs.get('fc_dropout', 0.5)
         self.vgg_fc_layer_size = kwargs.get('vgg_fc_layer_size', 512)
@@ -82,7 +83,10 @@ class CVAE:
                                                      self.decoder_mu_seq(self.x_vgg_enc_u),
                                                      self.decoder_kappa_seq(self.x_vgg_enc_u)]))
 
-        self.optimizer = keras.optimizers.Adam(lr=self.learning_rate, beta_1=self.beta1)
+        self.optimizer = keras.optimizers.Adam(lr=self.learning_rate,
+                                               beta_1=self.beta1,
+                                               beta_2=self.beta2,
+                                               epsilon=self.epsilon)
 
         self.full_model.compile(optimizer=self.optimizer, loss=self._cvae_elbo_loss_tf)
 

@@ -68,7 +68,7 @@ def load_towncentre(data_path,
         print("Number of validation samples: %s" % xval.shape[0])
         print("Number of test samples: %s" % xte.shape[0])
 
-    return xtr, ytr, xval, yval, xte, yte
+    return (xtr, ytr), (xval, yval), (xte, yte)
 
 
 def aug_data(x, y_deg, n_times=2, randomize_labels=True):

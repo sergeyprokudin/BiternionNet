@@ -47,10 +47,9 @@ def load_dataset(name, data_path, part=None):
         (xtr, ytr_deg), (xval, yval_deg), (xte, yte_deg) = load_caviar(data_path)
 
     elif name == 'TownCentre':
-        (xtr, ytr_rad), (xval, yval_rad), (xte, yte_rad) = load_towncentre(data_path)
-        ytr_deg = np.rad2deg(ytr_rad)
-        yval_deg = np.rad2deg(yval_rad)
-        yte_deg = np.rad2deg(yte_rad)
+
+        (xtr, ytr_deg), (xval, yval_deg), (xte, yte_deg) = load_towncentre(data_path)
+
     else:
         raise ValueError("invalid dataset name!")
 

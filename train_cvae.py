@@ -29,7 +29,7 @@ def generate_hyper_params(n_trials):
     hyp_params['batch_size'] = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=8)
     hyp_params['beta1'] = np.random.rand(n_trials)
     hyp_params['beta2'] = np.random.rand(n_trials)
-    hyp_params['epsilons'] = ht.sample_exp_float(n_trials, base=10, min_factor=-6, max_factor=-8)
+    hyp_params['epsilon'] = ht.sample_exp_float(n_trials, base=10, min_factor=-6, max_factor=-8)
     hyp_params['conv_dropout'] = np.random.rand(n_trials)
     hyp_params['fc_dropout'] = np.random.rand(n_trials)
     hyp_params['n_hidden_units'] = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=4)
