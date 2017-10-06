@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
-PROJECT_DIR="${SCRIPT_DIR}/../../../"
+PROJECT_DIR="${SCRIPT_DIR}/../../"
 PYENV="${PROJECT_DIR}/py_env"
 
 source "${PROJECT_DIR}/scripts/dbash.sh" || exit 1
