@@ -117,10 +117,10 @@ def define_callbacks(config, trial_dir, ckpt_path, val_data):
     else:
         x = xval
 
-    callbacks.append(keras.callbacks.TensorBoard(log_dir=trial_dir))
+    # callbacks.append(keras.callbacks.TensorBoard(log_dir=trial_dir))
 
     train_csv_log = os.path.join(trial_dir, 'train.csv')
-    callbacks.append(keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False))
+    # callbacks.append(keras.callbacks.CSVLogger(train_csv_log, separator=',', append=False))
 
     val_loss_log_path = os.path.join(trial_dir, 'val_loss.csv')
     callbacks.append(ModelCheckpointEveryNBatch(ckpt_path, val_loss_log_path,
@@ -132,7 +132,7 @@ def define_callbacks(config, trial_dir, ckpt_path, val_data):
                                                    min_delta=0, patience=config['patience'],
                                                    verbose=1, mode='auto'))
 
-    # callbacks.append(keras.callbacks.TerminateOnNaN())
+    callbacks.append(keras.callbacks.TerminateOnNaN())
 
     return callbacks
 

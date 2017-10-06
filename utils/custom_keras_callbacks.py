@@ -111,9 +111,6 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
             if self.save_best_only:
                 curr_batch_loss = logs.get('loss')
                 curr_val_loss = self.model.evaluate(self.xval, self.yval, verbose=0)
-                if np.isnan(curr_val_loss) or np.isinf(curr_val_loss):
-                    print('Batch %d: Invalid loss, terminating training' % (batch))
-                    self.model.stop_training = True
                 log_entry_np = np.asarray([self.n_steps, curr_val_loss, curr_batch_loss]).reshape([1, -1])
                 log_entry_df = pd.DataFrame(log_entry_np, columns=self.log_cols)
                 self.log_df = self.log_df.append(log_entry_df)
