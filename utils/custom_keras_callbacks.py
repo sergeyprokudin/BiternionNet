@@ -132,7 +132,7 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
                 else:
                     self.n_epochs_no_improvement += 1
                     if self.n_epochs_no_improvement > self.patience:
-                            self.model.terminate_training = True
+                        self.model.terminate_training = True
                     if self.verbose > 0:
                         print('Batch %05d: val_loss did not improve' % batch)
                         print('number of steps with no improvement: %d' % self.n_epochs_no_improvement)
