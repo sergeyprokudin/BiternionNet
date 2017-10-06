@@ -44,7 +44,7 @@ class EvalCVAEModel(keras.callbacks.Callback):
         self.max_log_likelihood = float('-inf')
 
     def on_epoch_end(self, epoch, logs=None):
-        results = self.cvae_model.evaluate_multi(self.x, self.y_deg, self.data_title)
+        results = self.cvae_model.evaluate(self.x, self.y_deg, self.data_title)
         if results['importance_log_likelihood'] > self.max_log_likelihood:
             print('max log likelihood improved from %f to %f' % (self.max_log_likelihood,
                                                                  results['importance_log_likelihood']))

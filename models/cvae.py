@@ -22,27 +22,22 @@ class CVAE:
                  image_height=50,
                  image_width=50,
                  n_channels=3,
-                 n_hidden_units=8,
-                 learning_rate=1.0e-3,
-                 beta1=0.9,
-                 conv_dropout=0.5,
-                 fc_dropout=0.2,
-                 vgg_fc_layer_size=512,
-                 cvae_fc_layer_size=512,
-                 kl_weight=1.0):
+                 **kwargs):
 
-        self.n_u = n_hidden_units
         self.image_height = image_height
         self.image_width = image_width
         self.n_channels = n_channels
         self.phi_shape = 2
-        self.learning_rate = learning_rate
-        self.beta1 = beta1
-        self.conv_dropout = conv_dropout
-        self.fc_dropout = fc_dropout
-        self.vgg_fc_layer_size = vgg_fc_layer_size
-        self.cvae_fc_layer_size = cvae_fc_layer_size
-        self.kl_weight = kl_weight
+        self.hyp_params = kwargs
+        self.n_u = kwargs.get('n_hidden_units', 8)
+        self.learning_rate = kwargs.get('learning_rate', 1.0e-3)
+        self.beta1 = kwargs.get('beta1', 0.9)
+        self.beta2 = kwargs.get('beta2', 0.999)
+        self.conv_dropout = kwargs.get('conv_dropout', 0.2)
+        self.fc_dropout = kwargs.get('fc_dropout', 0.5)
+        self.vgg_fc_layer_size = kwargs.get('vgg_fc_layer_size', 512)
+        self.cvae_fc_layer_size = kwargs.get('cvae_fc_layer_size', 512)
+        self.kl_weight = kwargs.get('kl_weight', 1.0)
 
         self.x = Input(shape=[self.image_height, self.image_width, self.n_channels])
 
@@ -177,6 +172,31 @@ class CVAE:
         output['kappa_pred'] = y_pred[:, self.n_u*5+2:]
         return output
 
+    def fit(self, train_data, val_data, n_epochs, batch_size, callbacks):
+
+        xtr, ytr_bit,  = train_data
+        xval, yval_bit = val_data
+
+        self.full_model.fit([xtr, ytr_bit], [ytr_bit],
+                            batch_size=batch_size,
+                            epochs=n_epochs,
+                            validation_data=([xval, yval_bit], yval_bit),
+                            callbacks=callbacks)
+
+        return
+
+    def save_weights(self, ckpt_path):
+
+        self.full_model.save_weights(ckpt_path)
+
+        return
+
+    def load_weights(self, ckpt_path):
+
+        self.full_model.load_weights(ckpt_path)
+
+        return
+
     def generate_multiple_samples(self, x, n_samples=10):
 
         n_points = x.shape[0]
@@ -240,7 +260,7 @@ class CVAE:
 
             return preds
 
-    def evaluate_multi(self, x, ytrue_deg, data_part, n_samples=10, verbose=1):
+    def evaluate(self, x, ytrue_deg, data_part, n_samples=10, verbose=1):
 
         ytrue_bit = deg2bit(ytrue_deg)
 

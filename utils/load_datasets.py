@@ -2,9 +2,10 @@ import numpy as np
 from utils.angles import rad2bit, deg2bit
 from utils.idiap import load_idiap_part
 from utils.caviar import load_caviar
+from utils.towncentre import load_towncentre
 
 
-def load_dataset(config):
+def load_dataset_old(config):
 
     if config['dataset'] == 'IDIAP':
 
@@ -30,7 +31,7 @@ def load_dataset(config):
     return (xtr, ytr_bit, ytr_deg), (xval, yval_bit, yval_deg), (xte, yte_bit, yte_deg)
 
 
-def load_dataset1(name, data_path, part=None):
+def load_dataset(name, data_path, part=None):
 
     if name == 'IDIAP':
 
@@ -45,8 +46,12 @@ def load_dataset1(name, data_path, part=None):
 
         (xtr, ytr_deg), (xval, yval_deg), (xte, yte_deg) = load_caviar(data_path)
 
+    elif name == 'TownCentre':
+        (xtr, ytr_rad), (xval, yval_rad), (xte, yte_rad) = load_towncentre(data_path)
+        ytr_deg = np.rad2deg(ytr_rad)
+        yval_deg = np.rad2deg(yval_rad)
+        yte_deg = np.rad2deg(yte_rad)
     else:
-
         raise ValueError("invalid dataset name!")
 
     ytr_bit = deg2bit(ytr_deg)

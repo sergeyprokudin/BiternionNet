@@ -80,9 +80,9 @@ def main():
                                   callbacks=[tensorboard_callback, csv_callback, model_ckpt_callback,
                                              eval_callback])
 
-        cvae_model.evaluate_multi(xtr, ytr_deg, 'train')
-        cvae_model.evaluate_multi(xval, yval_deg, 'validation')
-        cvae_model.evaluate_multi(xte, yte_deg, 'test')
+        cvae_model.evaluate(xtr, ytr_deg, 'train')
+        cvae_model.evaluate(xval, yval_deg, 'validation')
+        cvae_model.evaluate(xte, yte_deg, 'test')
 
         best_model = CVAE(image_height=image_height,
                           image_width=image_width,
@@ -93,9 +93,9 @@ def main():
 
         trial_results = dict()
         trial_results['ckpt_path'] = cvae_best_ckpt_path
-        trial_results['train'] = best_model.evaluate_multi(xtr, ytr_deg, 'train')
-        trial_results['validation'] = best_model.evaluate_multi(xval, yval_deg, 'validation')
-        trial_results['test'] = best_model.evaluate_multi(xte, yte_deg, 'test')
+        trial_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+        trial_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
+        trial_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
         results[tid] = trial_results
 
         if tid > 0:
@@ -117,9 +117,9 @@ def main():
     best_model.full_model.load_weights(overall_best_ckpt_path)
 
     best_results = dict()
-    best_results['train'] = best_model.evaluate_multi(xtr, ytr_deg, 'train')
-    best_results['validation'] = best_model.evaluate_multi(xval, yval_deg, 'validation')
-    best_results['test'] = best_model.evaluate_multi(xte, yte_deg, 'test')
+    best_results['train'] = best_model.evaluate(xtr, ytr_deg, 'train')
+    best_results['validation'] = best_model.evaluate(xval, yval_deg, 'validation')
+    best_results['test'] = best_model.evaluate(xte, yte_deg, 'test')
 
     results['best'] = best_results
 
