@@ -103,7 +103,6 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
 
     def on_batch_end(self, batch, logs=None):
         logs = logs or {}
-        import ipdb; ipdb.set_trace()
         self.n_steps += 1
         self.batches_since_last_save += 1
         if self.batches_since_last_save >= self.period:
@@ -112,6 +111,7 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
             if self.save_best_only:
                 curr_batch_loss = logs.get('loss')
                 curr_val_loss = self.model.evaluate(self.xval, self.yval, verbose=0)
+                logs['val_loss'] = curr_val_loss
                 log_entry_np = np.asarray([self.n_steps, curr_val_loss, curr_batch_loss]).reshape([1, -1])
                 log_entry_df = pd.DataFrame(log_entry_np, columns=self.log_cols)
                 self.log_df = self.log_df.append(log_entry_df)
