@@ -130,12 +130,13 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
                         self.model.save(filepath, overwrite=True)
                     self.n_epochs_no_improvement = 0
                 else:
+                    self.n_epochs_no_improvement += 1
+                    if self.n_epochs_no_improvement > self.patience:
+                            self.model.terminate_training = True
                     if self.verbose > 0:
                         print('Batch %05d: val_loss did not improve' % batch)
-                        self.n_epochs_no_improvement += 1
                         print('number of steps with no improvement: %d' % self.n_epochs_no_improvement)
-                        if self.n_epochs_no_improvement > self.patience:
-                            self.model.terminate_training = True
+
             else:
                 if self.verbose > 0:
                     print('Batch %05d: saving model to %s' % (batch, filepath))
