@@ -85,7 +85,7 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
     """
 
     def __init__(self, ckpt_path, log_path, xval, yval, verbose=0,
-                 save_best_only=False, save_weights_only=False, period=1):
+                 save_best_only=False, save_weights_only=False, period=1, patience=10):
         super(ModelCheckpointEveryNBatch, self).__init__()
         self.xval = xval
         self.yval = yval
@@ -101,6 +101,7 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
         self.log_cols = ['train_step', 'val_loss', 'batch_loss']
         self.log_df = pd.DataFrame(columns=self.log_cols)
         self.n_epochs_no_improvement = 0
+        self.patience = patience
 
     def on_batch_end(self, batch, logs=None):
         logs = logs or {}
@@ -132,7 +133,9 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
                     if self.verbose > 0:
                         print('/nBatch %05d: val_loss did not improve' % batch)
                         self.n_epochs_no_improvement += 1
-                        print('/n number of steps with no improvement:' % self.n_epochs_no_improvement)
+                        print('/n number of steps with no improvement: %d' % self.n_epochs_no_improvement)
+                        if self.n_epochs_no_improvement > self.patience:
+                            self.model.terminate_training = True
             else:
                 if self.verbose > 0:
                     print('Batch %05d: saving model to %s' % (batch, filepath))
