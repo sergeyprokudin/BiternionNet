@@ -100,6 +100,7 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
         self.n_steps = 0
         self.log_cols = ['train_step', 'val_loss', 'batch_loss']
         self.log_df = pd.DataFrame(columns=self.log_cols)
+        self.n_epochs_no_improvement = 0
 
     def on_batch_end(self, batch, logs=None):
         logs = logs or {}
@@ -111,14 +112,13 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
             if self.save_best_only:
                 curr_batch_loss = logs.get('loss')
                 curr_val_loss = self.model.evaluate(self.xval, self.yval, verbose=0)
-                logs['val_loss'] = curr_val_loss
                 log_entry_np = np.asarray([self.n_steps, curr_val_loss, curr_batch_loss]).reshape([1, -1])
                 log_entry_df = pd.DataFrame(log_entry_np, columns=self.log_cols)
                 self.log_df = self.log_df.append(log_entry_df)
                 self.log_df.to_csv(self.log_path, sep=';')
                 if curr_val_loss < self.min_val_loss:
                     if self.verbose > 0:
-                        print('Batch %05d: val_loss improved from %0.5f to %0.5f,'
+                        print('/nBatch %05d: val_loss improved from %0.5f to %0.5f,'
                               ' saving model to %s'
                               % (batch, self.min_val_loss,
                                  curr_val_loss, filepath))
@@ -127,9 +127,12 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
                         self.model.save_weights(filepath, overwrite=True)
                     else:
                         self.model.save(filepath, overwrite=True)
+                    self.n_epochs_no_improvement = 0
                 else:
                     if self.verbose > 0:
-                        print('Batch %05d: val_loss did not improve' % batch)
+                        print('/nBatch %05d: val_loss did not improve' % batch)
+                        self.n_epochs_no_improvement += 1
+                        print('/n number of steps with no improvement:' % self.n_epochs_no_improvement)
             else:
                 if self.verbose > 0:
                     print('Batch %05d: saving model to %s' % (batch, filepath))

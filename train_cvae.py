@@ -130,10 +130,6 @@ def define_callbacks(config, trial_dir, ckpt_path, val_data):
 
     callbacks.append(keras.callbacks.TerminateOnNaN())
 
-    callbacks.append(keras.callbacks.EarlyStopping(monitor='val_loss',
-                                                   min_delta=0, patience=config['patience'],
-                                                   verbose=1, mode='auto'))
-
     return callbacks
 
 
