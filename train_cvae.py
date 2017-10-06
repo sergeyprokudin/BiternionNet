@@ -204,7 +204,7 @@ def main():
 
         model.load_weights(trial_best_ckpt_path)
 
-        print("/n evaluating model # %d" % tid)
+        print("\n evaluating model # %d" % tid)
         trial_results = evaluate_model(model, eval_data)
 
         results[tid] = trial_results
