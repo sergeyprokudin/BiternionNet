@@ -132,7 +132,7 @@ def define_callbacks(config, trial_dir, ckpt_path, val_data):
                                                    min_delta=0, patience=config['patience'],
                                                    verbose=1, mode='auto'))
 
-    # callbacks.append(keras.callbacks.TerminateOnNaN())
+    callbacks.append(keras.callbacks.TerminateOnNaN())
 
     return callbacks
 
