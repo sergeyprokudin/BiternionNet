@@ -44,7 +44,7 @@ def load_hyper_params(config):
     hyp_params = dict()
     n_trials = config['n_trials']
     hyp_params['learning_rate'] = np.ones(n_trials)*config['learning_rate']
-    hyp_params['batch_size'] = np.ones(n_trials)*config['batch_size']
+    hyp_params['batch_size'] = np.ones(n_trials, dtype=int)*config['batch_size']
     hyp_params['beta1'] = np.ones(n_trials)*config['beta1']
     hyp_params['beta2'] = np.ones(n_trials)*config['beta2']
     hyp_params['epsilons'] = np.ones(n_trials)*config['epsilon']
