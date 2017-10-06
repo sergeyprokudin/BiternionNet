@@ -1,18 +1,21 @@
 dataset: IDIAP # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
-net_output: pan # possible choices: pan, tilt, roll
-root_log_dir: 'logs/IDIAP'
+net_output: pan # make sense for IDIAP only, possible choices: pan, tilt, roll
+root_log_dir: 'logs/IDIAP/pan/cvae'
 data_path: 'data//IDIAP.pkl'
 experiment_name: 'vggbit_cvae'
 canonical_split: True
+model_type: cvae
 n_epochs: 100
-val_check_period: 64
-patience: 5 # number of epochs with no imrpovement before train will be stopped
-n_trials: 50
+val_check_period: 32
+patience: 30
+n_trials: 10
 random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
-n_hidden_units: 8
-batch_sizes: [64]
-learning_rates: [0.0001]
-beta1: [0.9]
+n_hidden_units: 10
+batch_size: 23
+learning_rate: 0.000036
+beta1: 0.9
+beta2: 0.999
+epsilon: 1.0e-8
 conv_dropout: 0.2
 fc_dropout: 0.5
 vgg_fc_layer_size: 512
