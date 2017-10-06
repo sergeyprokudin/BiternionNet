@@ -124,15 +124,15 @@ def define_callbacks(config, trial_dir, ckpt_path, val_data):
 
     val_loss_log_path = os.path.join(trial_dir, 'val_loss.csv')
     callbacks.append(ModelCheckpointEveryNBatch(ckpt_path, val_loss_log_path,
-                                                     x, yval_bit,
-                                                     verbose=1, save_best_only=True,
-                                                     period=config['val_check_period']))
+                                                x, yval_bit,
+                                                verbose=1, save_best_only=True,
+                                                period=config['val_check_period']))
 
     callbacks.append(keras.callbacks.TerminateOnNaN())
 
-    # callbacks.append(keras.callbacks.EarlyStopping(monitor='val_loss',
-    #                                                min_delta=0, patience=config['patience'],
-    #                                                verbose=1, mode='auto'))
+    callbacks.append(keras.callbacks.EarlyStopping(monitor='val_loss',
+                                                   min_delta=0, patience=config['patience'],
+                                                   verbose=1, mode='auto'))
 
     return callbacks
 

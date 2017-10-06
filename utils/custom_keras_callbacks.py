@@ -103,6 +103,7 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
 
     def on_batch_end(self, batch, logs=None):
         logs = logs or {}
+        import ipdb; ipdb.set_trace()
         self.n_steps += 1
         self.batches_since_last_save += 1
         if self.batches_since_last_save >= self.period:
