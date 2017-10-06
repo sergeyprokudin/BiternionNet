@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml" afterPath="$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml" afterPath="$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
@@ -68,8 +69,8 @@
           <file leaf-file-name="train_cvae_idiap.yml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.35614526">
-                  <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+                <state vertical-scroll-proportion="0.21368715">
+                  <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
                   <folding />
                 </state>
               </provider>
@@ -134,8 +135,8 @@
           <file leaf-file-name="train_cvae_towncentre.yml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.2611732">
-                  <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+                <state vertical-scroll-proportion="0.21368715">
+                  <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
                   <folding />
                 </state>
               </provider>
@@ -271,8 +272,8 @@
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
         <option value="$PROJECT_DIR$/train_cvae.py" />
         <option value="$PROJECT_DIR$/utils/custom_keras_callbacks.py" />
-        <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml" />
+        <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml" />
       </list>
     </option>
   </component>
@@ -1162,8 +1163,12 @@
     <entry file="file://$PROJECT_DIR$/train_cvae.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="155" column="89" selection-start-line="155" selection-start-column="89" selection-end-line="155" selection-end-column="89" />
-          <folding />
+          <caret line="207" column="16" selection-start-line="207" selection-start-column="16" selection-end-line="207" selection-end-column="16" />
+          <folding>
+            <element signature="e#2350#2494#0" expanded="false" />
+            <element signature="e#2541#2730#0" expanded="false" />
+            <element signature="e#3115#3380#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1183,18 +1188,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml">
+    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35614526">
-          <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.21368715">
+          <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml">
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2611732">
-          <caret line="11" column="24" selection-start-line="11" selection-start-column="24" selection-end-line="11" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.21368715">
+          <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
           <folding />
         </state>
       </provider>
