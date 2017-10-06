@@ -7,7 +7,7 @@ canonical_split: True
 model_type: cvae
 n_epochs: 3
 val_check_period: 128
-patience: 30
+patience: 100
 n_trials: 2
 random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
 n_hidden_units: 10
