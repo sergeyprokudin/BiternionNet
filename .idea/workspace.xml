@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_cvae.py" afterPath="$PROJECT_DIR$/train_cvae.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/custom_keras_callbacks.py" afterPath="$PROJECT_DIR$/utils/custom_keras_callbacks.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -32,11 +31,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.53513515">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="train_cvae.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="train_cvae.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_cvae.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="125" column="41" selection-start-line="125" selection-start-column="41" selection-end-line="125" selection-end-column="41" />
+                <state vertical-scroll-proportion="0.4541779">
+                  <caret line="131" column="38" selection-start-line="131" selection-start-column="38" selection-end-line="131" selection-end-column="38" />
                   <folding>
                     <element signature="e#2350#2494#0" expanded="false" />
                     <element signature="e#2541#2730#0" expanded="false" />
@@ -47,10 +46,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="custom_keras_callbacks.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="custom_keras_callbacks.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/utils/custom_keras_callbacks.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.56469005">
+                <state vertical-scroll-proportion="0.0">
                   <caret line="114" column="39" selection-start-line="114" selection-start-column="39" selection-end-line="114" selection-end-column="39" />
                   <folding />
                 </state>
@@ -293,8 +292,8 @@
         <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_cvae_search.sh" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml" />
-        <option value="$PROJECT_DIR$/train_cvae.py" />
         <option value="$PROJECT_DIR$/utils/custom_keras_callbacks.py" />
+        <option value="$PROJECT_DIR$/train_cvae.py" />
       </list>
     </option>
   </component>
@@ -1205,24 +1204,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_cvae.py">
+    <entry file="file://$PROJECT_DIR$/utils/custom_keras_callbacks.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="125" column="41" selection-start-line="125" selection-start-column="41" selection-end-line="125" selection-end-column="41" />
+          <caret line="114" column="39" selection-start-line="114" selection-start-column="39" selection-end-line="114" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_cvae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4541779">
+          <caret line="131" column="38" selection-start-line="131" selection-start-column="38" selection-end-line="131" selection-end-column="38" />
           <folding>
             <element signature="e#2350#2494#0" expanded="false" />
             <element signature="e#2541#2730#0" expanded="false" />
             <element signature="e#2771#3055#0" expanded="false" />
             <element signature="e#3115#3380#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/custom_keras_callbacks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56469005">
-          <caret line="114" column="39" selection-start-line="114" selection-start-column="39" selection-end-line="114" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
