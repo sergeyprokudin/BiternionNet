@@ -219,7 +219,7 @@ class BiternionVGG:
 
         results['maad_loss'] = float(np.mean(loss))
         results['maad_loss_sem'] = float(sem(loss))
-        print("MAAD error (%s) : %f ± %fSEM" % (data_part,
+        print("MAAD error (%s) : %f pm %fSEM" % (data_part,
                                                 results['maad_loss'],
                                                 results['maad_loss_sem']))
 
