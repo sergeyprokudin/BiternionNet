@@ -11,7 +11,9 @@ from keras.models import Model
 from keras.layers.merge import concatenate
 
 from utils.angles import deg2bit, bit2deg
-from utils.losses import maad_from_deg, von_mises_log_likelihood_np
+from utils.losses import mad_loss_tf, cosine_loss_tf, von_mises_loss_tf, von_mises_log_likelihood_tf
+from utils.losses import von_mises_log_likelihood_np, von_mises_neg_log_likelihood_keras
+from utils.losses import maad_from_deg
 from scipy.stats import sem
 
 
@@ -104,26 +106,36 @@ class BiternionVGG:
                  image_height=50,
                  image_width=50,
                  n_channels=3,
+                 loss_type='cosine',
                  predict_kappa=False,
                  fixed_kappa_value=1.0,
-                 conv_dropout_val=0.2,
-                 fc_dropout_val=0.5):
+                 **kwargs):
 
         self.image_height = image_height
         self.image_width = image_width
         self.n_channels = n_channels
         self.predict_kappa = predict_kappa
         self.fixed_kappa_value = fixed_kappa_value
-        self.conv_dropout_val = conv_dropout_val
-        self.fc_dropout_val = fc_dropout_val
+        self.hyp_params = kwargs
+        self.n_u = kwargs.get('n_hidden_units', 8)
+        self.learning_rate = kwargs.get('learning_rate', 1.0e-3)
+        self.beta1 = kwargs.get('beta1', 0.9)
+        self.beta2 = kwargs.get('beta2', 0.999)
+        self.epsilon = kwargs.get('epsilon', 1.0e-7)
+        self.conv_dropout = kwargs.get('conv_dropout', 0.2)
+        self.fc_dropout = kwargs.get('fc_dropout', 0.5)
+        self.vgg_fc_layer_size = kwargs.get('vgg_fc_layer_size', 512)
+        self.loss_type = loss_type
+        self.loss = self._pick_loss()
 
         self.X = Input(shape=[image_height, image_width, 3])
 
         vgg_x = vgg_model(final_layer=False,
                           image_height=self.image_height,
                           image_width=self.image_width,
-                          conv_dropout_val=self.conv_dropout_val,
-                          fc_dropout_val=self.fc_dropout_val)(self.X)
+                          conv_dropout_val=self.conv_dropout,
+                          fc_dropout_val=self.fc_dropout,
+                          fc_layer_size=self.vgg_fc_layer_size)(self.X)
 
         self.y_pred = Lambda(lambda x: K.l2_normalize(x, axis=1))(Dense(2)(vgg_x))
 
@@ -132,6 +144,62 @@ class BiternionVGG:
             self.model = Model(self.X, concatenate([self.y_pred, self.kappa_pred]))
         else:
             self.model = Model(self.X, self.y_pred)
+
+        self.optimizer = keras.optimizers.Adam(lr=self.learning_rate,
+                                               beta_1=self.beta1,
+                                               beta_2=self.beta2,
+                                               epsilon=self.epsilon)
+
+        self.model.compile(optimizer=self.optimizer, loss=self.loss)
+
+    def _pick_loss(self):
+
+        if self.loss_type == 'cosine':
+            print("using cosine loss..")
+            loss = cosine_loss_tf
+        elif self.loss_type == 'von_mises':
+            print("using von-mises loss..")
+            loss = von_mises_loss_tf
+        elif self.loss_type == 'mad':
+            print("using mad loss..")
+            loss = mad_loss_tf
+        elif self.loss_type == 'vm_likelihood':
+            print("using likelihood loss..")
+            if self.predict_kappa:
+                loss = von_mises_neg_log_likelihood_keras
+            else:
+
+                def _von_mises_neg_log_likelihood_keras_fixed(y_true, y_pred):
+                    mu_pred = y_pred[:, 0:2]
+                    kappa_pred = tf.ones([tf.shape(y_pred[:, 2:])[0], 1])*self.fixed_kappa_value
+                    return -K.mean(von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred))
+
+                loss = _von_mises_neg_log_likelihood_keras_fixed
+        else:
+            raise ValueError("loss should be 'mad','cosine','von_mises' or 'vm_likelihood'")
+
+        return loss
+
+    def fit(self, train_data, val_data, n_epochs, batch_size, callbacks=None):
+
+        xtr, ytr_bit,  = train_data
+        xval, yval_bit = val_data
+
+        self.model.fit(xtr, ytr_bit,
+                       batch_size=batch_size,
+                       epochs=n_epochs,
+                       validation_data=(xval, yval_bit),
+                       callbacks=callbacks)
+
+        return
+
+    def save_weights(self, path):
+
+        self.model.save_weights(path)
+
+    def load_weights(self, path):
+
+        self.model.load_weights(path)
 
     def evaluate(self, x, ytrue_deg, data_part):
 

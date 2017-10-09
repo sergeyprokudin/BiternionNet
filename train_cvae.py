@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import keras
 
+from models import vgg
 from models.cvae import CVAE
 from utils.load_datasets import load_dataset
 from utils.experiements import get_experiment_id
@@ -144,6 +145,8 @@ def main():
 
     root_log_dir = config['root_log_dir']
 
+    model_type = config['model_type']
+
     if not os.path.exists(root_log_dir):
         os.makedirs(root_log_dir, exist_ok=True)
 
@@ -190,10 +193,22 @@ def main():
                                            ckpt_path=trial_best_ckpt_path,
                                            val_data=[xval, yval_bit])
 
-        model = CVAE(image_height=image_height,
-                     image_width=image_width,
-                     n_channels=3,
-                     **trial_hyp_params)
+        if model_type == "cvae":
+
+            model = CVAE(image_height=image_height,
+                         image_width=image_width,
+                         n_channels=3,
+                         **trial_hyp_params)
+
+        elif model_type == 'bivgg':
+
+            model = vgg.BiternionVGG(image_height=image_height,
+                                     image_width=image_width,
+                                     n_channels=3,
+                                     loss_type=config['loss_type'],
+                                     predict_kappa=False,
+                                     fixed_kappa_value=config['fixed_kappa_value'],
+                                     **trial_hyp_params)
 
         model.save_weights(trial_best_ckpt_path)
 
