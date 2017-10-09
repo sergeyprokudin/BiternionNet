@@ -1,6 +1,6 @@
 dataset: IDIAP # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
 net_output: pan # make sense for IDIAP only, possible choices: pan, tilt, roll
-root_log_dir: 'logs/IDIAP/pan/cvae'
+root_log_dir: 'logs/IDIAP/pan/bivgg_learned_kappa'
 data_path: 'data//IDIAP.pkl'
 experiment_name: 'vggbit_leaarned_kappa'
 canonical_split: True
@@ -8,7 +8,7 @@ model_type: bivgg # bivgg, cvae
 loss_type: vm_likelihood # (bivgg only) possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: True # valid for bivgg+vm_likelihood loss only
 fixed_kappa_value: 10
-n_epochs: 1
+n_epochs: 10
 val_check_period: 32 #32
 patience: 50
 n_trials: 50
