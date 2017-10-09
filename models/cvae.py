@@ -303,7 +303,7 @@ class CVAE:
 
             print("ELBO (%s) : %f pm %fSEM" % (data_part, results['elbo'], results['elbo_sem']))
 
-            print("Approx Log-Likelihood, importance sampling (%s) : %f ± %fSEM" %
+            print("Approx Log-Likelihood, importance sampling (%s) : %f pm %fSEM" %
                   (data_part, results['importance_log_likelihood'], results['importance_log_likelihood_sem']))
 
             print("KL-div (%s) : %f pm%fSEM" % (data_part, results['kl_div'], results['kl_div_sem']))
