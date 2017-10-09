@@ -20,4 +20,4 @@ source ${PYENV}/bin/activate
 
 cd ${PROJECT_DIR}
 
-python "${PROJECT_DIR}/train.py" "${PROJECT_DIR}/train_configs/IDIAP/pan/train_cvae_idiap_best.yml"
+python "${PROJECT_DIR}/train.py" "${PROJECT_DIR}/train_configs/IDIAP/pan/train_bivgg_learned_kappa_idiap.yml"
