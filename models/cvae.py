@@ -299,13 +299,13 @@ class CVAE:
 
         if verbose:
 
-            print("MAAD error (%s) : %f ± %fSEM" % (data_part, results['maad_loss'], results['maad_loss_sem']))
+            print("MAAD error (%s) : %f pm %fSEM" % (data_part, results['maad_loss'], results['maad_loss_sem']))
 
-            print("ELBO (%s) : %f ± %fSEM" % (data_part, results['elbo'], results['elbo_sem']))
+            print("ELBO (%s) : %f pm %fSEM" % (data_part, results['elbo'], results['elbo_sem']))
 
             print("Approx Log-Likelihood, importance sampling (%s) : %f ± %fSEM" %
                   (data_part, results['importance_log_likelihood'], results['importance_log_likelihood_sem']))
 
-            print("KL-div (%s) : %f ± %fSEM" % (data_part, results['kl_div'], results['kl_div_sem']))
+            print("KL-div (%s) : %f pm%fSEM" % (data_part, results['kl_div'], results['kl_div_sem']))
 
         return results

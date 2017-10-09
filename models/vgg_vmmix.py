@@ -188,10 +188,10 @@ class BiternionVGGMixture:
         results['log_likelihood_mean'] = float(np.mean(log_likelihoods))
         results['log_likelihood_sem'] = float(sem(log_likelihoods, axis=None))
 
-        print("MAAD error (%s) : %f ± %fSEM" % (data_part,
+        print("MAAD error (%s) : %f pm %fSEM" % (data_part,
                                                 results['maad_loss'],
                                                 results['maad_sem']))
-        print("log-likelihood (%s) : %f ± %fSEM" % (data_part,
+        print("log-likelihood (%s) : %f pm %fSEM" % (data_part,
                                                     results['log_likelihood_mean'],
                                                     results['log_likelihood_sem']))
 

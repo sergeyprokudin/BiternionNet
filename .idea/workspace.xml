@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml" afterPath="$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/cvae.py" afterPath="$PROJECT_DIR$/models/cvae.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/vgg.py" afterPath="$PROJECT_DIR$/models/vgg.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/vgg_vmmix.py" afterPath="$PROJECT_DIR$/models/vgg_vmmix.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -55,21 +57,21 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="vgg.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="vgg.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/models/vgg.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
-                  <caret line="33" column="3" selection-start-line="33" selection-start-column="3" selection-end-line="33" selection-end-column="3" />
+                <state vertical-scroll-proportion="0.61051214">
+                  <caret line="159" column="0" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="train_cvae_idiap.yml" pinned="false" current-in-tab="true">
+          <file leaf-file-name="train_cvae_idiap.yml" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.18994413">
-                  <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+                <state vertical-scroll-proportion="-7.8461537">
+                  <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
                   <folding />
                 </state>
               </provider>
@@ -141,10 +143,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="train_cvae_towncentre.yml" pinned="false" current-in-tab="true">
+          <file leaf-file-name="train_cvae_towncentre.yml" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.35614526">
+                <state vertical-scroll-proportion="-9.807693">
                   <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
                   <folding />
                 </state>
@@ -185,7 +187,7 @@
             <entry file="file://$PROJECT_DIR$/models/cvae.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state vertical-scroll-proportion="0.0">
-                  <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+                  <caret line="305" column="21" selection-start-line="305" selection-start-column="21" selection-end-line="305" selection-end-column="21" />
                   <folding>
                     <element signature="e#4726#5045#0" expanded="false" />
                     <element signature="e#5091#5335#0" expanded="false" />
@@ -199,8 +201,17 @@
                     <element signature="e#8889#8944#0" expanded="false" />
                     <element signature="e#9013#9425#0" expanded="false" />
                     <element signature="e#9503#11863#0" expanded="false" />
-                    <element signature="e#11948#13817#0" expanded="false" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="vgg_vmmix.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/models/vgg_vmmix.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.541779">
+                  <caret line="185" column="0" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -232,7 +243,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/train_configs/IDIAP/tilt/train_vgg_idiap_von_mises.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_idiap_von_mises.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/tilt/train_cvae_idiap.yml" />
         <option value="$PROJECT_DIR$/train_vgg_idiap.py" />
@@ -268,7 +278,6 @@
         <option value="$PROJECT_DIR$/train_scripts/IDIAP/pan/train_cvae_search.sh" />
         <option value="$PROJECT_DIR$/train_scripts/IDIAP/pan/train_cvae_best.sub" />
         <option value="$PROJECT_DIR$/train_scripts/IDIAP/pan/train_cvae_search.sub" />
-        <option value="$PROJECT_DIR$/models/vgg.py" />
         <option value="$PROJECT_DIR$/models/cvae_hyperas.py" />
         <option value="$PROJECT_DIR$/train.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap_best.yml" />
@@ -276,13 +285,15 @@
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae.yml" />
         <option value="$PROJECT_DIR$/utils/towncentre.py" />
         <option value="$PROJECT_DIR$/utils/load_datasets.py" />
-        <option value="$PROJECT_DIR$/models/cvae.py" />
         <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_cvae_search.sh" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
         <option value="$PROJECT_DIR$/train_cvae.py" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml" />
         <option value="$PROJECT_DIR$/utils/custom_keras_callbacks.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml" />
+        <option value="$PROJECT_DIR$/models/cvae.py" />
+        <option value="$PROJECT_DIR$/models/vgg.py" />
+        <option value="$PROJECT_DIR$/models/vgg_vmmix.py" />
       </list>
     </option>
   </component>
@@ -805,14 +816,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/vgg_vmmix.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.3891892">
-          <caret line="104" column="69" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="69" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_idiap_likelihood_learned_kappa_search.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.26190478">
@@ -1091,28 +1094,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/cvae.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding>
-            <element signature="e#4726#5045#0" expanded="false" />
-            <element signature="e#5091#5335#0" expanded="false" />
-            <element signature="e#5376#5508#0" expanded="false" />
-            <element signature="e#5550#6437#0" expanded="false" />
-            <element signature="e#6503#7100#0" expanded="false" />
-            <element signature="e#7160#7721#0" expanded="false" />
-            <element signature="e#7768#8297#0" expanded="false" />
-            <element signature="e#8382#8734#0" expanded="false" />
-            <element signature="e#8784#8839#0" expanded="false" />
-            <element signature="e#8889#8944#0" expanded="false" />
-            <element signature="e#9013#9425#0" expanded="false" />
-            <element signature="e#9503#11863#0" expanded="false" />
-            <element signature="e#11948#13817#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_cvae_search.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.06901218">
@@ -1137,14 +1118,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/vgg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="3" selection-start-line="33" selection-start-column="3" selection-end-line="33" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/py_env/lib/python3.6/site-packages/keras/callbacks.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4755245">
@@ -1156,27 +1129,7 @@
     <entry file="file://$PROJECT_DIR$/train_cvae.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="43" column="23" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
-          <folding>
-            <element signature="e#2350#2494#0" expanded="false" />
-            <element signature="e#2541#2730#0" expanded="false" />
-            <element signature="e#3115#3380#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/custom_keras_callbacks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="135" column="40" selection-start-line="135" selection-start-column="40" selection-end-line="135" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35614526">
-          <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+          <caret line="155" column="89" selection-start-line="155" selection-start-column="89" selection-end-line="155" selection-end-column="89" />
           <folding />
         </state>
       </provider>
@@ -1205,10 +1158,63 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/utils/custom_keras_callbacks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="135" column="40" selection-start-line="135" selection-start-column="40" selection-end-line="135" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18994413">
-          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
+        <state vertical-scroll-proportion="-7.8461537">
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.807693">
+          <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/vgg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.61051214">
+          <caret line="159" column="0" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/cvae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="305" column="21" selection-start-line="305" selection-start-column="21" selection-end-line="305" selection-end-column="21" />
+          <folding>
+            <element signature="e#4726#5045#0" expanded="false" />
+            <element signature="e#5091#5335#0" expanded="false" />
+            <element signature="e#5376#5508#0" expanded="false" />
+            <element signature="e#5550#6437#0" expanded="false" />
+            <element signature="e#6503#7100#0" expanded="false" />
+            <element signature="e#7160#7721#0" expanded="false" />
+            <element signature="e#7768#8297#0" expanded="false" />
+            <element signature="e#8382#8734#0" expanded="false" />
+            <element signature="e#8784#8839#0" expanded="false" />
+            <element signature="e#8889#8944#0" expanded="false" />
+            <element signature="e#9013#9425#0" expanded="false" />
+            <element signature="e#9503#11863#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/vgg_vmmix.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.541779">
+          <caret line="185" column="0" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
           <folding />
         </state>
       </provider>
