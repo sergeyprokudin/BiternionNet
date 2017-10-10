@@ -84,9 +84,9 @@ def evaluate_model(model, data):
     xtr, ytr_deg, xval, yval_deg, xte, yte_deg = data
 
     results = dict()
-    results['train'] = model.evaluate(xtr, ytr_deg, 'train')
-    results['validation'] = model.evaluate(xval, yval_deg, 'validation')
-    results['test'] = model.evaluate(xte, yte_deg, 'test')
+    results['train'] = model.evaluate(xtr[0:10], ytr_deg[0:10], 'train')
+    results['validation'] = model.evaluate(xval[0:10], yval_deg[0:10], 'validation')
+    results['test'] = model.evaluate(xte[0:10], yte_deg[0:10], 'test')
 
     return results
 
@@ -212,10 +212,10 @@ def main():
 
         model.save_weights(trial_best_ckpt_path)
 
-        model.fit([xtr, ytr_bit], [xval, yval_bit],
-                  batch_size=trial_hyp_params['batch_size'],
-                  n_epochs=config['n_epochs'],
-                  callbacks=keras_callbacks)
+        # model.fit([xtr, ytr_bit], [xval, yval_bit],
+        #           batch_size=trial_hyp_params['batch_size'],
+        #           n_epochs=config['n_epochs'],
+        #           callbacks=keras_callbacks)
 
         model.load_weights(trial_best_ckpt_path)
 
