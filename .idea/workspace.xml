@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml" afterPath="$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -31,10 +30,10 @@
     <splitter split-orientation="horizontal" split-proportion="0.53513515">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.0">
+                <state vertical-scroll-proportion="0.5629229">
                   <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
                   <folding>
                     <element signature="e#1706#2549#0" expanded="false" />
@@ -47,10 +46,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="train_cvae_towncentre.yml" pinned="false" current-in-tab="true">
+          <file leaf-file-name="train_cvae_towncentre.yml" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.19074334">
+                <state vertical-scroll-proportion="-5.230769">
                   <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
                   <folding />
                 </state>
@@ -1140,20 +1139,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
-          <folding>
-            <element signature="e#1706#2549#0" expanded="false" />
-            <element signature="e#2605#2749#0" expanded="false" />
-            <element signature="e#2796#2985#0" expanded="false" />
-            <element signature="e#4337#5148#0" expanded="false" />
-            <element signature="e#5239#6171#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vmmix_idiap.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.16690043">
@@ -1164,9 +1149,23 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_cvae_towncentre.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19074334">
+        <state vertical-scroll-proportion="-5.230769">
           <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5629229">
+          <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
+          <folding>
+            <element signature="e#1706#2549#0" expanded="false" />
+            <element signature="e#2605#2749#0" expanded="false" />
+            <element signature="e#2796#2985#0" expanded="false" />
+            <element signature="e#4337#5148#0" expanded="false" />
+            <element signature="e#5239#6171#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
