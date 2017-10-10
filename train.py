@@ -107,6 +107,19 @@ def results_to_df(trial_results, trial_hyp_params):
     return res_df
 
 
+def save_global_results(res_df, global_results_csv):
+
+    if os.path.exists(global_results_csv):
+        global_results = pd.read_csv(global_results_csv, sep=';')
+        global_results = global_results.append(res_df).reset_index(drop=True)
+    else:
+        global_results = res_df
+
+    global_results.to_csv(global_results_csv, sep=';', index=False)
+
+    return
+
+
 def define_callbacks(config, trial_dir, ckpt_path, val_data):
 
     callbacks = []
@@ -132,6 +145,27 @@ def define_callbacks(config, trial_dir, ckpt_path, val_data):
     callbacks.append(keras.callbacks.TerminateOnNaN())
 
     return callbacks
+
+
+def define_model(model_type, config, model_hyp_params, image_height, image_width):
+
+    if model_type == "cvae":
+
+        model = CVAE(image_height=image_height,
+                     image_width=image_width,
+                     n_channels=3,
+                     **model_hyp_params)
+
+    elif model_type == 'bivgg':
+
+        model = vgg.BiternionVGG(image_height=image_height,
+                                 image_width=image_width,
+                                 n_channels=3,
+                                 loss_type=config['loss_type'],
+                                 predict_kappa=False,
+                                 fixed_kappa_value=config['fixed_kappa_value'],
+                                 **model_hyp_params)
+    return model
 
 
 def main():
@@ -175,6 +209,7 @@ def main():
 
     checkpoints = dict()
     results_csv = os.path.join(experiment_dir, 'results.csv')
+    global_results_csv = os.path.join(root_log_dir, 'global_results.csv')
 
     for tid in range(0, n_trials):
 
@@ -185,6 +220,7 @@ def main():
         print_hyp_params(hyp_params, tid)
 
         trial_hyp_params = get_trial_hyp_params(hyp_params, tid)
+        trial_hyp_params['ckpt_path'] = trial_dir
 
         trial_best_ckpt_path = os.path.join(trial_dir, 'cvae.full_model.trial_%d.best.weights.hdf5' % tid)
 
@@ -193,29 +229,18 @@ def main():
                                            ckpt_path=trial_best_ckpt_path,
                                            val_data=[xval, yval_bit])
 
-        if model_type == "cvae":
-
-            model = CVAE(image_height=image_height,
-                         image_width=image_width,
-                         n_channels=3,
-                         **trial_hyp_params)
-
-        elif model_type == 'bivgg':
-
-            model = vgg.BiternionVGG(image_height=image_height,
-                                     image_width=image_width,
-                                     n_channels=3,
-                                     loss_type=config['loss_type'],
-                                     predict_kappa=False,
-                                     fixed_kappa_value=config['fixed_kappa_value'],
-                                     **trial_hyp_params)
+        model = define_model(model_type=model_type,
+                             model_hyp_params=trial_hyp_params,
+                             config=config,
+                             image_height=image_height,
+                             image_width=image_width)
 
         model.save_weights(trial_best_ckpt_path)
 
-        model.fit([xtr, ytr_bit], [xval, yval_bit],
-                  batch_size=trial_hyp_params['batch_size'],
-                  n_epochs=config['n_epochs'],
-                  callbacks=keras_callbacks)
+        # model.fit([xtr, ytr_bit], [xval, yval_bit],
+        #           batch_size=trial_hyp_params['batch_size'],
+        #           n_epochs=config['n_epochs'],
+        #           callbacks=keras_callbacks)
 
         model.load_weights(trial_best_ckpt_path)
 
@@ -233,6 +258,7 @@ def main():
             res_df = res_df.append(trial_df).reset_index(drop=True)
 
         res_df.to_csv(results_csv, sep=';')
+        save_global_results(trial_df, global_results_csv)
 
         if tid > 0:
             if model_type == 'cvae':
@@ -253,11 +279,13 @@ def main():
     best_ckpt_path = checkpoints[best_trial_id]
     overall_best_ckpt_path = os.path.join(experiment_dir, 'cvae.full_model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
+    best_hyp_params = get_trial_hyp_params(hyp_params, best_trial_id)
 
-    best_model = CVAE(image_height=image_height,
-                      image_width=image_width,
-                      n_channels=n_channels,
-                      **get_trial_hyp_params(hyp_params, best_trial_id))
+    best_model = define_model(model_type=model_type,
+                              model_hyp_params=best_hyp_params,
+                              config=config,
+                              image_height=image_height,
+                              image_width=image_width)
 
     best_model.load_weights(overall_best_ckpt_path)
 
