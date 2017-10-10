@@ -1,8 +1,8 @@
 executable = /bin/bash
 arguments = train_cvae_search.sh
-error = train_idiap_cvae.job.err
-output = train_idiap_cvae.job.out
-log = train_idiap_cvae.job.log
+error = train_towncentre_cvae.job.err
+output = train_towncentre_cvae.job.out
+log = train_towncentre_cvae.job.log
 request_memory = 10000
 request_gpus = 1
 request_cpus = 1
