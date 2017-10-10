@@ -9,6 +9,7 @@ import keras
 
 from models import vgg
 from models.cvae import CVAE
+from models.vgg_vmmix import BiternionVGGMixture
 from utils.load_datasets import load_dataset
 from utils.experiements import get_experiment_id
 from utils.custom_keras_callbacks import ModelCheckpointEveryNBatch
@@ -173,6 +174,14 @@ def define_model(model_type, config, model_hyp_params, image_height, image_width
                                  predict_kappa=False,
                                  fixed_kappa_value=config['fixed_kappa_value'],
                                  **model_hyp_params)
+
+    elif model_type == 'vm_mixture':
+
+        model = BiternionVGGMixture(image_height=image_height,
+                                    image_width=image_width,
+                                    n_channels=3,
+                                    **model_hyp_params)
+
     return model
 
 
@@ -285,7 +294,7 @@ def main():
                     best_trial_id = tid
                     print("Better validation loss achieved, current best trial: %d" % best_trial_id)
 
-            elif model_type == 'bivgg':
+            else:
 
                 if trial_results['validation']['log_likelihood_mean'] > \
                         results[best_trial_id]['validation']['log_likelihood_mean']:
@@ -295,7 +304,7 @@ def main():
     print("Loading best model (trial_id = %d)" % best_trial_id)
 
     best_ckpt_path = checkpoints[best_trial_id]
-    overall_best_ckpt_path = os.path.join(experiment_dir, 'cvae.full_model.overall_best.weights.hdf5')
+    overall_best_ckpt_path = os.path.join(experiment_dir, 'model.overall_best.weights.hdf5')
     shutil.copy(best_ckpt_path, overall_best_ckpt_path)
     best_hyp_params = get_trial_hyp_params(hyp_params, best_trial_id)
 
@@ -308,7 +317,7 @@ def main():
     best_model.load_weights(overall_best_ckpt_path)
 
     print("Evaluating best model..")
-    best_results = evaluate_model(best_model, eval_data)
+    _ = evaluate_model(best_model, eval_data)
 
     return
 

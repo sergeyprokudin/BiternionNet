@@ -20,7 +20,9 @@ N_BITERNION_OUTPUT = 2
 
 
 def vgg_model(n_outputs=1, final_layer=False, l2_normalize_final=False,
-              image_height=50, image_width=50):
+              image_height=50, image_width=50,
+              conv_dropout_val=0.2, fc_dropout_val=0.5, fc_layer_size=512):
+
     model = Sequential()
 
     model.add(Conv2D(24, kernel_size=(3, 3),
@@ -47,10 +49,10 @@ def vgg_model(n_outputs=1, final_layer=False, l2_normalize_final=False,
     model.add(Conv2D(64, (3, 3), activation=None))
     model.add(BatchNormalization())
     model.add(Activation('relu'))
-    model.add(Dropout(0.2))
+    model.add(Dropout(conv_dropout_val))
     model.add(Flatten())
     model.add(Dense(512, activation='relu'))
-    model.add(Dropout(0.5))
+    model.add(Dropout(fc_dropout_val))
 
     if final_layer:
         model.add(Dense(n_outputs, activation=None))
@@ -66,45 +68,77 @@ class BiternionVGGMixture:
                  image_height=50,
                  image_width=50,
                  n_channels=3,
-                 n_components=10,
-                 hlayer_size=256,
-                 learning_rate=1.0e-3):
+                 **kwargs):
 
         self.image_height = image_height
         self.image_width = image_width
         self.n_channels = n_channels
-        self.n_components = n_components
-        self.hlayer_size = hlayer_size
-        self.learning_rate = learning_rate
+        self.hyp_params = kwargs
+        self.n_components = kwargs.get('n_components', 8)
+        self.learning_rate = kwargs.get('learning_rate', 1.0e-3)
+        self.beta1 = kwargs.get('beta1', 0.9)
+        self.beta2 = kwargs.get('beta2', 0.999)
+        self.epsilon = kwargs.get('epsilon', 1.0e-7)
+        self.conv_dropout = kwargs.get('conv_dropout', 0.2)
+        self.fc_dropout = kwargs.get('fc_dropout', 0.5)
+        self.vgg_fc_layer_size = kwargs.get('vgg_fc_layer_size', 512)
+        self.mix_fc_layer_size = kwargs.get('mix_fc_layer_size', 512)
 
         self.X = Input(shape=[image_height, image_width, 3])
 
         vgg_x = vgg_model(final_layer=False,
                           image_height=self.image_height,
-                          image_width=self.image_width)(self.X)
+                          image_width=self.image_width,
+                          conv_dropout_val=self.conv_dropout,
+                          fc_dropout_val=self.fc_dropout,
+                          fc_layer_size=self.vgg_fc_layer_size)(self.X)
 
         mu_preds = []
         for i in range(0, self.n_components):
-            mu_pred = Dense(N_BITERNION_OUTPUT)(Dense(self.hlayer_size)(vgg_x))
+            mu_pred = Dense(N_BITERNION_OUTPUT)(Dense(self.mix_fc_layer_size)(vgg_x))
             mu_pred_normalized = Lambda(lambda x: K.l2_normalize(x, axis=1))(mu_pred)
             # mu_pred_norm_reshaped = Lambda(lambda x: K.reshape(x, [-1, 1, N_BITERNION_OUTPUT]))(mu_pred_normalized)
             mu_preds.append(mu_pred_normalized)
 
         self.mu_preds = concatenate(mu_preds)
 
-        self.kappa_preds = Lambda(lambda x: K.abs(x))(Dense(self.n_components)(Dense(256)(vgg_x)))
+        self.kappa_preds = Lambda(lambda x: K.abs(x))(Dense(self.n_components)(Dense(self.mix_fc_layer_size)(vgg_x)))
         # kappa_preds = Lambda(lambda x: K.reshape(x, [-1, self.n_components, 1]))(kappa_preds)
 
-        self.component_probs = Lambda(lambda x: K.softmax(x))(Dense(self.n_components)(Dense(256)(vgg_x)))
+        self.component_probs = Lambda(lambda x: K.softmax(x))(Dense(self.n_components)(Dense(self.mix_fc_layer_size)(vgg_x)))
         # self.component_probs = Lambda(lambda x: K.reshape(x, [-1, self.n_components, 1]))(component_probs)
 
         self.y_pred = concatenate([self.mu_preds, self.kappa_preds, self.component_probs])
 
         self.model = Model(inputs=self.X, outputs=self.y_pred)
 
-        self.optimizer = keras.optimizers.Adam(lr=self.learning_rate)
+        self.optimizer = keras.optimizers.Adam(lr=self.learning_rate,
+                                               beta_1=self.beta1,
+                                               beta_2=self.beta2,
+                                               epsilon=self.epsilon)
 
         self.model.compile(optimizer=self.optimizer, loss=self._neg_mean_vmm_loglikelihood_tf)
+
+    def fit(self, train_data, val_data, n_epochs, batch_size, callbacks=None):
+
+        xtr, ytr_bit,  = train_data
+        xval, yval_bit = val_data
+
+        self.model.fit(xtr, ytr_bit,
+                       batch_size=batch_size,
+                       epochs=n_epochs,
+                       validation_data=(xval, yval_bit),
+                       callbacks=callbacks)
+
+        return
+
+    def save_weights(self, path):
+
+        self.model.save_weights(path)
+
+    def load_weights(self, path):
+
+        self.model.load_weights(path)
 
     def parse_output_tf(self, y_preds):
 

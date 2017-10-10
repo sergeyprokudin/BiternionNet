@@ -1,7 +1,12 @@
-root_log_dir: 'logs/IDIAP/pan/vmmix'
-net_output: pan # possible choices: pan, tilt, roll
-batch_sizes: [16, 32, 64, 128, 256]
-learning_rates: [1.0e-4, 1.0e-5, 1.0e-6, 1.0e-7]
-n_components: [2, 3, 4, 5, 7, 10]
-n_trials: 10
-n_epochs: 20
+dataset: IDIAP # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
+net_output: pan # make sense for IDIAP only, possible choices: pan, tilt, roll
+root_log_dir: 'logs/IDIAP/pan/vm_mixture'
+data_path: 'data//IDIAP.pkl'
+experiment_name: 'vm_mixture'
+canonical_split: True
+model_type: vm_mixture
+n_epochs: 50
+val_check_period: 32 #32
+patience: 50
+n_trials: 50
+random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
