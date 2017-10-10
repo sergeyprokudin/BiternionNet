@@ -89,6 +89,9 @@ def evaluate_model(model, data):
     xtr, ytr_deg, xval, yval_deg, xte, yte_deg = data
 
     results = dict()
+    # results['train'] = model.evaluate(xtr[0:10], ytr_deg[0:10], 'train')
+    # results['validation'] = model.evaluate(xval[0:10], yval_deg[0:10], 'validation')
+    # results['test'] = model.evaluate(xte[0:10], yte_deg[0:10], 'test')
     results['train'] = model.evaluate(xtr, ytr_deg, 'train')
     results['validation'] = model.evaluate(xval, yval_deg, 'validation')
     results['test'] = model.evaluate(xte, yte_deg, 'test')
@@ -173,6 +176,14 @@ def define_model(model_type, config, model_hyp_params, image_height, image_width
     return model
 
 
+def save_dict(data_dict, path):
+
+    with open(path, 'w') as outfile:
+        yaml.dump(data_dict, outfile, default_flow_style=True)
+
+    return
+
+
 def main():
 
     if len(sys.argv) != 2:
@@ -208,7 +219,7 @@ def main():
     results = dict()
 
     if config['random_hyp_search']:
-        hyp_params = generate_hyper_params(n_trials)
+        hyp_params = generate_hyper_params(n_trials, model_type)
     else:
         hyp_params = load_hyper_params(config)
 
@@ -225,9 +236,11 @@ def main():
         print_hyp_params(hyp_params, tid)
 
         trial_hyp_params = get_trial_hyp_params(hyp_params, tid)
-        trial_hyp_params['ckpt_path'] = trial_dir
 
-        trial_best_ckpt_path = os.path.join(trial_dir, 'cvae.full_model.trial_%d.best.weights.hdf5' % tid)
+        trial_best_ckpt_path = os.path.join(trial_dir, 'model.trial_%d.best.weights.hdf5' % tid)
+        trial_hyp_params['ckpt_path'] = trial_best_ckpt_path
+        trial_hyp_params['hyp_yaml_path'] = os.path.join(trial_dir, 'model.trial_%d.params.yml' % tid)
+        save_dict(trial_hyp_params, trial_hyp_params['hyp_yaml_path'])
 
         keras_callbacks = define_callbacks(config=config,
                                            trial_dir=trial_dir,
