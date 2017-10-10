@@ -4,7 +4,7 @@ root_log_dir: 'logs/IDIAP/pan/bivgg_learned_kappa'
 data_path: 'data//IDIAP.pkl'
 experiment_name: 'vggbit_leaarned_kappa'
 canonical_split: True
-model_type: bivgg # bivgg, cvae
+model_type: bivgg # bivgg, vm_mixture, cvae
 loss_type: vm_likelihood # (bivgg only) possible choices : cosine, von_mises, mad, vm_likelihood
 predict_kappa: True # valid for bivgg+vm_likelihood loss only
 fixed_kappa_value: 10
