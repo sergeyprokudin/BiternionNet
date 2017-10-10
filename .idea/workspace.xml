@@ -34,12 +34,12 @@
           <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.3117409">
-                  <caret line="219" column="31" selection-start-line="219" selection-start-column="31" selection-end-line="219" selection-end-column="31" />
+                <state vertical-scroll-proportion="0.3787062">
+                  <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
                   <folding>
                     <element signature="e#2373#2517#0" expanded="false" />
                     <element signature="e#2564#2753#0" expanded="false" />
-                    <element signature="e#3509#4320#0" expanded="false" />
+                    <element signature="e#3504#4315#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -154,7 +154,7 @@
           <file leaf-file-name="vgg.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/models/vgg.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.35762483">
+                <state vertical-scroll-proportion="0.35849056">
                   <caret line="183" column="0" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
                   <folding>
                     <element signature="e#880#2159#0" expanded="false" />
@@ -637,7 +637,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3292683" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21849594" sideWeight="0.49605057" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21747968" sideWeight="0.49605057" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22064245" sideWeight="0.5045045" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1131,7 +1131,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/vgg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35762483">
+        <state vertical-scroll-proportion="0.35849056">
           <caret line="183" column="0" selection-start-line="183" selection-start-column="0" selection-end-line="183" selection-end-column="0" />
           <folding>
             <element signature="e#880#2159#0" expanded="false" />
@@ -1158,12 +1158,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3117409">
-          <caret line="219" column="31" selection-start-line="219" selection-start-column="31" selection-end-line="219" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.3787062">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
           <folding>
             <element signature="e#2373#2517#0" expanded="false" />
             <element signature="e#2564#2753#0" expanded="false" />
-            <element signature="e#3509#4320#0" expanded="false" />
+            <element signature="e#3504#4315#0" expanded="false" />
           </folding>
         </state>
       </provider>

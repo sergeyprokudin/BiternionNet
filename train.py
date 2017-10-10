@@ -84,9 +84,9 @@ def evaluate_model(model, data):
     xtr, ytr_deg, xval, yval_deg, xte, yte_deg = data
 
     results = dict()
-    results['train'] = model.evaluate(xtr[0:10], ytr_deg[0:10], 'train')
-    results['validation'] = model.evaluate(xval[0:10], yval_deg[0:10], 'validation')
-    results['test'] = model.evaluate(xte[0:10], yte_deg[0:10], 'test')
+    results['train'] = model.evaluate(xtr, ytr_deg, 'train')
+    results['validation'] = model.evaluate(xval, yval_deg, 'validation')
+    results['test'] = model.evaluate(xte, yte_deg, 'test')
 
     return results
 
@@ -99,8 +99,8 @@ def results_to_df(trial_results, trial_hyp_params):
 
     dfs.append(hyp_df)
 
-    for key in trial_results.keys():
-        dfs.append(pd.DataFrame.from_dict(trial_results[key]).add_prefix(key+'_'))
+    for data_part_key in trial_results.keys():
+        dfs.append(pd.DataFrame(trial_results[data_part_key], index=[0]).add_prefix(data_part_key+'_'))
 
     res_df = pd.concat(dfs, axis=1)
 
@@ -212,10 +212,10 @@ def main():
 
         model.save_weights(trial_best_ckpt_path)
 
-        # model.fit([xtr, ytr_bit], [xval, yval_bit],
-        #           batch_size=trial_hyp_params['batch_size'],
-        #           n_epochs=config['n_epochs'],
-        #           callbacks=keras_callbacks)
+        model.fit([xtr, ytr_bit], [xval, yval_bit],
+                  batch_size=trial_hyp_params['batch_size'],
+                  n_epochs=config['n_epochs'],
+                  callbacks=keras_callbacks)
 
         model.load_weights(trial_best_ckpt_path)
 
@@ -235,9 +235,18 @@ def main():
         res_df.to_csv(results_csv, sep=';')
 
         if tid > 0:
-            if trial_results['validation']['elbo'] > results[best_trial_id]['validation']['elbo']:
-                best_trial_id = tid
-                print("Better validation loss achieved, current best trial: %d" % best_trial_id)
+            if model_type == 'cvae':
+
+                if trial_results['validation']['elbo'] > results[best_trial_id]['validation']['elbo']:
+                    best_trial_id = tid
+                    print("Better validation loss achieved, current best trial: %d" % best_trial_id)
+
+            elif model_type == 'bivgg':
+
+                if trial_results['validation']['log_likelihood_mean'] > \
+                        results[best_trial_id]['validation']['log_likelihood_mean']:
+                    best_trial_id = tid
+                    print("Better validation loss achieved, current best trial: %d" % best_trial_id)
 
     print("Loading best model (trial_id = %d)" % best_trial_id)
 
