@@ -237,10 +237,10 @@ def main():
 
         model.save_weights(trial_best_ckpt_path)
 
-        # model.fit([xtr, ytr_bit], [xval, yval_bit],
-        #           batch_size=trial_hyp_params['batch_size'],
-        #           n_epochs=config['n_epochs'],
-        #           callbacks=keras_callbacks)
+        model.fit([xtr, ytr_bit], [xval, yval_bit],
+                  batch_size=trial_hyp_params['batch_size'],
+                  n_epochs=config['n_epochs'],
+                  callbacks=keras_callbacks)
 
         model.load_weights(trial_best_ckpt_path)
 
