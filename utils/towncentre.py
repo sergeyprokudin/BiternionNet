@@ -51,6 +51,8 @@ def load_towncentre(data_path,
     unique_pid_set = np.unique(person_ids)
     rands = np.random.rand(unique_pid_set.shape[0])
 
+    np.random.seed(None)
+
     train_pids = unique_pid_set[rands < 1-val_test_split*2]
     val_pids = unique_pid_set[(rands >= 1-val_test_split*2) & (rands < 1-val_test_split)]
     test_pids = unique_pid_set[rands > 1-val_test_split]
