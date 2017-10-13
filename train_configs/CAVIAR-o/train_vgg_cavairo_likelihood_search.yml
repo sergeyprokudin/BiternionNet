@@ -1,15 +1,22 @@
 dataset: CAVIAR-o # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
-net_output: pan # possible choices: pan, tilt, roll
-root_log_dir: 'logs/CAVIAR-o'
-data_path: 'data//CAVIAR-o.pkl.gz'
-loss: vm_likelihood # possible choices : cosine, von_mises, mad, vm_likelihood
+net_output: pan # make sense for IDIAP only, possible choices: pan, tilt, roll
+root_log_dir: 'logs/CAVIAR-o/learned_kappa'
+data_path: 'data/CAVIAR-o.pkl.gz'
 experiment_name: 'vggbit_likelihood'
 canonical_split: True
-predict_kappa: True
-fixed_kappa_value: 10.0
-n_epochs: 50
-val_check_period: 32
-conv_dropout: 0.2
-fc_dropout: 0.5
-random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
+model_type: bivgg
+n_epochs: 200
+val_check_period: 32 #32
+patience: 50
 n_trials: 50
+random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
+#n_hidden_units: 10
+#batch_size: 23
+#learning_rate: 0.000036
+#beta1: 0.9
+#beta2: 0.999
+#epsilon: 1.0e-8
+#conv_dropout: 0.2
+#fc_dropout: 0.5
+#vgg_fc_layer_size: 512
+#cvae_fc_layer_size: 512
