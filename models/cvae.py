@@ -11,7 +11,7 @@ from models import vgg
 
 from utils.losses import gaussian_kl_divergence_tf, gaussian_kl_divergence_np
 from utils.losses import von_mises_log_likelihood_tf, von_mises_log_likelihood_np
-from utils.angles import deg2bit, bit2deg, bit2deg_multi
+from utils.angles import deg2bit, bit2deg, bit2deg_multi, rad2bit
 from utils.losses import maad_from_deg, maximum_expected_utility, importance_loglikelihood
 from scipy.stats import sem
 
@@ -264,6 +264,26 @@ class CVAE:
 
             return preds
 
+    def get_multiple_decoder_predictions(self, x, n_samples=5):
+
+            n_points = x.shape[0]
+
+            mu_bit_preds_dec = np.zeros([n_points, n_samples, 2])
+            kappa_preds_dec = np.zeros([n_points, n_samples, 1])
+
+            for sid in range(0, n_samples):
+                preds_dec = self.decoder_model.predict(x, batch_size=100)
+                mu_bit_preds_dec[:, sid, :] = preds_dec[:, 0:2]
+                kappa_preds_dec[:, sid, :] = preds_dec[:, 2:].reshape(-1, 1)
+
+            preds = dict()
+            preds['mu_bit'] = mu_bit_preds_dec
+            preds['kappa'] = kappa_preds_dec
+            preds['mu_rad'] = np.deg2rad(bit2deg_multi(preds['mu_bit']))
+            preds['maxutil_deg'] = maximum_expected_utility(np.rad2deg(preds['mu_rad']))
+
+            return preds
+
     def evaluate(self, x, ytrue_deg, data_part, n_samples=10, verbose=1):
 
         ytrue_bit = deg2bit(ytrue_deg)
@@ -309,3 +329,46 @@ class CVAE:
             print("KL-div (%s) : %f pm%fSEM" % (data_part, results['kl_div'], results['kl_div_sem']))
 
         return results
+
+    def pdf(self, x, x_vals, n_samples=10, n_step=0.01):
+        """ Compute probability density function on a circle given images
+
+        Parameters
+        ----------
+        x: numpy array of shape [n_images, image_width, image_height, n_channels]
+            angles in biternion (cos, sin) representation that will be used to compute likelihood
+
+
+        Returns
+        -------
+
+        x_vals: numpy array of shape [n_points]
+            angles (in rads) at which pdf values were computed
+        pdfs: numpy array of shape [n_images, n_samples, n_points]
+            array containing pdf values for each CVAE sample on circle [0, 2pi] for each values
+
+        acc_pdf: numpy array of shape [n_images, n_points]
+            array containing accumulated pdf value on circle [0, 2pi] for each values
+        """
+
+        n_images = x.shape[0]
+
+        x_vals_tiled = np.ones(n_images)
+
+        decoder_preds = self.get_multiple_decoder_predictions(x, n_samples=n_samples)
+
+        vm_pdfs = np.zeros([n_images, n_samples, len(x_vals)])
+
+        for xid, xval in enumerate(x_vals):
+
+            for sid in range(0,n_samples):
+
+                x_bit = rad2bit(x_vals_tiled*xval)
+
+                vm_pdfs[:, sid, xid] = np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit,
+                                                                          decoder_preds['mu_bit'][:, sid, :],
+                                                                          decoder_preds['kappa'][:, sid])))
+
+        acc_pdf = np.mean(vm_pdfs, axis=1)
+        return vm_pdfs, acc_pdf
+

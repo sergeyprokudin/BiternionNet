@@ -1,0 +1,12 @@
+executable = /bin/bash
+arguments = train_learned_kappa_best.sh
+error = train_caviaro_learned_kappa.job.err
+output = train_caviaro_learned_kappa.job.out
+log = train_caviaro_learned_kappa.job.log
+request_memory = 10000
+request_gpus = 1
+request_cpus = 1
+MaxTime = 648000
+periodic_hold = (CurrentTime - JobCurrentStartDate) >= $(MaxTime)
+periodic_hold_reason = "Job runtime exceeded"
+queue 1

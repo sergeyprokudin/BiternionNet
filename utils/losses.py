@@ -172,7 +172,7 @@ def von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred, input_type='biterni
     log_likelihood = kappa_pred * cosin_dist - \
                      tf.log(2 * np.pi) - log_bessel_approx_tf(kappa_pred)
     return tf.reshape(log_likelihood, [-1, 1])
-    #return tf.reduce_mean(log_likelihood)
+    # return tf.reduce_mean(log_likelihood)
 
 
 def kappa_to_stddev(kappa, output='radians'):
