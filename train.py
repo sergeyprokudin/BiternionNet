@@ -149,7 +149,8 @@ def define_callbacks(config, trial_dir, ckpt_path, val_data):
     callbacks.append(ModelCheckpointEveryNBatch(ckpt_path, val_loss_log_path,
                                                 x, yval_bit,
                                                 verbose=1, save_best_only=True,
-                                                period=config['val_check_period']))
+                                                period=config['val_check_period'],
+                                                patience=config['patience']))
 
     callbacks.append(keras.callbacks.TerminateOnNaN())
 

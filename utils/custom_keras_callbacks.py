@@ -85,7 +85,7 @@ class ModelCheckpointEveryNBatch(keras.callbacks.Callback):
     """
 
     def __init__(self, ckpt_path, log_path, xval, yval, verbose=0,
-                 save_best_only=False, save_weights_only=False, period=1, patience=10):
+                 save_best_only=False, save_weights_only=False, period=1, patience=50):
         super(ModelCheckpointEveryNBatch, self).__init__()
         self.xval = xval
         self.yval = yval
