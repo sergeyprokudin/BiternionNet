@@ -10,7 +10,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import Model
 from keras.layers.merge import concatenate
 
-from utils.angles import deg2bit, bit2deg_multi
+from utils.angles import deg2bit, bit2deg_multi, rad2bit
 from utils.losses import maad_from_deg, von_mises_log_likelihood_np, von_mises_log_likelihood_tf
 from scipy.stats import sem
 from utils.sampling import sample_von_mises_mixture_multi
@@ -165,6 +165,53 @@ class BiternionVGGMixture:
         component_probs = np.reshape(y_preds[:, cprobs_ptr:cprobs_ptr+self.n_components], [-1, self.n_components])
 
         return mu_preds, kappa_preds, component_probs
+
+    def pdf(self, x, x_vals):
+        """ Compute probability density function on a circle given images
+
+        Parameters
+        ----------
+        x: numpy array of shape [n_images, image_width, image_height, n_channels]
+            angles in biternion (cos, sin) representation that will be used to compute likelihood
+
+        x_vals: numpy array of shape [n_points]
+            angles (in rads) at which pdf values were computed
+
+        Returns
+        -------
+
+        pdfs: numpy array of shape [n_images, n_components, n_points]
+            array containing pdf values for each CVAE sample on circle [0, 2pi] for each values
+
+        acc_pdf: numpy array of shape [n_images, n_points]
+            array containing accumulated pdf value on circle [0, 2pi] for each values
+        """
+
+        n_images = x.shape[0]
+
+        x_vals_tiled = np.ones(n_images)
+
+        preds = self.model.predict(x)
+
+        mu_preds, kappa_preds, component_probs = self.parse_output_np(preds)
+
+        component_probs = np.tile(component_probs.reshape([n_images, self.n_components, 1]), [1, 1, len(x_vals)])
+
+        vm_pdfs = np.zeros([n_images, self.n_components, len(x_vals)])
+
+        for xid, xval in enumerate(x_vals):
+
+            for cid in range(0, self.n_components):
+
+                x_bit = rad2bit(x_vals_tiled*xval)
+
+                vm_pdfs[:, cid, xid] = np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit,
+                                                                          mu_preds[:, cid, :],
+                                                                          kappa_preds[:, cid])))
+
+        acc_pdf = np.sum((component_probs*vm_pdfs), axis=1)
+
+        return vm_pdfs, acc_pdf
 
     def _von_mises_mixture_log_likelihood_np(self, y_true, y_pred):
 

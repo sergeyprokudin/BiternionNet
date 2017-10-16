@@ -330,7 +330,7 @@ class CVAE:
 
         return results
 
-    def pdf(self, x, x_vals, n_samples=10, n_step=0.01):
+    def pdf(self, x, x_vals, n_samples=10):
         """ Compute probability density function on a circle given images
 
         Parameters
@@ -338,12 +338,12 @@ class CVAE:
         x: numpy array of shape [n_images, image_width, image_height, n_channels]
             angles in biternion (cos, sin) representation that will be used to compute likelihood
 
+        x_vals: numpy array of shape [n_points]
+            angles (in rads) at which pdf values were computed
 
         Returns
         -------
 
-        x_vals: numpy array of shape [n_points]
-            angles (in rads) at which pdf values were computed
         pdfs: numpy array of shape [n_images, n_samples, n_points]
             array containing pdf values for each CVAE sample on circle [0, 2pi] for each values
 
