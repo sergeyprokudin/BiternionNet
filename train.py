@@ -59,7 +59,10 @@ def load_hyper_params(config):
     hyp_params['fc_dropout'] = np.ones(n_trials)*config['fc_dropout']
     hyp_params['vgg_fc_layer_size'] = np.ones(n_trials, dtype=int)*config['vgg_fc_layer_size']
     hyp_params['cvae_fc_layer_size'] = np.ones(n_trials, dtype=int)*config['cvae_fc_layer_size']
-    hyp_params['n_hidden_units'] = np.ones(n_trials, dtype=int)*config['n_hidden_units']
+    if config['model_type'] == 'cvae':
+        hyp_params['n_hidden_units'] = np.ones(n_trials, dtype=int)*config['n_hidden_units']
+    if config['model_type'] == 'vm_mixture':
+        hyp_params['n_components'] = np.ones(n_trials, dtype=int)*config['n_components']
 
     return hyp_params
 
