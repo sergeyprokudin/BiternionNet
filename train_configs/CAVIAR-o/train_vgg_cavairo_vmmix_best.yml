@@ -1,8 +1,8 @@
 dataset: CAVIAR-o # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
 net_output: pan # make sense for IDIAP only, possible choices: pan, tilt, roll
-root_log_dir: 'logs/CAVIAR-o/learned_kappa'
+root_log_dir: 'logs/CAVIAR-o/vm_mixture'
 data_path: 'data/CAVIAR-o.pkl.gz'
-experiment_name: 'vggbit_likelihood'
+experiment_name: 'vm_mixture'
 canonical_split: True
 model_type: vm_mixture
 loss_type: vm_likelihood
