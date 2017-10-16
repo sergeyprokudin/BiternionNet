@@ -8,7 +8,7 @@ model_type: bivgg
 loss_type: vm_likelihood
 fixed_kappa_value: 10
 n_epochs: 200
-val_check_period: 32 #32
+val_check_period: 128 #32
 patience: 1000
 n_trials: 50
 random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
