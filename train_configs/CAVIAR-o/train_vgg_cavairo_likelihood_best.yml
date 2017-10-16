@@ -9,11 +9,11 @@ loss_type: vm_likelihood
 fixed_kappa_value: 10
 n_epochs: 200
 val_check_period: 32 #32
-patience: 200
+patience: 1000
 n_trials: 50
 random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
 batch_size: 16
-learning_rate: 0.0001
+learning_rate: 0.01
 beta1: 0.9
 beta2: 0.999
 epsilon: 1.0e-8
