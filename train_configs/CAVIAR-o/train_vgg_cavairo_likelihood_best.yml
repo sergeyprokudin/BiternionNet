@@ -6,7 +6,7 @@ experiment_name: 'vggbit_likelihood'
 canonical_split: True
 model_type: bivgg
 loss_type: vm_likelihood
-n_epochs: 200
+n_epochs: 1000
 val_check_period: 128 #32
 patience: 1000
 n_trials: 50

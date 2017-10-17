@@ -10,7 +10,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import Model
 from keras.layers.merge import concatenate
 
-from utils.angles import deg2bit, bit2deg
+from utils.angles import deg2bit, bit2deg, rad2bit
 from utils.losses import mad_loss_tf, cosine_loss_tf, von_mises_loss_tf, von_mises_log_likelihood_tf
 from utils.losses import von_mises_log_likelihood_np, von_mises_neg_log_likelihood_keras
 from utils.losses import maad_from_deg
@@ -201,16 +201,19 @@ class BiternionVGG:
 
         self.model.load_weights(path)
 
-    def finetune_kappa(self, x, y_bit, vgg_model, max_kappa=1.0):
-        ytr_preds_bit = vgg_model.model.predict(x)
-        kappa_vals = np.arange(0, 1000, 1.0)
+    def finetune_kappa(self, x, y_bit, max_kappa=1000.0, verbose=False):
+        ytr_preds_bit = self.model.predict(x)[:, 0:2]
+        kappa_vals = np.arange(0, max_kappa, 1.0)
         log_likelihoods = np.zeros(kappa_vals.shape)
         for i, kappa_val in enumerate(kappa_vals):
             kappa_preds = np.ones([x.shape[0], 1]) * kappa_val
             log_likelihoods[i] = np.mean(von_mises_log_likelihood_np(y_bit, ytr_preds_bit, kappa_preds))
-            print("kappa: %f, log-likelihood: %f" % (kappa_val, log_likelihoods[i]))
+            if verbose:
+                print("kappa: %f, log-likelihood: %f" % (kappa_val, log_likelihoods[i]))
         max_ix = np.argmax(log_likelihoods)
         self.fixed_kappa_value = kappa_vals[max_ix]
+        if verbose:
+            print("best kappa : %f" % self.fixed_kappa_value)
         return self.fixed_kappa_value
 
     def evaluate(self, x, ytrue_deg, data_part):
@@ -248,3 +251,26 @@ class BiternionVGG:
 
         return results
 
+    def pdf(self, x, x_vals):
+
+        n_images = x.shape[0]
+
+        x_vals_tiled = np.ones(n_images)
+
+        preds = self.model.predict(x)
+        mu_preds_bit = preds[:, 0:2]
+
+        if self.predict_kappa:
+            kappa_preds = preds[:, 2:]
+        else:
+            kappa_preds = np.ones([x.shape[0], 1]) * self.fixed_kappa_value
+
+        log_likelihoods = np.zeros([n_images, len(x_vals)])
+
+        for xid, xval in enumerate(x_vals):
+
+            x_bit = rad2bit(x_vals_tiled*xval)
+
+            log_likelihoods[:, xid] = np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
+
+        return log_likelihoods

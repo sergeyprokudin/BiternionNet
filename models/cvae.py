@@ -361,7 +361,7 @@ class CVAE:
 
         for xid, xval in enumerate(x_vals):
 
-            for sid in range(0,n_samples):
+            for sid in range(0, n_samples):
 
                 x_bit = rad2bit(x_vals_tiled*xval)
 
