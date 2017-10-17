@@ -86,7 +86,8 @@ def sample_von_mises_mixture_multi(mus_rad, kappas, component_probs, n_samples=1
         sampled angles (in radians)
     """
 
-    samples = [np.reshape(sample_von_mises_mixture(mus_rad[fid], kappas[fid], component_probs[fid], n_samples=100), [1, -1])
+    samples = [np.reshape(sample_von_mises_mixture(mus_rad[fid], kappas[fid], component_probs[fid],
+                                                   n_samples=n_samples), [1, -1])
                for fid in range(0, len(component_probs))]
 
     return np.concatenate(samples, axis=0)
