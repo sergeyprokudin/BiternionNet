@@ -1,19 +1,22 @@
 dataset: IDIAP # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
-net_output: pan # possible choices: pan, tilt, roll
-root_log_dir: 'logs/IDIAP'
+net_output: pan # make sense for IDIAP only, possible choices: pan, tilt, roll
+root_log_dir: 'logs/IDIAP/pan/cvae'
 data_path: 'data//IDIAP.pkl'
 experiment_name: 'vggbit_cvae'
 canonical_split: True
+model_type: cvae
 n_epochs: 100
-val_check_period: 32
-n_trials: 10
-random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
-n_hidden_units: 2
-batch_sizes: [32]
-epsilons: [1.0e-8]
-learning_rates: [0.001]
-beta1: [0.95]
-conv_dropout: 0.2
-fc_dropout: 0.5
-vgg_fc_layer_size: 512
-cvae_fc_layer_size: 512
+val_check_period: 32 #32
+patience: 200
+n_trials: 50
+random_hyp_search: False
+n_hidden_units: 10
+batch_size: 256
+learning_rate: 0.000036
+beta1: 0.9
+beta2: 0.999
+epsilon: 1.0e-8
+conv_dropout: 0.96
+fc_dropout: 0.31
+vgg_fc_layer_size: 195
+cvae_fc_layer_size: 99

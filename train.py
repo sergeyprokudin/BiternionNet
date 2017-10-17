@@ -171,13 +171,24 @@ def define_model(model_type, config, model_hyp_params, image_height, image_width
 
     elif model_type == 'bivgg':
 
-        model = vgg.BiternionVGG(image_height=image_height,
-                                 image_width=image_width,
-                                 n_channels=3,
-                                 loss_type=config['loss_type'],
-                                 predict_kappa=False,
-                                 fixed_kappa_value=config['fixed_kappa_value'],
-                                 **model_hyp_params)
+        if config['loss_type'] == 'vm_likelihood':
+
+            model = vgg.BiternionVGG(image_height=image_height,
+                                     image_width=image_width,
+                                     n_channels=3,
+                                     loss_type='vm_likelihood',
+                                     predict_kappa=True,
+                                     **model_hyp_params)
+
+        else:
+
+            model = vgg.BiternionVGG(image_height=image_height,
+                                     image_width=image_width,
+                                     n_channels=3,
+                                     loss_type=config['loss_type'],
+                                     predict_kappa=False,
+                                     fixed_kappa_value=config['fixed_kappa_value'],
+                                     **model_hyp_params)
 
     elif model_type == 'vm_mixture':
 

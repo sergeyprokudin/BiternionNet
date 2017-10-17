@@ -6,12 +6,11 @@ experiment_name: 'vggbit_likelihood'
 canonical_split: True
 model_type: bivgg
 loss_type: vm_likelihood
-fixed_kappa_value: 10
 n_epochs: 300
 val_check_period: 128 #32
 patience: 1000
 n_trials: 50
-random_hyp_search: Truee #if True, ignore config params and perform random search of hyperparameters
+random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
 #n_hidden_units: 10
 #batch_size: 23
 #learning_rate: 0.000036
