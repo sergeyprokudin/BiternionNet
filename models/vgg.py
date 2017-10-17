@@ -201,6 +201,18 @@ class BiternionVGG:
 
         self.model.load_weights(path)
 
+    def finetune_kappa(self, x, y_bit, vgg_model, max_kappa=1.0):
+        ytr_preds_bit = vgg_model.model.predict(x)
+        kappa_vals = np.arange(0, 1000, 1.0)
+        log_likelihoods = np.zeros(kappa_vals.shape)
+        for i, kappa_val in enumerate(kappa_vals):
+            kappa_preds = np.ones([x.shape[0], 1]) * kappa_val
+            log_likelihoods[i] = np.mean(von_mises_log_likelihood_np(y_bit, ytr_preds_bit, kappa_preds))
+            print("kappa: %f, log-likelihood: %f" % (kappa_val, log_likelihoods[i]))
+        max_ix = np.argmax(log_likelihoods)
+        self.fixed_kappa_value = kappa_vals[max_ix]
+        return self.fixed_kappa_value
+
     def evaluate(self, x, ytrue_deg, data_part):
 
         ytrue_bit = deg2bit(ytrue_deg)

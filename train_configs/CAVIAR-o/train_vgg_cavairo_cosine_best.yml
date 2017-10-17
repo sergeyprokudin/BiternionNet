@@ -6,6 +6,8 @@ experiment_name: 'vggbit_cosine_best'
 canonical_split: True
 model_type: bivgg
 loss_type: cosine
+predict_kappa: False # valid for bivgg+vm_likelihood loss only
+fixed_kappa_value: 25
 n_epochs: 200
 val_check_period: 128 #32
 patience: 1000
