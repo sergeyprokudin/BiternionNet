@@ -149,7 +149,7 @@ class CVAE:
         kappa_pred = model_output[:, self.n_u*5+2:]
         reconstruction_err = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred)
         kl = gaussian_kl_divergence_tf(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
-        elbo = reconstruction_err - self.kl_weight*kl
+        elbo = reconstruction_err - 0.1*kl
         print("\nkl_weight : %f\n" % self.kl_weight)
         return K.mean(-elbo)
 
