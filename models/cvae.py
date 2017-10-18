@@ -188,15 +188,15 @@ class CVAE:
                 self.kl_weight = kl_weight
                 self.full_model.fit([xtr, ytr_bit], [ytr_bit],
                                     batch_size=batch_size,
-                                    epochs=int(n_epochs/len(kl_weights))+1,
+                                    epochs=1,
                                     validation_data=([xval, yval_bit], yval_bit),
                                     callbacks=callbacks)
-        else:
-            self.full_model.fit([xtr, ytr_bit], [ytr_bit],
-                                batch_size=batch_size,
-                                epochs=n_epochs,
-                                validation_data=([xval, yval_bit], yval_bit),
-                                callbacks=callbacks)
+
+        self.full_model.fit([xtr, ytr_bit], [ytr_bit],
+                            batch_size=batch_size,
+                            epochs=n_epochs,
+                            validation_data=([xval, yval_bit], yval_bit),
+                            callbacks=callbacks)
 
         return
 
