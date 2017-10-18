@@ -187,6 +187,9 @@ class CVAE:
             kl_weights = np.arange(0.5, 1.0, 0.1)
             for kl_weight in kl_weights:
                 self.kl_weight = kl_weight
+
+                self.full_model.compile(optimizer=self.optimizer, loss=self._cvae_elbo_loss_tf)
+
                 print("\n current kl weight: %f \n" % self.kl_weight)
                 self.full_model.fit([xtr, ytr_bit], [ytr_bit],
                                     batch_size=batch_size,
