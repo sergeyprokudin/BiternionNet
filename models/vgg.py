@@ -216,7 +216,7 @@ class BiternionVGG:
             print("best kappa : %f" % self.fixed_kappa_value)
         return self.fixed_kappa_value
 
-    def evaluate(self, x, ytrue_deg, data_part):
+    def evaluate(self, x, ytrue_deg, data_part, return_per_image=False):
 
         ytrue_bit = deg2bit(ytrue_deg)
         ypreds = self.model.predict(x)
@@ -248,6 +248,10 @@ class BiternionVGG:
         print("log-likelihood (%s) : %f pm %fSEM" % (data_part,
                                                     results['log_likelihood_mean'],
                                                     results['log_likelihood_sem']))
+
+        if return_per_image:
+            results['maad'] = loss
+            results['log_likelihood'] = log_likelihoods
 
         return results
 

@@ -284,7 +284,8 @@ class CVAE:
 
             return preds
 
-    def evaluate(self, x, ytrue_deg, data_part, n_samples=10, verbose=1):
+    def evaluate(self, x, ytrue_deg, data_part, n_samples=10, verbose=1,
+                 return_per_image=False):
 
         ytrue_bit = deg2bit(ytrue_deg)
 
@@ -327,6 +328,10 @@ class CVAE:
                   (data_part, results['importance_log_likelihood'], results['importance_log_likelihood_sem']))
 
             print("KL-div (%s) : %f pm%fSEM" % (data_part, results['kl_div'], results['kl_div_sem']))
+
+        if return_per_image:
+            results['maad'] = loss
+            results['importance_log_likelihood'] = importance_loglikelihoods
 
         return results
 

@@ -251,7 +251,7 @@ class BiternionVGGMixture:
 
         return -tf.reduce_mean(log_likelihoods)
 
-    def evaluate(self, x, ytrue_deg, data_part):
+    def evaluate(self, x, ytrue_deg, data_part, return_per_image=False):
 
         ytrue_bit = deg2bit(ytrue_deg)
         ypreds = self.model.predict(x)
@@ -275,6 +275,10 @@ class BiternionVGGMixture:
         print("log-likelihood (%s) : %f pm %fSEM" % (data_part,
                                                     results['log_likelihood_mean'],
                                                     results['log_likelihood_sem']))
+
+        if return_per_image:
+            results['maad'] = maad_errs
+            results['log_likelihood'] = log_likelihoods
 
         return results
 
