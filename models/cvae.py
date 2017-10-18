@@ -176,16 +176,26 @@ class CVAE:
         output['kappa_pred'] = y_pred[:, self.n_u*5+2:]
         return output
 
-    def fit(self, train_data, val_data, n_epochs, batch_size, callbacks):
+    def fit(self, train_data, val_data, n_epochs, batch_size, callbacks,
+            kl_annealing=True):
 
         xtr, ytr_bit,  = train_data
         xval, yval_bit = val_data
 
-        self.full_model.fit([xtr, ytr_bit], [ytr_bit],
-                            batch_size=batch_size,
-                            epochs=n_epochs,
-                            validation_data=([xval, yval_bit], yval_bit),
-                            callbacks=callbacks)
+        if kl_annealing:
+            kl_weights = np.range(0.5, 1.0, 0.1)
+            for kid, kl_weight in enumerate(kl_weights):
+                self.full_model.fit([xtr, ytr_bit], [ytr_bit],
+                                    batch_size=batch_size,
+                                    epochs=int(n_epochs/len(kl_weights))+1,
+                                    validation_data=([xval, yval_bit], yval_bit),
+                                    callbacks=callbacks)
+        else:
+            self.full_model.fit([xtr, ytr_bit], [ytr_bit],
+                                batch_size=batch_size,
+                                epochs=n_epochs,
+                                validation_data=([xval, yval_bit], yval_bit),
+                                callbacks=callbacks)
 
         return
 
@@ -330,6 +340,7 @@ class CVAE:
             print("KL-div (%s) : %f pm%fSEM" % (data_part, results['kl_div'], results['kl_div_sem']))
 
         if return_per_image:
+            results['point_preds'] = bit2deg(deg2bit(preds['maxutil_deg_dec']))
             results['maad'] = loss
             results['importance_log_likelihood'] = importance_loglikelihoods
 

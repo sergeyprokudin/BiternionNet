@@ -10,7 +10,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.models import Model
 from keras.layers.merge import concatenate
 
-from utils.angles import deg2bit, bit2deg_multi, rad2bit
+from utils.angles import deg2bit, bit2deg_multi, rad2bit, bit2deg
 from utils.losses import maad_from_deg, von_mises_log_likelihood_np, von_mises_log_likelihood_tf
 from scipy.stats import sem
 from utils.sampling import sample_von_mises_mixture_multi
@@ -261,7 +261,8 @@ class BiternionVGGMixture:
         vmmix_mu, vmmix_kappas, vmmix_probs = self.parse_output_np(ypreds)
         vmmix_mu_rad = np.deg2rad(bit2deg_multi(vmmix_mu))
         samples = sample_von_mises_mixture_multi(vmmix_mu_rad, vmmix_kappas, vmmix_probs, n_samples=100)
-        maad_errs = maad_from_deg(maximum_expected_utility(np.rad2deg(samples)), ytrue_deg)
+        point_preds = maximum_expected_utility(np.rad2deg(samples))
+        maad_errs = maad_from_deg(point_preds, ytrue_deg)
         results['maad_loss'] = float(np.mean(maad_errs))
         results['maad_sem'] = float(sem(maad_errs))
 
@@ -277,6 +278,7 @@ class BiternionVGGMixture:
                                                     results['log_likelihood_sem']))
 
         if return_per_image:
+            results['point_preds'] = bit2deg(deg2bit(point_preds))
             results['maad'] = maad_errs
             results['log_likelihood'] = log_likelihoods
 

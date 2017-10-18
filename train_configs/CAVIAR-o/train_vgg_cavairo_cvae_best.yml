@@ -10,7 +10,7 @@ val_check_period: 64 #32
 patience: 1000
 n_trials: 10
 random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
-n_hidden_units: 2
+n_hidden_units: 2 #8
 batch_size: 23
 learning_rate: 0.000036
 beta1: 0.9

@@ -250,6 +250,7 @@ class BiternionVGG:
                                                     results['log_likelihood_sem']))
 
         if return_per_image:
+            results['point_preds'] = bit2deg(deg2bit(ypreds_deg))
             results['maad'] = loss
             results['log_likelihood'] = log_likelihoods
 
