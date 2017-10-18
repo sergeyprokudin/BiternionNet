@@ -193,7 +193,7 @@ class CVAE:
                 print("\n current kl weight: %f \n" % self.kl_weight)
                 self.full_model.fit([xtr, ytr_bit], [ytr_bit],
                                     batch_size=batch_size,
-                                    epochs=1,
+                                    epochs=5,
                                     validation_data=([xval, yval_bit], yval_bit),
                                     callbacks=callbacks)
 
