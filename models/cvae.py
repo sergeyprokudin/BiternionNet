@@ -88,7 +88,7 @@ class CVAE:
                                                beta_2=self.beta2,
                                                epsilon=self.epsilon)
 
-        self.full_model.compile(optimizer=self.optimizer, loss=self._cvae_elbo_loss_tf)
+        # self.full_model.compile(optimizer=self.optimizer, loss=self._cvae_elbo_loss_tf)
 
         self.decoder_input = concatenate([self.x_vgg, self.u_prior])
 
