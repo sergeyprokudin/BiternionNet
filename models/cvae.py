@@ -150,6 +150,7 @@ class CVAE:
         reconstruction_err = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred)
         kl = gaussian_kl_divergence_tf(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
         elbo = reconstruction_err - self.kl_weight*kl
+        print("kl_weight : %f" % self.kl_weight)
         return K.mean(-elbo)
 
     def _cvae_elbo_loss_np(self, y_true, y_pred):
@@ -189,7 +190,7 @@ class CVAE:
                 print("\n current kl weight: %f \n" % self.kl_weight)
                 self.full_model.fit([xtr, ytr_bit], [ytr_bit],
                                     batch_size=batch_size,
-                                    epochs=1,
+                                    epochs=3,
                                     validation_data=([xval, yval_bit], yval_bit),
                                     callbacks=callbacks)
 

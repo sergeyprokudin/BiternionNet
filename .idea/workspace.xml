@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InferenceDemo.ipynb" afterPath="$PROJECT_DIR$/InferenceDemo.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/cvae.py" afterPath="$PROJECT_DIR$/models/cvae.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
@@ -80,20 +81,20 @@
           <file leaf-file-name="cvae.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/models/cvae.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.80529594">
-                  <caret line="198" column="18" selection-start-line="198" selection-start-column="17" selection-end-line="198" selection-end-column="18" />
+                <state vertical-scroll-proportion="0.60280377">
+                  <caret line="192" column="44" selection-start-line="192" selection-start-column="44" selection-end-line="192" selection-end-column="44" />
                   <folding>
                     <element signature="e#5100#5344#0" expanded="false" />
                     <element signature="e#5385#5517#0" expanded="false" />
                     <element signature="e#5559#6446#0" expanded="false" />
-                    <element signature="e#7169#7730#0" expanded="false" />
-                    <element signature="e#7777#8306#0" expanded="false" />
-                    <element signature="e#9361#9416#0" expanded="false" />
-                    <element signature="e#9466#9521#0" expanded="false" />
-                    <element signature="e#9590#10002#0" expanded="false" />
-                    <element signature="e#10080#12440#0" expanded="false" />
-                    <element signature="e#12519#13240#0" expanded="false" />
-                    <element signature="e#15514#17018#0" expanded="false" />
+                    <element signature="e#7218#7779#0" expanded="false" />
+                    <element signature="e#7826#8355#0" expanded="false" />
+                    <element signature="e#9410#9465#0" expanded="false" />
+                    <element signature="e#9515#9570#0" expanded="false" />
+                    <element signature="e#9639#10051#0" expanded="false" />
+                    <element signature="e#10129#12489#0" expanded="false" />
+                    <element signature="e#12568#13289#0" expanded="false" />
+                    <element signature="e#15563#17067#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -692,7 +693,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/models/cvae.py</url>
-          <line>298</line>
+          <line>299</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
@@ -1091,14 +1092,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/losses.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="392" column="0" selection-start-line="392" selection-start-column="0" selection-end-line="392" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/vgg.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1129,22 +1122,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/utils/losses.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="392" column="0" selection-start-line="392" selection-start-column="0" selection-end-line="392" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/models/cvae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.80529594">
-          <caret line="198" column="18" selection-start-line="198" selection-start-column="17" selection-end-line="198" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.60280377">
+          <caret line="192" column="44" selection-start-line="192" selection-start-column="44" selection-end-line="192" selection-end-column="44" />
           <folding>
             <element signature="e#5100#5344#0" expanded="false" />
             <element signature="e#5385#5517#0" expanded="false" />
             <element signature="e#5559#6446#0" expanded="false" />
-            <element signature="e#7169#7730#0" expanded="false" />
-            <element signature="e#7777#8306#0" expanded="false" />
-            <element signature="e#9361#9416#0" expanded="false" />
-            <element signature="e#9466#9521#0" expanded="false" />
-            <element signature="e#9590#10002#0" expanded="false" />
-            <element signature="e#10080#12440#0" expanded="false" />
-            <element signature="e#12519#13240#0" expanded="false" />
-            <element signature="e#15514#17018#0" expanded="false" />
+            <element signature="e#7218#7779#0" expanded="false" />
+            <element signature="e#7826#8355#0" expanded="false" />
+            <element signature="e#9410#9465#0" expanded="false" />
+            <element signature="e#9515#9570#0" expanded="false" />
+            <element signature="e#9639#10051#0" expanded="false" />
+            <element signature="e#10129#12489#0" expanded="false" />
+            <element signature="e#12568#13289#0" expanded="false" />
+            <element signature="e#15563#17067#0" expanded="false" />
           </folding>
         </state>
       </provider>
