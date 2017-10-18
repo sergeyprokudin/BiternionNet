@@ -184,7 +184,7 @@ class CVAE:
         xval, yval_bit = val_data
 
         if kl_annealing:
-            kl_weights = np.arange(0.5, 1.0, 0.1)
+            kl_weights = np.arange(0.1, 1.0, 0.1)
             for kl_weight in kl_weights:
                 self.kl_weight = kl_weight
 
