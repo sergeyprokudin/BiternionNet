@@ -183,8 +183,9 @@ class CVAE:
         xval, yval_bit = val_data
 
         if kl_annealing:
-            kl_weights = np.range(0.5, 1.0, 0.1)
-            for kid, kl_weight in enumerate(kl_weights):
+            kl_weights = np.arange(0.5, 1.0, 0.1)
+            for kl_weight in kl_weights:
+                self.kl_weight = kl_weight
                 self.full_model.fit([xtr, ytr_bit], [ytr_bit],
                                     batch_size=batch_size,
                                     epochs=int(n_epochs/len(kl_weights))+1,
