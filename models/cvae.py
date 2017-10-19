@@ -52,6 +52,14 @@ class CVAE:
                                    conv_dropout_val=self.conv_dropout,
                                    fc_layer_size=self.vgg_fc_layer_size)(self.x)
 
+        # self.x_vgg = vgg.vgg_model(n_outputs=self.n_u,
+        #                            final_layer=True,
+        #                            image_height=self.image_height,
+        #                            image_width=self.image_width,
+        #                            fc_dropout_val=self.fc_dropout,
+        #                            conv_dropout_val=self.conv_dropout,
+        #                            fc_layer_size=self.vgg_fc_layer_size)(self.x)
+
         self.x_vgg_shape = self.x_vgg.get_shape().as_list()[1]
 
         # self.x_vgg_prior = vgg.vgg_model(image_height=self.image_height,
@@ -137,7 +145,8 @@ class CVAE:
         decoder_kappa.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.n_u]))
         # decoder_kappa.add(Dense(512, activation='relu'))
         decoder_kappa.add(Dense(1, activation='linear'))
-        decoder_kappa.add(Lambda(lambda x: K.abs(x)))
+        # decoder_kappa.add(Lambda(lambda x: K.abs(x)))
+        decoder_kappa.add(Lambda(lambda x: K.exp(x)))
         return decoder_mu, decoder_kappa
 
     def _cvae_elbo_loss_tf(self, y_true, model_output):
