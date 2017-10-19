@@ -89,8 +89,7 @@ class CVAE:
                                                      # self.decoder_mu_seq(self.u_encoder),
                                                      # self.decoder_kappa_seq(self.u_encoder)]))
                                                      self.decoder_mu_seq(self.x_vgg_enc_u),
-                                                     self.decoder_kappa_seq(self.x_vgg_enc_u),
-                                                     self.x_vgg]))
+                                                     self.decoder_kappa_seq(self.x_vgg_enc_u)]))
 
         self.optimizer = keras.optimizers.Adam(lr=self.learning_rate,
                                                beta_1=self.beta1,
@@ -195,7 +194,6 @@ class CVAE:
         output['u_encoder_samples'] = y_pred[:, self.n_u*4:self.n_u*5]
         output['mu_pred'] = y_pred[:, self.n_u*5:self.n_u*5+2]
         output['kappa_pred'] = y_pred[:, self.n_u*5+2:self.n_u*5+3]
-        output['x_vgg'] = y_pred[:, self.n_u*5+3:self.n_u*5+3+self.x_vgg_shape]
         return output
 
     def fit(self, train_data, val_data, n_epochs, batch_size, callbacks,
