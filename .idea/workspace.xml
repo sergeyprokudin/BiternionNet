@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InferenceDemo.ipynb" afterPath="$PROJECT_DIR$/InferenceDemo.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/cvae.py" afterPath="$PROJECT_DIR$/models/cvae.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
@@ -71,16 +70,16 @@
           <file leaf-file-name="cvae.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/models/cvae.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.3068536">
-                  <caret line="189" column="30" selection-start-line="189" selection-start-column="30" selection-end-line="189" selection-end-column="30" />
+                <state vertical-scroll-proportion="0.20093457">
+                  <caret line="98" column="8" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="8" />
                   <folding>
-                    <element signature="e#7743#8304#0" expanded="false" />
-                    <element signature="e#10034#10089#0" expanded="false" />
-                    <element signature="e#10139#10194#0" expanded="false" />
-                    <element signature="e#10753#13113#0" expanded="false" />
-                    <element signature="e#13192#13913#0" expanded="false" />
-                    <element signature="e#14039#16133#0" expanded="false" />
-                    <element signature="e#16187#17691#0" expanded="false" />
+                    <element signature="e#7741#8302#0" expanded="false" />
+                    <element signature="e#10032#10087#0" expanded="false" />
+                    <element signature="e#10137#10192#0" expanded="false" />
+                    <element signature="e#10751#13111#0" expanded="false" />
+                    <element signature="e#13190#13911#0" expanded="false" />
+                    <element signature="e#14037#16131#0" expanded="false" />
+                    <element signature="e#16185#17689#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -1165,16 +1164,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/cvae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3068536">
-          <caret line="189" column="30" selection-start-line="189" selection-start-column="30" selection-end-line="189" selection-end-column="30" />
+        <state vertical-scroll-proportion="0.20093457">
+          <caret line="98" column="8" selection-start-line="98" selection-start-column="8" selection-end-line="98" selection-end-column="8" />
           <folding>
-            <element signature="e#7743#8304#0" expanded="false" />
-            <element signature="e#10034#10089#0" expanded="false" />
-            <element signature="e#10139#10194#0" expanded="false" />
-            <element signature="e#10753#13113#0" expanded="false" />
-            <element signature="e#13192#13913#0" expanded="false" />
-            <element signature="e#14039#16133#0" expanded="false" />
-            <element signature="e#16187#17691#0" expanded="false" />
+            <element signature="e#7741#8302#0" expanded="false" />
+            <element signature="e#10032#10087#0" expanded="false" />
+            <element signature="e#10137#10192#0" expanded="false" />
+            <element signature="e#10751#13111#0" expanded="false" />
+            <element signature="e#13190#13911#0" expanded="false" />
+            <element signature="e#14037#16131#0" expanded="false" />
+            <element signature="e#16185#17689#0" expanded="false" />
           </folding>
         </state>
       </provider>
