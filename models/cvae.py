@@ -46,19 +46,19 @@ class CVAE:
 
         self.u = Input(shape=[self.n_u])
 
-        self.x_vgg = vgg.vgg_model(image_height=self.image_height,
-                                   image_width=self.image_width,
-                                   fc_dropout_val=self.fc_dropout,
-                                   conv_dropout_val=self.conv_dropout,
-                                   fc_layer_size=self.vgg_fc_layer_size)(self.x)
-
-        # self.x_vgg = vgg.vgg_model(n_outputs=self.n_u,
-        #                            final_layer=True,
-        #                            image_height=self.image_height,
+        # self.x_vgg = vgg.vgg_model(image_height=self.image_height,
         #                            image_width=self.image_width,
         #                            fc_dropout_val=self.fc_dropout,
         #                            conv_dropout_val=self.conv_dropout,
         #                            fc_layer_size=self.vgg_fc_layer_size)(self.x)
+
+        self.x_vgg = vgg.vgg_model(n_outputs=self.n_u,
+                                   final_layer=True,
+                                   image_height=self.image_height,
+                                   image_width=self.image_width,
+                                   fc_dropout_val=self.fc_dropout,
+                                   conv_dropout_val=self.conv_dropout,
+                                   fc_layer_size=self.vgg_fc_layer_size)(self.x)
 
         self.x_vgg_shape = self.x_vgg.get_shape().as_list()[1]
 
@@ -89,7 +89,8 @@ class CVAE:
                                                      # self.decoder_mu_seq(self.u_encoder),
                                                      # self.decoder_kappa_seq(self.u_encoder)]))
                                                      self.decoder_mu_seq(self.x_vgg_enc_u),
-                                                     self.decoder_kappa_seq(self.x_vgg_enc_u)]))
+                                                     self.decoder_kappa_seq(self.x_vgg_enc_u),
+                                                     self.x_vgg]))
 
         self.optimizer = keras.optimizers.Adam(lr=self.learning_rate,
                                                beta_1=self.beta1,
@@ -134,17 +135,26 @@ class CVAE:
 
     def _decoder_net_seq(self):
         decoder_mu = Sequential()
-        decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu',input_shape=[self.x_vgg_shape + self.n_u]))
-        decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.n_u]))
-        # decoder_mu.add(Dense(512, activation='relu'))
+        decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.x_vgg_shape + self.n_u]))
+        # decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.n_u]))
+        decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu'))
         decoder_mu.add(Dense(2, activation='linear'))
         decoder_mu.add(Lambda(lambda x: K.l2_normalize(x, axis=1)))
 
         decoder_kappa = Sequential()
-        decoder_kappa.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.x_vgg_shape + self.n_u]))
-        decoder_kappa.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.n_u]))
-        # decoder_kappa.add(Dense(512, activation='relu'))
-        decoder_kappa.add(Dense(1, activation='linear'))
+        init = keras.initializers.RandomNormal(mean=0.0, stddev=0.2, seed=None)
+        decoder_kappa.add(Dense(self.cvae_fc_layer_size,
+                                activation='relu',
+                                input_shape=[self.x_vgg_shape + self.n_u],
+                                kernel_initializer=keras.initializers.RandomNormal(mean=0.0, stddev=0.2, seed=None)))
+        # decoder_kappa.add(Dense(1,
+        #                 activation='linear',
+        #                 input_shape=[self.x_vgg_shape + self.n_u],
+        #                         kernel_initializer=init))
+        # decoder_kappa.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.n_u]))
+        # decoder_kappa.add(Dense(self.cvae_fc_layer_size, activation='relu'))
+        decoder_kappa.add(Dense(1, activation='linear',
+                                kernel_initializer=keras.initializers.RandomNormal(mean=0.0, stddev=0.2, seed=None)))
         # decoder_kappa.add(Lambda(lambda x: K.abs(x)))
         decoder_kappa.add(Lambda(lambda x: K.exp(x)))
         return decoder_mu, decoder_kappa
@@ -183,7 +193,8 @@ class CVAE:
         output['log_sigma_encoder'] = y_pred[:, self.n_u*3:self.n_u*4]
         output['u_encoder_samples'] = y_pred[:, self.n_u*4:self.n_u*5]
         output['mu_pred'] = y_pred[:, self.n_u*5:self.n_u*5+2]
-        output['kappa_pred'] = y_pred[:, self.n_u*5+2:]
+        output['kappa_pred'] = y_pred[:, self.n_u*5+2:self.n_u*5+3]
+        output['x_vgg'] = y_pred[:, self.n_u*5+3:self.n_u*5+3+self.x_vgg_shape]
         return output
 
     def fit(self, train_data, val_data, n_epochs, batch_size, callbacks,
