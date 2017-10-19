@@ -137,12 +137,13 @@ class CVAE:
         decoder_mu = Sequential()
         decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.x_vgg_shape + self.n_u]))
         # decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.n_u]))
-        decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu'))
-        decoder_mu.add(Dense(2, activation='linear'))
+        decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu',
+                             kernel_initializer=keras.initializers.RandomNormal(mean=0.0, stddev=0.2, seed=None)))
+        decoder_mu.add(Dense(2, activation='linear',
+                             kernel_initializer=keras.initializers.RandomNormal(mean=0.0, stddev=0.2, seed=None)))
         decoder_mu.add(Lambda(lambda x: K.l2_normalize(x, axis=1)))
 
         decoder_kappa = Sequential()
-        init = keras.initializers.RandomNormal(mean=0.0, stddev=0.2, seed=None)
         decoder_kappa.add(Dense(self.cvae_fc_layer_size,
                                 activation='relu',
                                 input_shape=[self.x_vgg_shape + self.n_u],

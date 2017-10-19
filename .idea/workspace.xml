@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InferenceDemo.ipynb" afterPath="$PROJECT_DIR$/InferenceDemo.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/cvae.py" afterPath="$PROJECT_DIR$/models/cvae.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
@@ -72,15 +71,15 @@
           <file leaf-file-name="cvae.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/models/cvae.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.67469877">
-                  <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.71686745">
+                  <caret line="153" column="59" selection-start-line="153" selection-start-column="59" selection-end-line="153" selection-end-column="59" />
                   <folding>
-                    <element signature="e#8449#9010#0" expanded="false" />
-                    <element signature="e#10832#10887#0" expanded="false" />
-                    <element signature="e#10937#10992#0" expanded="false" />
-                    <element signature="e#11551#13911#0" expanded="false" />
-                    <element signature="e#14837#16931#0" expanded="false" />
-                    <element signature="e#16985#18489#0" expanded="false" />
+                    <element signature="e#8597#9158#0" expanded="false" />
+                    <element signature="e#10980#11035#0" expanded="false" />
+                    <element signature="e#11085#11140#0" expanded="false" />
+                    <element signature="e#11699#14059#0" expanded="false" />
+                    <element signature="e#14985#17079#0" expanded="false" />
+                    <element signature="e#17133#18637#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -731,12 +730,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/models/cvae.py</url>
-          <line>322</line>
+          <line>323</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/models/cvae.py</url>
-          <line>186</line>
+          <line>187</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
@@ -1121,15 +1120,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/cvae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.67469877">
-          <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.71686745">
+          <caret line="153" column="59" selection-start-line="153" selection-start-column="59" selection-end-line="153" selection-end-column="59" />
           <folding>
-            <element signature="e#8449#9010#0" expanded="false" />
-            <element signature="e#10832#10887#0" expanded="false" />
-            <element signature="e#10937#10992#0" expanded="false" />
-            <element signature="e#11551#13911#0" expanded="false" />
-            <element signature="e#14837#16931#0" expanded="false" />
-            <element signature="e#16985#18489#0" expanded="false" />
+            <element signature="e#8597#9158#0" expanded="false" />
+            <element signature="e#10980#11035#0" expanded="false" />
+            <element signature="e#11085#11140#0" expanded="false" />
+            <element signature="e#11699#14059#0" expanded="false" />
+            <element signature="e#14985#17079#0" expanded="false" />
+            <element signature="e#17133#18637#0" expanded="false" />
           </folding>
         </state>
       </provider>
