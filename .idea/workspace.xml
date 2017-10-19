@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InferenceDemo.ipynb" afterPath="$PROJECT_DIR$/InferenceDemo.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/cvae.py" afterPath="$PROJECT_DIR$/models/cvae.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" afterPath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -72,15 +70,15 @@
           <file leaf-file-name="cvae.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/models/cvae.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.10391566">
-                  <caret line="48" column="45" selection-start-line="48" selection-start-column="45" selection-end-line="48" selection-end-column="45" />
+                <state vertical-scroll-proportion="0.38554215">
+                  <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
                   <folding>
-                    <element signature="e#8536#9097#0" expanded="false" />
-                    <element signature="e#10839#10894#0" expanded="false" />
-                    <element signature="e#10944#10999#0" expanded="false" />
-                    <element signature="e#11558#13918#0" expanded="false" />
-                    <element signature="e#14844#16938#0" expanded="false" />
-                    <element signature="e#16992#18496#0" expanded="false" />
+                    <element signature="e#8532#9093#0" expanded="false" />
+                    <element signature="e#10835#10890#0" expanded="false" />
+                    <element signature="e#10940#10995#0" expanded="false" />
+                    <element signature="e#11554#13914#0" expanded="false" />
+                    <element signature="e#14840#16934#0" expanded="false" />
+                    <element signature="e#16988#18492#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -264,8 +262,8 @@
         <option value="$PROJECT_DIR$/models/vgg.py" />
         <option value="$PROJECT_DIR$/models/vgg_vmmix.py" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_vmmix_best.yml" />
-        <option value="$PROJECT_DIR$/models/cvae.py" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
+        <option value="$PROJECT_DIR$/models/cvae.py" />
       </list>
     </option>
   </component>
@@ -1121,15 +1119,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/cvae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10391566">
-          <caret line="48" column="45" selection-start-line="48" selection-start-column="45" selection-end-line="48" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.38554215">
+          <caret line="61" column="0" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
           <folding>
-            <element signature="e#8536#9097#0" expanded="false" />
-            <element signature="e#10839#10894#0" expanded="false" />
-            <element signature="e#10944#10999#0" expanded="false" />
-            <element signature="e#11558#13918#0" expanded="false" />
-            <element signature="e#14844#16938#0" expanded="false" />
-            <element signature="e#16992#18496#0" expanded="false" />
+            <element signature="e#8532#9093#0" expanded="false" />
+            <element signature="e#10835#10890#0" expanded="false" />
+            <element signature="e#10940#10995#0" expanded="false" />
+            <element signature="e#11554#13914#0" expanded="false" />
+            <element signature="e#14840#16934#0" expanded="false" />
+            <element signature="e#16988#18492#0" expanded="false" />
           </folding>
         </state>
       </provider>
