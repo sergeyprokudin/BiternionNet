@@ -187,7 +187,7 @@ class CVAE:
         return output
 
     def fit(self, train_data, val_data, n_epochs, batch_size, callbacks,
-            kl_annealing=True):
+            kl_annealing=False):
 
         xtr, ytr_bit,  = train_data
         xval, yval_bit = val_data

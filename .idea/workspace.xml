@@ -4,7 +4,6 @@
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InferenceDemo.ipynb" afterPath="$PROJECT_DIR$/InferenceDemo.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/cvae.py" afterPath="$PROJECT_DIR$/models/cvae.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" afterPath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -72,16 +71,16 @@
           <file leaf-file-name="cvae.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/models/cvae.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="-0.59345794">
-                  <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
+                <state vertical-scroll-proportion="0.3068536">
+                  <caret line="189" column="30" selection-start-line="189" selection-start-column="30" selection-end-line="189" selection-end-column="30" />
                   <folding>
                     <element signature="e#7743#8304#0" expanded="false" />
-                    <element signature="e#10033#10088#0" expanded="false" />
-                    <element signature="e#10138#10193#0" expanded="false" />
-                    <element signature="e#10752#13112#0" expanded="false" />
-                    <element signature="e#13191#13912#0" expanded="false" />
-                    <element signature="e#14038#16132#0" expanded="false" />
-                    <element signature="e#16186#17690#0" expanded="false" />
+                    <element signature="e#10034#10089#0" expanded="false" />
+                    <element signature="e#10139#10194#0" expanded="false" />
+                    <element signature="e#10753#13113#0" expanded="false" />
+                    <element signature="e#13192#13913#0" expanded="false" />
+                    <element signature="e#14039#16133#0" expanded="false" />
+                    <element signature="e#16187#17691#0" expanded="false" />
                   </folding>
                 </state>
               </provider>
@@ -255,8 +254,8 @@
         <option value="$PROJECT_DIR$/models/vgg.py" />
         <option value="$PROJECT_DIR$/models/vgg_vmmix.py" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_vmmix_best.yml" />
-        <option value="$PROJECT_DIR$/models/cvae.py" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
+        <option value="$PROJECT_DIR$/models/cvae.py" />
       </list>
     </option>
   </component>
@@ -1156,27 +1155,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/cvae.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.59345794">
-          <caret line="63" column="0" selection-start-line="63" selection-start-column="0" selection-end-line="63" selection-end-column="0" />
-          <folding>
-            <element signature="e#7743#8304#0" expanded="false" />
-            <element signature="e#10033#10088#0" expanded="false" />
-            <element signature="e#10138#10193#0" expanded="false" />
-            <element signature="e#10752#13112#0" expanded="false" />
-            <element signature="e#13191#13912#0" expanded="false" />
-            <element signature="e#14038#16132#0" expanded="false" />
-            <element signature="e#16186#17690#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19318181">
           <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/cvae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3068536">
+          <caret line="189" column="30" selection-start-line="189" selection-start-column="30" selection-end-line="189" selection-end-column="30" />
+          <folding>
+            <element signature="e#7743#8304#0" expanded="false" />
+            <element signature="e#10034#10089#0" expanded="false" />
+            <element signature="e#10139#10194#0" expanded="false" />
+            <element signature="e#10753#13113#0" expanded="false" />
+            <element signature="e#13192#13913#0" expanded="false" />
+            <element signature="e#14039#16133#0" expanded="false" />
+            <element signature="e#16187#17691#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
