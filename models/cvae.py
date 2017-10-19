@@ -46,19 +46,19 @@ class CVAE:
 
         self.u = Input(shape=[self.n_u])
 
-        # self.x_vgg = vgg.vgg_model(image_height=self.image_height,
-        #                            image_width=self.image_width,
-        #                            fc_dropout_val=self.fc_dropout,
-        #                            conv_dropout_val=self.conv_dropout,
-        #                            fc_layer_size=self.vgg_fc_layer_size)(self.x)
-
-        self.x_vgg = vgg.vgg_model(n_outputs=self.n_u,
-                                   final_layer=True,
-                                   image_height=self.image_height,
+        self.x_vgg = vgg.vgg_model(image_height=self.image_height,
                                    image_width=self.image_width,
                                    fc_dropout_val=self.fc_dropout,
                                    conv_dropout_val=self.conv_dropout,
                                    fc_layer_size=self.vgg_fc_layer_size)(self.x)
+
+        # self.x_vgg = vgg.vgg_model(n_outputs=self.n_u,
+        #                            final_layer=True,
+        #                            image_height=self.image_height,
+        #                            image_width=self.image_width,
+        #                            fc_dropout_val=self.fc_dropout,
+        #                            conv_dropout_val=self.conv_dropout,
+        #                            fc_layer_size=self.vgg_fc_layer_size)(self.x)
 
         self.x_vgg_shape = self.x_vgg.get_shape().as_list()[1]
 
