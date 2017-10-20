@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InferenceDemo.ipynb" afterPath="$PROJECT_DIR$/InferenceDemo.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" afterPath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
@@ -69,8 +70,8 @@
           <file leaf-file-name="train_vgg_cavairo_cvae_best.yml" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml">
               <provider selected="true" editor-type-id="text-editor">
-                <state vertical-scroll-proportion="0.3197492">
-                  <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+                <state vertical-scroll-proportion="0.39968652">
+                  <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
                   <folding />
                 </state>
               </provider>
@@ -1134,8 +1135,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3197492">
-          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.39968652">
+          <caret line="15" column="10" selection-start-line="15" selection-start-column="10" selection-end-line="15" selection-end-column="10" />
           <folding />
         </state>
       </provider>
