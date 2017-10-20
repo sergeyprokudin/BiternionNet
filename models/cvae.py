@@ -134,9 +134,7 @@ class CVAE:
 
     def _decoder_net_seq(self):
         decoder_mu = Sequential()
-        decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.x_vgg_shape + self.n_u]))
-        # decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.n_u]))
-        decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu',
+        decoder_mu.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.x_vgg_shape + self.n_u],
                              kernel_initializer=keras.initializers.RandomNormal(mean=0.0, stddev=1.0, seed=None)))
         decoder_mu.add(Dense(2, activation='linear',
                              kernel_initializer=keras.initializers.RandomNormal(mean=0.0, stddev=1.0, seed=None)))
@@ -147,15 +145,8 @@ class CVAE:
                                 activation='relu',
                                 input_shape=[self.x_vgg_shape + self.n_u],
                                 kernel_initializer=keras.initializers.RandomNormal(mean=0.0, stddev=1.0, seed=None)))
-        # decoder_kappa.add(Dense(1,
-        #                 activation='linear',
-        #                 input_shape=[self.x_vgg_shape + self.n_u],
-        #                         kernel_initializer=init))
-        # decoder_kappa.add(Dense(self.cvae_fc_layer_size, activation='relu', input_shape=[self.n_u]))
-        # decoder_kappa.add(Dense(self.cvae_fc_layer_size, activation='relu'))
         decoder_kappa.add(Dense(1, activation='linear',
                                 kernel_initializer=keras.initializers.RandomNormal(mean=0.0, stddev=1.0, seed=None)))
-        # decoder_kappa.add(Lambda(lambda x: K.abs(x)))
         decoder_kappa.add(Lambda(lambda x: K.abs(x)))
         return decoder_mu, decoder_kappa
 
