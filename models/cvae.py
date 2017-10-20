@@ -169,7 +169,6 @@ class CVAE:
         reconstruction_err = von_mises_log_likelihood_tf(y_true, mu_pred, kappa_pred)
         kl = gaussian_kl_divergence_tf(mu_encoder, log_var_encoder, mu_prior, log_var_prior)
         elbo = reconstruction_err - self.kl_weight * kl
-        print("\nkl_weight : %f\n" % self.kl_weight)
         return K.mean(-elbo)
 
     def _cvae_elbo_loss_np(self, y_true, y_pred):
@@ -319,7 +318,7 @@ class CVAE:
 
             return preds
 
-    def evaluate(self, x, ytrue_deg, data_part, n_samples=10, verbose=1,
+    def evaluate(self, x, ytrue_deg, data_part, n_samples=50, verbose=1,
                  return_per_image=False):
 
         ytrue_bit = deg2bit(ytrue_deg)
@@ -372,6 +371,48 @@ class CVAE:
         return results
 
     def pdf(self, x, x_vals, n_samples=10):
+        """ Compute probability density function on a circle given images
+
+        Parameters
+        ----------
+        x: numpy array of shape [n_images, image_width, image_height, n_channels]
+            angles in biternion (cos, sin) representation that will be used to compute likelihood
+
+        x_vals: numpy array of shape [n_points]
+            angles (in rads) at which pdf values were computed
+
+        Returns
+        -------
+
+        pdfs: numpy array of shape [n_images, n_samples, n_points]
+            array containing pdf values for each CVAE sample on circle [0, 2pi] for each values
+
+        acc_pdf: numpy array of shape [n_images, n_points]
+            array containing accumulated pdf value on circle [0, 2pi] for each values
+        """
+
+        n_images = x.shape[0]
+
+        x_vals_tiled = np.ones(n_images)
+
+        decoder_preds = self.get_multiple_decoder_predictions(x, n_samples=n_samples)
+
+        vm_pdfs = np.zeros([n_images, n_samples, len(x_vals)])
+
+        for xid, xval in enumerate(x_vals):
+
+            for sid in range(0, n_samples):
+
+                x_bit = rad2bit(x_vals_tiled*xval)
+
+                vm_pdfs[:, sid, xid] = np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit,
+                                                                          decoder_preds['mu_bit'][:, sid, :],
+                                                                          decoder_preds['kappa'][:, sid])))
+
+        acc_pdf = np.mean(vm_pdfs, axis=1)
+        return vm_pdfs, acc_pdf
+
+    def pdf_importance(self, x, y_bit, x_vals, n_samples=10):
         """ Compute probability density function on a circle given images
 
         Parameters
