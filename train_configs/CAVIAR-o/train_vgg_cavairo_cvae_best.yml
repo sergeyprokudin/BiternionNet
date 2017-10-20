@@ -17,6 +17,6 @@ beta1: 0.9
 beta2: 0.999
 epsilon: 1.0e-8
 conv_dropout: 0.2
-fc_dropout: 0.2
+fc_dropout: 0.5
 vgg_fc_layer_size: 32
 cvae_fc_layer_size: 512
