@@ -6,18 +6,17 @@ experiment_name: 'vggbit_likelihood'
 canonical_split: True
 model_type: bivgg
 loss_type: vm_likelihood
-n_epochs: 300
+n_epochs: 1000
 val_check_period: 128 #32
 patience: 1000
 n_trials: 50
-random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
-#n_hidden_units: 10
-#batch_size: 23
-#learning_rate: 0.000036
-#beta1: 0.9
-#beta2: 0.999
-#epsilon: 1.0e-8
-#conv_dropout: 0.2
-#fc_dropout: 0.5
-#vgg_fc_layer_size: 512
-#cvae_fc_layer_size: 512
+random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
+batch_size: 32
+learning_rate: 0.001
+beta1: 0.9
+beta2: 0.999
+epsilon: 1.0e-7
+conv_dropout: 0.2
+fc_dropout: 0.5
+vgg_fc_layer_size: 512
+cvae_fc_layer_size: 512
