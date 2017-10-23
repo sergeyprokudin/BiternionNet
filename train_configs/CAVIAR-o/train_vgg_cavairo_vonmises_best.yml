@@ -8,7 +8,7 @@ model_type: bivgg
 loss_type: von_mises
 predict_kappa: False # valid for bivgg+vm_likelihood loss only
 fixed_kappa_value: 25
-n_epochs: 200
+n_epochs: 300
 val_check_period: 128 #32
 patience: 1000
 n_trials: 50
