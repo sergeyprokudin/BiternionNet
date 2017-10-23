@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml" afterPath="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/cvae.py" afterPath="$PROJECT_DIR$/models/cvae.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" afterPath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -30,23 +30,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="cvae.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cvae.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/cvae.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="218" column="48" selection-start-line="218" selection-start-column="48" selection-end-line="218" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.84638554">
+              <caret line="223" column="38" selection-start-line="223" selection-start-column="38" selection-end-line="223" selection-end-column="38" />
               <folding>
                 <element signature="e#7299#7898#0" expanded="false" />
                 <element signature="e#7958#8519#0" expanded="false" />
                 <element signature="e#8566#9107#0" expanded="false" />
-                <element signature="e#10261#10316#0" expanded="false" />
-                <element signature="e#10366#10421#0" expanded="false" />
-                <element signature="e#10490#10902#0" expanded="false" />
-                <element signature="e#10980#13340#0" expanded="false" />
-                <element signature="e#13419#14140#0" expanded="false" />
-                <element signature="e#14266#16360#0" expanded="false" />
-                <element signature="e#16414#17918#0" expanded="false" />
-                <element signature="e#17990#19494#0" expanded="false" />
+                <element signature="e#10562#10617#0" expanded="false" />
+                <element signature="e#10667#10722#0" expanded="false" />
+                <element signature="e#10791#11203#0" expanded="false" />
+                <element signature="e#11281#13641#0" expanded="false" />
+                <element signature="e#13720#14441#0" expanded="false" />
+                <element signature="e#14567#16661#0" expanded="false" />
+                <element signature="e#16715#18219#0" expanded="false" />
+                <element signature="e#18291#19795#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -76,7 +76,7 @@
         <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-11.769231">
-              <caret line="18" column="17" selection-start-line="11" selection-start-column="0" selection-end-line="21" selection-end-column="23" />
+              <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -92,10 +92,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_vgg_vmmix_best.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train_vgg_vmmix_best.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47962382">
+            <state vertical-scroll-proportion="-11.769231">
               <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
               <folding />
             </state>
@@ -174,10 +174,10 @@
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cavairo_likelihood_search.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cavairo_vmmix_best.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml" />
-        <option value="$PROJECT_DIR$/models/cvae.py" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cvae_best.yml" />
-        <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml" />
+        <option value="$PROJECT_DIR$/models/cvae.py" />
+        <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
       </list>
     </option>
   </component>
@@ -661,7 +661,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
           <url>file://$PROJECT_DIR$/models/cvae.py</url>
-          <line>317</line>
+          <line>325</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="python-line">
@@ -1044,23 +1044,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/cvae.py">
+    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="218" column="48" selection-start-line="218" selection-start-column="48" selection-end-line="218" selection-end-column="48" />
-          <folding>
-            <element signature="e#7299#7898#0" expanded="false" />
-            <element signature="e#7958#8519#0" expanded="false" />
-            <element signature="e#8566#9107#0" expanded="false" />
-            <element signature="e#10261#10316#0" expanded="false" />
-            <element signature="e#10366#10421#0" expanded="false" />
-            <element signature="e#10490#10902#0" expanded="false" />
-            <element signature="e#10980#13340#0" expanded="false" />
-            <element signature="e#13419#14140#0" expanded="false" />
-            <element signature="e#14266#16360#0" expanded="false" />
-            <element signature="e#16414#17918#0" expanded="false" />
-            <element signature="e#17990#19494#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="-11.769231">
+          <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.769231">
+          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1072,19 +1068,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml">
+    <entry file="file://$PROJECT_DIR$/models/cvae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.769231">
-          <caret line="18" column="17" selection-start-line="11" selection-start-column="0" selection-end-line="21" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47962382">
-          <caret line="18" column="12" selection-start-line="18" selection-start-column="12" selection-end-line="18" selection-end-column="12" />
-          <folding />
+        <state vertical-scroll-proportion="0.84638554">
+          <caret line="223" column="38" selection-start-line="223" selection-start-column="38" selection-end-line="223" selection-end-column="38" />
+          <folding>
+            <element signature="e#7299#7898#0" expanded="false" />
+            <element signature="e#7958#8519#0" expanded="false" />
+            <element signature="e#8566#9107#0" expanded="false" />
+            <element signature="e#10562#10617#0" expanded="false" />
+            <element signature="e#10667#10722#0" expanded="false" />
+            <element signature="e#10791#11203#0" expanded="false" />
+            <element signature="e#11281#13641#0" expanded="false" />
+            <element signature="e#13720#14441#0" expanded="false" />
+            <element signature="e#14567#16661#0" expanded="false" />
+            <element signature="e#16715#18219#0" expanded="false" />
+            <element signature="e#18291#19795#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
