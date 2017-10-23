@@ -5,8 +5,8 @@ data_path: 'data/CAVIAR-o.pkl.gz'
 experiment_name: 'vggbit_cvae'
 canonical_split: True
 model_type: cvae
-n_epochs: 500
+n_epochs: 200
 val_check_period: 128 #32
-patience: 100
+patience: 1000
 n_trials: 50
 random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
