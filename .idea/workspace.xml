@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml" afterPath="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -48,11 +49,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_vgg_cosine_best.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train_vgg_cosine_best.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4263323">
+            <state vertical-scroll-proportion="-10.461538">
               <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_vgg_vmmix_best.yml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.53291535">
+              <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -73,7 +84,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/utils/load_datasets.py" />
         <option value="$PROJECT_DIR$/train_scripts/IDIAP/pan/train_cvae_search.sub" />
         <option value="$PROJECT_DIR$/train_vgg.py" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_bivgg_cosine_idiap.yml" />
@@ -124,6 +134,7 @@
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cavairo_vmmix_best.yml" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cvae_best.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml" />
+        <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml" />
       </list>
     </option>
   </component>
@@ -1015,14 +1026,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.106583074">
-          <caret line="4" column="30" selection-start-line="4" selection-start-column="30" selection-end-line="4" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/models/cvae.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1043,8 +1046,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4263323">
+        <state vertical-scroll-proportion="-10.461538">
           <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_best.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.53291535">
+          <caret line="20" column="17" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
           <folding />
         </state>
       </provider>
