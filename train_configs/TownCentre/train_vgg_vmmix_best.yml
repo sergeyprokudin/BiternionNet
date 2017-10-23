@@ -13,9 +13,9 @@ patience: 1000
 n_trials: 5
 random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
 batch_size: 8
-n_components: 5 #5
+n_components: 10 #5
 learning_rate: 0.001
-beta1: 0.9
+beta1: 0.99
 beta2: 0.999
 epsilon: 1.0e-8
 conv_dropout: 0.2
