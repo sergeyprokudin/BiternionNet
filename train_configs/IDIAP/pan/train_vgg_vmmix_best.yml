@@ -8,13 +8,13 @@ model_type: vm_mixture
 loss_type: vm_likelihood
 fixed_kappa_value: 10
 n_epochs: 1000
-val_check_period: 32 #32
+val_check_period: 128 #32
 patience: 1000
-n_trials: 5
+n_trials: 50
 random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
 batch_size: 8
-n_components: 5 #5
-learning_rate: 0.001
+n_components: 20 #5
+learning_rate: 0.0001
 beta1: 0.9
 beta2: 0.999
 epsilon: 1.0e-8
