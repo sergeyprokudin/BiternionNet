@@ -1,6 +1,6 @@
 dataset: TownCentre # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
 net_output: pan # make sense for IDIAP only, possible choices: pan, tilt, roll
-root_log_dir: 'logs/TownCentre/cosine'
+root_log_dir: 'logs/TownCentre/vmmixture'
 data_path: 'data/TownCentre.pkl.gz'
 experiment_name: 'vggbit_vmmix_best'
 canonical_split: True
