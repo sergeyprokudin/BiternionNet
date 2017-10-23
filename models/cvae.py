@@ -214,18 +214,9 @@ class CVAE:
 
         self.full_model.fit([xtr, ytr_bit], [ytr_bit],
                             batch_size=batch_size,
-                            epochs=150,
+                            epochs=n_epochs,
                             validation_data=([xval, yval_bit], yval_bit),
                             callbacks=callbacks)
-
-        self.optimizer.lr = 0.0001
-
-        self.full_model.fit([xtr, ytr_bit], [ytr_bit],
-                            batch_size=batch_size,
-                            epochs=150,
-                            validation_data=([xval, yval_bit], yval_bit),
-                            callbacks=callbacks)
-
         return
 
     def save_weights(self, ckpt_path):
