@@ -1,10 +1,12 @@
 dataset: CAVIAR-o # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
 net_output: pan # make sense for IDIAP only, possible choices: pan, tilt, roll
-root_log_dir: 'logs/CAVIAR-o/cvae'
+root_log_dir: 'logs/CAVIAR-o/vm_mixture'
 data_path: 'data/CAVIAR-o.pkl.gz'
-experiment_name: 'vggbit_cvae_search'
+experiment_name: 'vm_mixture_search'
 canonical_split: True
-model_type: cvae
+model_type: vm_mixture
+loss_type: vm_likelihood
+fixed_kappa_value: 10
 n_epochs: 200
 val_check_period: 128 #32
 patience: 1000
