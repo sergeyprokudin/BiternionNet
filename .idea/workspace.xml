@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InferenceDemo.ipynb" afterPath="$PROJECT_DIR$/InferenceDemo.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_best.yml" afterPath="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_best.yml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -44,8 +41,8 @@
       <file leaf-file-name="train_vgg_cavairo_likelihood_best.yml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_best.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40117994">
-              <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+            <state vertical-scroll-proportion="0.20058997">
+              <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -1042,8 +1039,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_best.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40117994">
-          <caret line="16" column="12" selection-start-line="16" selection-start-column="12" selection-end-line="16" selection-end-column="12" />
+        <state vertical-scroll-proportion="0.20058997">
+          <caret line="8" column="14" selection-start-line="8" selection-start-column="14" selection-end-line="8" selection-end-column="14" />
           <folding />
         </state>
       </provider>
