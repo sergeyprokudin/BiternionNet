@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
-PROJECT_DIR="${SCRIPT_DIR}/../../../"
+PROJECT_DIR="${SCRIPT_DIR}/../../"
 PYENV="${PROJECT_DIR}/py_env"
 
 source "${PROJECT_DIR}/scripts/dbash.sh" || exit 1
@@ -20,4 +20,4 @@ source ${PYENV}/bin/activate
 
 cd ${PROJECT_DIR}
 
-python "${PROJECT_DIR}/train.py" "${PROJECT_DIR}/train_configs/IDIAP/pan/train_bivgg_learned_kappa_idiap.yml"
+python "${PROJECT_DIR}/train.py" "${PROJECT_DIR}/train_configs/TownCentre/train_vgg_vmmix_search.yml"

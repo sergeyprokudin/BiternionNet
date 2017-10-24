@@ -1,8 +1,8 @@
 executable = /bin/bash
-arguments = train_bivgg_learn_kappa_search.sh
-error = train_bivgg_learn_kappa_search.job.err
-output = train_bivgg_learn_kappa_search.job.out
-log = train_bivgg_learn_kappa_search.job.log
+arguments = train_vmmix_search.sh
+error = train_vmmix_search.job.err
+output = train_vmmix_search.job.out
+log = train_vmmix_search.job.log
 request_memory = 10000
 request_gpus = 1
 request_cpus = 1
