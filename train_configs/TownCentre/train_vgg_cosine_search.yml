@@ -6,9 +6,9 @@ experiment_name: 'vggbit_cosine_best'
 canonical_split: True
 model_type: bivgg
 loss_type: cosine
-n_epochs: 200
+n_epochs: 1000
 val_check_period: 128 #32
-patience: 1000
+patience: 50
 n_trials: 50
 random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
 batch_size: 32

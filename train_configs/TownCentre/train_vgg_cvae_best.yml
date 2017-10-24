@@ -6,17 +6,17 @@ experiment_name: 'vggbit_cvae_best'
 canonical_split: True
 model_type: cvae
 n_epochs: 1000
-val_check_period: 128 #32
-patience: 1000
+val_check_period: 32 #32
+patience: 100
 n_trials: 5
 random_hyp_search: False #if True, ignore config params and perform random search of hyperparameters
-n_hidden_units: 8 #8
-batch_size: 32
-learning_rate: 0.001
-beta1: 0.99
-beta2: 0.999
+n_hidden_units: 5 #8
+batch_size: 7
+learning_rate: 0.00026
+beta1: 0.41
+beta2: 0.9998
 epsilon: 1.0e-7
-conv_dropout: 0.2
-fc_dropout: 0.5
-vgg_fc_layer_size: 512
+conv_dropout: 0.7
+fc_dropout: 0.07
+vgg_fc_layer_size: 215
 cvae_fc_layer_size: 512
