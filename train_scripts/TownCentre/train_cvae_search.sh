@@ -20,4 +20,4 @@ source ${PYENV}/bin/activate
 
 cd ${PROJECT_DIR}
 
-python "${PROJECT_DIR}/train.py" "${PROJECT_DIR}/train_configs/TownCentre/train_cvae_towncentre.yml"
+python "${PROJECT_DIR}/train.py" "${PROJECT_DIR}/train_configs/TownCentre/train_vgg_cvae_search.yml"
