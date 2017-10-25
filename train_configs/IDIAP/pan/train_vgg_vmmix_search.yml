@@ -1,4 +1,4 @@
-dataset: TownCentre # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
+dataset: IDIAP # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
 net_output: pan # make sense for IDIAP only, possible choices: pan, tilt, roll
 root_log_dir: 'logs/IDIAP/pan/vm_mixture'
 data_path: 'data//IDIAP.pkl'
