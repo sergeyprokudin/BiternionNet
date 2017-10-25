@@ -1,0 +1,12 @@
+executable = /bin/bash
+arguments = train_cosine_search.sh
+error = train_cosine_search.job.err
+output = train_cosine_search.job.out
+log = train_cosine_search.job.log
+request_memory = 10000
+request_gpus = 1
+request_cpus = 1
+MaxTime = 648000
+periodic_hold = (CurrentTime - JobCurrentStartDate) >= $(MaxTime)
+periodic_hold_reason = "Job runtime exceeded"
+queue 1
