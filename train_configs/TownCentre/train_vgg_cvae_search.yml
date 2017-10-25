@@ -6,7 +6,7 @@ experiment_name: 'vggbit_cvae_search'
 canonical_split: True
 model_type: cvae
 n_epochs: 1000
-val_check_period: 128 #32
-patience: 50
+val_check_period: 64 #32
+patience: 100
 n_trials: 50
 random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
