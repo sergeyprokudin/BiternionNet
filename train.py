@@ -261,9 +261,9 @@ def main():
 
         trial_hyp_params = get_trial_hyp_params(hyp_params, tid)
 
-        trial_best_ckpt_path = os.path.join(trial_dir, 'model.best.weights.hdf5' % tid)
+        trial_best_ckpt_path = os.path.join(trial_dir, 'model.best.weights.hdf5')
         trial_hyp_params['ckpt_path'] = trial_best_ckpt_path
-        trial_hyp_params['hyp_yaml_path'] = os.path.join(trial_dir, 'model.best.params.yml' % tid)
+        trial_hyp_params['hyp_yaml_path'] = os.path.join(trial_dir, 'model.best.params.yml')
         save_dict(trial_hyp_params, trial_hyp_params['hyp_yaml_path'])
 
         keras_callbacks = define_callbacks(config=config,
