@@ -36,9 +36,9 @@ def generate_hyper_params(n_trials, model_type):
     hyp_params['fc_dropout'] = np.random.rand(n_trials)
 
     if model_type == 'vm_mixture':
-        hyp_params['n_components'] = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=4)
+        hyp_params['n_components'] = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=6)
     if model_type == 'cvae':
-        hyp_params['n_hidden_units'] = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=4)
+        hyp_params['n_hidden_units'] = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=6)
 
     hyp_params['vgg_fc_layer_size'] = ht.sample_exp_int(n_trials, base=2, min_factor=5, max_factor=10)
     hyp_params['cvae_fc_layer_size'] = ht.sample_exp_int(n_trials, base=2, min_factor=5, max_factor=10)
@@ -261,9 +261,9 @@ def main():
 
         trial_hyp_params = get_trial_hyp_params(hyp_params, tid)
 
-        trial_best_ckpt_path = os.path.join(trial_dir, 'model.trial_%d.best.weights.hdf5' % tid)
+        trial_best_ckpt_path = os.path.join(trial_dir, 'model.best.weights.hdf5' % tid)
         trial_hyp_params['ckpt_path'] = trial_best_ckpt_path
-        trial_hyp_params['hyp_yaml_path'] = os.path.join(trial_dir, 'model.trial_%d.params.yml' % tid)
+        trial_hyp_params['hyp_yaml_path'] = os.path.join(trial_dir, 'model.best.params.yml' % tid)
         save_dict(trial_hyp_params, trial_hyp_params['hyp_yaml_path'])
 
         keras_callbacks = define_callbacks(config=config,

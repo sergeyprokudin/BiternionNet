@@ -244,7 +244,7 @@ class CVAE:
 
         return cvae_mu_preds, cvae_kappa_preds
 
-    def get_multiple_predictions(self, x, y_bit, n_samples=5):
+    def get_multiple_predictions(self, x, y_bit, n_samples=10, batch_size=512):
 
             n_points = x.shape[0]
 
@@ -259,7 +259,7 @@ class CVAE:
             kappa_preds_dec = np.zeros([n_points, n_samples, 1])
 
             for sid in range(0, n_samples):
-                preds = self.full_model.predict([x, y_bit])
+                preds = self.full_model.predict([x, y_bit], batch_size=batch_size)
                 mu_prior = preds[:, 0:self.n_u]
                 log_sigma_prior = preds[:, self.n_u:self.n_u*2]
                 mu_encoder = preds[:, self.n_u*2:self.n_u*3]
@@ -315,13 +315,15 @@ class CVAE:
             return preds
 
     def evaluate(self, x, ytrue_deg, data_part, n_samples=50, verbose=1,
-                 return_per_image=False):
+                 return_per_image=False, batch_size=512):
 
         ytrue_bit = deg2bit(ytrue_deg)
 
         results = dict()
 
-        preds = self.get_multiple_predictions(x, ytrue_bit, n_samples=n_samples)
+        preds = self.get_multiple_predictions(x, ytrue_bit,
+                                              n_samples=n_samples,
+                                              batch_size=batch_size)
 
         results['elbo'] = np.mean(preds['elbo'])
         results['elbo_sem'] = sem(np.mean(preds['elbo'], axis=1))
@@ -329,11 +331,11 @@ class CVAE:
         results['kl_div'] = np.mean(preds['kl_div'])
         results['kl_div_sem'] = sem(np.mean(preds['kl_div'], axis=1))
 
-        ypreds = self.decoder_model.predict(x)
-        ypreds_bit = ypreds[:, 0:2]
-        kappa_preds = ypreds[:, 2:]
-
-        ypreds_deg = bit2deg(ypreds_bit)
+        # ypreds = self.decoder_model.predict(x, batch_size=batch_size)
+        # ypreds_bit = ypreds[:, 0:2]
+        # kappa_preds = ypreds[:, 2:]
+        #
+        # ypreds_deg = bit2deg(ypreds_bit)
 
         loss = maad_from_deg(ytrue_deg, preds['maxutil_deg_dec'])
         results['maad_loss'] = np.mean(loss)
