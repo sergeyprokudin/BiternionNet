@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InferenceDemo.ipynb" afterPath="$PROJECT_DIR$/InferenceDemo.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_best.sub" afterPath="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_best.sub" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_search.sub" afterPath="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_search.sub" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_learned_kappa_best.sub" afterPath="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_learned_kappa_best.sub" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_learned_kappa_search.sub" afterPath="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_learned_kappa_search.sub" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/TownCentre/train_cosine_search.sub" afterPath="$PROJECT_DIR$/train_scripts/TownCentre/train_cosine_search.sub" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/TownCentre/train_cvae_search.sub" afterPath="$PROJECT_DIR$/train_scripts/TownCentre/train_cvae_search.sub" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/TownCentre/train_likelihood_search.sub" afterPath="$PROJECT_DIR$/train_scripts/TownCentre/train_likelihood_search.sub" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/TownCentre/train_vmmix_search.sub" afterPath="$PROJECT_DIR$/train_scripts/TownCentre/train_vmmix_search.sub" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -39,66 +46,91 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_vgg_cosine_search.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_search.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.8846154">
-              <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train_vgg_vmmix_search.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_search.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.8846154">
-              <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train_vgg_likelihood_search.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train_vgg_likelihood_search.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_likelihood_search.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5356551">
+            <state vertical-scroll-proportion="-12.423077">
               <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_vgg_cosine_best.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml">
+      <file leaf-file-name="train_cvae_search.sub" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_cvae_search.sub">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.115385">
-              <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train.py">
+      <file leaf-file-name="train_vmmix_search.sub" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_vmmix_search.sub">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="281" column="32" selection-start-line="281" selection-start-column="32" selection-end-line="281" selection-end-column="32" />
-              <folding>
-                <element signature="e#2973#3162#0" expanded="false" />
-                <element signature="e#3782#4078#0" expanded="false" />
-                <element signature="e#4139#4444#0" expanded="false" />
-                <element signature="e#4514#5402#0" expanded="false" />
-              </folding>
+              <caret line="8" column="15" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="15" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="vgg.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/models/vgg.py">
+      <file leaf-file-name="train_cvae_best.sub" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_best.sub">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="219" column="37" selection-start-line="219" selection-start-column="37" selection-end-line="219" selection-end-column="37" />
+              <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_cvae_search.sub" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_search.sub">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_learned_kappa_best.sub" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_scripts/CAVIAR-o/train_learned_kappa_best.sub">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_learned_kappa_search.sub" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/train_scripts/CAVIAR-o/train_learned_kappa_search.sub">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.21621622">
+              <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_cosine_search.sub" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_cosine_search.sub">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_likelihood_search.sub" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_likelihood_search.sub">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="8" column="15" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="15" />
               <folding />
             </state>
           </provider>
@@ -119,11 +151,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/utils/sampling.py" />
-        <option value="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_search.sh" />
-        <option value="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_search.sub" />
-        <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_cvae_idiap_best.yml" />
-        <option value="$PROJECT_DIR$/models/vgg_vmmix.py" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_cosine_best.yml" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_vmmix_best.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cavairo_cosine_search.yml" />
@@ -146,12 +173,9 @@
         <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_cvae_search.sh" />
         <option value="$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_search.yml" />
         <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_vmmix_search.sh" />
-        <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_vmmix_search.sub" />
         <option value="$PROJECT_DIR$/models/cvae.py" />
         <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_likelihood_search.sh" />
-        <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_likelihood_search.sub" />
         <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_cosine_search.sh" />
-        <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_cosine_search.sub" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_likelihood_best.yml" />
         <option value="$PROJECT_DIR$/train_scripts/IDIAP/pan/train_cvae_search.sh" />
         <option value="$PROJECT_DIR$/train_scripts/IDIAP/pan/train_vmmix_search.sh" />
@@ -170,6 +194,14 @@
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_search.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_search.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_likelihood_search.yml" />
+        <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_likelihood_search.sub" />
+        <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_cvae_search.sub" />
+        <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_vmmix_search.sub" />
+        <option value="$PROJECT_DIR$/train_scripts/TownCentre/train_cosine_search.sub" />
+        <option value="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_best.sub" />
+        <option value="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_search.sub" />
+        <option value="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_learned_kappa_best.sub" />
+        <option value="$PROJECT_DIR$/train_scripts/CAVIAR-o/train_learned_kappa_search.sub" />
       </list>
     </option>
   </component>
@@ -232,7 +264,43 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="utils" />
+              <option name="myItemId" value="train_scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="train_scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TownCentre" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BiternionNet" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="train_scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CAVIAR-o" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -599,34 +667,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_vonmises_best.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.5384617">
-          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_vmmix_best.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8846154">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/CAVIAR-o/train_vgg_cavairo_likelihood_best.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.230769">
-          <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/cvae_mod.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cvae_best.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.1923075">
@@ -673,13 +713,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_vmmix_search.sub">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -730,27 +763,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="90" selection-start-line="22" selection-start-column="90" selection-end-line="22" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_cosine_search.sub">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_cvae_search.sub">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_likelihood_search.sub">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -986,8 +998,72 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_likelihood_search.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5356551">
+        <state vertical-scroll-proportion="-12.423077">
           <caret line="19" column="18" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_cosine_search.sub">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_cvae_search.sub">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_likelihood_search.sub">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_scripts/TownCentre/train_vmmix_search.sub">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_best.sub">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_scripts/CAVIAR-o/train_cvae_search.sub">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_scripts/CAVIAR-o/train_learned_kappa_best.sub">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_scripts/CAVIAR-o/train_learned_kappa_search.sub">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21621622">
+          <caret line="8" column="15" selection-start-line="8" selection-start-column="15" selection-end-line="8" selection-end-column="15" />
           <folding />
         </state>
       </provider>

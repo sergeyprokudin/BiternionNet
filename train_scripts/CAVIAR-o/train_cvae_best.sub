@@ -6,7 +6,7 @@ log = train_caviaro_cvae.job.log
 request_memory = 10000
 request_gpus = 1
 request_cpus = 1
-MaxTime = 648000
+MaxTime = 43200
 periodic_hold = (CurrentTime - JobCurrentStartDate) >= $(MaxTime)
 periodic_hold_reason = "Job runtime exceeded"
 queue 1
