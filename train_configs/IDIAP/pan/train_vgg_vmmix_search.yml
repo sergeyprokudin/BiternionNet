@@ -7,7 +7,7 @@ canonical_split: True
 model_type: vm_mixture
 loss_type: vm_likelihood
 fixed_kappa_value: 10
-n_epochs: 1000
+n_epochs: 4000
 val_check_period: 64 #32
 patience: 200
 n_trials: 50
