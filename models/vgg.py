@@ -204,7 +204,7 @@ class BiternionVGG:
 
         self.model.load_weights(path)
 
-    def finetune_kappa(self, x, y_bit, max_kappa=1000.0, verbose=True):
+    def finetune_kappa(self, x, y_bit, max_kappa=1000.0, verbose=False):
         ytr_preds_bit = self.model.predict(x)[:, 0:2]
         kappa_vals = np.arange(0, max_kappa, 1.0)
         log_likelihoods = np.zeros(kappa_vals.shape)
