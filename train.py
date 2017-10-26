@@ -284,8 +284,9 @@ def main():
                   n_epochs=config['n_epochs'],
                   callbacks=keras_callbacks)
 
-        if not model.predict_kappa:
-            trial_hyp_params['best_kappa'] = model.fixed_kappa_value
+        if model_type == 'bivgg':
+            if not model.predict_kappa:
+                trial_hyp_params['best_kappa'] = model.fixed_kappa_value
 
         save_dict(trial_hyp_params, trial_hyp_params['hyp_yaml_path'])
 
