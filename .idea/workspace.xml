@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml" afterPath="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/InferenceDemo.ipynb" afterPath="$PROJECT_DIR$/InferenceDemo.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/vgg.py" afterPath="$PROJECT_DIR$/models/vgg.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train.py" afterPath="$PROJECT_DIR$/train.py" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -39,51 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_vgg_likelihood_search.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_likelihood_search.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.5384617">
-              <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train_vgg_vmmix_search.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_search.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.8846154">
-              <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train_vgg_cosine_best.yml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2819237">
-              <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train_vgg_cosine_search.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_search.yml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.1923075">
-              <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="train.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="270" column="30" selection-start-line="270" selection-start-column="30" selection-end-line="270" selection-end-column="30" />
+            <state vertical-scroll-proportion="0.7297297">
+              <caret line="288" column="8" selection-start-line="288" selection-start-column="8" selection-end-line="288" selection-end-column="8" />
               <folding>
                 <element signature="e#2973#3162#0" expanded="false" />
                 <element signature="e#3782#4078#0" expanded="false" />
@@ -98,37 +60,7 @@
         <entry file="file://$PROJECT_DIR$/models/vgg.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="220" column="0" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="caviar.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/caviar.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="towncentre.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/towncentre.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="47" column="28" selection-start-line="47" selection-start-column="28" selection-end-line="47" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="idiap.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils/idiap.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="61" column="25" selection-start-line="61" selection-start-column="25" selection-end-line="61" selection-end-column="25" />
+              <caret line="216" column="44" selection-start-line="216" selection-start-column="44" selection-end-line="216" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -193,13 +125,13 @@
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_cvae_search.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_likelihood_search.yml" />
         <option value="$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_vmmix_search.yml" />
-        <option value="$PROJECT_DIR$/models/vgg.py" />
-        <option value="$PROJECT_DIR$/train.py" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_search.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cvae_search.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_likelihood_search.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_search.yml" />
         <option value="$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml" />
+        <option value="$PROJECT_DIR$/models/vgg.py" />
+        <option value="$PROJECT_DIR$/train.py" />
       </list>
     </option>
   </component>
@@ -961,30 +893,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/vgg.py">
+    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_likelihood_search.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="220" column="0" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
+        <state vertical-scroll-proportion="-6.5384617">
+          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train.py">
+    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="270" column="30" selection-start-line="270" selection-start-column="30" selection-end-line="270" selection-end-column="30" />
-          <folding>
-            <element signature="e#2973#3162#0" expanded="false" />
-            <element signature="e#3782#4078#0" expanded="false" />
-            <element signature="e#4139#4444#0" expanded="false" />
-            <element signature="e#4514#5402#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="-6.5384617">
+          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_search.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25373134">
+          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_search.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.1923075">
+        <state vertical-scroll-proportion="0.31011608">
           <caret line="11" column="11" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="11" />
           <folding />
         </state>
@@ -998,27 +933,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_likelihood_search.yml">
+    <entry file="file://$PROJECT_DIR$/models/vgg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.5384617">
-          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="216" column="44" selection-start-line="216" selection-start-column="44" selection-end-line="216" selection-end-column="44" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_search.yml">
+    <entry file="file://$PROJECT_DIR$/train.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8846154">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2819237">
-          <caret line="10" column="11" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-          <folding />
+        <state vertical-scroll-proportion="0.7297297">
+          <caret line="288" column="8" selection-start-line="288" selection-start-column="8" selection-end-line="288" selection-end-column="8" />
+          <folding>
+            <element signature="e#2973#3162#0" expanded="false" />
+            <element signature="e#3782#4078#0" expanded="false" />
+            <element signature="e#4139#4444#0" expanded="false" />
+            <element signature="e#4514#5402#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

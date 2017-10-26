@@ -264,7 +264,7 @@ def main():
         trial_best_ckpt_path = os.path.join(trial_dir, 'model.best.weights.hdf5')
         trial_hyp_params['ckpt_path'] = trial_best_ckpt_path
         trial_hyp_params['hyp_yaml_path'] = os.path.join(trial_dir, 'model.best.params.yml')
-        save_dict(trial_hyp_params, trial_hyp_params['hyp_yaml_path'])
+
 
         keras_callbacks = define_callbacks(config=config,
                                            trial_dir=trial_dir,
@@ -286,6 +286,8 @@ def main():
 
         if not model.predict_kappa:
             trial_hyp_params['best_kappa'] = model.fixed_kappa_value
+
+        save_dict(trial_hyp_params, trial_hyp_params['hyp_yaml_path'])
 
         model.load_weights(trial_best_ckpt_path)
 
