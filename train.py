@@ -284,6 +284,9 @@ def main():
                   n_epochs=config['n_epochs'],
                   callbacks=keras_callbacks)
 
+        if not model.predict_kappa:
+            trial_hyp_params['best_kappa'] = model.fixed_kappa_value
+
         model.load_weights(trial_best_ckpt_path)
 
         print("\n evaluating model # %d" % tid)

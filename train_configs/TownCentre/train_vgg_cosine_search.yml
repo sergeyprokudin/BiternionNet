@@ -2,13 +2,13 @@ dataset: TownCentre # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
 net_output: pan # make sense for IDIAP only, possible choices: pan, tilt, roll
 root_log_dir: 'logs/TownCentre/cosine'
 data_path: 'data/TownCentre.pkl.gz'
-experiment_name: 'vggbit_cosine_best'
+experiment_name: 'vggbit_cosine_search'
 canonical_split: True
 model_type: bivgg
 loss_type: cosine
 fixed_kappa_value: 10
 n_epochs: 1000
 val_check_period: 128 #32
-patience: 100
+patience: 200
 n_trials: 50
 random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters

@@ -191,6 +191,9 @@ class BiternionVGG:
                        validation_data=(xval, yval_bit),
                        callbacks=callbacks)
 
+        if not self.predict_kappa:
+            self.finetune_kappa(xval, yval_bit)
+
         return
 
     def save_weights(self, path):
