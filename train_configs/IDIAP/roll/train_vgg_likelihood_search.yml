@@ -1,0 +1,13 @@
+dataset: IDIAP # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
+net_output: roll # make sense for IDIAP only, possible choices: pan, tilt, roll
+root_log_dir: 'logs/IDIAP/pan/likelihood'
+data_path: 'data//IDIAP.pkl'
+experiment_name: 'vggbit_likelihood_search'
+canonical_split: True
+model_type: bivgg
+loss_type: vm_likelihood
+n_epochs: 4000
+val_check_period: 64 #32
+patience: 200
+n_trials: 50
+random_hyp_search: True #if True, ignore config params and perform random search of hyperparameters
