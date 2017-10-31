@@ -27,7 +27,7 @@ def load_config(config_path):
 def generate_hyper_params(n_trials, model_type):
 
     hyp_params = dict()
-    hyp_params['learning_rate'] = ht.sample_exp_float(n_trials, base=10, min_factor=-3, max_factor=-5)
+    hyp_params['learning_rate'] = ht.sample_exp_float(n_trials, base=10, min_factor=-1, max_factor=-5)
     hyp_params['batch_size'] = ht.sample_exp_int(n_trials, base=2, min_factor=1, max_factor=5)
     hyp_params['beta1'] = np.random.rand(n_trials)
     hyp_params['beta2'] = 1-ht.sample_exp_float(n_trials, base=10, min_factor=-4, max_factor=-2)
