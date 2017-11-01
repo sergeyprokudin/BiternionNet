@@ -1,6 +1,6 @@
 dataset: IDIAP # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
-net_output: roll # make sense for IDIAP only, possible choices: pan, tilt, roll
-root_log_dir: 'logs/IDIAP/pan/cosine'
+net_output: tilt # make sense for IDIAP only, possible choices: pan, tilt, roll
+root_log_dir: 'logs/IDIAP/tilt/cosine'
 data_path: 'data//IDIAP.pkl'
 experiment_name: 'vggbit_cosine_search'
 canonical_split: True

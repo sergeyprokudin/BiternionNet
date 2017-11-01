@@ -1,6 +1,6 @@
 dataset: IDIAP # TownCentre, IDIAP, CAVIAR-o, CAVIAR-c
 net_output: roll # make sense for IDIAP only, possible choices: pan, tilt, roll
-root_log_dir: 'logs/IDIAP/pan/likelihood'
+root_log_dir: 'logs/IDIAP/roll/likelihood'
 data_path: 'data//IDIAP.pkl'
 experiment_name: 'vggbit_likelihood_search'
 canonical_split: True
