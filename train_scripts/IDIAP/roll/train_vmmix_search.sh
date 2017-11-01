@@ -20,4 +20,4 @@ source ${PYENV}/bin/activate
 
 cd ${PROJECT_DIR}
 
-python "${PROJECT_DIR}/train.py" "${PROJECT_DIR}/train_configs/IDIAP/pan/train_vgg_vmmix_search.yml"
+python "${PROJECT_DIR}/train.py" "${PROJECT_DIR}/train_configs/IDIAP/roll/train_vgg_vmmix_search.yml"
