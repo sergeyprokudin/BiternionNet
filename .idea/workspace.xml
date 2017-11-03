@@ -2,16 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6c252e1-6f7f-4dc7-8828-c3dff243eff0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/IDIAP/roll/train_cosine_search.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/roll/train_cosine_search.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/IDIAP/roll/train_cvae_best.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/roll/train_cvae_best.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/IDIAP/roll/train_cvae_search.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/roll/train_cvae_search.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/IDIAP/roll/train_likelihood_search.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/roll/train_likelihood_search.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/IDIAP/roll/train_vmmix_search.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/roll/train_vmmix_search.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_cosine_search.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_cosine_search.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_cvae_best.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_cvae_best.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_cvae_search.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_cvae_search.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_likelihood_search.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_likelihood_search.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_vmmix_search.sh" afterPath="$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_vmmix_search.sh" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.gitignore" afterPath="$USER_HOME$/knet/.gitignore" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/.idea/workspace.xml" afterPath="$USER_HOME$/knet/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" afterPath="$USER_HOME$/knet/experiments/faster_rcnn_knet_finetune/model/eval.py" />
@@ -38,36 +28,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="train_cvae_search.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_scripts/IDIAP/roll/train_cvae_search.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="67" selection-start-line="22" selection-start-column="67" selection-end-line="22" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train_likelihood_search.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_scripts/IDIAP/roll/train_likelihood_search.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="67" selection-start-line="22" selection-start-column="67" selection-end-line="22" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="train_vmmix_search.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_scripts/IDIAP/roll/train_vmmix_search.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="67" selection-start-line="22" selection-start-column="67" selection-end-line="22" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="train_cosine_search.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_cosine_search.sh">
           <provider selected="true" editor-type-id="text-editor">
@@ -108,31 +68,71 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_vmmix_search.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="train_vmmix_search.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_vmmix_search.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5945946">
+            <state vertical-scroll-proportion="0.0">
               <caret line="22" column="66" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_cosine_search.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_scripts/IDIAP/roll/train_cosine_search.sh">
+      <file leaf-file-name="train_vgg.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_vgg.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="73" selection-start-line="22" selection-start-column="73" selection-end-line="22" selection-end-column="73" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train_cvae_best.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/train_scripts/IDIAP/roll/train_cvae_best.sh">
+      <file leaf-file-name="cvae.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/cvae.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="22" column="73" selection-start-line="22" selection-start-column="73" selection-end-line="22" selection-end-column="73" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="e#7299#7898#0" expanded="false" />
+                <element signature="e#7958#8519#0" expanded="false" />
+                <element signature="e#8566#9107#0" expanded="false" />
+                <element signature="e#10260#10315#0" expanded="false" />
+                <element signature="e#10365#10420#0" expanded="false" />
+                <element signature="e#10489#10901#0" expanded="false" />
+                <element signature="e#13458#14179#0" expanded="false" />
+                <element signature="e#16624#18128#0" expanded="false" />
+                <element signature="e#18200#19704#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vgg.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/models/vgg.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_vgg_cosine_search.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_cosine_search.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.9230769">
+              <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_vgg_cvae_search.yml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_cvae_search.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.25373134">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -266,7 +266,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="train_scripts" />
+              <option name="myItemId" value="train_configs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -280,17 +280,13 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="train_scripts" />
+              <option name="myItemId" value="train_configs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="IDIAP" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="tilt" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -302,7 +298,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="train_scripts" />
+              <option name="myItemId" value="train_configs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -324,25 +320,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="train_scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="IDIAP" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BiternionNet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="BiternionNet" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="train_configs" />
+              <option name="myItemId" value="models" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -645,30 +623,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/pan/train_vgg_likelihood_search.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.6153846">
-          <caret line="4" column="42" selection-start-line="4" selection-start-column="42" selection-end-line="4" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_best.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.115385">
-          <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_cosine_search.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.8846154">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/TownCentre/train_vgg_vmmix_search.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.8846154">
@@ -874,24 +828,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_cosine_search.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.9230769">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-          <folding>
-            <marker date="1509537727000" expanded="true" signature="67:71" placeholder="r" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_cvae_search.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3076923">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_likelihood_search.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.9230769">
@@ -1030,8 +966,58 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/train_scripts/IDIAP/tilt/train_vmmix_search.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5945946">
+        <state vertical-scroll-proportion="0.0">
           <caret line="22" column="66" selection-start-line="22" selection-start-column="66" selection-end-line="22" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_vgg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/cvae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#7299#7898#0" expanded="false" />
+            <element signature="e#7958#8519#0" expanded="false" />
+            <element signature="e#8566#9107#0" expanded="false" />
+            <element signature="e#10260#10315#0" expanded="false" />
+            <element signature="e#10365#10420#0" expanded="false" />
+            <element signature="e#10489#10901#0" expanded="false" />
+            <element signature="e#13458#14179#0" expanded="false" />
+            <element signature="e#16624#18128#0" expanded="false" />
+            <element signature="e#18200#19704#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/vgg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_cosine_search.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9230769">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/train_configs/IDIAP/roll/train_vgg_cvae_search.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.25373134">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding />
         </state>
       </provider>
