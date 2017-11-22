@@ -31,7 +31,7 @@ def load_dataset_old(config):
     return (xtr, ytr_bit, ytr_deg), (xval, yval_bit, yval_deg), (xte, yte_bit, yte_deg)
 
 
-def load_dataset(name, data_path, part=None):
+def load_dataset(name, data_path, part=None, return_info=False):
 
     if name == 'IDIAP':
 
@@ -44,11 +44,11 @@ def load_dataset(name, data_path, part=None):
 
     elif (name == 'CAVIAR-o') or (name == 'CAVIAR-c'):
 
-        (xtr, ytr_deg), (xval, yval_deg), (xte, yte_deg) = load_caviar(data_path)
+        (xtr, ytr_deg, info_tr), (xval, yval_deg, info_val), (xte, yte_deg, info_te) = load_caviar(data_path)
 
     elif name == 'TownCentre':
 
-        (xtr, ytr_deg), (xval, yval_deg), (xte, yte_deg) = load_towncentre(data_path)
+        (xtr, ytr_deg, info_tr), (xval, yval_deg, info_val), (xte, yte_deg, info_te) = load_towncentre(data_path)
 
     else:
         raise ValueError("invalid dataset name!")
@@ -57,4 +57,7 @@ def load_dataset(name, data_path, part=None):
     yval_bit = deg2bit(yval_deg)
     yte_bit = deg2bit(yte_deg)
 
-    return (xtr, ytr_bit, ytr_deg), (xval, yval_bit, yval_deg), (xte, yte_bit, yte_deg)
+    if return_info:
+        return (xtr, ytr_bit, ytr_deg, info_tr), (xval, yval_bit, yval_deg, info_val), (xte, yte_bit, yte_deg, info_te)
+    else:
+        return (xtr, ytr_bit, ytr_deg), (xval, yval_bit, yval_deg), (xte, yte_bit, yte_deg)

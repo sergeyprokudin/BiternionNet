@@ -211,7 +211,7 @@ class BiternionVGGMixture:
 
         acc_pdf = np.sum((component_probs*vm_pdfs), axis=1)
 
-        return vm_pdfs, acc_pdf
+        return vm_pdfs, acc_pdf, component_probs
 
     def _von_mises_mixture_log_likelihood_np(self, y_true, y_pred):
 

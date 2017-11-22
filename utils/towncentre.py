@@ -39,9 +39,11 @@ def prepare_data(x, y):
 def load_towncentre(data_path,
                     val_test_split=0.1,
                     canonical_split=True,
-                    verbose=0):
+                    verbose=1):
 
     x, y, img_names = pickle.load(gzip.open(data_path, 'rb'))
+
+    img_names = np.asarray(img_names)
 
     x, y = prepare_data(x, y)
     if canonical_split:
@@ -61,16 +63,16 @@ def load_towncentre(data_path,
     ixval = np.where(np.in1d(person_ids, val_pids))[0]
     ixte = np.where(np.in1d(person_ids, test_pids))[0]
 
-    xtr, ytr = x[ixtr], y[ixtr]
-    xval, yval = x[ixval], y[ixval]
-    xte, yte = x[ixte], y[ixte]
+    xtr, ytr, img_names_tr = x[ixtr], y[ixtr], img_names[ixtr]
+    xval, yval, img_names_val = x[ixval], y[ixval], img_names[ixval]
+    xte, yte, img_names_te = x[ixte], y[ixte], img_names[ixte]
 
     if verbose:
         print("Number of train samples: %s" % xtr.shape[0])
         print("Number of validation samples: %s" % xval.shape[0])
         print("Number of test samples: %s" % xte.shape[0])
 
-    return (xtr, ytr), (xval, yval), (xte, yte)
+    return (xtr, ytr, img_names_tr), (xval, yval, img_names_val), (xte, yte, img_names_te)
 
 
 def aug_data(x, y_deg, n_times=2, randomize_labels=True):
