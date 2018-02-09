@@ -265,7 +265,6 @@ def main():
         trial_hyp_params['ckpt_path'] = trial_best_ckpt_path
         trial_hyp_params['hyp_yaml_path'] = os.path.join(trial_dir, 'model.best.params.yml')
 
-
         keras_callbacks = define_callbacks(config=config,
                                            trial_dir=trial_dir,
                                            ckpt_path=trial_best_ckpt_path,
