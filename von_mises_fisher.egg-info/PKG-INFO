@@ -1,0 +1,12 @@
+Metadata-Version: 1.1
+Name: von-mises-fisher
+Version: 0.1
+Summary: Model your data with the n-dimensional Von Mises-Fisher distribution
+Home-page: https://github.com/lmc2179/von_mises_fisher
+Author: Louis Cialdella
+Author-email: louiscialdella@gmail.com
+License: UNKNOWN
+Description: UNKNOWN
+Keywords: unit sphere,probability,distribution,von mises,fisher
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3 :: Only
