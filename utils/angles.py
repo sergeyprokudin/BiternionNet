@@ -32,3 +32,14 @@ def bit2deg_multi(angles_bit):
     deg_angles = np.asarray([bit2deg(angles_bit[:, i, :]) for i in range(0, angles_bit.shape[1])]).T
 
     return deg_angles
+
+
+def cart_to_spherical(xyz):
+
+    r_phi_theta = np.zeros(xyz.shape)
+    xy = xyz[:, 0]**2 + xyz[:, 1]**2
+    r_phi_theta[:, 0] = np.sqrt(xy + xyz[:, 2]**2)
+    r_phi_theta[:, 1] = np.arctan2( xyz[:, 1], xyz[:, 0]) # for elevation angle defined from XY-plane up
+    r_phi_theta[:, 2] = np.arccos(xyz[:, 2]) #theta = arccos(z/r)
+
+    return r_phi_theta
