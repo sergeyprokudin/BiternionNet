@@ -16,6 +16,7 @@ utils/hyper_tune.py
 utils/idiap.py
 utils/load_datasets.py
 utils/losses.py
+utils/mpigaze.py
 utils/sampling.py
 utils/towncentre.py
 von_mises_fisher/__init__.py

@@ -21,7 +21,7 @@ def vgg_model(n_outputs=1, final_layer=False, l2_normalize_final=False,
               image_height=50, image_width=50, n_channels=3,
               conv_dropout_val=0.2, fc_dropout_val=0.5, fc_layer_size=512):
 
-    model = Sequential()
+    model = Sequential(name='VGG')
 
     model.add(Conv2D(24, kernel_size=(3, 3),
                      activation=None,

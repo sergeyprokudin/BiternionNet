@@ -9,6 +9,7 @@ utils/hyper_tune.py
 utils/idiap.py
 utils/load_datasets.py
 utils/losses.py
+utils/mpigaze.py
 utils/sampling.py
 utils/towncentre.py
 utils.egg-info/PKG-INFO
