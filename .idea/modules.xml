@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/BiternionNet.iml" filepath="$PROJECT_DIR$/.idea/BiternionNet.iml" />
       <module fileurl="file://$USER_HOME$/biternion_net_cluster_logs/.idea/biternion_net_cluster_logs.iml" filepath="$USER_HOME$/biternion_net_cluster_logs/.idea/biternion_net_cluster_logs.iml" />
-      <module fileurl="file://$USER_HOME$/knet/.idea/knet.iml" filepath="$USER_HOME$/knet/.idea/knet.iml" />
     </modules>
   </component>
 </project>
