@@ -1,0 +1,12 @@
+executable = /bin/bash
+arguments = start_notebook_cluster.sh
+error = start_notebook_cluster.job.err
+output = start_notebook_cluster.job.out
+log = start_notebook_cluster.job.log
+request_memory = 10000
+request_gpus = 1
+request_cpus = 1
+MaxTime = 648000
+periodic_hold = (CurrentTime - JobCurrentStartDate) >= $(MaxTime)
+periodic_hold_reason = "Job runtime exceeded"
+queue 1
