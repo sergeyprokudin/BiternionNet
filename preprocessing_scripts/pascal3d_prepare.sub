@@ -1,0 +1,12 @@
+executable = /bin/bash
+arguments = pascal3d_prepare.sh
+error = pascal3d_prepare.job.err
+output = pascal3d_prepare.job.out
+log = pascal3d_prepare.job.log
+request_memory = 100000
+request_gpus = 1
+request_cpus = 1
+MaxTime = 648000
+periodic_hold = (CurrentTime - JobCurrentStartDate) >= $(MaxTime)
+periodic_hold_reason = "Job runtime exceeded"
+queue 1
