@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+source ~/.bashrc
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 PYENV="${SCRIPT_DIR}/../py_env"

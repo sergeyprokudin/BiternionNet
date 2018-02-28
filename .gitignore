@@ -5,6 +5,7 @@ py_env_old
 .idea/workspace.xml
 .idea
 logs
+logs/
 .job.
 logs
 biternion_net_cluster_logs
