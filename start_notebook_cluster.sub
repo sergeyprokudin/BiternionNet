@@ -1,5 +1,5 @@
 executable = /bin/bash
-arguments = start_notebook_cluster.sh
+arguments = scripts/start_notebook_cluster.sh
 error = start_notebook_cluster.job.err
 output = start_notebook_cluster.job.out
 log = start_notebook_cluster.job.log
