@@ -106,10 +106,10 @@ def prepare_pascal3d(data_path, out_path, n_max_images=10000):
     test_real_det_labels_paths = [os.path.join(test_real_det_labels_global_path, (classes[key]+'.txt')) for key in classes.keys()]
     _load_data_part(test_real_det_labels_paths, 'test_real_frcnn_boxes')
 
-    print("Loading synthetic test images..")
-    test_syn_labels_global_path = os.path.join(data_path, 'syn_lmdbs')
-    test_syn_labels_paths = [os.path.join(test_syn_labels_global_path, (classes[key]+'_test.txt')) for key in classes.keys()]
-    _load_data_part(test_syn_labels_paths, 'test_syn_boxes')
+    # print("Loading synthetic test images..")
+    # test_syn_labels_global_path = os.path.join(data_path, 'syn_lmdbs')
+    # test_syn_labels_paths = [os.path.join(test_syn_labels_global_path, (classes[key]+'_test.txt')) for key in classes.keys()]
+    # _load_data_part(test_syn_labels_paths, 'test_syn_boxes')
 
     pascal_db.close()
 
@@ -118,12 +118,12 @@ def prepare_pascal3d(data_path, out_path, n_max_images=10000):
 
 def main():
 
-    db_path = '../data/pascal3d_real_synthetic10k.h5'
+    db_path = '../data/pascal3d_real_synthetic100k.h5'
 
     if os.path.exists(db_path):
         os.remove(db_path)
 
-    prepare_pascal3d(DEFAULT_DATA_PATH, db_path, n_max_images=10000)
+    prepare_pascal3d(DEFAULT_DATA_PATH, db_path, n_max_images=100000)
 
     return
 
