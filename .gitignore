@@ -6,7 +6,7 @@ py_env_old
 .idea
 logs
 logs/
-.job.
+*.job.*
 logs
 biternion_net_cluster_logs
 pretrained_models
