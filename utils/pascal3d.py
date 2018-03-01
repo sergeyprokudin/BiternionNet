@@ -61,7 +61,7 @@ def prepare_pascal3d(data_path, out_path, n_max_images=10000):
 
         if n_samples > n_max_images:
             samples = np.random.choice(len(labels), n_max_images, replace=False)
-            labels = labels[samples]
+            labels = labels.iloc[samples]
 
         labels_np = np.asarray(labels[['class_id', 'azimuth', 'elevation', 'tilt']])
 
