@@ -118,12 +118,12 @@ def prepare_pascal3d(data_path, out_path, n_max_images=10000):
 
 def main():
 
-    db_path = '../data/pascal3d_real_synthetic1.h5'
+    db_path = '../data/pascal3d_real_synthetic10k.h5'
 
     if os.path.exists(db_path):
         os.remove(db_path)
 
-    prepare_pascal3d(DEFAULT_DATA_PATH, db_path)
+    prepare_pascal3d(DEFAULT_DATA_PATH, db_path, n_max_images=10000)
 
     return
 
