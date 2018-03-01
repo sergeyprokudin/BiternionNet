@@ -9,7 +9,7 @@ from keras.preprocessing import image
 DEFAULT_DATA_PATH = '/home/sprokudin/RenderForCNN/data/'
 
 
-def prepare_pascal3d(data_path, out_path):
+def prepare_pascal3d(data_path, out_path, n_max_images=10000):
     """Converts cropped images and orientation annotation from Pascal3D+ into h5 database.
 
     !!! Follow data preprocessing steps described here first:
@@ -56,6 +56,12 @@ def prepare_pascal3d(data_path, out_path):
         print("loading labels from path : %s" % lpath)
         labels = pd.read_csv(lpath, delimiter=' ', header=None,
                              names=['image_path', 'class_id', 'azimuth', 'elevation', 'tilt'])
+
+        n_samples = len(labels)
+
+        if n_samples > n_max_images:
+            samples = np.random.choice(len(labels), n_max_images, replace=False)
+            labels = labels[samples]
 
         labels_np = np.asarray(labels[['class_id', 'azimuth', 'elevation', 'tilt']])
 
