@@ -4,10 +4,9 @@ py_env
 py_env_old
 .idea/workspace.xml
 .idea
-logs
 logs/
 *.job.*
-logs
+*.h5
 biternion_net_cluster_logs
 pretrained_models
 images/
