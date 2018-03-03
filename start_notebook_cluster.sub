@@ -3,10 +3,10 @@ arguments = scripts/start_notebook_cluster.sh
 error = start_notebook_cluster.job.err
 output = start_notebook_cluster.job.out
 log = start_notebook_cluster.job.log
-request_memory = 10000
+request_memory = 100000
 request_gpus = 1
 request_cpus = 1
-requirements = CUDAGlobalMemoryMb > 15000
+requirements = CUDAGlobalMemoryMb > 10000
 MaxTime = 648000
 periodic_hold = (CurrentTime - JobCurrentStartDate) >= $(MaxTime)
 periodic_hold_reason = "Job runtime exceeded"

@@ -12,4 +12,4 @@ export LD_LIBRARY_PATH=${CUDAPATH}/lib64:$LD_LIBRARY_PATH
 
 python -m ipykernel install --user --name=py_env
 
-jupyter notebook --no-browser --port=8888 --ip=0.0.0.0
+jupyter notebook --no-browser --port=8896 --ip=0.0.0.0
