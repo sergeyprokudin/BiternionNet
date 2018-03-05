@@ -356,7 +356,7 @@ def train_model(angle='azimuth', loss='cosine', n_epochs=10, lr=1.0e-3, batch_si
     model = biternion_vgg(image_height, image_width, n_channels, 
                           loss_type=loss, learning_rate=lr)
     
-    ckpt_path = '../logs/%s_model_%s.ckpt' %(angle, loss)
+    ckpt_path = '/home/sprokudin/biternionnet/logs/%s_model_%s.ckpt' %(angle, loss)
     
     model.save_weights(ckpt_path)
     
