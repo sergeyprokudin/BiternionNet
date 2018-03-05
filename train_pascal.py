@@ -193,7 +193,7 @@ n_train_images, image_height, image_width, n_channels = train_data['images'].sha
 
 # In[6]:
 
-plt.imshow(np.asarray(train_data['images'][81], dtype='uint8'))
+#plt.imshow(np.asarray(train_data['images'][81], dtype='uint8'))
 
 
 # In[7]:
