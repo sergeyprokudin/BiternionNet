@@ -176,7 +176,7 @@ def get_data(dbpath, class_name,
 # In[5]:
 
 
-dbpath = '../data/pascal3d_real_synthetic100k.h5'
+dbpath = '/data/pascal3d_real_synthetic100k.h5'
 
 pascal_train_data, test_data = get_data(dbpath, 'aeroplane', use_synthetic=False)
 
