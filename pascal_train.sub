@@ -1,7 +1,7 @@
 executable = /bin/bash
-arguments = scripts/train_pascal.sh
-error = train_pascal.job.err
-output = train_pascal.job.out
+arguments = scripts/run_pascal_training.sh
+error = run_pascal_training.job.err
+output = run_pascal_training.job.out
 log = train_pascal.job.log
 request_memory = 100000
 request_gpus = 1
