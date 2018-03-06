@@ -330,13 +330,13 @@ def evaluate_model(model, images, y_target, data_part, loss_type='cosine', fixed
     aads = maad_from_deg(gt_theta, preds_theta)
     theta_maad = np.mean(aads)
     theta_maad_sem = stats.sem(aads)
-    print("MAAD (%s): %f±%f" %(data_part, theta_maad, theta_maad_sem))
+    print("MAAD (%s): %f+-%f" %(data_part, theta_maad, theta_maad_sem))
     if fixed_kappa is not None:
         theta_kappa = np.ones(theta_kappa.shape)*fixed_kappa
     theta_lls = von_mises_log_likelihood_np(theta_target, theta_mean, theta_kappa)
     theta_ll = np.mean(theta_lls)
     theta_ll_sem = stats.sem(theta_lls)
-    print("Log-likelihood (%s): %f±%f" %(data_part, theta_ll, theta_ll_sem))
+    print("Log-likelihood (%s): %f+-%f" %(data_part, theta_ll, theta_ll_sem))
     
     return
 
@@ -396,17 +396,17 @@ def train_model(angle='azimuth', loss='cosine', n_epochs=10, lr=1.0e-3, batch_si
 # In[163]:
 
 
-for i in range(0, 20):
+for i in range(0, 5):
 
     print("TRAINING ON COSINE!!!")
     K.clear_session()
-    cosine_model, fixed_kappa = train_model(angle='azimuth', loss='cosine', n_epochs=200, lr=1.0e-4, batch_size=32)
+    cosine_model, fixed_kappa = train_model(angle='azimuth', loss='cosine', n_epochs=200, lr=1.0e-3, batch_size=32)
 
 
 # In[10]:
 
 
-for i in range(0, 20):
+for i in range(0, 5):
 
     print("TRAINING ON LIKELIHOOD!!!")
     K.clear_session()
