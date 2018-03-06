@@ -223,7 +223,7 @@ from utils.losses import von_mises_log_likelihood_np, von_mises_neg_log_likeliho
 
 
 def biternion_vgg(image_height, image_width, n_channels, 
-                  name='biternion_cnn', loss_type='cosine',
+                  name='inception_resnet', loss_type='cosine',
                   backbone_cnn_type='densenet',
                   learning_rate=1.0e-3, fixed_kappa=1.0):
 
@@ -236,7 +236,7 @@ def biternion_vgg(image_height, image_width, n_channels,
         x = GlobalAveragePooling2D()(x)
         
     elif backbone_cnn_type=='densenet':
-        backbone_model = DenseNet169(weights=None, include_top=False, 
+        backbone_model = DenseNet169(weights='imagenet', include_top=False,
                               input_shape=[image_height, image_width, n_channels])
         x = backbone_model.output
         x = GlobalAveragePooling2D()(x)
@@ -400,7 +400,7 @@ for i in range(0, 5):
 
     print("TRAINING ON COSINE!!!")
     K.clear_session()
-    cosine_model, fixed_kappa = train_model(angle='azimuth', loss='cosine', n_epochs=200, lr=1.0e-3, batch_size=32)
+    cosine_model, fixed_kappa = train_model(angle='azimuth', loss='cosine', n_epochs=200, lr=1.0e-4, batch_size=32)
 
 
 # In[10]:
