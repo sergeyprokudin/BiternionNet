@@ -7,10 +7,8 @@ source ${PYENV}/bin/activate
 
 #CUDNNPATH="/lustre/shared/caffe_shared/cuda_stuff/cudnn-5.1_for_cuda8.0rc"
 CUDNNPATH="/lustre/shared/caffe_shared/cuda_stuff/cudnnn-6.0_for_cuda8"
-CUDAPATH="/lustre/shared/caffe_shared/cuda_stuff/cuda-8.0.27.1_RC"
 export LD_LIBRARY_PATH=${CUDNNPATH}/lib64:$LD_LIBRARY_PATH
+CUDAPATH="/lustre/shared/caffe_shared/cuda_stuff/cuda-8.0.27.1_RC"
 export LD_LIBRARY_PATH=${CUDAPATH}/lib64:$LD_LIBRARY_PATH
-
-python -m ipykernel install --user --name=py_env
 
 python "${SCRIPT_DIR}/../train_pascal.py"

@@ -1,12 +1,12 @@
 executable = /bin/bash
-arguments = scripts/run_pascal_training.sh
-error = run_pascal_training.job.err
-output = run_pascal_training.job.out
+arguments = scripts/train_pascal.sh
+error = train_pascal.job.err
+output = train_pascal.job.out
 log = train_pascal.job.log
 request_memory = 100000
 request_gpus = 1
 request_cpus = 1
-requirements = CUDAGlobalMemoryMb > 10000
+requirements = CUDAGlobalMemoryMb < 15000
 MaxTime = 648000
 periodic_hold = (CurrentTime - JobCurrentStartDate) >= $(MaxTime)
 periodic_hold_reason = "Job runtime exceeded"

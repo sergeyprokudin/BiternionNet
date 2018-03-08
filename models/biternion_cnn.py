@@ -70,6 +70,12 @@ class BiternionCNN:
             self.model = Model(backbone_model.input, y_pred, name='BiternionInception')
 
         opt = Adam(lr=learning_rate)
+
+        if loss_type == 'cosine':
+            self.loss = self.cosine_loss
+        elif loss_type == 'likelihood':
+            self.loss = self.cosine_loss
+
         self.model.compile(optimizer=opt, loss=self.loss)
 
     def unpack_preds(self, y_pred):
