@@ -11,7 +11,7 @@ from models.biternion_cnn import BiternionCNN
 PASCAL_DATA_DB = '/home/sprokudin/biternionnet/data/pascal_imagenet_train_test.h5'
 LOGS_PATH = '/home/sprokudin/biternionnet/logs'
 GLOBAL_RESULTS_LOG = '/home/sprokudin/biternionnet/logs/biternion_cosine_loss.csv'
-N_TRIALS = 20
+N_TRIALS = 5
 LOSS_TYPE = 'cosine'
 
 
