@@ -81,7 +81,7 @@ def main():
 
     if not os.path.exists(GLOBAL_RESULTS_LOG):
         with open(GLOBAL_RESULTS_LOG, 'w') as f:
-            f.write("checkpoint_path;validation_loss")
+            f.write("checkpoint_path;validation_loss\n")
 
     for i in range(0, N_TRIALS):
         exp_id = get_experiment_id()
@@ -97,7 +97,7 @@ def main():
                   patience=5, batch_size=params['batch_size'])
         val_loss = model.model.evaluate(x_val, y_val)
         with open(GLOBAL_RESULTS_LOG, 'a') as f:
-            f.write("%s;%f" % (ckp_path, val_loss))
+            f.write("%s;%f\n" % (ckp_path, val_loss))
 
     print("model")
 
