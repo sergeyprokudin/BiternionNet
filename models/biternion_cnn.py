@@ -133,4 +133,4 @@ class BiternionCNN:
                        batch_size=batch_size,
                        callbacks=[early_stop_cb, model_ckpt])
 
-        self.model.load_weights(model_ckpt)
+        self.model.load_weights(ckpt_path)
