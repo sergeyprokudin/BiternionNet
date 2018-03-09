@@ -182,7 +182,7 @@ class BiternionCNN:
 
     def save_detections_for_official_eval(self, x, save_path):
 
-        #det path example: '/home/sprokudin/RenderForCNN/view_estimation/vp_test_results/aeroplane_pred_view.txt'
+        # det path example: '/home/sprokudin/RenderForCNN/view_estimation/vp_test_results/aeroplane_pred_view.txt'
 
         y_pred = self.model.predict(np.asarray(x))
         az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = self.unpack_preds(y_pred)

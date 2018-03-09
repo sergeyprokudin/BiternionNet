@@ -13,7 +13,7 @@ LOGS_PATH = '/home/sprokudin/biternionnet/logs'
 N_TRIALS = 20
 
 PASCAL_CLASSES = ['aeroplane', 'bicycle', 'boat', 'bottle', 'bus', 'car',
-                 'chair', 'diningtable', 'motorbike', 'sofa',  'train', 'tvmonitor']
+                  'chair', 'diningtable', 'motorbike', 'sofa',  'train', 'tvmonitor']
 
 
 def train_val_split(x, y, val_split=0.2):
@@ -136,8 +136,8 @@ def main():
 
     for i in range(0, N_TRIALS):
 
-        class_name = np.random.choice(PASCAL_CLASSES)
-        loss_type = np.random.choice(['cosine', 'likelihood'])
+        class_name = 'bicycle' #np.random.choice(PASCAL_CLASSES)
+        loss_type = 'cosine' #np.random.choice(['cosine', 'likelihood'])
         train_model(class_name, loss_type)
 
     print("Fin.")
