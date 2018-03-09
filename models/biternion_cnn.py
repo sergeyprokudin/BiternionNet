@@ -176,9 +176,11 @@ class BiternionCNN:
         ll_mean = np.mean(lls)
         ll_sem = stats.sem(lls)
 
-        print("Log-likelihood total : %2.2f+-%2.2fSE" % (ll_mean, ll_sem))
+        maad_mean = np.mean([az_maad, el_maad, ti_maad])
+        print("MAAD total: %2.2f+-%2.2fSE" % (maad_mean, az_sem))
+        print("Log-likelihood total: %2.2f+-%2.2fSE" % (ll_mean, ll_sem))
 
-        return
+        return az_maad
 
     def save_detections_for_official_eval(self, x, save_path):
 
