@@ -88,12 +88,12 @@ def main():
         params = select_params()
 
         K.clear_session()
-        model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type=LOSS_TYPE,
+        model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type=LOSS_TYPE,
                              learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
         ckpt_name = 'bicnn_%s_bs%d_hls%d_lr_%0.1e' % (exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
         ckp_path = os.path.join(LOGS_PATH, ckpt_name)
-        model.fit(x_train, y_train, [x_val, y_val], epochs=1, ckpt_path=ckp_path,
+        model.fit(x_train, y_train, [x_val, y_val], epochs=50, ckpt_path=ckp_path,
                   patience=5, batch_size=params['batch_size'])
         val_loss = model.model.evaluate(x_val, y_val)
         with open(GLOBAL_RESULTS_LOG, 'a') as f:
