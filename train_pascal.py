@@ -98,23 +98,6 @@ def fixed_params():
     return params
 
 
-def main():
-
-    for i in range(0, N_TRIALS):
-
-        class_name = np.random.choice(PASCAL_CLASSES)
-        loss_type = np.random.choice(['cosine', 'likelihood'])
-        train_model(class_name, loss_type)
-
-    print("Fin.")
-
-    return
-
-
-class_name = 'aeroplane'
-loss_type = 'cosine'
-
-
 def train_model(class_name, loss_type):
 
     global_results_log = '/home/sprokudin/biternionnet/logs/biternion_%s_%s.csv' % (loss_type, class_name)
@@ -148,6 +131,18 @@ def train_model(class_name, loss_type):
 
     return
 
+
+def main():
+
+    for i in range(0, N_TRIALS):
+
+        class_name = np.random.choice(PASCAL_CLASSES)
+        loss_type = np.random.choice(['cosine', 'likelihood'])
+        train_model(class_name, loss_type)
+
+    print("Fin.")
+
+    return
 
 if __name__ == '__main__':
     main()
