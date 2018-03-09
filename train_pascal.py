@@ -13,7 +13,7 @@ LOGS_PATH = '/home/sprokudin/biternionnet/logs'
 CLASS = 'aeroplane'
 LOSS_TYPE = 'likelihood'
 GLOBAL_RESULTS_LOG = '/home/sprokudin/biternionnet/logs/biternion_%s_%s.csv' % (LOSS_TYPE, CLASS)
-N_TRIALS = 1
+N_TRIALS = 10
 
 
 def train_val_split(x, y, val_split=0.2):
@@ -106,6 +106,8 @@ def main():
         with open(GLOBAL_RESULTS_LOG, 'w') as f:
             f.write("checkpoint_path;validation_loss\n")
 
+    print("TRAINING on CLASS : %s" % CLASS)
+    print("LOSS function used: %s" % LOSS_TYPE)
     for i in range(0, N_TRIALS):
         exp_id = get_experiment_id()
         params = fixed_params()
@@ -122,8 +124,9 @@ def main():
         with open(GLOBAL_RESULTS_LOG, 'a') as f:
             f.write("%s;%f\n" % (ckp_path, val_loss))
 
-    print("model")
+        print("%d/%d trials finished. Model for trial %d is available here : $s" % (i, N_TRIALS, i, ckp_path))
 
+    print("Fin.")
     return
 
 
