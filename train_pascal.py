@@ -12,7 +12,7 @@ PASCAL_DATA_DB = '/home/sprokudin/biternionnet/data/pascal_imagenet_train_test.h
 LOGS_PATH = '/home/sprokudin/biternionnet/logs'
 LOSS_TYPE = 'likelihood'
 GLOBAL_RESULTS_LOG = '/home/sprokudin/biternionnet/logs/biternion_%s_loss.csv'%LOSS_TYPE
-N_TRIALS = 5
+N_TRIALS = 1
 
 
 def train_val_split(x, y, val_split=0.2):
