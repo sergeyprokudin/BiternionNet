@@ -11,7 +11,7 @@ from models.biternion_cnn import BiternionCNN
 PASCAL_DATA_DB = '/home/sprokudin/biternionnet/data/pascal_imagenet_train_test.h5'
 LOGS_PATH = '/home/sprokudin/biternionnet/logs'
 CLASS = 'aeroplane'
-LOSS_TYPE = 'likelihood'
+LOSS_TYPE = 'cosine'
 GLOBAL_RESULTS_LOG = '/home/sprokudin/biternionnet/logs/biternion_%s_%s.csv' % (LOSS_TYPE, CLASS)
 N_TRIALS = 10
 
