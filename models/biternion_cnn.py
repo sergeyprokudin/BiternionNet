@@ -195,5 +195,5 @@ class BiternionCNN:
         y_pred = np.vstack([az_preds_deg, el_preds_deg, ti_preds_deg]).T
 
         np.savetxt(save_path, y_pred, delimiter=' ', fmt='%i')
-
+        print("evaluation data saved to %s" % save_path)
         return
