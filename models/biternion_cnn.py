@@ -29,7 +29,7 @@ class BiternionCNN:
                  debug=False,
                  loss_type='cosine',
                  backbone_cnn='inception',
-                 learning_rate=1.0e-3,
+                 learning_rate=1.0e-4,
                  hlayer_size=512,
                  fixed_kappa=1.0):
 
@@ -55,12 +55,12 @@ class BiternionCNN:
         x = Dense(hlayer_size, activation='relu')(x)
         x = Dense(hlayer_size, activation='relu')(x)
 
-        az_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='az_mean')(Dense(2, activation='linear')(x))
-        az_kappa = Lambda(lambda x: K.abs(x), name='az_kappa')(Dense(1, activation='linear')(x))
-        el_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='el_mean')(Dense(2, activation='linear')(x))
-        el_kappa = Lambda(lambda x: K.abs(x), name='el_kappa')(Dense(1, activation='linear')(x))
-        ti_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='ti_mean')(Dense(2, activation='linear')(x))
-        ti_kappa = Lambda(lambda x: K.abs(x), name='ti_kappa')(Dense(1, activation='linear')(x))
+        az_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='az_mean')(Dense(2, activation='linear')(Dense(128, activation='relu')(x)))
+        az_kappa = Lambda(lambda x: K.abs(x), name='az_kappa')(Dense(1, activation='linear')(Dense(128, activation='relu')(x)))
+        el_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='el_mean')(Dense(2, activation='linear')(Dense(128, activation='relu')(x)))
+        el_kappa = Lambda(lambda x: K.abs(x), name='el_kappa')(Dense(1, activation='linear')(Dense(128, activation='relu')(x)))
+        ti_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='ti_mean')(Dense(2, activation='linear')(Dense(128, activation='relu')(x)))
+        ti_kappa = Lambda(lambda x: K.abs(x), name='ti_kappa')(Dense(1, activation='linear')(Dense(128, activation='relu')(x)))
 
         y_pred = concatenate([az_mean, az_kappa, el_mean, el_kappa, ti_mean, ti_kappa])
 
@@ -134,3 +134,4 @@ class BiternionCNN:
                        callbacks=[early_stop_cb, model_ckpt])
 
         self.model.load_weights(ckpt_path)
+
