@@ -10,10 +10,10 @@ from models.biternion_cnn import BiternionCNN
 
 PASCAL_DATA_DB = '/home/sprokudin/biternionnet/data/pascal_imagenet_train_test.h5'
 LOGS_PATH = '/home/sprokudin/biternionnet/logs'
-CLASS = 'aeroplane'
-LOSS_TYPE = 'cosine'
-GLOBAL_RESULTS_LOG = '/home/sprokudin/biternionnet/logs/biternion_%s_%s.csv' % (LOSS_TYPE, CLASS)
-N_TRIALS = 10
+N_TRIALS = 20
+
+PASCAL_CLASSES = ['aeroplane', 'bicycle', 'boat', 'bottle', 'bus', 'car',
+                 'chair', 'diningtable', 'motorbike', 'sofa',  'train', 'tvmonitor']
 
 
 def train_val_split(x, y, val_split=0.2):
@@ -100,33 +100,52 @@ def fixed_params():
 
 def main():
 
-    x_train, y_train, x_val, y_val = load_data(cls='aeroplane', val_split=0.2)
-
-    if not os.path.exists(GLOBAL_RESULTS_LOG):
-        with open(GLOBAL_RESULTS_LOG, 'w') as f:
-            f.write("checkpoint_path;validation_loss\n")
-
-    print("TRAINING on CLASS : %s" % CLASS)
-    print("LOSS function used: %s" % LOSS_TYPE)
     for i in range(0, N_TRIALS):
-        exp_id = get_experiment_id()
-        params = fixed_params()
 
-        K.clear_session()
-        model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type=LOSS_TYPE,
-                             learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
-
-        ckpt_name = 'bicnn_%s_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (LOSS_TYPE, CLASS, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
-        ckp_path = os.path.join(LOGS_PATH, ckpt_name)
-        model.fit(x_train, y_train, [x_val, y_val], epochs=200, ckpt_path=ckp_path,
-                  patience=10, batch_size=params['batch_size'])
-        val_loss = model.model.evaluate(x_val, y_val)
-        with open(GLOBAL_RESULTS_LOG, 'a') as f:
-            f.write("%s;%f\n" % (ckp_path, val_loss))
-
-        print("%d/%d trials finished. Model for trial %d is available here : %s" % (i+1, N_TRIALS, i+1, ckp_path))
+        class_name = np.random.choice(PASCAL_CLASSES)
+        loss_type = np.random.choice(['cosine', 'likelihood'])
+        train_model(class_name, loss_type)
 
     print("Fin.")
+
+    return
+
+
+class_name = 'aeroplane'
+loss_type = 'cosine'
+
+
+def train_model(class_name, loss_type):
+
+    global_results_log = '/home/sprokudin/biternionnet/logs/biternion_%s_%s.csv' % (loss_type, class_name)
+
+    if not os.path.exists(global_results_log):
+        with open(global_results_log, 'w') as f:
+            f.write("checkpoint_path;validation_loss\n")
+
+    x_train, y_train, x_val, y_val = load_data(cls=class_name, val_split=0.2)
+
+    print("TRAINING on CLASS : %s" % class_name)
+    print("LOSS function used: %s" % loss_type)
+
+    exp_id = get_experiment_id()
+    params = fixed_params()
+
+    K.clear_session()
+    model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type=loss_type,
+                         learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
+
+    ckpt_name = 'bicnn_%s_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (loss_type, class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
+    ckp_path = os.path.join(LOGS_PATH, ckpt_name)
+    model.fit(x_train, y_train, [x_val, y_val], epochs=1, ckpt_path=ckp_path,
+              patience=10, batch_size=params['batch_size'])
+    val_loss = model.model.evaluate(x_val, y_val)
+    with open(global_results_log, 'a') as f:
+        f.write("%s;%f\n" % (ckp_path, val_loss))
+
+    print("Trial finished. Best model saved at %s" % ckp_path)
+
+
     return
 
 
