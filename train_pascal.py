@@ -124,7 +124,7 @@ def main():
         with open(GLOBAL_RESULTS_LOG, 'a') as f:
             f.write("%s;%f\n" % (ckp_path, val_loss))
 
-        print("%d/%d trials finished. Model for trial %d is available here : %s" % (i, N_TRIALS, i, ckp_path))
+        print("%d/%d trials finished. Model for trial %d is available here : %s" % (i+1, N_TRIALS, i+1, ckp_path))
 
     print("Fin.")
     return
