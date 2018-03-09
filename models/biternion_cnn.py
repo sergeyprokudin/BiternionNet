@@ -74,7 +74,7 @@ class BiternionCNN:
         if loss_type == 'cosine':
             self.loss = self.cosine_loss
         elif loss_type == 'likelihood':
-            self.loss = self.cosine_loss
+            self.loss = self.likelihood_loss
 
         self.model.compile(optimizer=opt, loss=self.loss)
 
