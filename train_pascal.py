@@ -113,7 +113,7 @@ def main():
         params = fixed_params()
 
         K.clear_session()
-        model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type=LOSS_TYPE,
+        model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type=LOSS_TYPE,
                              learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
         ckpt_name = 'bicnn_%s_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (LOSS_TYPE, CLASS, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
