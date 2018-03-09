@@ -10,8 +10,9 @@ from models.biternion_cnn import BiternionCNN
 
 PASCAL_DATA_DB = '/home/sprokudin/biternionnet/data/pascal_imagenet_train_test.h5'
 LOGS_PATH = '/home/sprokudin/biternionnet/logs'
+CLASS = 'aeroplane'
 LOSS_TYPE = 'likelihood'
-GLOBAL_RESULTS_LOG = '/home/sprokudin/biternionnet/logs/biternion_%s_loss.csv'%LOSS_TYPE
+GLOBAL_RESULTS_LOG = '/home/sprokudin/biternionnet/logs/biternion_%s_%s.csv' % (LOSS_TYPE, CLASS)
 N_TRIALS = 1
 
 
@@ -30,16 +31,25 @@ def train_val_split(x, y, val_split=0.2):
     return x_train, y_train, x_val, y_val
 
 
+def get_class_data(data_h5, cls_name):
+
+    images = np.asarray(data_h5[cls_name]['images'])
+    azimuth_bit = np.asarray(data_h5[cls_name]['azimuth_bit'])
+    elevation_bit = np.asarray(data_h5[cls_name]['elevation_bit'])
+    tilt_bit = np.asarray(data_h5[cls_name]['tilt_bit'])
+    angles = np.hstack([azimuth_bit, elevation_bit, tilt_bit])
+
+    return images, angles
+
+
 def merge_all_classes(data):
 
     images = []
     angles = []
-    for obj_key in data.keys():
-        images.append(np.asarray(data[obj_key]['images']))
-        azimuth_bit = np.asarray(data[obj_key]['azimuth_bit'])
-        elevation_bit = np.asarray(data[obj_key]['elevation_bit'])
-        tilt_bit = np.asarray(data[obj_key]['tilt_bit'])
-        angles.append(np.hstack([azimuth_bit, elevation_bit, tilt_bit]))
+    for cls_key in data.keys():
+        cls_images, cls_angles = get_class_data(data, cls_key)
+        images.append(cls_images)
+        angles.append(cls_angles)
 
     images = np.vstack(images)
     angles = np.vstack(angles)
@@ -47,13 +57,16 @@ def merge_all_classes(data):
     return images, angles
 
 
-def load_data(val_split=0.2):
+def load_data(cls=None, val_split=0.2):
 
     train_test_data_db = h5py.File(PASCAL_DATA_DB, 'r')
-    train_data = train_test_data_db['train']
-    # test_data = train_test_data_db['test']
 
-    x_train, y_train = merge_all_classes(train_data)
+    train_data = train_test_data_db['train']
+
+    if cls is None:
+        x_train, y_train = merge_all_classes(train_data)
+    else:
+        x_train, y_train = get_class_data(train_data, cls)
 
     x_train, y_train, x_val, y_val = train_val_split(x_train, y_train, val_split=val_split)
 
@@ -87,7 +100,7 @@ def fixed_params():
 
 def main():
 
-    x_train, y_train, x_val, y_val = load_data(val_split=0.2)
+    x_train, y_train, x_val, y_val = load_data(cls='aeroplane', val_split=0.2)
 
     if not os.path.exists(GLOBAL_RESULTS_LOG):
         with open(GLOBAL_RESULTS_LOG, 'w') as f:
