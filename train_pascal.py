@@ -132,12 +132,12 @@ def train_model(class_name, loss_type):
     params = fixed_params()
 
     K.clear_session()
-    model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type=loss_type,
+    model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type=loss_type,
                          learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
     ckpt_name = 'bicnn_%s_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (loss_type, class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
     ckp_path = os.path.join(LOGS_PATH, ckpt_name)
-    model.fit(x_train, y_train, [x_val, y_val], epochs=1, ckpt_path=ckp_path,
+    model.fit(x_train, y_train, [x_val, y_val], epochs=200, ckpt_path=ckp_path,
               patience=10, batch_size=params['batch_size'])
     val_loss = model.model.evaluate(x_val, y_val)
     with open(global_results_log, 'a') as f:
