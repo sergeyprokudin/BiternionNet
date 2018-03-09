@@ -180,7 +180,7 @@ class BiternionCNN:
         print("MAAD total: %2.2f+-%2.2fSE" % (maad_mean, az_sem))
         print("Log-likelihood total: %2.2f+-%2.2fSE" % (ll_mean, ll_sem))
 
-        return az_maad
+        return maad_mean, ll_mean
 
     def save_detections_for_official_eval(self, x, save_path):
 
