@@ -103,8 +103,8 @@ def main():
 
         ckpt_name = 'bicnn_%s_bs%d_hls%d_lr_%0.1e' % (exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
         ckp_path = os.path.join(LOGS_PATH, ckpt_name)
-        model.fit(x_train, y_train, [x_val, y_val], epochs=50, ckpt_path=ckp_path,
-                  patience=5, batch_size=params['batch_size'])
+        model.fit(x_train, y_train, [x_val, y_val], epochs=200, ckpt_path=ckp_path,
+                  patience=10, batch_size=params['batch_size'])
         val_loss = model.model.evaluate(x_val, y_val)
         with open(GLOBAL_RESULTS_LOG, 'a') as f:
             f.write("%s;%f\n" % (ckp_path, val_loss))
