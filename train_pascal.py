@@ -114,7 +114,7 @@ def main():
         model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type=LOSS_TYPE,
                              learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
-        ckpt_name = 'bicnn_%s_bs%d_hls%d_lr_%0.1e' % (exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
+        ckpt_name = 'bicnn_%s_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (LOSS_TYPE, CLASS, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
         ckp_path = os.path.join(LOGS_PATH, ckpt_name)
         model.fit(x_train, y_train, [x_val, y_val], epochs=200, ckpt_path=ckp_path,
                   patience=10, batch_size=params['batch_size'])
