@@ -75,6 +75,16 @@ def select_params():
     return params
 
 
+def fixed_params():
+
+    params ={}
+    params['lr'] = 1.0e-4
+    params['batch_size'] = 32
+    params['hlayer_size'] = 512
+
+    return params
+
+
 def main():
 
     x_train, y_train, x_val, y_val = load_data(val_split=0.2)
@@ -85,10 +95,10 @@ def main():
 
     for i in range(0, N_TRIALS):
         exp_id = get_experiment_id()
-        params = select_params()
+        params = fixed_params()
 
         K.clear_session()
-        model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type=LOSS_TYPE,
+        model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type=LOSS_TYPE,
                              learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
         ckpt_name = 'bicnn_%s_bs%d_hls%d_lr_%0.1e' % (exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
