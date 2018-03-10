@@ -123,14 +123,14 @@ def train_model(class_name, loss_type):
     ckpt_name = 'bicnn_%s_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (loss_type, class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
     ckpt_path = os.path.join(LOGS_PATH, ckpt_name)
 
-    if loss_type == 'likelihood':
-        print("Pre-training model with fixed kappas..")
-        model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type='cosine',
-                             learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
-
-        train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas = \
-            model.train_finetune_eval(x_train, y_train, x_val, y_val, x_test, y_test,
-                                  ckpt_path, batch_size=params['batch_size'], patience=5, epochs=20)
+    # if loss_type == 'likelihood':
+    #     print("Pre-training model with fixed kappas..")
+    #     model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type='cosine',
+    #                          learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
+    #
+    #     train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas = \
+    #         model.train_finetune_eval(x_train, y_train, x_val, y_val, x_test, y_test,
+    #                               ckpt_path, batch_size=params['batch_size'], patience=5, epochs=20)
 
     K.clear_session()
     model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type=loss_type,
