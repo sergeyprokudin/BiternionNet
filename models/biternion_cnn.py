@@ -191,8 +191,8 @@ class BiternionCNN:
         ll_sem = stats.sem(lls)
 
         maad_mean = np.mean([az_maad, el_maad, ti_maad])
-        print("MAAD total: %2.2f+-%2.2fSE" % (maad_mean, az_sem))
-        print("Log-likelihood total: %2.2f+-%2.2fSE" % (ll_mean, ll_sem))
+        print("MAAD TOTAL: %2.2f+-%2.2fSE" % (maad_mean, az_sem))
+        print("Log-likelihood TOTAL: %2.2f+-%2.2fSE" % (ll_mean, ll_sem))
 
         return maad_mean, ll_mean
 
@@ -261,8 +261,11 @@ class BiternionCNN:
 
         if self.loss_type == 'cosine':
             kappas = self.finetune_all_kappas(x_val, y_val)
+            print("EVALUATING ON TRAIN")
             train_maad, train_ll = self.evaluate(x_test, y_test, kappas)
+            print("EVALUATING ON VALIDAITON")
             val_maad, val_ll = self.evaluate(x_val, y_val, kappas)
+            print("EVALUATING ON TEST")
             test_maad, test_ll = self.evaluate(x_test, y_test, kappas)
         else:
             kappas = [1.0, 1.0, 1.0]
