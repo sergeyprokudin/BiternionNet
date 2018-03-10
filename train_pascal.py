@@ -183,7 +183,7 @@ def main():
 
         class_name = 'boat' #np.random.choice(PASCAL_CLASSES)
         loss_type = 'likelihood' #np.random.choice(['cosine', 'likelihood'])
-        train_model(class_name, loss_type, pretrain=True)
+        train_model(class_name, loss_type, pretrain=False)
 
     print("Fin.")
 
