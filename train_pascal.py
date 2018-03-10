@@ -119,11 +119,24 @@ def train_model(class_name, loss_type):
     # params = select_params()
 
     K.clear_session()
-    model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type=loss_type,
-                         learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
     ckpt_name = 'bicnn_%s_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (loss_type, class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
     ckpt_path = os.path.join(LOGS_PATH, ckpt_name)
+
+    if loss_type == 'cosine':
+        print("Pre-training model with fixed kappas..")
+        model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type='cosine',
+                             learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
+
+        train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas = \
+            model.train_finetune_eval(x_train, y_train, x_val, y_val, x_test, y_test,
+                                  ckpt_path, batch_size=params['batch_size'], patience=10, epochs=10)
+
+    model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type=loss_type,
+                         learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
+
+    model.load_weights(ckpt_path)
+
     train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas = \
         model.train_finetune_eval(x_train, y_train, x_val, y_val, x_test, y_test,
                                   ckpt_path, batch_size=params['batch_size'], patience=10, epochs=10)
