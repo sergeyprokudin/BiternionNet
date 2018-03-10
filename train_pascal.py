@@ -132,6 +132,7 @@ def train_model(class_name, loss_type):
             model.train_finetune_eval(x_train, y_train, x_val, y_val, x_test, y_test,
                                   ckpt_path, batch_size=params['batch_size'], patience=5, epochs=10)
 
+    K.clear_session()
     model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type=loss_type,
                          learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
@@ -157,8 +158,8 @@ def main():
 
     for i in range(0, N_TRIALS):
 
-        class_name = 'boat' #np.random.choice(PASCAL_CLASSES)
-        loss_type = 'likelihood' #np.random.choice(['cosine', 'likelihood'])
+        class_name = 'aeroplane' #np.random.choice(PASCAL_CLASSES)
+        loss_type = 'cosine' #np.random.choice(['cosine', 'likelihood'])
         train_model(class_name, loss_type)
 
     print("Fin.")

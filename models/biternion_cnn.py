@@ -20,7 +20,7 @@ from utils.custom_keras_callbacks import ModelCheckpointEveryNBatch
 from utils.losses import maad_from_deg
 from utils.losses import cosine_loss_tf, von_mises_log_likelihood_tf
 from utils.losses import von_mises_log_likelihood_np
-from utils.angles import bit2deg
+from utils.angles import bit2deg, rad2bit
 
 
 class BiternionCNN:
@@ -274,3 +274,28 @@ class BiternionCNN:
             test_maad, test_ll = self.evaluate(x_test, y_test)
 
         return train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas
+
+    def pdf(self, x, angle='azimuth', kappa=None):
+
+        vals = np.arange(0, 2*np.pi, 0.01)
+
+        n_images = x.shape[0]
+        x_vals_tiled = np.ones(n_images)
+
+        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = \
+            self.unpack_preds(self.model.predict(x))
+
+        if angle == 'azimuth':
+            mu_preds_bit = az_preds_bit
+            kappa_preds = az_preds_kappa
+
+        if self.loss_type == 'cosine':
+            kappa_preds = np.ones([x.shape[0], 1]) * kappa
+
+        pdf_vals = np.zeros([n_images, len(vals)])
+
+        for xid, xval in enumerate(vals):
+            x_bit = rad2bit(x_vals_tiled*xval)
+            pdf_vals[:, xid] = np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
+
+        return vals, pdf_vals
