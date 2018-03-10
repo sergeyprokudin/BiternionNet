@@ -22,6 +22,7 @@ from utils.losses import cosine_loss_tf, von_mises_log_likelihood_tf
 from utils.losses import von_mises_log_likelihood_np
 from utils.angles import bit2deg
 
+
 class BiternionCNN:
 
     def __init__(self,
@@ -55,11 +56,11 @@ class BiternionCNN:
         x = Dense(hlayer_size, activation='relu')(x)
         x = Dense(hlayer_size, activation='relu')(x)
 
-        az_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='az_mean')(Dense(2, activation='linear')(Dense(128, activation='relu')(x)))
+        az_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='az_mean')(Dense(2, activation='linear')(Dense(256, activation='relu')(x)))
         az_kappa = Lambda(lambda x: K.abs(x), name='az_kappa')(Dense(1, activation='linear')(Dense(128, activation='relu')(x)))
-        el_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='el_mean')(Dense(2, activation='linear')(Dense(128, activation='relu')(x)))
+        el_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='el_mean')(Dense(2, activation='linear')(Dense(256, activation='relu')(x)))
         el_kappa = Lambda(lambda x: K.abs(x), name='el_kappa')(Dense(1, activation='linear')(Dense(128, activation='relu')(x)))
-        ti_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='ti_mean')(Dense(2, activation='linear')(Dense(128, activation='relu')(x)))
+        ti_mean = Lambda(lambda x: K.l2_normalize(x, axis=1), name='ti_mean')(Dense(2, activation='linear')(Dense(256, activation='relu')(x)))
         ti_kappa = Lambda(lambda x: K.abs(x), name='ti_kappa')(Dense(1, activation='linear')(Dense(128, activation='relu')(x)))
 
         y_pred = concatenate([az_mean, az_kappa, el_mean, el_kappa, ti_mean, ti_kappa])
@@ -133,8 +134,25 @@ class BiternionCNN:
                        callbacks=[early_stop_cb, model_ckpt])
 
         self.model.load_weights(ckpt_path)
+        self.evaluate(validation_data)
 
-    def evaluate(self, x, y_true):
+    def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds, angle='', verbose=1):
+        vm_lls = von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)
+        vm_ll_mean = np.mean(vm_lls)
+        vm_ll_sem = stats.sem(vm_lls)
+        if verbose:
+            print("Log-likelihood %s : %2.2f+-%2.2fSE" % (angle, vm_ll_mean, vm_ll_sem))
+        return vm_lls, vm_ll_mean, vm_ll_sem
+
+    def maad(self, y_true_deg, y_pred_deg, angle='', verbose=1):
+        aads = maad_from_deg(y_true_deg, y_pred_deg)
+        maad = np.mean(aads)
+        sem = stats.sem(aads)
+        if verbose:
+            print("MAAD %s : %2.2f+-%2.2fSE" % (angle, maad, sem))
+        return aads, maad, sem
+
+    def evaluate(self, x, y_true, verbose=1):
 
         y_pred = self.model.predict(np.asarray(x))
 
@@ -148,29 +166,16 @@ class BiternionCNN:
         el_true_deg = bit2deg(el_true_bit)
         ti_true_deg = bit2deg(ti_true_bit)
 
-        def maad(y_true_deg, y_pred_deg, angle='', verbose=1):
-            aads = maad_from_deg(y_true_deg, y_pred_deg)
-            maad = np.mean(aads)
-            sem = stats.sem(aads)
-            if verbose:
-                print("MAAD %s : %2.2f+-%2.2fSE" % (angle, maad, sem))
-            return aads, maad, sem
+        az_aads, az_maad, az_sem = self.maad(az_true_deg, az_preds_deg, 'azimuth', verbose=verbose)
+        el_aads, el_maad, el_sem = self.maad(el_true_deg, el_preds_deg, 'elevetion', verbose=verbose)
+        ti_aads, ti_maad, ti_sem = self.maad(ti_true_deg, ti_preds_deg, 'tilt', verbose=verbose)
 
-        az_aads, az_maad, az_sem = maad(az_true_deg, az_preds_deg, 'azimuth')
-        el_aads, el_maad, el_sem = maad(el_true_deg, el_preds_deg, 'elevetion')
-        ti_aads, ti_maad, ti_sem = maad(ti_true_deg, ti_preds_deg, 'tilt')
-
-        def vm_log_likelihood(y_true_bit, y_preds_bit, kappa_preds, angle='', verbose=1):
-            vm_lls = von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)
-            vm_ll_mean = np.mean(vm_lls)
-            vm_ll_sem = stats.sem(vm_lls)
-            if verbose:
-                print("Log-likelihood %s : %2.2f+-%2.2fSE" % (angle, vm_ll_mean, vm_ll_sem))
-            return vm_lls, vm_ll_mean, vm_ll_sem
-
-        az_lls, az_ll_mean, az_ll_sem = vm_log_likelihood(az_true_bit, az_preds_bit, az_preds_kappa, 'azimuth')
-        el_lls, el_ll_mean, el_ll_sem = vm_log_likelihood(el_true_bit, el_preds_bit, el_preds_kappa, 'elevation')
-        ti_lls, el_ll_mean, ti_ll_sem = vm_log_likelihood(ti_true_bit, ti_preds_bit, ti_preds_kappa, 'tilt')
+        az_lls, az_ll_mean, az_ll_sem = self.log_likelihood(az_true_bit, az_preds_bit, az_preds_kappa,
+                                                               'azimuth', verbose=verbose)
+        el_lls, el_ll_mean, el_ll_sem = self.log_likelihood(el_true_bit, el_preds_bit, el_preds_kappa,
+                                                               'elevation', verbose=verbose)
+        ti_lls, el_ll_mean, ti_ll_sem = self.log_likelihood(ti_true_bit, ti_preds_bit, ti_preds_kappa,
+                                                               'tilt', verbose=verbose)
 
         lls = az_lls + el_lls + ti_lls
         ll_mean = np.mean(lls)
@@ -196,4 +201,45 @@ class BiternionCNN:
 
         np.savetxt(save_path, y_pred, delimiter=' ', fmt='%i')
         print("evaluation data saved to %s" % save_path)
+
         return
+
+    def finetune_angle_kappa(self, y_true_bit, y_preds_bit, max_kappa=1000.0, verbose=1):
+
+        kappa_vals = np.arange(0, max_kappa, 1.0)
+        log_likelihoods = np.zeros(kappa_vals.shape)
+        for i, kappa_val in enumerate(kappa_vals):
+            kappa_preds = np.ones([y_true_bit.shape[0], 1]) * kappa_val
+            log_likelihoods[i] = self.log_likelihood(y_true_bit, y_preds_bit, kappa_preds)
+            if verbose:
+                print("kappa: %f, log-likelihood: %f" % (kappa_val, log_likelihoods[i]))
+        max_ix = np.argmax(log_likelihoods)
+        fixed_kappa_value = kappa_vals[max_ix]
+
+        if verbose:
+            print("best kappa : %f" % fixed_kappa_value)
+
+        return fixed_kappa_value
+
+    def finetune_all_kappas(self, x, y_true_bit, verbose=1):
+
+        az_preds_bit, _, el_preds_bit, _, ti_preds_bit, _ = \
+            self.unpack_preds(self.model.predict(np.asarray(x)))
+        az_true_bit, el_true_bit, ti_true_bit = self.unpack_target(y_true_bit)
+
+        az_kappa = self.finetune_angle_kappa(az_true_bit, az_preds_bit)
+        el_kappa = self.finetune_angle_kappa(el_true_bit, el_preds_bit)
+        ti_kappa = self.finetune_angle_kappa(ti_true_bit, ti_preds_bit)
+
+        if verbose:
+            print("azimuth kappa: %f" % az_kappa)
+            az_kappas = np.ones([y_true_bit.shape[0], 1]) * az_kappa
+            self.log_likelihood(az_true_bit, az_preds_bit, az_kappas)
+            print("elevation kappa: %f" % el_kappa)
+            el_kappas = np.ones([y_true_bit.shape[0], 1]) * el_kappa
+            self.log_likelihood(el_true_bit, el_preds_bit, el_kappas)
+            print("tilt kappa: %f" % ti_kappa)
+            ti_kappas = np.ones([y_true_bit.shape[0], 1]) * ti_kappa
+            self.log_likelihood(ti_true_bit, ti_preds_bit, ti_kappas)
+
+        return az_kappa, el_kappa, ti_kappa

@@ -131,7 +131,6 @@ def train_model(class_name, loss_type):
 
     print("Trial finished. Best model saved at %s" % ckp_path)
 
-
     return
 
 
