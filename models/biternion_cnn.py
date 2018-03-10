@@ -137,7 +137,6 @@ class BiternionCNN:
                        callbacks=[early_stop_cb, model_ckpt])
 
         self.model.load_weights(ckpt_path)
-        self.evaluate(validation_data)
 
     def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds, angle='', verbose=1):
         vm_lls = von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)
