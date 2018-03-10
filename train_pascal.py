@@ -123,7 +123,7 @@ def fixed_params():
     return params
 
 
-def train_model(class_name, loss_type):
+def train_model(class_name, loss_type, pretrain=True):
 
     global_results_log = '/home/sprokudin/biternionnet/logs/V1_biternion_%s_%s.csv' % (loss_type, class_name)
 
@@ -145,7 +145,7 @@ def train_model(class_name, loss_type):
     ckpt_name = 'bicnn_%s_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (loss_type, class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
     ckpt_path = os.path.join(LOGS_PATH, ckpt_name)
 
-    if loss_type == 'likelihood':
+    if loss_type == 'likelihood' and pretrain:
         print("Pre-training model with fixed kappas..")
         model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type='cosine',
                              learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
@@ -181,9 +181,9 @@ def main():
 
     for i in range(0, N_TRIALS):
 
-        class_name = 'aeroplane' #np.random.choice(PASCAL_CLASSES)
+        class_name = 'boat' #np.random.choice(PASCAL_CLASSES)
         loss_type = 'likelihood' #np.random.choice(['cosine', 'likelihood'])
-        train_model(class_name, loss_type)
+        train_model(class_name, loss_type, pretrain=True)
 
     print("Fin.")
 
