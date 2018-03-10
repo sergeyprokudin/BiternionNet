@@ -108,6 +108,8 @@ def train_model(class_name, loss_type):
 
     x_train, y_train, x_val, y_val = load_data(cls=class_name, val_split=0.2)
 
+    y_train[:, 2:] = 0
+
     print("TRAINING on CLASS : %s" % class_name)
     print("LOSS function used: %s" % loss_type)
 
