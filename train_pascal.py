@@ -57,20 +57,23 @@ def merge_all_classes(data):
     return images, angles
 
 
-def load_data(cls=None, val_split=0.2):
+def load_pascal_data(cls=None, val_split=0.2):
 
     train_test_data_db = h5py.File(PASCAL_DATA_DB, 'r')
 
     train_data = train_test_data_db['train']
+    test_data = train_test_data_db['test']
 
     if cls is None:
         x_train, y_train = merge_all_classes(train_data)
+        x_test, y_test = merge_all_classes(test_data)
     else:
         x_train, y_train = get_class_data(train_data, cls)
+        x_test, y_test = get_class_data(test_data, cls)
 
     x_train, y_train, x_val, y_val = train_val_split(x_train, y_train, val_split=val_split)
 
-    return x_train, y_train, x_val, y_val
+    return x_train, y_train, x_val, y_val, x_test, y_test
 
 
 def get_experiment_id():
@@ -104,11 +107,9 @@ def train_model(class_name, loss_type):
 
     if not os.path.exists(global_results_log):
         with open(global_results_log, 'w') as f:
-            f.write("checkpoint_path;validation_loss\n")
+            f.write("checkpoint_path;train_maad;train_ll;val_maad;val_ll;test_maad;test_ll;az_kappa;el_kappa;ti_kappa\n")
 
-    x_train, y_train, x_val, y_val = load_data(cls=class_name, val_split=0.2)
-
-    y_train[:, 2:] = 0
+    x_train, y_train, x_val, y_val, x_test, y_test = load_pascal_data(cls=class_name, val_split=0.2)
 
     print("TRAINING on CLASS : %s" % class_name)
     print("LOSS function used: %s" % loss_type)
@@ -118,18 +119,21 @@ def train_model(class_name, loss_type):
     # params = select_params()
 
     K.clear_session()
-    model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type=loss_type,
+    model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type=loss_type,
                          learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
     ckpt_name = 'bicnn_%s_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (loss_type, class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
-    ckp_path = os.path.join(LOGS_PATH, ckpt_name)
-    model.fit(x_train, y_train, [x_val, y_val], epochs=200, ckpt_path=ckp_path,
-              patience=10, batch_size=params['batch_size'])
-    val_loss = model.model.evaluate(x_val, y_val)
-    with open(global_results_log, 'a') as f:
-        f.write("%s;%f\n" % (ckp_path, val_loss))
+    ckpt_path = os.path.join(LOGS_PATH, ckpt_name)
+    train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas = \
+        model.train_finetune_eval(x_train, y_train, x_val, y_val, x_test, y_test,
+                                  ckpt_path, batch_size=params['batch_size'], patience=10, epochs=200)
 
-    print("Trial finished. Best model saved at %s" % ckp_path)
+    with open(global_results_log, 'a') as f:
+        res_str = ';'.join([ckpt_path, train_maad, train_ll, val_maad, val_ll, test_maad, test_ll,
+                            kappas[0], kappas[1], kappas[2]])
+        f.write("%s\n" % res_str)
+
+    print("Trial finished. Best model saved at %s" % ckpt_path)
 
     return
 

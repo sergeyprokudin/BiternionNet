@@ -32,11 +32,14 @@ class BiternionCNN:
                  backbone_cnn='inception',
                  learning_rate=1.0e-4,
                  hlayer_size=512,
-                 fixed_kappa=1.0):
+                 fixed_kappas=[1.0, 1.0, 1.0]):
 
         self.loss_type = loss_type
         self.input_shape = input_shape
         self.learning_rate = learning_rate
+        self.az_kappa = fixed_kappas[0]
+        self.el_kappa = fixed_kappas[1]
+        self.ti_kappa = fixed_kappas[2]
 
         if debug:
             x_in = Input(shape=input_shape)
@@ -152,7 +155,7 @@ class BiternionCNN:
             print("MAAD %s : %2.2f+-%2.2fSE" % (angle, maad, sem))
         return aads, maad, sem
 
-    def evaluate(self, x, y_true, verbose=1):
+    def evaluate(self, x, y_true, kappas=None, verbose=1):
 
         y_pred = self.model.predict(np.asarray(x))
 
@@ -167,8 +170,15 @@ class BiternionCNN:
         ti_true_deg = bit2deg(ti_true_bit)
 
         az_aads, az_maad, az_sem = self.maad(az_true_deg, az_preds_deg, 'azimuth', verbose=verbose)
-        el_aads, el_maad, el_sem = self.maad(el_true_deg, el_preds_deg, 'elevetion', verbose=verbose)
+        el_aads, el_maad, el_sem = self.maad(el_true_deg, el_preds_deg, 'elevation', verbose=verbose)
         ti_aads, ti_maad, ti_sem = self.maad(ti_true_deg, ti_preds_deg, 'tilt', verbose=verbose)
+
+        if self.loss_type == 'cosine':
+            print("cosine loss, using fixed kappas..")
+            az_kappa, el_kappa, ti_kappa = kappas
+            az_preds_kappa = np.ones([y_true.shape[0], 1]) * az_kappa
+            el_preds_kappa = np.ones([y_true.shape[0], 1]) * el_kappa
+            ti_preds_kappa = np.ones([y_true.shape[0], 1]) * ti_kappa
 
         az_lls, az_ll_mean, az_ll_sem = self.log_likelihood(az_true_bit, az_preds_bit, az_preds_kappa,
                                                                'azimuth', verbose=verbose)
@@ -221,25 +231,44 @@ class BiternionCNN:
 
         return fixed_kappa_value
 
-    def finetune_all_kappas(self, x, y_true_bit, verbose=1):
+    def finetune_all_kappas(self, x, y_true, verbose=1):
 
         az_preds_bit, _, el_preds_bit, _, ti_preds_bit, _ = \
             self.unpack_preds(self.model.predict(np.asarray(x)))
-        az_true_bit, el_true_bit, ti_true_bit = self.unpack_target(y_true_bit)
+        az_true_bit, el_true_bit, ti_true_bit = self.unpack_target(y_true)
 
-        az_kappa = self.finetune_angle_kappa(az_true_bit, az_preds_bit)
-        el_kappa = self.finetune_angle_kappa(el_true_bit, el_preds_bit)
-        ti_kappa = self.finetune_angle_kappa(ti_true_bit, ti_preds_bit)
+        az_kappa = self.finetune_angle_kappa(az_true_bit, az_preds_bit, verbose=0)
+        el_kappa = self.finetune_angle_kappa(el_true_bit, el_preds_bit, verbose=0)
+        ti_kappa = self.finetune_angle_kappa(ti_true_bit, ti_preds_bit, verbose=0)
 
         if verbose:
             print("azimuth kappa: %f" % az_kappa)
-            az_kappas = np.ones([y_true_bit.shape[0], 1]) * az_kappa
-            self.log_likelihood(az_true_bit, az_preds_bit, az_kappas)
+            az_kappas = np.ones([y_true.shape[0], 1]) * az_kappa
+            _, az_ll, _ = self.log_likelihood(az_true_bit, az_preds_bit, az_kappas)
             print("elevation kappa: %f" % el_kappa)
-            el_kappas = np.ones([y_true_bit.shape[0], 1]) * el_kappa
-            self.log_likelihood(el_true_bit, el_preds_bit, el_kappas)
+            el_kappas = np.ones([y_true.shape[0], 1]) * el_kappa
+            _, az_ll, _ = self.log_likelihood(el_true_bit, el_preds_bit, el_kappas)
             print("tilt kappa: %f" % ti_kappa)
-            ti_kappas = np.ones([y_true_bit.shape[0], 1]) * ti_kappa
-            self.log_likelihood(ti_true_bit, ti_preds_bit, ti_kappas)
+            ti_kappas = np.ones([y_true.shape[0], 1]) * ti_kappa
+            _, az_ll, _ = self.log_likelihood(ti_true_bit, ti_preds_bit, ti_kappas)
 
         return az_kappa, el_kappa, ti_kappa
+
+    def train_finetune_eval(self, x_train, y_train, x_val, y_val, x_test, y_test,
+                            ckpt_path, batch_size=32, patience=10, epochs=200):
+
+        self.fit(x_train, y_train, [x_val, y_val], epochs=epochs,
+                 ckpt_path=ckpt_path, patience=patience, batch_size=batch_size)
+
+        if self.loss_type == 'cosine':
+            kappas = self.finetune_all_kappas(x_val, y_val)
+            train_maad, train_ll = self.evaluate(x_test, y_test, kappas)
+            val_maad, val_ll = self.evaluate(x_val, y_val, kappas)
+            test_maad, test_ll = self.evaluate(x_test, y_test, kappas)
+        else:
+            kappas = [1.0, 1.0, 1.0]
+            train_maad, train_ll = self.evaluate(x_test, y_test)
+            val_maad, val_ll = self.evaluate(x_val, y_val)
+            test_maad, test_ll = self.evaluate(x_test, y_test)
+
+        return train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas
