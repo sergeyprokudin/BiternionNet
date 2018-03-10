@@ -210,7 +210,7 @@ class BiternionCNN:
         log_likelihoods = np.zeros(kappa_vals.shape)
         for i, kappa_val in enumerate(kappa_vals):
             kappa_preds = np.ones([y_true_bit.shape[0], 1]) * kappa_val
-            log_likelihoods[i] = self.log_likelihood(y_true_bit, y_preds_bit, kappa_preds)
+            log_likelihoods[i] = self.log_likelihood(y_true_bit, y_preds_bit, kappa_preds)[1]
             if verbose:
                 print("kappa: %f, log-likelihood: %f" % (kappa_val, log_likelihoods[i]))
         max_ix = np.argmax(log_likelihoods)
