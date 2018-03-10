@@ -261,17 +261,15 @@ class BiternionCNN:
 
         if self.loss_type == 'cosine':
             kappas = self.finetune_all_kappas(x_val, y_val, verbose=0)
-            print("EVALUATING ON TRAIN")
-            train_maad, train_ll = self.evaluate(x_test, y_test, kappas)
-            print("EVALUATING ON VALIDAITON")
-            val_maad, val_ll = self.evaluate(x_val, y_val, kappas)
-            print("EVALUATING ON TEST")
-            test_maad, test_ll = self.evaluate(x_test, y_test, kappas)
         else:
             kappas = [1.0, 1.0, 1.0]
-            train_maad, train_ll = self.evaluate(x_test, y_test)
-            val_maad, val_ll = self.evaluate(x_val, y_val)
-            test_maad, test_ll = self.evaluate(x_test, y_test)
+
+        print("EVALUATING ON TRAIN")
+        train_maad, train_ll = self.evaluate(x_test, y_test, kappas)
+        print("EVALUATING ON VALIDAITON")
+        val_maad, val_ll = self.evaluate(x_val, y_val, kappas)
+        print("EVALUATING ON TEST")
+        test_maad, test_ll = self.evaluate(x_test, y_test, kappas)
 
         return train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas
 
