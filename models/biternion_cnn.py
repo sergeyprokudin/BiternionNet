@@ -146,7 +146,7 @@ class BiternionCNN:
         p_uniform = 0.15916927
         gamma = 1.0e-3
 
-        vm_lls = np.log(p_uniform*gamma -
+        vm_lls = np.log(p_uniform*gamma +
                         (1-gamma)*np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)))
         vm_ll_mean = np.mean(vm_lls)
         vm_ll_sem = stats.sem(vm_lls)
@@ -306,6 +306,6 @@ class BiternionCNN:
 
         for xid, xval in enumerate(vals):
             x_bit = rad2bit(x_vals_tiled*xval)
-            pdf_vals[:, xid] = p_uni*gamma - (1-gamma)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
+            pdf_vals[:, xid] = p_uni*gamma + (1-gamma)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
 
         return vals, pdf_vals
