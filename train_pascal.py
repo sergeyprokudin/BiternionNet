@@ -123,7 +123,7 @@ def train_model(class_name, loss_type):
     ckpt_name = 'bicnn_%s_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (loss_type, class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
     ckpt_path = os.path.join(LOGS_PATH, ckpt_name)
 
-    if loss_type == 'cosine':
+    if loss_type == 'likelihood':
         print("Pre-training model with fixed kappas..")
         model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type='cosine',
                              learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
