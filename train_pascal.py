@@ -103,7 +103,7 @@ def fixed_params():
 
 def train_model(class_name, loss_type):
 
-    global_results_log = '/home/sprokudin/biternionnet/logs/biternion_%s_%s.csv' % (loss_type, class_name)
+    global_results_log = '/home/sprokudin/biternionnet/logs/NEW_biternion_%s_%s.csv' % (loss_type, class_name)
 
     if not os.path.exists(global_results_log):
         with open(global_results_log, 'w') as f:
@@ -130,8 +130,9 @@ def train_model(class_name, loss_type):
 
     with open(global_results_log, 'a') as f:
         import ipdb; ipdb.set_trace()
-        res_str = ';'.join([ckpt_path, train_maad, train_ll, val_maad, val_ll, test_maad, test_ll,
-                            kappas[0], kappas[1], kappas[2]])
+        res_str = '%s;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f'\
+                  % (ckpt_path, train_maad, train_ll, val_maad, val_ll, test_maad, test_ll,
+                     kappas[0], kappas[1], kappas[2])
         f.write("%s\n" % res_str)
 
     print("Trial finished. Best model saved at %s" % ckpt_path)
