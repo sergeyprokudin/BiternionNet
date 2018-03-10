@@ -22,6 +22,8 @@ from utils.losses import cosine_loss_tf, von_mises_log_likelihood_tf
 from utils.losses import von_mises_log_likelihood_np
 from utils.angles import bit2deg, rad2bit
 
+P_UNIFORM = 0.15916927
+GAMMA = 1.0e-3
 
 class BiternionCNN:
 
@@ -116,15 +118,12 @@ class BiternionCNN:
 
     def likelihood_loss(self, y_target, y_pred):
 
-        p_uniform = 0.15916927
-        gamma = 1.0e-3
-
         az_mean, az_kappa, el_mean, el_kappa, ti_mean, ti_kappa = self.unpack_preds(y_pred)
         az_target, el_target, ti_target = self.unpack_target(y_target)
 
-        az_loss = -K.log(p_uniform*gamma + (1-gamma)*K.exp(von_mises_log_likelihood_tf(az_target, az_mean, az_kappa)))
-        el_loss = -K.log(p_uniform*gamma + (1-gamma)*K.exp(von_mises_log_likelihood_tf(el_target, el_mean, el_kappa)))
-        ti_loss = -K.log(p_uniform*gamma + (1-gamma)*K.exp(von_mises_log_likelihood_tf(ti_target, ti_mean, ti_kappa)))
+        az_loss = -K.log(P_UNIFORM * GAMMA + (1 - GAMMA) * K.exp(von_mises_log_likelihood_tf(az_target, az_mean, az_kappa)))
+        el_loss = -K.log(P_UNIFORM * GAMMA + (1 - GAMMA) * K.exp(von_mises_log_likelihood_tf(el_target, el_mean, el_kappa)))
+        ti_loss = -K.log(P_UNIFORM * GAMMA + (1 - GAMMA) * K.exp(von_mises_log_likelihood_tf(ti_target, ti_mean, ti_kappa)))
 
         return az_loss + el_loss + ti_loss
 
@@ -143,11 +142,8 @@ class BiternionCNN:
 
     def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds, angle='', verbose=1):
 
-        p_uniform = 0.15916927
-        gamma = 1.0e-3
-
-        vm_lls = np.log(p_uniform*gamma +
-                        (1-gamma)*np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)))
+        vm_lls = np.log(P_UNIFORM*GAMMA +
+                        (1-GAMMA)*np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)))
         vm_ll_mean = np.mean(vm_lls)
         vm_ll_sem = stats.sem(vm_lls)
         if verbose:
@@ -284,9 +280,6 @@ class BiternionCNN:
 
     def pdf(self, x, angle='azimuth', kappa=None):
 
-        p_uni = 0.15916927
-        gamma = 1.0e-3
-
         vals = np.arange(0, 2*np.pi, 0.01)
 
         n_images = x.shape[0]
@@ -306,6 +299,6 @@ class BiternionCNN:
 
         for xid, xval in enumerate(vals):
             x_bit = rad2bit(x_vals_tiled*xval)
-            pdf_vals[:, xid] = p_uni*gamma + (1-gamma)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
+            pdf_vals[:, xid] = P_UNIFORM*GAMMA + (1-GAMMA)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
 
         return vals, pdf_vals
