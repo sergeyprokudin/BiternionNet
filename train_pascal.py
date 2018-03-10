@@ -116,7 +116,7 @@ def select_params():
 def fixed_params():
 
     params ={}
-    params['lr'] = 1.0e-4
+    params['lr'] = 1.0e-5
     params['batch_size'] = 32
     params['hlayer_size'] = 512
 
