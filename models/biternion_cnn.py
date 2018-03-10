@@ -220,7 +220,7 @@ class BiternionCNN:
         for i, kappa_val in enumerate(kappa_vals):
             kappa_preds = np.ones([y_true_bit.shape[0], 1]) * kappa_val
             log_likelihoods[i] = self.log_likelihood(y_true_bit, y_preds_bit, kappa_preds)[1]
-            if verbose:
+            if verbose == 1:
                 print("kappa: %f, log-likelihood: %f" % (kappa_val, log_likelihoods[i]))
         max_ix = np.argmax(log_likelihoods)
         fixed_kappa_value = kappa_vals[max_ix]
@@ -260,7 +260,7 @@ class BiternionCNN:
                  ckpt_path=ckpt_path, patience=patience, batch_size=batch_size)
 
         if self.loss_type == 'cosine':
-            kappas = self.finetune_all_kappas(x_val, y_val)
+            kappas = self.finetune_all_kappas(x_val, y_val, verbose=0)
             print("EVALUATING ON TRAIN")
             train_maad, train_ll = self.evaluate(x_test, y_test, kappas)
             print("EVALUATING ON VALIDAITON")
