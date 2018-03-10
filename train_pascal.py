@@ -158,7 +158,7 @@ def train_model(class_name, loss_type, pretrain=True):
     model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type=loss_type,
                          learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
-    if loss_type == 'likelihood':
+    if loss_type == 'likelihood' and pretrain:
           model.model.load_weights(ckpt_path)
           # model.model.load_weights(best_cosine_models[class_name])
 
