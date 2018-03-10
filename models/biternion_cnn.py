@@ -122,9 +122,9 @@ class BiternionCNN:
         az_mean, az_kappa, el_mean, el_kappa, ti_mean, ti_kappa = self.unpack_preds(y_pred)
         az_target, el_target, ti_target = self.unpack_target(y_target)
 
-        az_loss = -K.log(p_uniform*gamma - (1-gamma)*K.exp(von_mises_log_likelihood_tf(az_target, az_mean, az_kappa)))
-        el_loss = -K.log(p_uniform*gamma - (1-gamma)*K.exp(von_mises_log_likelihood_tf(el_target, el_mean, el_kappa)))
-        ti_loss = -K.log(p_uniform*gamma - (1-gamma)*K.exp(von_mises_log_likelihood_tf(ti_target, ti_mean, ti_kappa)))
+        az_loss = -K.log(p_uniform*gamma + (1-gamma)*K.exp(von_mises_log_likelihood_tf(az_target, az_mean, az_kappa)))
+        el_loss = -K.log(p_uniform*gamma + (1-gamma)*K.exp(von_mises_log_likelihood_tf(el_target, el_mean, el_kappa)))
+        ti_loss = -K.log(p_uniform*gamma + (1-gamma)*K.exp(von_mises_log_likelihood_tf(ti_target, ti_mean, ti_kappa)))
 
         return az_loss + el_loss + ti_loss
 
