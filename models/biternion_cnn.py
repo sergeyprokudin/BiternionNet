@@ -23,7 +23,7 @@ from utils.losses import von_mises_log_likelihood_np
 from utils.angles import bit2deg, rad2bit
 
 P_UNIFORM = 0.15916927
-GAMMA = 1.0e-2
+GAMMA = 1.0e-1
 
 class BiternionCNN:
 
