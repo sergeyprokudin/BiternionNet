@@ -236,6 +236,7 @@ class BiternionCNN:
             self.unpack_preds(self.model.predict(np.asarray(x)))
         az_true_bit, el_true_bit, ti_true_bit = self.unpack_target(y_true)
 
+        print("finetuning kappas..")
         az_kappa = self.finetune_angle_kappa(az_true_bit, az_preds_bit, verbose=0)
         el_kappa = self.finetune_angle_kappa(el_true_bit, el_preds_bit, verbose=0)
         ti_kappa = self.finetune_angle_kappa(ti_true_bit, ti_preds_bit, verbose=0)
