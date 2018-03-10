@@ -265,7 +265,7 @@ class BiternionCNN:
             kappas = [1.0, 1.0, 1.0]
 
         print("EVALUATING ON TRAIN")
-        train_maad, train_ll = self.evaluate(x_test, y_test, kappas)
+        train_maad, train_ll = self.evaluate(x_train, y_train, kappas)
         print("EVALUATING ON VALIDAITON")
         val_maad, val_ll = self.evaluate(x_val, y_val, kappas)
         print("EVALUATING ON TEST")
