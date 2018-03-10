@@ -129,6 +129,7 @@ def train_model(class_name, loss_type):
                                   ckpt_path, batch_size=params['batch_size'], patience=10, epochs=1)
 
     with open(global_results_log, 'a') as f:
+        import ipdb; ipdb.set_trace()
         res_str = ';'.join([ckpt_path, train_maad, train_ll, val_maad, val_ll, test_maad, test_ll,
                             kappas[0], kappas[1], kappas[2]])
         f.write("%s\n" % res_str)
