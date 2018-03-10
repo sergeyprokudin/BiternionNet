@@ -112,7 +112,8 @@ def train_model(class_name, loss_type):
     print("LOSS function used: %s" % loss_type)
 
     exp_id = get_experiment_id()
-    params = fixed_params()
+    #params = fixed_params()
+    params = select_params()
 
     K.clear_session()
     model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type=loss_type,
