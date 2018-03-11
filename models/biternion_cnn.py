@@ -350,7 +350,7 @@ class BiternionCNN:
             fig, axs = plt.subplots(1, 2, figsize=(10, 5))
             axs[0].imshow(x[i])
             if y_true is not None:
-                self.plot_pdf(xvals, pdf_vals[i], target=az_true_rad[i], predicted=az_preds_rad, ax=axs[1])
+                self.plot_pdf(xvals, pdf_vals[i], target=az_true_rad[i], predicted=az_preds_rad[i], ax=axs[1])
             else:
                 self.plot_pdf(xvals, pdf_vals[i], ax=axs[1])
             fig.show()
