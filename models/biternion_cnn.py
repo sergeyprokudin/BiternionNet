@@ -140,10 +140,11 @@ class BiternionCNN:
 
         self.model.load_weights(ckpt_path)
 
-    def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds, angle='', verbose=1):
+    def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds,
+                       gamma=GAMMA, angle='', verbose=1):
 
-        vm_lls = np.log(P_UNIFORM*GAMMA +
-                        (1-GAMMA)*np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)))
+        vm_lls = np.log(P_UNIFORM*gamma +
+                        (1-gamma)*np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)))
         vm_ll_mean = np.mean(vm_lls)
         vm_ll_sem = stats.sem(vm_lls)
         if verbose:
@@ -278,7 +279,7 @@ class BiternionCNN:
 
         return train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas
 
-    def pdf(self, x, angle='azimuth', kappa=None):
+    def pdf(self, x, angle='azimuth', kappa=None, gamma=GAMMA):
 
         vals = np.arange(0, 2*np.pi, 0.01)
 
@@ -299,8 +300,8 @@ class BiternionCNN:
 
         for xid, xval in enumerate(vals):
             x_bit = rad2bit(x_vals_tiled*xval)
-            pdf_vals[:, xid] = P_UNIFORM*GAMMA + \
-                               (1-GAMMA)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
+            pdf_vals[:, xid] = P_UNIFORM*gamma + \
+                               (1-gamma)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
 
         return vals, pdf_vals
 
