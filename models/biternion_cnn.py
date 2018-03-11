@@ -299,6 +299,7 @@ class BiternionCNN:
 
         for xid, xval in enumerate(vals):
             x_bit = rad2bit(x_vals_tiled*xval)
-            pdf_vals[:, xid] = P_UNIFORM*GAMMA + (1-GAMMA)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
+            pdf_vals[:, xid] = P_UNIFORM*GAMMA + \
+                               (1-GAMMA)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
 
         return vals, pdf_vals
