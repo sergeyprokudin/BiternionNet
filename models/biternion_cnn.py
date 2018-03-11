@@ -36,7 +36,7 @@ class BiternionCNN:
                  learning_rate=1.0e-4,
                  hlayer_size=512,
                  fixed_kappas=[1.0, 1.0, 1.0],
-                 gamma=1.0e-1):
+                 gammas=[1.0e-1, 1.0e-1, 1.0e-1]):
 
         self.loss_type = loss_type
         self.input_shape = input_shape
@@ -44,7 +44,7 @@ class BiternionCNN:
         self.az_kappa = fixed_kappas[0]
         self.el_kappa = fixed_kappas[1]
         self.ti_kappa = fixed_kappas[2]
-        self.gamma = gamma
+        self.set_gammas(gammas)
 
         if debug:
             x_in = Input(shape=input_shape)
@@ -87,6 +87,11 @@ class BiternionCNN:
 
         self.model.compile(optimizer=opt, loss=self.loss)
 
+    def set_gammas(self, gammas):
+        self.az_gamma = gammas[0]
+        self.el_gamma = gammas[1]
+        self.ti_gamma = gammas[2]
+
     def unpack_preds(self, y_pred):
 
         az_mean = y_pred[:, 0:2]
@@ -124,9 +129,9 @@ class BiternionCNN:
         az_mean, az_kappa, el_mean, el_kappa, ti_mean, ti_kappa = self.unpack_preds(y_pred)
         az_target, el_target, ti_target = self.unpack_target(y_target)
 
-        az_loss = -K.log(P_UNIFORM * self.gamma + (1 - self.gamma) * K.exp(von_mises_log_likelihood_tf(az_target, az_mean, az_kappa)))
-        el_loss = -K.log(P_UNIFORM * self.gamma + (1 - self.gamma) * K.exp(von_mises_log_likelihood_tf(el_target, el_mean, el_kappa)))
-        ti_loss = -K.log(P_UNIFORM * self.gamma + (1 - self.gamma) * K.exp(von_mises_log_likelihood_tf(ti_target, ti_mean, ti_kappa)))
+        az_loss = -K.log(P_UNIFORM * self.az_gamma + (1 - self.az_gamma) * K.exp(von_mises_log_likelihood_tf(az_target, az_mean, az_kappa)))
+        el_loss = -K.log(P_UNIFORM * self.el_gamma + (1 - self.el_gamma) * K.exp(von_mises_log_likelihood_tf(el_target, el_mean, el_kappa)))
+        ti_loss = -K.log(P_UNIFORM * self.ti_gamma + (1 - self.ti_gamma) * K.exp(von_mises_log_likelihood_tf(ti_target, ti_mean, ti_kappa)))
 
         return az_loss + el_loss + ti_loss
 
@@ -143,10 +148,10 @@ class BiternionCNN:
 
         self.model.load_weights(ckpt_path)
 
-    def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds, angle='', verbose=1):
+    def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds, gamma=1.0e-1, angle='', verbose=1):
 
-        vm_lls = np.log(P_UNIFORM*self.gamma +
-                        (1-self.gamma)*np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)))
+        vm_lls = np.log(P_UNIFORM*gamma +
+                        (1-gamma)*np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)))
         vm_ll_mean = np.mean(vm_lls)
         vm_ll_sem = stats.sem(vm_lls)
         if verbose:
@@ -186,11 +191,11 @@ class BiternionCNN:
             el_preds_kappa = np.ones([y_true.shape[0], 1]) * el_kappa
             ti_preds_kappa = np.ones([y_true.shape[0], 1]) * ti_kappa
 
-        az_lls, az_ll_mean, az_ll_sem = self.log_likelihood(az_true_bit, az_preds_bit, az_preds_kappa,
+        az_lls, az_ll_mean, az_ll_sem = self.log_likelihood(az_true_bit, az_preds_bit, az_preds_kappa, self.az_gamma,
                                                                'azimuth', verbose=verbose)
-        el_lls, el_ll_mean, el_ll_sem = self.log_likelihood(el_true_bit, el_preds_bit, el_preds_kappa,
+        el_lls, el_ll_mean, el_ll_sem = self.log_likelihood(el_true_bit, el_preds_bit, el_preds_kappa, self.el_gamma,
                                                                'elevation', verbose=verbose)
-        ti_lls, el_ll_mean, ti_ll_sem = self.log_likelihood(ti_true_bit, ti_preds_bit, ti_preds_kappa,
+        ti_lls, el_ll_mean, ti_ll_sem = self.log_likelihood(ti_true_bit, ti_preds_bit, ti_preds_kappa, self.ti_gamma,
                                                                'tilt', verbose=verbose)
 
         lls = az_lls + el_lls + ti_lls
@@ -294,6 +299,7 @@ class BiternionCNN:
         if angle == 'azimuth':
             mu_preds_bit = az_preds_bit
             kappa_preds = az_preds_kappa
+            gamma = self.az_gamma
 
         if self.loss_type == 'cosine':
             kappa_preds = np.ones([x.shape[0], 1]) * kappa
@@ -302,8 +308,8 @@ class BiternionCNN:
 
         for xid, xval in enumerate(vals):
             x_bit = rad2bit(x_vals_tiled*xval)
-            pdf_vals[:, xid] = P_UNIFORM*self.gamma + \
-                               (1-self.gamma)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
+            pdf_vals[:, xid] = P_UNIFORM*gamma + \
+                               (1-gamma)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
 
         return vals, pdf_vals
 
