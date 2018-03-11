@@ -150,7 +150,7 @@ def train_model(class_name):
 def main():
 
     for i in range(0, N_TRIALS):
-        class_name = np.random.choice(PASCAL_CLASSES)
+        class_name = 'aeroplane' #np.random.choice(PASCAL_CLASSES)
         train_model(class_name)
 
     print("Fin.")
