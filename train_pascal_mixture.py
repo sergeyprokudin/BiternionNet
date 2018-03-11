@@ -125,7 +125,7 @@ def train_model(class_name):
 
     K.clear_session()
 
-    ckpt_name = 'bimixture_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
+    ckpt_name = 'bimixture_%s_bs%d_hls%d_lr_%0.1e.h5' % (class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
     ckpt_path = os.path.join(LOGS_PATH, ckpt_name)
 
     K.clear_session()
