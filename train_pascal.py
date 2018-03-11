@@ -182,7 +182,7 @@ def main():
     for i in range(0, N_TRIALS):
 
         class_name = 'aeroplane' #np.random.choice(PASCAL_CLASSES)
-        loss_type = 'cosine' #np.random.choice(['cosine', 'likelihood'])
+        loss_type = 'likelihood' #np.random.choice(['cosine', 'likelihood'])
         train_model(class_name, loss_type, pretrain=True)
 
     print("Fin.")
