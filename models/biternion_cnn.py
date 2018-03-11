@@ -25,7 +25,6 @@ from utils.losses import von_mises_log_likelihood_np
 from utils.angles import bit2deg, rad2bit, bit2rad
 
 P_UNIFORM = 0.15916927
-GAMMA = 1.0e-1
 
 class BiternionCNN:
 
@@ -36,7 +35,8 @@ class BiternionCNN:
                  backbone_cnn='inception',
                  learning_rate=1.0e-4,
                  hlayer_size=512,
-                 fixed_kappas=[1.0, 1.0, 1.0]):
+                 fixed_kappas=[1.0, 1.0, 1.0],
+                 gamma=1.0e-1):
 
         self.loss_type = loss_type
         self.input_shape = input_shape
@@ -44,6 +44,7 @@ class BiternionCNN:
         self.az_kappa = fixed_kappas[0]
         self.el_kappa = fixed_kappas[1]
         self.ti_kappa = fixed_kappas[2]
+        self.gamma = gamma
 
         if debug:
             x_in = Input(shape=input_shape)
@@ -123,9 +124,9 @@ class BiternionCNN:
         az_mean, az_kappa, el_mean, el_kappa, ti_mean, ti_kappa = self.unpack_preds(y_pred)
         az_target, el_target, ti_target = self.unpack_target(y_target)
 
-        az_loss = -K.log(P_UNIFORM * GAMMA + (1 - GAMMA) * K.exp(von_mises_log_likelihood_tf(az_target, az_mean, az_kappa)))
-        el_loss = -K.log(P_UNIFORM * GAMMA + (1 - GAMMA) * K.exp(von_mises_log_likelihood_tf(el_target, el_mean, el_kappa)))
-        ti_loss = -K.log(P_UNIFORM * GAMMA + (1 - GAMMA) * K.exp(von_mises_log_likelihood_tf(ti_target, ti_mean, ti_kappa)))
+        az_loss = -K.log(P_UNIFORM * self.gamma + (1 - self.gamma) * K.exp(von_mises_log_likelihood_tf(az_target, az_mean, az_kappa)))
+        el_loss = -K.log(P_UNIFORM * self.gamma + (1 - self.gamma) * K.exp(von_mises_log_likelihood_tf(el_target, el_mean, el_kappa)))
+        ti_loss = -K.log(P_UNIFORM * self.gamma + (1 - self.gamma) * K.exp(von_mises_log_likelihood_tf(ti_target, ti_mean, ti_kappa)))
 
         return az_loss + el_loss + ti_loss
 
@@ -142,11 +143,10 @@ class BiternionCNN:
 
         self.model.load_weights(ckpt_path)
 
-    def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds,
-                       gamma=GAMMA, angle='', verbose=1):
+    def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds, angle='', verbose=1):
 
-        vm_lls = np.log(P_UNIFORM*gamma +
-                        (1-gamma)*np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)))
+        vm_lls = np.log(P_UNIFORM*self.gamma +
+                        (1-self.gamma)*np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)))
         vm_ll_mean = np.mean(vm_lls)
         vm_ll_sem = stats.sem(vm_lls)
         if verbose:
@@ -281,7 +281,7 @@ class BiternionCNN:
 
         return train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas
 
-    def pdf(self, x, angle='azimuth', kappa=None, gamma=GAMMA):
+    def pdf(self, x, angle='azimuth', kappa=None):
 
         vals = np.arange(0, 2*np.pi, 0.01)
 
@@ -302,8 +302,8 @@ class BiternionCNN:
 
         for xid, xval in enumerate(vals):
             x_bit = rad2bit(x_vals_tiled*xval)
-            pdf_vals[:, xid] = P_UNIFORM*gamma + \
-                               (1-gamma)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
+            pdf_vals[:, xid] = P_UNIFORM*self.gamma + \
+                               (1-self.gamma)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
 
         return vals, pdf_vals
 
@@ -425,7 +425,7 @@ class BiternionCNN:
 
         return fig
 
-    def visualize_detections_on_circle(self, x, y_true=None, kappa=3.0):
+    def visualize_detections_on_circle(self, x, y_true=None, kappa=1.0):
 
         n_images = x.shape[0]
 
