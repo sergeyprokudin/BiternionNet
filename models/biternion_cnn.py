@@ -207,7 +207,7 @@ class BiternionCNN:
         print("Log-likelihood TOTAL: %2.2f+-%2.2fSE" % (ll_mean, ll_sem))
 
         if return_full:
-            return maad_mean, ll_mean, ll_sem, az_lls, el_lls, ti_lls
+            return maad_mean, ll_mean, ll_sem, lls
         else:
             return maad_mean, ll_mean, ll_sem
 
