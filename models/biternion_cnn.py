@@ -166,7 +166,7 @@ class BiternionCNN:
             print("MAAD %s : %2.2f+-%2.2fSE" % (angle, maad, sem))
         return aads, maad, sem
 
-    def evaluate(self, x, y_true, kappas=None, verbose=1):
+    def evaluate(self, x, y_true, kappas=None, verbose=1, return_full=False):
 
         y_pred = self.model.predict(np.asarray(x))
 
@@ -206,7 +206,10 @@ class BiternionCNN:
         print("MAAD TOTAL: %2.2f+-%2.2fSE" % (maad_mean, az_sem))
         print("Log-likelihood TOTAL: %2.2f+-%2.2fSE" % (ll_mean, ll_sem))
 
-        return maad_mean, ll_mean, ll_sem
+        if return_full:
+            return maad_mean, ll_mean, ll_sem, az_lls, el_lls, ti_lls
+        else:
+            return maad_mean, ll_mean, ll_sem
 
     def save_detections_for_official_eval(self, x, save_path):
 
