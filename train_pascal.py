@@ -183,7 +183,8 @@ def main():
 
         class_name = np.random.choice(PASCAL_CLASSES)
         loss_type = np.random.choice(['cosine', 'likelihood'])
-        train_model(class_name, loss_type, pretrain=True)
+        pretrain = np.random.choice([False, True])
+        train_model(class_name, loss_type, pretrain=pretrain)
 
     print("Fin.")
 
