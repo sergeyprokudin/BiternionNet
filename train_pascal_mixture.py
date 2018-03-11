@@ -107,9 +107,9 @@ def fixed_params():
     return params
 
 
-def train_model(class_name, loss_type):
+def train_model(class_name):
 
-    global_results_log = '/home/sprokudin/biternionnet/logs/bimixture_%s_%s.csv' % (loss_type, class_name)
+    global_results_log = '/home/sprokudin/biternionnet/logs/bimixture_%s.csv' % (class_name)
 
     if not os.path.exists(global_results_log):
         with open(global_results_log, 'w') as f:
@@ -118,7 +118,6 @@ def train_model(class_name, loss_type):
     x_train, y_train, x_val, y_val, x_test, y_test = load_pascal_data(cls=class_name, val_split=0.2)
 
     print("TRAINING on CLASS : %s" % class_name)
-    print("LOSS function used: %s" % loss_type)
 
     exp_id = get_experiment_id()
     params = fixed_params()
@@ -126,7 +125,7 @@ def train_model(class_name, loss_type):
 
     K.clear_session()
 
-    ckpt_name = 'bimixture_%s_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (loss_type, class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
+    ckpt_name = 'bimixture_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
     ckpt_path = os.path.join(LOGS_PATH, ckpt_name)
 
     K.clear_session()
