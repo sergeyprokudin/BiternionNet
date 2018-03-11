@@ -256,13 +256,13 @@ class BiternionCNN:
         if verbose:
             print("azimuth kappa: %f" % az_kappa)
             az_kappas = np.ones([y_true.shape[0], 1]) * az_kappa
-            _, az_ll, _ = self.log_likelihood(az_true_bit, az_preds_bit, az_kappas)
+            _, az_ll, _ = self.log_likelihood(az_true_bit, az_preds_bit, az_kappas, self.az_gamma)
             print("elevation kappa: %f" % el_kappa)
             el_kappas = np.ones([y_true.shape[0], 1]) * el_kappa
-            _, az_ll, _ = self.log_likelihood(el_true_bit, el_preds_bit, el_kappas)
+            _, az_ll, _ = self.log_likelihood(el_true_bit, el_preds_bit, el_kappas, self.el_gamma)
             print("tilt kappa: %f" % ti_kappa)
             ti_kappas = np.ones([y_true.shape[0], 1]) * ti_kappa
-            _, az_ll, _ = self.log_likelihood(ti_true_bit, ti_preds_bit, ti_kappas)
+            _, az_ll, _ = self.log_likelihood(ti_true_bit, ti_preds_bit, ti_kappas, self.ti_gamma)
 
         return az_kappa, el_kappa, ti_kappa
 
