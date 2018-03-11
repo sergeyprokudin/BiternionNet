@@ -185,7 +185,7 @@ class BiternionCNN:
         ti_aads, ti_maad, ti_sem = self.maad(ti_true_deg, ti_preds_deg, 'tilt', verbose=verbose)
 
         if self.loss_type == 'cosine':
-            print("cosine loss, using fixed kappas..")
+            print("cosine loss, using fixed kappas : %s" % str(kappas))
             az_kappa, el_kappa, ti_kappa = kappas
             az_preds_kappa = np.ones([y_true.shape[0], 1]) * az_kappa
             el_preds_kappa = np.ones([y_true.shape[0], 1]) * el_kappa
