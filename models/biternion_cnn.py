@@ -3,6 +3,8 @@ import keras
 import numpy as np
 from scipy import stats
 
+from scipy.misc import imresize
+
 from keras import backend as K
 from keras.models import Sequential
 from keras.layers import Input, Dense, Dropout, Flatten, Activation, Lambda, GlobalAveragePooling2D
@@ -354,6 +356,99 @@ class BiternionCNN:
                 self.plot_pdf(xvals, pdf_vals[i], target=az_true_rad[i], predicted=az_preds_rad[i], ax=axs[1])
             else:
                 self.plot_pdf(xvals, pdf_vals[i], ax=axs[1])
+            fig.show()
+
+        return
+
+    def make_halo(self, img, standard_size=[224, 224], black_canvas=False):
+        img_halo = np.copy(img)
+        lx, ly = img.shape[0:2]
+        X, Y = np.ogrid[0:lx, 0:ly]
+        mask = (X - lx / 2) ** 2 + (Y - ly / 2) ** 2 > lx * ly / 4
+        if black_canvas:
+            img_halo[mask] = 0
+        else:
+            img_halo[mask] = 255
+        img_halo = imresize(img_halo, size=standard_size)
+        return img_halo
+
+    def frame_image(self, img, frame_width, black_canvas=False):
+        b = frame_width # border size in pixel
+        ny, nx = img.shape[0], img.shape[1] # resolution / number of pixels in x and y
+        if black_canvas:
+            framed_img = np.zeros((b+ny+b, b+nx+b, img.shape[2]), dtype='uint8')*255
+        else:
+            framed_img = np.ones((b+ny+b, b+nx+b, img.shape[2]), dtype='uint8')*255
+        for i in range(0,3):
+            framed_img[b:-b, b:-b,i] = img[:,:,i]
+        return framed_img
+
+    def plot_pdf_circle(self, img, xvals, pdf, ypred_rad=None, ytrue_rad=None, show_legend=True,
+                        theta_zero_location='E', show_ticks=True, pdf_scaler=7.0, pdf_color='green', pred_color='darkgreen'):
+
+        import matplotlib.pyplot as plt
+
+        fig = plt.figure(figsize=(25, 8))
+
+        ax_img = fig.add_subplot(1, 1, 1, frameon=False)
+        ax_pdf = fig.add_subplot(1, 1, 1, projection='polar')
+
+        ax_img.axis("off")
+
+        img_halo = self.frame_image(self.make_halo(img, standard_size=[224, 224]), frame_width=90)
+        ax_img.imshow(img_halo)
+
+        ax_pdf.axvline(0, ymin=0.54, color='white', linewidth=3, linestyle='dashed')
+
+        ax_pdf.set_yticks([])
+        ax_pdf.set_xticks(([]))
+        ax_pdf.set_xticks(([ypred_rad]))
+        if show_ticks:
+            ax_pdf.set_xticklabels(["%d°" % np.rad2deg(ypred_rad)], fontsize=25)
+        else:
+            ax_pdf.set_xticklabels([])
+        ax_pdf.set_xlim(0, 1.0)
+        ax_pdf.set_ylim(0, 17)
+        ax_pdf.patch.set_alpha(0.1)
+        ax_pdf.set_theta_zero_location(theta_zero_location)
+        margin = 9.2
+        border = 0.8
+
+        ax_pdf.fill_between(xvals, np.ones(xvals.shape[0])*(margin+border), pdf*pdf_scaler+margin+border,
+                            color=pdf_color, alpha=0.8, label='$p_{\\theta}(\phi | \mathbf{x})$')
+        if ytrue_rad is not None:
+            ax_pdf.axvline(ytrue_rad, ymin=0.54, color='red', linewidth=4, label='ground truth')
+        if ypred_rad is not None:
+            ax_pdf.axvline(ypred_rad, ymin=0.54, color=pred_color, linewidth=4, label='prediction')
+        if show_legend:
+            ax_pdf.legend(fontsize=25, loc=1, framealpha=1.0)
+
+        return fig
+
+    def visualize_detections_on_circle(self, x, y_true=None, kappa=3.0):
+
+        n_images = x.shape[0]
+
+        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = self.unpack_preds(self.model.predict(x))
+        az_preds_rad = bit2rad(az_preds_bit)
+
+        if y_true is not None:
+            az_true_bit, el_true_bit, ti_true_bit = self.unpack_target(y_true)
+            az_true_rad = bit2rad(az_true_bit)
+        else:
+            az_true_rad = list(None for i in range(0, n_images))
+
+        xvals, pdf_vals = self.pdf(x, kappa=kappa)
+
+        for i in range(0, n_images):
+            fig = self.plot_pdf_circle(x[i], xvals, pdf_vals[i],
+                                       ypred_rad=az_preds_rad[i],
+                                       ytrue_rad=az_true_rad[i],
+                                       theta_zero_location='N',
+                                       show_ticks=True,
+                                       pdf_color='purple',
+                                       pred_color='purple',
+                                       show_legend=False)
             fig.show()
 
         return
