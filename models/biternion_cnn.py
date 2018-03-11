@@ -206,7 +206,7 @@ class BiternionCNN:
         print("MAAD TOTAL: %2.2f+-%2.2fSE" % (maad_mean, az_sem))
         print("Log-likelihood TOTAL: %2.2f+-%2.2fSE" % (ll_mean, ll_sem))
 
-        return maad_mean, ll_mean
+        return maad_mean, ll_mean, ll_sem
 
     def save_detections_for_official_eval(self, x, save_path):
 
@@ -278,11 +278,11 @@ class BiternionCNN:
             kappas = [1.0, 1.0, 1.0]
 
         print("EVALUATING ON TRAIN")
-        train_maad, train_ll = self.evaluate(x_train, y_train, kappas)
+        train_maad, train_ll, train_ll_sem = self.evaluate(x_train, y_train, kappas)
         print("EVALUATING ON VALIDAITON")
-        val_maad, val_ll = self.evaluate(x_val, y_val, kappas)
+        val_maad, val_ll, val_ll_sem = self.evaluate(x_val, y_val, kappas)
         print("EVALUATING ON TEST")
-        test_maad, test_ll = self.evaluate(x_test, y_test, kappas)
+        test_maad, test_ll, test_ll_sem = self.evaluate(x_test, y_test, kappas)
 
         return train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas
 
