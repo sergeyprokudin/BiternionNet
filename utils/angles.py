@@ -13,6 +13,8 @@ def deg2bit(angles_deg):
 def bit2deg(angles_bit):
     return (np.rad2deg(np.arctan2(angles_bit[:, 1], angles_bit[:, 0])) + 360) % 360
 
+def bit2rad(angles_bit):
+    return np.deg2rad(bit2deg(angles_bit))
 
 def bit2deg_multi(angles_bit):
     """ Convert biternion representation to degree for multiple samples

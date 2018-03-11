@@ -20,7 +20,7 @@ from utils.custom_keras_callbacks import ModelCheckpointEveryNBatch
 from utils.losses import maad_from_deg
 from utils.losses import cosine_loss_tf, von_mises_log_likelihood_tf
 from utils.losses import von_mises_log_likelihood_np
-from utils.angles import bit2deg, rad2bit
+from utils.angles import bit2deg, rad2bit, bit2rad
 
 P_UNIFORM = 0.15916927
 GAMMA = 1.0e-1
@@ -303,3 +303,56 @@ class BiternionCNN:
                                (1-GAMMA)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
 
         return vals, pdf_vals
+
+    def plot_pdf(self, vals, pdf_vals, ax=None, target=None, predicted=None, step=1.0e-2):
+
+        import matplotlib.pyplot as plt
+
+        if ax is None:
+            fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+
+        x = np.arange(0, 2*np.pi, step)
+        xticks = [0., .5*np.pi, np.pi, 1.5*np.pi, 2*np.pi]
+        xticks_labels = ["$0$", r"$\frac{\pi}{2}$", r"$\pi$", r"$\frac{3\pi}{2}$", r"$2\pi$"]
+        ax.set_xticks(xticks)
+        ax.set_xticklabels(xticks_labels)
+        ax.plot(vals, pdf_vals, label='pdf')
+        # mu = np.sum(pdf_vals*vals*step)
+        # ax.axvline(mu, c='blue', label='mean')
+        if target is not None:
+            ax.axvline(target, c='red', label='ground truth')
+
+        if predicted is not None:
+            ax.axvline(predicted, c='lightblue', label='predicted value')
+
+        ax.set_xlim((0, 2*np.pi))
+        ax.set_ylim(0, 1.0)
+        ax.legend(loc=4)
+
+        return
+
+    def visualize_detections(self, x, y_true=None, kappa=1.0):
+
+        import matplotlib.pyplot as plt
+
+        n_images = x.shape[0]
+
+        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = self.unpack_preds(self.model.predict(x))
+        az_preds_rad = bit2rad(az_preds_bit)
+
+        if y_true is not None:
+            az_true_bit, el_true_bit, ti_true_bit = self.unpack_target(y_true)
+            az_true_rad = bit2rad(az_true_bit)
+
+        xvals, pdf_vals = self.pdf(x, kappa=kappa)
+
+        for i in range(0, n_images):
+            fig, axs = plt.subplots(1, 2, figsize=(10, 5))
+            axs[0].imshow(x[i])
+            if y_true is not None:
+                self.plot_pdf(xvals, pdf_vals[i], target=az_true_rad[i], predicted=az_preds_rad, ax=axs[1])
+            else:
+                self.plot_pdf(xvals, pdf_vals[i], ax=axs[1])
+            fig.show()
+
+        return
