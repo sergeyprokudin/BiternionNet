@@ -148,7 +148,7 @@ class BiternionCNN:
 
         self.model.load_weights(ckpt_path)
 
-    def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds, gamma=1.0e-1, angle='', verbose=1):
+    def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds, gamma, angle='', verbose=1):
 
         vm_lls = np.log(P_UNIFORM*gamma +
                         (1-gamma)*np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit, kappa_preds)))
@@ -225,13 +225,13 @@ class BiternionCNN:
 
         return
 
-    def finetune_angle_kappa(self, y_true_bit, y_preds_bit, max_kappa=1000.0, verbose=1):
+    def finetune_angle_kappa(self, y_true_bit, y_preds_bit, gamma, max_kappa=1000.0, verbose=1):
 
         kappa_vals = np.arange(0, max_kappa, 1.0)
         log_likelihoods = np.zeros(kappa_vals.shape)
         for i, kappa_val in enumerate(kappa_vals):
             kappa_preds = np.ones([y_true_bit.shape[0], 1]) * kappa_val
-            log_likelihoods[i] = self.log_likelihood(y_true_bit, y_preds_bit, kappa_preds, verbose=0)[1]
+            log_likelihoods[i] = self.log_likelihood(y_true_bit, y_preds_bit, kappa_preds, gamma, verbose=0)[1]
             if verbose == 1:
                 print("kappa: %f, log-likelihood: %f" % (kappa_val, log_likelihoods[i]))
         max_ix = np.argmax(log_likelihoods)
@@ -249,9 +249,9 @@ class BiternionCNN:
         az_true_bit, el_true_bit, ti_true_bit = self.unpack_target(y_true)
 
         print("finetuning kappas..")
-        az_kappa = self.finetune_angle_kappa(az_true_bit, az_preds_bit, verbose=0)
-        el_kappa = self.finetune_angle_kappa(el_true_bit, el_preds_bit, verbose=0)
-        ti_kappa = self.finetune_angle_kappa(ti_true_bit, ti_preds_bit, verbose=0)
+        az_kappa = self.finetune_angle_kappa(az_true_bit, az_preds_bit, self.az_gamma, verbose=0)
+        el_kappa = self.finetune_angle_kappa(el_true_bit, el_preds_bit, self.el_gamma, verbose=0)
+        ti_kappa = self.finetune_angle_kappa(ti_true_bit, ti_preds_bit, self.ti_gamma, verbose=0)
 
         if verbose:
             print("azimuth kappa: %f" % az_kappa)
