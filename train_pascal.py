@@ -116,7 +116,7 @@ def select_params():
 def fixed_params():
 
     params ={}
-    params['lr'] = 1.0e-3
+    params['lr'] = 1.0e-4
     params['batch_size'] = 32
     params['hlayer_size'] = 512
 
@@ -147,15 +147,15 @@ def train_model(class_name, loss_type, pretrain=True):
 
     if loss_type == 'likelihood' and pretrain:
         print("Pre-training model with fixed kappas..")
-        model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type='cosine',
+        model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type='cosine',
                              learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
         train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas = \
             model.train_finetune_eval(x_train, y_train, x_val, y_val, x_test, y_test,
-                                  ckpt_path, batch_size=params['batch_size'], patience=5, epochs=1)
+                                  ckpt_path, batch_size=params['batch_size'], patience=5, epochs=20)
 
     K.clear_session()
-    model = BiternionCNN(input_shape=x_train.shape[1:], debug=True, loss_type=loss_type,
+    model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type=loss_type,
                          learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
     if loss_type == 'likelihood' and pretrain:
