@@ -139,7 +139,7 @@ def train_model(class_name):
     with open(global_results_log, 'a') as f:
         res_str = '%s;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f'\
                   % (ckpt_path, train_maad, train_ll, val_maad, val_ll, test_maad, test_ll,
-                     kappas[0], kappas[1], kappas[2])
+                     0, 0, 0)
         f.write("%s\n" % res_str)
 
     print("Trial finished. Best model saved at %s" % ckpt_path)
