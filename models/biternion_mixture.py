@@ -19,7 +19,7 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint
 from utils.custom_keras_callbacks import ModelCheckpointEveryNBatch
 
 
-from utils.losses import maad_from_deg
+from utils.losses import maad_from_deg, maximum_expected_utility
 from utils.losses import cosine_loss_tf, von_mises_log_likelihood_tf
 from utils.losses import von_mises_log_likelihood_np
 from utils.angles import bit2deg, rad2bit, bit2rad
@@ -31,7 +31,6 @@ class BiternionMixture:
     def __init__(self,
                  input_shape=[224, 224, 3],
                  debug=False,
-                 loss_type='cosine',
                  backbone_cnn='inception',
                  learning_rate=1.0e-4,
                  z_size=2,
@@ -40,7 +39,6 @@ class BiternionMixture:
                  noise_std=1.0,
                  gammas=[1.0e-1, 1.0e-1, 1.0e-1]):
 
-        self.loss_type = loss_type
         self.input_shape = input_shape
         self.learning_rate = learning_rate
         self.set_gammas(gammas)
@@ -48,6 +46,7 @@ class BiternionMixture:
         self.z_size = z_size
         self.n_samples = n_samples
         self.noise_std = noise_std
+        self.n_sample_outputs = 9
 
         if debug:
             x_in = Input(shape=input_shape)
@@ -102,9 +101,11 @@ class BiternionMixture:
         sample_el_likelihoods = []
         sample_ti_likelihoods = []
 
+        n_feat = 9
+
         for sid in range(0, self.n_samples):
 
-            az_mean, az_kappa, el_mean, el_kappa, ti_mean, ti_kappa = self.unpack_preds(y_pred[:, sid*6])
+            az_mean, az_kappa, el_mean, el_kappa, ti_mean, ti_kappa = self.unpack_sample_preds(y_pred[:, sid * n_feat:sid * n_feat + n_feat])
 
             sample_az_likelihoods.append(K.exp(von_mises_log_likelihood_tf(az_target,
                                                                            az_mean,
@@ -157,7 +158,7 @@ class BiternionMixture:
         self.el_gamma = gammas[1]
         self.ti_gamma = gammas[2]
 
-    def unpack_preds(self, y_pred):
+    def unpack_sample_preds(self, y_pred):
 
         az_mean = y_pred[:, 0:2]
         az_kappa =  y_pred[:, 2:3]
@@ -169,6 +170,30 @@ class BiternionMixture:
         ti_kappa = y_pred[:, 8:9]
 
         return az_mean, az_kappa, el_mean, el_kappa, ti_mean, ti_kappa
+
+    def unpack_all_preds(self, y_pred):
+
+        az_means = []
+        az_kappas = []
+        el_means = []
+        el_kappas = []
+        ti_means = []
+        ti_kappas = []
+
+        n_feat = 9
+
+        for sid in range(0, self.n_samples):
+            az_mean, az_kappa, el_mean, el_kappa, ti_mean, ti_kappa = \
+                self.unpack_sample_preds(y_pred[:, sid * n_feat:sid * n_feat + n_feat])
+
+            az_means.append(az_mean)
+            az_kappas.append(az_kappa)
+            el_means.append(el_mean)
+            el_kappas.append(el_kappa)
+            ti_means.append(ti_mean)
+            ti_kappas.append(ti_kappa)
+
+        return az_means, az_kappas, el_means, el_kappas, ti_means, ti_kappas
 
     def unpack_target(self, y_target):
 
@@ -191,11 +216,13 @@ class BiternionMixture:
 
         self.model.load_weights(ckpt_path)
 
-    def log_likelihood(self, y_true_bit, y_preds_bit, gamma, angle='', verbose=1):
+    def log_likelihood(self, y_true_bit, y_preds_bit, kappa_preds, gamma, angle='', verbose=1):
 
+        likelihoods = np.hstack([np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit[sid], kappa_preds[sid]))
+                       for sid in range(0, self.n_samples)])
 
         vm_lls = np.log(P_UNIFORM*gamma +
-                        (1-gamma)*np.exp(von_mises_log_likelihood_np(y_true_bit, y_preds_bit)))
+                        (1-gamma)*np.mean(likelihoods, axis=1))
         vm_ll_mean = np.mean(vm_lls)
         vm_ll_sem = stats.sem(vm_lls)
         if verbose:
@@ -211,14 +238,26 @@ class BiternionMixture:
             print("MAAD %s : %2.2f+-%2.2fSE" % (angle, maad, sem))
         return aads, maad, sem
 
-    def evaluate(self, x, y_true, kappas=None, verbose=1, return_full=False):
+    def convert_to_deg_preds(self, y_pred):
+
+        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = self.unpack_all_preds(y_pred)
+
+        az_preds_deg_lst = np.vstack([bit2deg(az_preds_bit[sid]) for sid in range(0, self.n_samples)]).T
+        az_preds_deg = maximum_expected_utility(az_preds_deg_lst)
+        el_preds_deg_lst = np.vstack([bit2deg(el_preds_bit[sid]) for sid in range(0, self.n_samples)]).T
+        el_preds_deg = maximum_expected_utility(el_preds_deg_lst)
+        ti_preds_deg_lst = np.vstack([bit2deg(ti_preds_bit[sid]) for sid in range(0, self.n_samples)]).T
+        ti_preds_deg = maximum_expected_utility(ti_preds_deg_lst)
+
+        return az_preds_deg, el_preds_deg, ti_preds_deg
+
+    def evaluate(self, x, y_true, verbose=1, return_full=False):
 
         y_pred = self.model.predict(np.asarray(x))
 
-        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = self.unpack_preds(y_pred)
-        az_preds_deg = bit2deg(az_preds_bit)
-        el_preds_deg = bit2deg(el_preds_bit)
-        ti_preds_deg = bit2deg(ti_preds_bit)
+        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = \
+            self.unpack_all_preds(y_pred)
+        az_preds_deg, el_preds_deg, ti_preds_deg = self.convert_to_deg_preds(y_pred)
 
         az_true_bit, el_true_bit, ti_true_bit = self.unpack_target(y_true)
         az_true_deg = bit2deg(az_true_bit)
@@ -228,13 +267,6 @@ class BiternionMixture:
         az_aads, az_maad, az_sem = self.maad(az_true_deg, az_preds_deg, 'azimuth', verbose=verbose)
         el_aads, el_maad, el_sem = self.maad(el_true_deg, el_preds_deg, 'elevation', verbose=verbose)
         ti_aads, ti_maad, ti_sem = self.maad(ti_true_deg, ti_preds_deg, 'tilt', verbose=verbose)
-
-        if self.loss_type == 'cosine':
-            print("cosine loss, using fixed kappas : %s" % str(kappas))
-            az_kappa, el_kappa, ti_kappa = kappas
-            az_preds_kappa = np.ones([y_true.shape[0], 1]) * az_kappa
-            el_preds_kappa = np.ones([y_true.shape[0], 1]) * el_kappa
-            ti_preds_kappa = np.ones([y_true.shape[0], 1]) * ti_kappa
 
         az_lls, az_ll_mean, az_ll_sem = self.log_likelihood(az_true_bit, az_preds_bit, az_preds_kappa, self.az_gamma,
                                                                'azimuth', verbose=verbose)
@@ -261,10 +293,8 @@ class BiternionMixture:
         # det path example: '/home/sprokudin/RenderForCNN/view_estimation/vp_test_results/aeroplane_pred_view.txt'
 
         y_pred = self.model.predict(np.asarray(x))
-        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = self.unpack_preds(y_pred)
-        az_preds_deg = bit2deg(az_preds_bit)
-        el_preds_deg = bit2deg(el_preds_bit)
-        ti_preds_deg = bit2deg(ti_preds_bit)
+        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = self.unpack_sample_preds(y_pred)
+        az_preds_deg, el_preds_deg, ti_preds_deg = self.convert_to_deg_preds(y_pred)
 
         y_pred = np.vstack([az_preds_deg, el_preds_deg, ti_preds_deg]).T
 
@@ -273,68 +303,22 @@ class BiternionMixture:
 
         return
 
-    def finetune_angle_kappa(self, y_true_bit, y_preds_bit, gamma, max_kappa=1000.0, verbose=1):
-
-        kappa_vals = np.arange(0, max_kappa, 1.0)
-        log_likelihoods = np.zeros(kappa_vals.shape)
-        for i, kappa_val in enumerate(kappa_vals):
-            kappa_preds = np.ones([y_true_bit.shape[0], 1]) * kappa_val
-            log_likelihoods[i] = self.log_likelihood(y_true_bit, y_preds_bit, kappa_preds, gamma, verbose=0)[1]
-            if verbose == 1:
-                print("kappa: %f, log-likelihood: %f" % (kappa_val, log_likelihoods[i]))
-        max_ix = np.argmax(log_likelihoods)
-        fixed_kappa_value = kappa_vals[max_ix]
-
-        if verbose:
-            print("best kappa : %f" % fixed_kappa_value)
-
-        return fixed_kappa_value
-
-    def finetune_all_kappas(self, x, y_true, verbose=1):
-
-        az_preds_bit, _, el_preds_bit, _, ti_preds_bit, _ = \
-            self.unpack_preds(self.model.predict(np.asarray(x)))
-        az_true_bit, el_true_bit, ti_true_bit = self.unpack_target(y_true)
-
-        print("finetuning kappas..")
-        az_kappa = self.finetune_angle_kappa(az_true_bit, az_preds_bit, self.az_gamma, verbose=0)
-        el_kappa = self.finetune_angle_kappa(el_true_bit, el_preds_bit, self.el_gamma, verbose=0)
-        ti_kappa = self.finetune_angle_kappa(ti_true_bit, ti_preds_bit, self.ti_gamma, verbose=0)
-
-        if verbose:
-            print("azimuth kappa: %f" % az_kappa)
-            az_kappas = np.ones([y_true.shape[0], 1]) * az_kappa
-            _, az_ll, _ = self.log_likelihood(az_true_bit, az_preds_bit, az_kappas, self.az_gamma)
-            print("elevation kappa: %f" % el_kappa)
-            el_kappas = np.ones([y_true.shape[0], 1]) * el_kappa
-            _, az_ll, _ = self.log_likelihood(el_true_bit, el_preds_bit, el_kappas, self.el_gamma)
-            print("tilt kappa: %f" % ti_kappa)
-            ti_kappas = np.ones([y_true.shape[0], 1]) * ti_kappa
-            _, az_ll, _ = self.log_likelihood(ti_true_bit, ti_preds_bit, ti_kappas, self.ti_gamma)
-
-        return az_kappa, el_kappa, ti_kappa
-
     def train_finetune_eval(self, x_train, y_train, x_val, y_val, x_test, y_test,
                             ckpt_path, batch_size=32, patience=10, epochs=200):
 
         self.fit(x_train, y_train, [x_val, y_val], epochs=epochs,
                  ckpt_path=ckpt_path, patience=patience, batch_size=batch_size)
 
-        if self.loss_type == 'cosine':
-            kappas = self.finetune_all_kappas(x_val, y_val, verbose=0)
-        else:
-            kappas = [1.0, 1.0, 1.0]
-
         print("EVALUATING ON TRAIN")
-        train_maad, train_ll, train_ll_sem = self.evaluate(x_train, y_train, kappas)
+        train_maad, train_ll, train_ll_sem = self.evaluate(x_train, y_train)
         print("EVALUATING ON VALIDAITON")
-        val_maad, val_ll, val_ll_sem = self.evaluate(x_val, y_val, kappas)
+        val_maad, val_ll, val_ll_sem = self.evaluate(x_val, y_val)
         print("EVALUATING ON TEST")
-        test_maad, test_ll, test_ll_sem = self.evaluate(x_test, y_test, kappas)
+        test_maad, test_ll, test_ll_sem = self.evaluate(x_test, y_test)
 
-        return train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas
+        return train_maad, train_ll, val_maad, val_ll, test_maad, test_ll
 
-    def pdf(self, x, angle='azimuth', kappa=None):
+    def pdf(self, x, gamma, angle='azimuth'):
 
         vals = np.arange(0, 2*np.pi, 0.01)
 
@@ -342,22 +326,19 @@ class BiternionMixture:
         x_vals_tiled = np.ones(n_images)
 
         az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = \
-            self.unpack_preds(self.model.predict(x))
+            self.unpack_all_preds(self.model.predict(x))
 
         if angle == 'azimuth':
             mu_preds_bit = az_preds_bit
             kappa_preds = az_preds_kappa
             gamma = self.az_gamma
 
-        if self.loss_type == 'cosine':
-            kappa_preds = np.ones([x.shape[0], 1]) * kappa
-
         pdf_vals = np.zeros([n_images, len(vals)])
 
         for xid, xval in enumerate(vals):
             x_bit = rad2bit(x_vals_tiled*xval)
-            pdf_vals[:, xid] = P_UNIFORM*gamma + \
-                               (1-gamma)*np.exp(np.squeeze(von_mises_log_likelihood_np(x_bit, mu_preds_bit, kappa_preds)))
+            pdf_vals[:, xid] = np.exp(self.log_likelihood(x_bit,
+                                                          mu_preds_bit, kappa_preds, gamma, angle=angle, verbose=0)[0])
 
         return vals, pdf_vals
 
@@ -394,14 +375,17 @@ class BiternionMixture:
 
         n_images = x.shape[0]
 
-        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = self.unpack_preds(self.model.predict(x))
-        az_preds_rad = bit2rad(az_preds_bit)
+        y_pred = self.model.predict(x)
+        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = \
+            self.unpack_sample_preds(y_pred)
+        az_preds_deg, el_preds_deg, ti_preds_deg = self.convert_to_deg_preds(y_pred)
+        az_preds_rad = np.deg2rad(az_preds_deg)
 
         if y_true is not None:
             az_true_bit, el_true_bit, ti_true_bit = self.unpack_target(y_true)
             az_true_rad = bit2rad(az_true_bit)
 
-        xvals, pdf_vals = self.pdf(x, kappa=kappa)
+        xvals, pdf_vals = self.pdf(x, gamma=self.az_gamma)
 
         for i in range(0, n_images):
             fig, axs = plt.subplots(1, 2, figsize=(10, 5))
@@ -479,12 +463,15 @@ class BiternionMixture:
 
         return fig
 
-    def visualize_detections_on_circle(self, x, y_true=None, kappa=1.0):
+    def visualize_detections_on_circle(self, x, y_true=None):
 
         n_images = x.shape[0]
 
-        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = self.unpack_preds(self.model.predict(x))
-        az_preds_rad = bit2rad(az_preds_bit)
+        y_pred = self.model.predict(x)
+        az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = \
+            self.unpack_sample_preds(y_pred)
+        az_preds_deg, el_preds_deg, ti_preds_deg = self.convert_to_deg_preds(y_pred)
+        az_preds_rad = np.deg2rad(az_preds_deg)
 
         if y_true is not None:
             az_true_bit, el_true_bit, ti_true_bit = self.unpack_target(y_true)
@@ -492,7 +479,7 @@ class BiternionMixture:
         else:
             az_true_rad = list(None for i in range(0, n_images))
 
-        xvals, pdf_vals = self.pdf(x, kappa=kappa)
+        xvals, pdf_vals = self.pdf(x, gamma=self.az_gamma)
 
         for i in range(0, n_images):
             fig = self.plot_pdf_circle(x[i], xvals, pdf_vals[i],
