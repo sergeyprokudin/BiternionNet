@@ -116,7 +116,7 @@ def select_params():
 def fixed_params():
 
     params ={}
-    params['lr'] = 1.0e-5
+    params['lr'] = 1.0e-3
     params['batch_size'] = 32
     params['hlayer_size'] = 512
 
@@ -181,8 +181,8 @@ def main():
 
     for i in range(0, N_TRIALS):
 
-        class_name = 'boat' #np.random.choice(PASCAL_CLASSES)
-        loss_type = 'likelihood' #np.random.choice(['cosine', 'likelihood'])
+        class_name = 'aeroplane' #np.random.choice(PASCAL_CLASSES)
+        loss_type = 'cosine' #np.random.choice(['cosine', 'likelihood'])
         train_model(class_name, loss_type, pretrain=True)
 
     print("Fin.")
