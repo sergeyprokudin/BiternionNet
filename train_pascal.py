@@ -152,7 +152,7 @@ def train_model(class_name, loss_type, pretrain=True):
 
         train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas = \
             model.train_finetune_eval(x_train, y_train, x_val, y_val, x_test, y_test,
-                                  ckpt_path, batch_size=params['batch_size'], patience=5, epochs=20)
+                                  ckpt_path, batch_size=params['batch_size'], patience=10, epochs=20)
 
     K.clear_session()
     model = BiternionCNN(input_shape=x_train.shape[1:], debug=False, loss_type=loss_type,
@@ -164,7 +164,7 @@ def train_model(class_name, loss_type, pretrain=True):
 
     train_maad, train_ll, val_maad, val_ll, test_maad, test_ll, kappas = \
         model.train_finetune_eval(x_train, y_train, x_val, y_val, x_test, y_test,
-                                  ckpt_path, batch_size=params['batch_size'], patience=5, epochs=100)
+                                  ckpt_path, batch_size=params['batch_size'], patience=10, epochs=100)
 
     with open(global_results_log, 'a') as f:
         res_str = '%s;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f'\
