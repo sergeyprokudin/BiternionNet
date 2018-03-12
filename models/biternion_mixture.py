@@ -443,6 +443,8 @@ class BiternionMixture:
         ax_pdf.set_xticks(([ypred_rad]))
         if show_ticks:
             ax_pdf.set_xticklabels(["%d°" % np.rad2deg(ypred_rad)], fontsize=25)
+            if ypred_rad is not None:
+                ax_pdf.set_xticklabels(["%d°" % np.rad2deg(ytrue_rad)], fontsize=25)
         else:
             ax_pdf.set_xticklabels([])
         ax_pdf.set_xlim(0, 1.0)
@@ -453,7 +455,7 @@ class BiternionMixture:
         border = 0.8
 
         ax_pdf.fill_between(xvals, np.ones(xvals.shape[0])*(margin+border), pdf*pdf_scaler+margin+border,
-                            color=pdf_color, alpha=0.8, label='$p_{\\theta}(\phi | \mathbf{x})$')
+                            color=pdf_color, alpha=0.5, label='$p_{\\theta}(\phi | \mathbf{x})$')
         if ytrue_rad is not None:
             ax_pdf.axvline(ytrue_rad, ymin=0.54, color='red', linewidth=4, label='ground truth')
         if ypred_rad is not None:
@@ -463,7 +465,7 @@ class BiternionMixture:
 
         return fig
 
-    def visualize_detections_on_circle(self, x, y_true=None):
+    def visualize_detections_on_circle(self, x, y_true=None, show_legend=True):
 
         n_images = x.shape[0]
 
@@ -489,7 +491,7 @@ class BiternionMixture:
                                        show_ticks=True,
                                        pdf_color='purple',
                                        pred_color='purple',
-                                       show_legend=False)
+                                       show_legend=show_legend)
             fig.show()
 
         return
