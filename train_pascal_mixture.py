@@ -104,13 +104,15 @@ def fixed_params():
     params['lr'] = 1.0e-4
     params['batch_size'] = 32
     params['hlayer_size'] = 512
+    params['z_size'] = 4
+    params['n_samples'] = 50
 
     return params
 
 
 def train_model(class_name):
 
-    global_results_log = '/home/sprokudin/biternionnet/logs/V1_bimixture_%s.csv' % (class_name)
+    global_results_log = '/home/sprokudin/biternionnet/logs/V2_bimixture_%s.csv' % (class_name)
 
     if not os.path.exists(global_results_log):
         with open(global_results_log, 'w') as f:
@@ -126,18 +128,19 @@ def train_model(class_name):
 
     K.clear_session()
 
-    ckpt_name = 'bimixture_%s_%s_bs%d_hls%d_lr_%0.1e.h5' % (class_name, exp_id, params['batch_size'], params['hlayer_size'], params['lr'])
+    ckpt_name = 'bimixture_%s_%s_hls%d_zs_%d_ns_%d.1e.h5' % (class_name, exp_id, params['hlayer_size'],
+                                                             params['z_size'], params['n_samples'])
     ckpt_path = os.path.join(LOGS_PATH, ckpt_name)
 
     K.clear_session()
     #20 samples, z_size=8
-    model = BiternionMixture(input_shape=x_train.shape[1:], debug=False,
+    model = BiternionMixture(input_shape=x_train.shape[1:], debug=True,
                              n_samples=50, z_size=2,
                              learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
     train_maad, train_ll, val_maad, val_ll, test_maad, test_ll = \
         model.train_finetune_eval(x_train, y_train, x_val, y_val, x_test, y_test,
-                                  ckpt_path, batch_size=params['batch_size'], patience=20, epochs=100)
+                                  ckpt_path, batch_size=params['batch_size'], patience=20, epochs=1)
 
     with open(global_results_log, 'a') as f:
         res_str = '%s;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f;%2.2f'\
