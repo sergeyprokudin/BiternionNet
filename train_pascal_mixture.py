@@ -131,7 +131,7 @@ def train_model(class_name):
 
     K.clear_session()
     model = BiternionMixture(input_shape=x_train.shape[1:], debug=False,
-                             n_samples=10, z_size=8,
+                             n_samples=20, z_size=8,
                              learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
     train_maad, train_ll, val_maad, val_ll, test_maad, test_ll = \
