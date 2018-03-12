@@ -104,8 +104,8 @@ def fixed_params():
     params['lr'] = 1.0e-4
     params['batch_size'] = 32
     params['hlayer_size'] = 512
-    params['z_size'] = 4
-    params['n_samples'] = 50
+    params['z_size'] = 8
+    params['n_samples'] = 20
 
     return params
 
@@ -135,7 +135,7 @@ def train_model(class_name):
     K.clear_session()
     #20 samples, z_size=8
     model = BiternionMixture(input_shape=x_train.shape[1:], debug=True,
-                             n_samples=50, z_size=2,
+                             n_samples=params['n_samples'], z_size=params['z_size'],
                              learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
     train_maad, train_ll, val_maad, val_ll, test_maad, test_ll = \
