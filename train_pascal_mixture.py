@@ -110,7 +110,7 @@ def fixed_params():
 
 def train_model(class_name):
 
-    global_results_log = '/home/sprokudin/biternionnet/logs/bimixture_%s.csv' % (class_name)
+    global_results_log = '/home/sprokudin/biternionnet/logs/V1_bimixture_%s.csv' % (class_name)
 
     if not os.path.exists(global_results_log):
         with open(global_results_log, 'w') as f:
@@ -131,6 +131,7 @@ def train_model(class_name):
 
     K.clear_session()
     model = BiternionMixture(input_shape=x_train.shape[1:], debug=False,
+                             n_samples=20, z_size=8,
                              learning_rate=params['lr'], hlayer_size=params['hlayer_size'])
 
     train_maad, train_ll, val_maad, val_ll, test_maad, test_ll = \
