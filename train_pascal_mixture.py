@@ -15,6 +15,7 @@ N_TRIALS = 20
 PASCAL_CLASSES = ['aeroplane', 'bicycle', 'boat', 'bottle', 'bus', 'car',
                   'chair', 'diningtable', 'motorbike', 'sofa',  'train', 'tvmonitor']
 
+
 def train_val_split(x, y, val_split=0.2, canonical_split=True):
 
     if canonical_split:
