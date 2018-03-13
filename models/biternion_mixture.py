@@ -442,9 +442,10 @@ class BiternionMixture:
         ax_pdf.set_yticks([])
         ax_pdf.set_xticks(([]))
         if show_ticks:
+            #ax_pdf.set_xticklabels(["%d°" % np.rad2deg(ypred_rad)], fontsize=25)
             if (ypred_rad is not None) and (ytrue_rad is not None):
                 ax_pdf.set_xticks(([ypred_rad, ytrue_rad]))
-                ax_pdf.set_xticklabels(["%d°" % np.rad2deg(ytrue_rad), "%d°" % np.rad2deg(ypred_rad)], fontsize=25)
+                ax_pdf.set_xticklabels([ "%d°" % np.rad2deg(ypred_rad), "%d°" % np.rad2deg(ytrue_rad)], fontsize=25)
             elif ytrue_rad is not None:
                 ax_pdf.set_xticks(([ytrue_rad]))
                 ax_pdf.set_xticklabels(["%d°" % np.rad2deg(ytrue_rad)], fontsize=25)
