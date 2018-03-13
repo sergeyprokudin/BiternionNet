@@ -463,7 +463,7 @@ class BiternionMixture:
         ax_pdf.fill_between(xvals, np.ones(xvals.shape[0])*(margin+border), pdf*pdf_scaler+margin+border,
                             color=pdf_color, alpha=0.5, label='$p_{\\theta}(\phi | \mathbf{x})$')
         if ytrue_rad is not None:
-            ax_pdf.axvline(ytrue_rad, ls='dashed', ymin=0.54, color='red', linewidth=4, label='ground truth')
+            ax_pdf.axvline(ytrue_rad, ymin=0.54, color='red', linewidth=4, label='ground truth')
         if ypred_rad is not None:
             ax_pdf.axvline(ypred_rad, ls='dashed', ymin=0.54, color=pred_color, linewidth=4, label='prediction')
         if show_legend:
