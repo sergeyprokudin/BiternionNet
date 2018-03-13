@@ -1,6 +1,7 @@
 import tensorflow as tf
 import keras
 import numpy as np
+import os
 from scipy import stats
 
 from scipy.misc import imresize
@@ -440,11 +441,16 @@ class BiternionMixture:
 
         ax_pdf.set_yticks([])
         ax_pdf.set_xticks(([]))
-        ax_pdf.set_xticks(([ypred_rad]))
         if show_ticks:
-            ax_pdf.set_xticklabels(["%d°" % np.rad2deg(ypred_rad)], fontsize=25)
-            if ypred_rad is not None:
+            if (ypred_rad is not None) and (ytrue_rad is not None):
+                ax_pdf.set_xticks(([ypred_rad, ytrue_rad]))
+                ax_pdf.set_xticklabels(["%d°" % np.rad2deg(ytrue_rad), "%d°" % np.rad2deg(ypred_rad)], fontsize=25)
+            elif ytrue_rad is not None:
+                ax_pdf.set_xticks(([ytrue_rad]))
                 ax_pdf.set_xticklabels(["%d°" % np.rad2deg(ytrue_rad)], fontsize=25)
+            elif ypred_rad is not None:
+                ax_pdf.set_xticks(([ypred_rad]))
+                ax_pdf.set_xticklabels(["%d°" % np.rad2deg(ypred_rad)], fontsize=25)
         else:
             ax_pdf.set_xticklabels([])
         ax_pdf.set_xlim(0, 1.0)
@@ -457,17 +463,21 @@ class BiternionMixture:
         ax_pdf.fill_between(xvals, np.ones(xvals.shape[0])*(margin+border), pdf*pdf_scaler+margin+border,
                             color=pdf_color, alpha=0.5, label='$p_{\\theta}(\phi | \mathbf{x})$')
         if ytrue_rad is not None:
-            ax_pdf.axvline(ytrue_rad, ymin=0.54, color='red', linewidth=4, label='ground truth')
+            ax_pdf.axvline(ytrue_rad, ls='dashed', ymin=0.54, color='red', linewidth=4, label='ground truth')
         if ypred_rad is not None:
-            ax_pdf.axvline(ypred_rad, ymin=0.54, color=pred_color, linewidth=4, label='prediction')
+            ax_pdf.axvline(ypred_rad, ls='dashed', ymin=0.54, color=pred_color, linewidth=4, label='prediction')
         if show_legend:
             ax_pdf.legend(fontsize=25, loc=1, framealpha=1.0)
 
         return fig
 
-    def visualize_detections_on_circle(self, x, y_true=None, show_legend=True):
+    def visualize_detections_on_circle(self, x, y_true=None, show_legend=True, save_figs=False, save_path=None):
 
         n_images = x.shape[0]
+
+        if save_figs:
+            if not os.path.exists(save_path):
+                os.makedirs(save_path)
 
         y_pred = self.model.predict(x)
         az_preds_bit, az_preds_kappa, el_preds_bit, el_preds_kappa, ti_preds_bit, ti_preds_kappa = \
@@ -492,6 +502,13 @@ class BiternionMixture:
                                        pdf_color='purple',
                                        pred_color='purple',
                                        show_legend=show_legend)
+
+
+            if save_figs:
+                fig_save_path = os.path.join(save_path, 'frame_%d.png' % i)
+                print("saving frame detections to %s" % fig_save_path)
+                fig.savefig(fig_save_path)
+
             fig.show()
 
         return
