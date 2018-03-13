@@ -181,6 +181,7 @@ def main():
 
     for i in range(0, N_TRIALS):
 
+        problem_classes = ['boat', 'bus', 'table']
         class_name = np.random.choice(PASCAL_CLASSES)
         loss_type = np.random.choice(['cosine', 'likelihood'])
         pretrain = np.random.choice([False, True])
