@@ -156,7 +156,9 @@ def train_model(class_name):
 def main():
 
     for i in range(0, N_TRIALS):
-        class_name = np.random.choice(PASCAL_CLASSES)
+
+        problem_classes = ['bicycle', 'boat', 'bus', 'chair', 'table']
+        class_name = np.random.choice(problem_classes)
         train_model(class_name)
 
     print("Fin.")
