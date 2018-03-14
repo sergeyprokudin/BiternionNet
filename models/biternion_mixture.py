@@ -423,7 +423,7 @@ class BiternionMixture:
         return framed_img
 
     def plot_pdf_circle(self, img, xvals, pdf, ypred_rad=None, ytrue_rad=None, show_legend=True,
-                        theta_zero_location='E', show_ticks=True, pdf_scaler=20.0, pdf_color='green', pred_color='darkgreen'):
+                        theta_zero_location='E', show_ticks=True, pdf_scaler=10.0, pdf_color='green', pred_color='darkgreen'):
 
         import matplotlib.pyplot as plt
 
